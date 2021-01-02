@@ -2,7 +2,6 @@
 
 import Vue from 'vue'
 import App from './App.vue'
-// import login from "@/login";
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
