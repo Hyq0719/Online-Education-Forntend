@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <router-view/>
-    <flvjs></flvjs>
+<!--    <flvjs></flvjs>-->
   </div>
 </template>
 
 <script>
-import flvjs from "./components/flvjs.vue";
+// import flvjs from "./components/flvjs.vue";
 export default {
   name: 'App',
   components: {
-    flvjs
+    // flvjs
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-main>
-      <flvjs></flvjs>
+<!--      <flvjs></flvjs>-->
     </el-main>
     <el-aside width="300px">
       <div class="infinite-list-wrapper" style="overflow:auto">
@@ -9,7 +9,7 @@
           class="list"
           v-infinite-scroll="load"
           infinite-scroll-disabled="disabled">
-          <li v-for="i in count" class="list-item">{{ i }}</li>
+          <li v-for="i in count" v-bind:key="i" class="list-item">{{ i }}</li>
         </ul>
         <p v-if="loading">加载中...</p>
         <p v-if="noMore">没有更多了</p>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import flvjs from 'flvjs';
+// import flvjs from 'flvjs';
 export default {
   name: "live",
   data () {
@@ -46,7 +46,7 @@ export default {
     }
   },
   components:{
-    flvjs,
+    // flvjs,
   },
 }
 </script>

@@ -9,31 +9,31 @@ import live from '../views/live';
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path:'/login',
-      name:'login',
-      component:login
-    },
-    {
-      path:'/',
-      name:'main',
-      component:main,
-    },
-    {
-      path:'/register',
-      name:'register',
-      component:register,
-    },
-    {
-      path:'/register/teacher',
-      name:'teacherregister',
-      component:teacherregister,
-    },
-    {
-      path:'/live',
-      name:'live',
-      component:live,
-    },
-  ]
+    routes: [
+        {
+            path: '/login',
+            name: 'logi+n',
+            component: login
+        },
+        {
+            path: '/',
+            name: 'main',
+            component: main,
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: register,
+        },
+        {
+            path: '/register/teacher',
+            name: 'teacherregister',
+            component: teacherregister,
+        },
+        {
+            path: '/live',
+            name: 'live',
+            component: live,
+        },
+    ]
 })
