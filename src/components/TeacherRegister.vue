@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "registerteacher",
+  name: "TeacherRegister",
   data () {
     var validatePass = (rule, value, callback) => {
       if (value === '') {

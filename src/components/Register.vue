@@ -26,7 +26,7 @@
       <div class="choose">
           <el-link :underline="false" @click="TeacherRegister">我是老师</el-link>
       </div>
-      
+
 
     </el-form>
   </div>
@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: "register",
+  name: "Register",
   data() {
       var validatePass = (rule, value, callback) => {
         if (value === '') {
@@ -74,7 +74,7 @@ export default {
             { validator: validatePass2, trigger: 'blur' }
           ],
         },
-      
+
       radio: true,
     };
   },

@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '../views/login';
-import main from '../views/main';
-import register from '../views/register';
-import teacherregister from '../views/teacherregister';
-import live from '../views/live';
+import Login from '../views/Login';
+import Main from '../views/Main';
+import Register from '../views/Register';
+import TeacherRegister from '../views/TeacherRegister';
+import Live from '../views/Live';
 
 Vue.use(Router);
 
@@ -12,28 +12,28 @@ export default new Router({
     routes: [
         {
             path: '/login',
-            name: 'logi+n',
-            component: login
+            name: 'Login',
+            component: Login
         },
         {
             path: '/',
-            name: 'main',
-            component: main,
+            name: 'Main',
+            component: Main,
         },
         {
             path: '/register',
-            name: 'register',
-            component: register,
+            name: 'Register',
+            component: Register,
         },
         {
             path: '/register/teacher',
-            name: 'teacherregister',
-            component: teacherregister,
+            name: 'TeacherRegister',
+            component: TeacherRegister,
         },
         {
             path: '/live',
-            name: 'live',
-            component: live,
+            name: 'Live',
+            component: Live,
         },
     ]
 })

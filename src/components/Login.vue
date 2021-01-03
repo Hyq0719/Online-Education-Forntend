@@ -4,7 +4,7 @@
           <el-radio v-model="radio" label="1" border>我是学生</el-radio>
           <el-radio v-model="radio" label="2" border>我是老师</el-radio>
       </div>
-      
+
       <h2>登录</h2>
     <el-form ref="form" :model="form" label-width="100px">
       <el-form-item label="账号/昵称：">
@@ -15,8 +15,8 @@
       </el-form-item>
 
       <div>
-        <el-button type="primary" @click="login">登录</el-button>
-        <el-button @click="register">注册</el-button>
+        <el-button type="primary" @click="Login">登录</el-button>
+        <el-button @click="Register">注册</el-button>
       </div>
     </el-form>
   </div>
@@ -35,11 +35,11 @@ export default {
     };
   },
   methods: {
-    login() {
+    Login() {
       this.$router.push('/')
     },
-    register() {
-      this.$router.push('/register')
+    Register() {
+      this.$router.push('/Register')
     }
   },
 };

@@ -6,15 +6,15 @@
       mode="horizontal"
       @select="handleSelect"
     >
-<!--      <div class="myheader">-->
-<!--        <img src="../../build/logo.png" alt="加载失败" style="height:60px; width:60px;"/>-->
-<!--      </div>-->
-      <div class="myheader-search">
+      <div class="Header">
+        <img src="../assets/logo.png" alt="加载失败" style="height:60px; width:60px;"/>
+      </div>
+      <div class="Header-search">
         <el-input placeholder="请输入内容" v-model="input" clearable>
         </el-input>
       </div>
-      <div class="myheader">
-        <img src="../../pictures/search.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0px;"/>
+      <div class="Header">
+        <img src="../assets/Header-search-logo.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0px;"/>
       </div>
 
       <el-menu-item index="1"
@@ -45,7 +45,7 @@
 
 <script>
 export default {
-  name:"header",
+  name:"Header",
   data() {
     return {
       activeIndex: "1",
@@ -62,12 +62,12 @@ export default {
 </script>
 
 <style scoped>
-.myheader {
+.Header {
   float: left;
   height: 60px;
   width: 60px;
 }
-.myheader-search{
+.Header-search{
     float:left;
     width:200px;
     margin:10px 0px 10px 50px;

@@ -1,10 +1,10 @@
 <template>
   <el-container>
     <el-main>
-      <flvjs></flvjs>
+      <Flvjs></Flvjs>
     </el-main>
     <el-aside width="300px">
-      <div class="infinite-list-wrapper" style="overflow:auto">
+      <div class="infinite-list-wrapper" style="overflow:auto; height:400px;">
         <ul
           class="list"
           v-infinite-scroll="load"
@@ -14,18 +14,27 @@
         <p v-if="loading">加载中...</p>
         <p v-if="noMore">没有更多了</p>
       </div>
+      <div>
+        <el-input
+            placeholder="请输入内容"
+            v-model="input"
+            clearable
+            class="communicate">
+        </el-input>
+      </div>
     </el-aside>
   </el-container>
 </template>
 
 <script>
-import flvjs from '../components/flvjs'
+import Flvjs from '../components/Flvjs'
 export default {
-  name: "live",
+  name: "Live",
   data () {
     return {
       count: 10,
-      loading: false
+      loading: false,
+      input: '',
     }
   },
   computed: {
@@ -46,7 +55,7 @@ export default {
     }
   },
   components:{
-     flvjs,
+     Flvjs,
   },
 }
 </script>
@@ -62,12 +71,12 @@ export default {
   background-color: #E9EEF3;
   color: #333;
   text-align: center;
-  line-height: 160px;
+  padding: 0px;
 }
 
 .el-container {
   margin:0px 100px;
-  height: 500px;
+  height: 504px;
 }
 
 .el-header, .el-footer {
@@ -75,5 +84,9 @@ export default {
   color: #333;
   text-align: center;
   line-height: 60px;
+}
+
+.communicate{
+
 }
 </style>

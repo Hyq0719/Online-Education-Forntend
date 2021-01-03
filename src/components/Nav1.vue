@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container style="margin:0px 150px; height: 500px; border: 1px solid #eee">
-      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+      <el-aside width="220px" style="background-color: rgb(238, 241, 246)">
         <el-menu :default-openeds="['1']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-menu"></i>前沿</template>
@@ -77,16 +77,16 @@
           <span class="demonstration"></span>
           <el-carousel height="455px">
             <el-carousel-item>
-                <img src="../../pictures/p1.jpg" alt="">
+                <img src="../assets/Nav1-p1.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img src="../../pictures/p2.jpg" alt="">
+                <img src="../assets/Nav1-p2.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img src="../../pictures/p3.jpg" alt="">
+                <img src="../assets/Nav1-p3.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img src="../../pictures/p4.jpg" alt="">
+                <img src="../assets/Nav1-p4.jpg" alt="">
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -97,7 +97,7 @@
 
 <script>
 export default {
-  name:"nav1",
+  name:"Nav1",
 }
 </script>
 

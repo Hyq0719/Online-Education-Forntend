@@ -1,14 +1,14 @@
 <template>
   <div>
-    <register></register>
+    <TeacherRegister></TeacherRegister>
   </div>
 </template>
 
 <script>
-import register from '../components/register'
+import TeacherRegister from '../components/TeacherRegister'
     export default{
         components:{
-            register,
+            TeacherRegister,
         },
     }
 </script>

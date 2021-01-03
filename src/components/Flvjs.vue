@@ -1,8 +1,8 @@
 <template>
   <div>
-    <video id="videoElement" controls autoplay muted width="300px" height="200px"></video>
-    <button @click="play">播放</button>
-    <button @click="reload">重新加载</button>
+    <video id="videoElement" controls autoplay muted style="width:100%; height:500px;"></video>
+<!--      <button @click="play">播放</button>-->
+<!--      <button @click="reload">重新加载</button>-->
   </div>
 </template>
 
