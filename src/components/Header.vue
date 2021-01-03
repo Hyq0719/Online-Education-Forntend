@@ -17,11 +17,9 @@
         <img src="../assets/Header-search-logo.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0px;"/>
       </div>
 
-      <el-menu-item index="1"
-      >
+      <el-menu-item index="1">
         <router-link to="/login">登录</router-link>
-      </el-menu-item
-      >
+      </el-menu-item>
       <el-submenu index="2">
         <template slot="title">分类</template>
         <el-menu-item index="2-1">选项1</el-menu-item>
@@ -35,13 +33,13 @@
         </el-submenu>
       </el-submenu>
       <el-menu-item index="3">消息中心</el-menu-item>
-      <el-menu-item index="4"
-      >
+      <el-menu-item index="4">
+        <router-link to="/Courses">课程</router-link>
+      </el-menu-item>
+      <el-menu-item index="5">
         <router-link to="/live">直播</router-link>
-      </el-menu-item
-      >
-      <el-menu-item index="5"
-      >
+      </el-menu-item>
+      <el-menu-item index="6">
         <router-link to="/">首页</router-link>
       </el-menu-item
       >

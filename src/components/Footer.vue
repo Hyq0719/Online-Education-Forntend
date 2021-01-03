@@ -17,7 +17,7 @@ export default {
 }
 
 .Footer p {
-  color: white;
+  color: grey;
   font-size: 14px;
   margin: 23px;
   display: inline-block;

@@ -4,7 +4,7 @@
       <Flvjs></Flvjs>
     </el-main>
     <el-aside width="300px">
-      <div class="infinite-list-wrapper" style="overflow:auto; height:400px;">
+      <div class="infinite-list-wrapper" style="overflow:auto; height:464px;">
         <ul
             class="list"
             v-infinite-scroll="load"
@@ -19,7 +19,7 @@
             placeholder="请输入内容"
             v-model="input"
             clearable
-            class="communicate">
+            size="large">
         </el-input>
       </div>
     </el-aside>
