@@ -2,16 +2,18 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <flvjs></flvjs>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-
+import flvjs from "./components/flvjs.vue";
 export default {
   name: 'App',
   components: {
     HelloWorld,
+    flvjs
   }
 }
 </script>
