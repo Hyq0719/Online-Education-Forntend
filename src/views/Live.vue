@@ -8,8 +8,9 @@
 <script>
 import Header from '../components/Header'
 import Live from '../components/Live'
+
 export default {
-  components:{
+  components: {
     Header,
     Live,
   },

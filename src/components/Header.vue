@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect"
+        :default-active="activeIndex"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
     >
       <div class="Header">
         <img src="../assets/logo.png" alt="加载失败" style="height:60px; width:60px;"/>
@@ -18,7 +18,9 @@
       </div>
 
       <el-menu-item index="1"
-        ><router-link to="/login">登录</router-link></el-menu-item
+      >
+        <router-link to="/login">登录</router-link>
+      </el-menu-item
       >
       <el-submenu index="2">
         <template slot="title">分类</template>
@@ -34,10 +36,14 @@
       </el-submenu>
       <el-menu-item index="3">消息中心</el-menu-item>
       <el-menu-item index="4"
-        ><router-link to="/live">直播</router-link></el-menu-item
+      >
+        <router-link to="/live">直播</router-link>
+      </el-menu-item
       >
       <el-menu-item index="5"
-        ><router-link to="/">首页</router-link></el-menu-item
+      >
+        <router-link to="/">首页</router-link>
+      </el-menu-item
       >
     </el-menu>
   </div>
@@ -45,12 +51,12 @@
 
 <script>
 export default {
-  name:"Header",
+  name: "Header",
   data() {
     return {
       activeIndex: "1",
       activeIndex2: "1",
-      input:'',
+      input: '',
     };
   },
   methods: {
@@ -67,15 +73,17 @@ export default {
   height: 60px;
   width: 60px;
 }
-.Header-search{
-    float:left;
-    width:200px;
-    margin:10px 0px 10px 50px;
+
+.Header-search {
+  float: left;
+  width: 200px;
+  margin: 10px 0px 10px 50px;
 }
 
 .el-menu--horizontal > .el-menu-item {
   float: right;
 }
+
 .el-menu--horizontal > .el-submenu {
   float: right;
 }

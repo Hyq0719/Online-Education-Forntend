@@ -77,16 +77,16 @@
           <span class="demonstration"></span>
           <el-carousel height="455px">
             <el-carousel-item>
-                <img src="../assets/Nav1-p1.jpg" alt="">
+              <img src="../assets/Nav1-p1.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img src="../assets/Nav1-p2.jpg" alt="">
+              <img src="../assets/Nav1-p2.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img src="../assets/Nav1-p3.jpg" alt="">
+              <img src="../assets/Nav1-p3.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img src="../assets/Nav1-p4.jpg" alt="">
+              <img src="../assets/Nav1-p4.jpg" alt="">
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -97,7 +97,7 @@
 
 <script>
 export default {
-  name:"Nav1",
+  name: "Nav1",
 }
 </script>
 
@@ -111,9 +111,10 @@ export default {
 .el-aside {
   color: #333;
 }
+
 .el-carousel__item img {
   height: 100%;
-  width:100%;
+  width: 100%;
 }
 
 .el-carousel__item:nth-child(2n) {

@@ -6,9 +6,9 @@
     <el-aside width="300px">
       <div class="infinite-list-wrapper" style="overflow:auto; height:400px;">
         <ul
-          class="list"
-          v-infinite-scroll="load"
-          infinite-scroll-disabled="disabled">
+            class="list"
+            v-infinite-scroll="load"
+            infinite-scroll-disabled="disabled">
           <li v-for="i in count" v-bind:key='i' class="list-item">{{ i }}</li>
         </ul>
         <p v-if="loading">加载中...</p>
@@ -28,9 +28,10 @@
 
 <script>
 import Flvjs from '../components/Flvjs'
+
 export default {
   name: "Live",
-  data () {
+  data() {
     return {
       count: 10,
       loading: false,
@@ -38,15 +39,15 @@ export default {
     }
   },
   computed: {
-    noMore () {
+    noMore() {
       return this.count >= 40
     },
-    disabled () {
+    disabled() {
       return this.loading || this.noMore
     }
   },
   methods: {
-    load () {
+    load() {
       this.loading = true
       setTimeout(() => {
         this.count += 2
@@ -54,8 +55,8 @@ export default {
       }, 200)
     }
   },
-  components:{
-     Flvjs,
+  components: {
+    Flvjs,
   },
 }
 </script>
@@ -75,7 +76,7 @@ export default {
 }
 
 .el-container {
-  margin:0px 100px;
+  margin: 0px 100px;
   height: 504px;
 }
 
@@ -86,7 +87,7 @@ export default {
   line-height: 60px;
 }
 
-.communicate{
+.communicate {
 
 }
 </style>

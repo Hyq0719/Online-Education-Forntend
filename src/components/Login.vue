@@ -1,17 +1,17 @@
 <template>
   <div class="login">
-      <div>
-          <el-radio v-model="radio" label="1" border>我是学生</el-radio>
-          <el-radio v-model="radio" label="2" border>我是老师</el-radio>
-      </div>
+    <div>
+      <el-radio v-model="radio" label="1" border>我是学生</el-radio>
+      <el-radio v-model="radio" label="2" border>我是老师</el-radio>
+    </div>
 
-      <h2>登录</h2>
+    <h2>登录</h2>
     <el-form ref="form" :model="form" label-width="100px">
       <el-form-item label="账号/昵称：">
         <el-input v-model="form.name" placeholder="请输入账号/昵称"></el-input>
       </el-form-item>
       <el-form-item label="密码：">
-          <el-input placeholder="请输入密码" v-model="form.password" show-password></el-input>
+        <el-input placeholder="请输入密码" v-model="form.password" show-password></el-input>
       </el-form-item>
 
       <div>
@@ -31,7 +31,7 @@ export default {
         name: "",
         password: "",
       },
-      radio:'1',
+      radio: '1',
     };
   },
   methods: {
@@ -58,7 +58,8 @@ export default {
 .login-title {
   text-align: center;
 }
-.el-form-item{
-    margin:20px 0 40px 0;
+
+.el-form-item {
+  margin: 20px 0 40px 0;
 }
 </style>

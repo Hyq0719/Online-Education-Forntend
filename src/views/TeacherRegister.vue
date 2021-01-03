@@ -6,11 +6,12 @@
 
 <script>
 import TeacherRegister from '../components/TeacherRegister'
-    export default{
-        components:{
-            TeacherRegister,
-        },
-    }
+
+export default {
+  components: {
+    TeacherRegister,
+  },
+}
 </script>
 
 <style>

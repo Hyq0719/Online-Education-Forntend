@@ -1,19 +1,20 @@
 <template>
   <div>
     <video id="videoElement" controls autoplay muted style="width:100%; height:500px;"></video>
-<!--      <button @click="play">播放</button>-->
-<!--      <button @click="reload">重新加载</button>-->
+    <!--      <button @click="play">播放</button>-->
+    <!--      <button @click="reload">重新加载</button>-->
   </div>
 </template>
 
 <script>
 import flvjs from 'flv.js'
+
 export default {
   name: "flvjs",
-  data () {
+  data() {
     return {
       msg: 'Welcome to Your Vue.js App',
-      flvPlayer:null
+      flvPlayer: null
     }
   },
   mounted() {
@@ -30,11 +31,11 @@ export default {
       this.flvPlayer.play();
     }
   },
-  methods:{
-    play () {
+  methods: {
+    play() {
       this.flvPlayer.play();
     },
-    reload(){
+    reload() {
       this.flvPlayer.load();
       this.flvPlayer.play();
     }
