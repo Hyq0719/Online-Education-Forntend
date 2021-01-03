@@ -36,10 +36,10 @@ export default {
   },
   methods: {
     login() {
-      this.$router.push('/main')
+      this.$router.push('/')
     },
     register() {
-      this.$router.push('/main/register')
+      this.$router.push('/register')
     }
   },
 };

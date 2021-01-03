@@ -80,10 +80,10 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$router.push("/main");
+      this.$router.push("/");
     },
     TeacherRegister() {
-      this.$router.push("/main/register/teacher");
+      this.$router.push("/register/teacher");
     }
   },
 };

@@ -2,8 +2,8 @@
   <div class="login">
     <h2>老师注册</h2>
     <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="昵称：">
-        <el-input v-model="ruleForm.name" placeholder="请输入昵称"></el-input>
+      <el-form-item label="真实姓名：">
+        <el-input v-model="ruleForm.name" placeholder="请输入真实姓名"></el-input>
       </el-form-item>
 
         <el-form-item label="密码：" prop="pass">
@@ -17,10 +17,6 @@
   <el-form-item label="手机号：">
         <el-input class="phone" v-model="ruleForm.phone" placeholder="请输入手机号"></el-input>
         <el-button class="code" type="primary">发送验证码</el-button>
-      </el-form-item>
-
-      <el-form-item label="教师证号：">
-        <el-input v-model="ruleForm.name" placeholder="请输入教师证号"></el-input>
       </el-form-item>
 
       <div>
@@ -37,17 +33,17 @@
 <script>
 export default {
   name: "registerteacher",
-  data() {
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
-          }
-          callback();
+  data () {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('checkPass');
         }
-      };
+        callback();
+      }
+    };
 
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
@@ -76,19 +72,19 @@ export default {
             { validator: validatePass2, trigger: 'blur' }
           ],
         },
-      
+
       radio: true,
     };
   },
   methods: {
-    onSubmit() {
-      this.$router.push("/main");
+    onSubmit () {
+      this.$router.push("/");
     },
     StudentRegister() {
-      this.$router.push("/main/register");
+      this.$router.push("/register");
     }
-  },
-};
+  }
+}
 </script>
 
 <style scoped>

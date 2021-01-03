@@ -6,9 +6,9 @@
       mode="horizontal"
       @select="handleSelect"
     >
-      <div class="myheader">
-        <img src="../../build/logo.png" alt="加载失败" style="height:60px; width:60px;"/>
-      </div>
+<!--      <div class="myheader">-->
+<!--        <img src="../../build/logo.png" alt="加载失败" style="height:60px; width:60px;"/>-->
+<!--      </div>-->
       <div class="myheader-search">
         <el-input placeholder="请输入内容" v-model="input" clearable>
         </el-input>
@@ -18,7 +18,7 @@
       </div>
 
       <el-menu-item index="1"
-        ><router-link to="/main/login">登录</router-link></el-menu-item
+        ><router-link to="/login">登录</router-link></el-menu-item
       >
       <el-submenu index="2">
         <template slot="title">分类</template>
@@ -34,10 +34,10 @@
       </el-submenu>
       <el-menu-item index="3">消息中心</el-menu-item>
       <el-menu-item index="4"
-        ><router-link to="/main">直播</router-link></el-menu-item
+        ><router-link to="/live">直播</router-link></el-menu-item
       >
       <el-menu-item index="5"
-        ><router-link to="/main">首页</router-link></el-menu-item
+        ><router-link to="/">首页</router-link></el-menu-item
       >
     </el-menu>
   </div>
@@ -61,7 +61,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .myheader {
   float: left;
   height: 60px;
