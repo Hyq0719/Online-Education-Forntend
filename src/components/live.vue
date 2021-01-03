@@ -9,7 +9,7 @@
           class="list"
           v-infinite-scroll="load"
           infinite-scroll-disabled="disabled">
-          <li v-for="i in count" class="list-item">{{ i }}</li>
+          <li v-for="i in count" v-bind:key='i' class="list-item">{{ i }}</li>
         </ul>
         <p v-if="loading">加载中...</p>
         <p v-if="noMore">没有更多了</p>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import flvjs from 'flvjs';
+import flvjs from '../components/flvjs'
 export default {
   name: "live",
   data () {
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     noMore () {
-      return this.count >= 20
+      return this.count >= 40
     },
     disabled () {
       return this.loading || this.noMore
@@ -42,11 +42,11 @@ export default {
       setTimeout(() => {
         this.count += 2
         this.loading = false
-      }, 2000)
+      }, 200)
     }
   },
   components:{
-    flvjs,
+     flvjs,
   },
 }
 </script>
