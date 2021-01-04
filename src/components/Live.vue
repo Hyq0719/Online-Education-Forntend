@@ -76,18 +76,9 @@ export default {
 }
 
 .el-container {
-  margin: 0px 100px;
-  height: 504px;
-}
-
-.el-header, .el-footer {
-  background-color: #B3C0D1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
-}
-
-.communicate {
-
+  margin: 20px 100px;
+  height: 506px;
+  border: #99a9bf 1px solid;
+  border-radius: 10px;
 }
 </style>
