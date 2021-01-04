@@ -1,85 +1,91 @@
 <template>
-  <div>
-    <h3 align="center">新手入门</h3>
-    <el-row :gutter="20">
-      <el-col :span="9" :offset="3">
-        <adview1 label="广告位1" :img="adpicture[0]"></adview1>
-      </el-col>
-      <el-col :span="9" :offset="1">
-        <adview1 label="广告位2" :img="adpicture[1]"></adview1>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="4" :offset="2">
-        <classview1 :img=classpicture :star=star[1] :classname=classname[1]></classview1>
-      </el-col>
-      <el-col :span="4">
-        <classview1 :img=classpicture :star=star[2] :classname=classname[2]></classview1>
-      </el-col>
-      <el-col :span="4">
-        <classview1 :img=classpicture :star=star[3] :classname=classname[3]></classview1>
-      </el-col>
-      <el-col :span="4">
-        <classview1 :img=classpicture :star=star[4]></classview1>
-      </el-col>
-      <el-col :span="4">
-        <classview1 :img=classpicture :star=star[5]>></classview1>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :span="4" :offset="2">
-        <classview1 :img=classpicture :star=star[6]>></classview1>
-      </el-col>
-      <el-col :span="4">
-        <classview1 :img=classpicture :star=star[7]>></classview1>
-      </el-col>
-      <el-col :span="4">
-        <classview1 :img=classpicture :star=star[8]>></classview1>
-      </el-col>
-      <el-col :span="4">
-        <classview1 :img=classpicture :star=star[9]>></classview1>
-      </el-col>
-      <el-col :span="4">
-        <classview1 :img=classpicture :star=star[10]>></classview1>
-      </el-col>
-    </el-row>
+  <div class="container">
+    <h3 class="tiltlefont">新手入门</h3>
+    <div>
+      <adview1 class="adview" :img="adpicture[0]"></adview1>
+      <adview1 lass="adview" :img="adpicture[1]"></adview1>
+
+    </div>
+    <div>
+      <classview1 class="classview" :img=classpicture[0] :star=star[1] :classname=classname[1]></classview1>
+
+      <classview1 class="classview" :img=classpicture[0] :star=star[2] :classname=classname[2]></classview1>
+
+
+      <classview1 class="classview" :img=classpicture[0] :star=star[3] :classname=classname[0]></classview1>
+
+      <classview1 class="classview" :img=classpicture[0] :star=star[4]></classview1>
+
+      <classview1 class="classview_last" :img=classpicture[0] :star=star[5]>></classview1>
+    </div>
+    <div>
+      <classview1 class="classview" :img=classpicture[0] :star=star[6] :classname=classname[1]></classview1>
+
+      <classview1 class="classview" :img=classpicture[0] :star=star[7] :classname=classname[2]></classview1>
+
+
+      <classview1 class="classview" :img=classpicture[0] :star=star[8] :classname=classname[0]></classview1>
+
+      <classview1 class="classview" :img=classpicture[0] :star=star[9]></classview1>
+
+      <classview1 class="classview_last" :img=classpicture[0] :star=star[10]>></classview1>
+    </div>
   </div>
 </template>
 
 <style>
-.adbox {
-  display: flex;
+.tiltlefont {
+  text-align: center;
+  font-size: 20px;
+  color: #4d555d;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: 1px;
 }
 
-.el-row {
-  margin-bottom: 20px;
-
+.adview {
+  position: relative;
+  width: 700px;
+  height: 150px;
+  margin: 0 24px 24px 75px;
+  background: #FFFFFF;
+  box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
+  border-radius: 8px;
+  float: left;
 }
 
-.el-col {
-  border-radius: 4px;
+.classview {
+  position: relative;
+  width: 300px;
+  height: 272px;
+  margin: 0 24px 24px 0;
+  background: #FFFFFF;
+  box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
+  border-radius: 8px;
+  float: left;
+  /*border: 3px solid #B3C0D1;*/
+  /* transition: all .2s;*/
 }
 
-.bg-purple-dark {
-  background: #99a9bf;
+.classview_last {
+  position: relative;
+  width: 300px;
+  height: 272px;
+  margin: 0 0 24px 0;
+  background: #FFFFFF;
+  box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
+  border-radius: 8px;
+  float: left;
+  /*border: 3px solid #B3C0D1;*/
+  /* transition: all .2s;*/
 }
 
-.bg-purple {
-  background: #d3dce6;
-}
-
-.bg-purple-light {
-  background: #e5e9f2;
-}
-
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
+.container {
+  width: 1596px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px 0;
+  /*border: 3px solid #B3C0D1;*/
 }
 </style>
 
@@ -97,7 +103,7 @@ export default {
     return {
       adpicture: [require('@/assets/ad1.jpg'), require('@/assets/ad2.jpg')],
       classpicture: [require('@/assets/class1.jpg')],
-      star: [3, 4, 3.4, 3.5, 2.0, 4, 1, 2.3, 3.4],
+      star: [3, 4, 3.4, 3.5, 2.0, 4, 1, 2.3, 3.4, 3, 3, 3, 3, 3],
       classname: ['一晚上搞定CSS', '一晚上搞定Vue', '一晚上搞定HTML']
     }
   }

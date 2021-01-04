@@ -1,44 +1,60 @@
 <template>
-  <div class="grid-content bg-purple">
-    <el-row>
-      <img :src="img">
-    </el-row>
-    <el-row>
-      {{ classname }}
-    </el-row>
-    <el-row>
-      <el-col :span="3" :offset="0">{{ label }}</el-col>
-      <el-col :span="12" :offset="8">
-        <el-rate
-            v-model="star"
-            disabled
-            show-score
-            text-color="#ff9900"
-            score-template="{value}"></el-rate>
-      </el-col>
-      <el-row>
-        <el-col :span="2">￥{{ price }}</el-col>
-      </el-row>
-    </el-row>
+  <div class="grid-content">
+    <img :src="img" width="300" height="180" class="img" alt="">
+    <span class="classname">{{ classname }}</span>
+    <p class="info">
+      <span class="labelname">{{ label }}</span>
+      <span>   </span>
+      <el-rate
+          v-model="star"
+          disabled
+          show-score
+          text-color="#ff9900"
+          score-template="{value}" class="star"></el-rate>
+    </p>
+    <p class="price">￥{{ price }}</p>
   </div>
 </template>
 
 <style>
-.el-row {
-  margin-bottom: 20px;
-
+.info {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #9199a1;
+  line-height: 24px;
 }
 
-.el-col {
-  border-radius: 4px;
+.price {
+  text-align: left;
+  padding: 0 8px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.bg-purple {
-  background: #d3dce6;
+.star {
+  display: inline;
+  text-align: right;
 }
 
-.bg-purple-light {
-  background: #e5e9f2;
+.labelname {
+  text-align: left;
+  font-size: 14px;
+}
+
+.classname {
+  text-align: left;
+  height: 20px;
+  word-break: break-all;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #1c1f21;
+  overflow: hidden;
+}
+
+.img {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .grid-content {

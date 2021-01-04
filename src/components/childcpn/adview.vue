@@ -1,30 +1,14 @@
 <template>
-  <div class="grid-content bg-purple">
+  <div class="grid-content">
     <el-row>
-      <img :src="img" alt="">
-    </el-row>
-    <el-row>
-      {{ label }}
+      <img :src="img" class="img" width="700px" height="150px" alt="">
     </el-row>
   </div>
 </template>
 
 <style>
-.el-row {
-  margin-bottom: 20px;
-
-}
-
-.el-col {
-  border-radius: 4px;
-}
-
-.bg-purple {
-  background: #d3dce6;
-}
-
-.bg-purple-light {
-  background: #e5e9f2;
+.img {
+  border-radius: 12px;
 }
 
 .grid-content {

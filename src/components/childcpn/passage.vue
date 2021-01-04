@@ -1,40 +1,36 @@
 <template>
-  <div class="grid-content bg-purple">
-    <el-col>
-      <img :src="img" alt="">
-    </el-col>
-    <el-col>
+  <div class="view">
+    <img :src="img" class="img" alt="">
+    <span class="font">
       {{ content }}
-    </el-col>
+    </span>
   </div>
 </template>
 
 <style>
-.el-row {
-  margin-bottom: 20px;
+.view {
+  overflow: hidden;
 }
 
-.el-col {
-  border-radius: 4px;
+.font {
+  text-align: left;
+  height: 20px;
+  word-break: break-all;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #1c1f21;
+  overflow: hidden;
 }
 
-.bg-purple {
-  background: #d3dce6;
-}
-
-.bg-purple-light {
-  background: #e5e9f2;
-}
-
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
+.img {
+  float: left;
 }
 </style>
 
 <script>
 export default {
-  name: 'classview1',
+  name: 'passage',
   props: {
     img: {
       type: String,
