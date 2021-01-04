@@ -92,7 +92,7 @@ export default {
 <style scoped>
 .login {
   width: 450px;
-  margin: 200px auto;
+  margin: 70px auto;
   border: 1px solid green;
   padding: 40px;
   border-radius: 10px;
