@@ -16,7 +16,7 @@ import Header from '../components/Header'
 import Nav1 from '../components/Nav1'
 import Footer from '../components/Footer'
 import Sidebar from '../components/Sidebar'
-import  Nav2 from '../components/Nav2'
+import Nav2 from '../components/Nav2'
 import Article from '../components/Article'
 
 export default {

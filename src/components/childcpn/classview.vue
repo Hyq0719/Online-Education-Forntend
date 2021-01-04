@@ -1,46 +1,51 @@
 <template>
-<div class="grid-content bg-purple">
+  <div class="grid-content bg-purple">
     <el-row>
-      <img :src="img" >
+      <img :src="img">
     </el-row>
     <el-row>
-      {{classname}}
+      {{ classname }}
     </el-row>
     <el-row>
-      <el-col :span="3" :offset="0">{{label}}</el-col>
+      <el-col :span="3" :offset="0">{{ label }}</el-col>
       <el-col :span="12" :offset="8">
-          <el-rate
+        <el-rate
             v-model="star"
-             disabled
+            disabled
             show-score
             text-color="#ff9900"
             score-template="{value}"></el-rate>
-        </el-col>
-        <el-row>
-            <el-col :span="2">￥{{price}}</el-col>
-        </el-row>
+      </el-col>
+      <el-row>
+        <el-col :span="2">￥{{ price }}</el-col>
+      </el-row>
     </el-row>
-</div>
+  </div>
 </template>
 
 <style>
-  .el-row {
-    margin-bottom: 20px;
+.el-row {
+  margin-bottom: 20px;
 
-  }
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
+}
+
+.el-col {
+  border-radius: 4px;
+}
+
+.bg-purple {
+  background: #d3dce6;
+}
+
+.bg-purple-light {
+  background: #e5e9f2;
+}
+
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -76,7 +81,7 @@ export default {
       default: 0
     }
   },
-  data () {
+  data() {
     return {
       value: 3.0
     }
