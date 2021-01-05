@@ -1,6 +1,7 @@
 <template>
   <div class="grid-content">
     <img :src="img" width="300" height="180" class="img" alt="">
+
     <span class="classname">{{ classname }}</span>
     <p class="info">
       <span class="labelname">{{ label }}</span>
@@ -18,14 +19,20 @@
 
 <style>
 .info {
+  position: relative;
+  left: 0;
   margin-top: 5px;
+  margin-bottom: auto;
   font-size: 12px;
   color: #9199a1;
   line-height: 24px;
 }
 
 .price {
-  text-align: left;
+  margin: 2px;
+  font-size: 14px;
+  position: absolute;
+  left: 10px;
   padding: 0 8px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -37,7 +44,8 @@
 }
 
 .labelname {
-  text-align: left;
+  position: absolute;
+  left: 18px;
   font-size: 14px;
 }
 
