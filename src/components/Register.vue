@@ -22,7 +22,7 @@
       </el-form-item>
 
       <div>
-        <el-button type="primary" @click="onSubmit">注册</el-button>
+        <el-button type="primary" @click="StudentRegister">注册</el-button>
       </div>
 
       <div class="choose">
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "Register",
   data() {
@@ -60,6 +62,7 @@ export default {
     };
 
     return {
+      apiUrl: 'http://192.168.1.102:8080/api/Student/addStudent',
       ruleForm: {
         name: '',
         pass: '',
@@ -81,8 +84,20 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
-      this.$router.push("/");
+    StudentRegister() {
+      let a = new URLSearchParams();
+      a.append('password', this.ruleForm.password);
+      a.append('phone_id', this.ruleForm.phone);
+      let that = this;
+      axios.post("http://192.168.1.102:8080/api/Student/addStudent", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        if (response.data.code === 1000) {
+          that.$router.push('/login');
+          that.$store.commit('saveIsRegister');
+        }
+      }, function (err) {
+        console.log(err);
+      })
     },
     TeacherRegister() {
       this.$router.push("/register/teacher");

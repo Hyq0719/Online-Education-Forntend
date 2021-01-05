@@ -14,7 +14,7 @@
         </el-input>
       </div>
       <div class="Header">
-        <img src="../assets/Header-search-logo.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0px;"/>
+        <img src="../assets/Header-search-logo.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0;"/>
       </div>
       <el-menu-item index="1">
         <router-link to="/login" class="showInformation" v-if="!isLogin">登录</router-link>
@@ -44,6 +44,7 @@
 <script>
 import store from '../vuex/store';
 import Avatar from "@/components/Avatar";
+
 export default {
   components: {Avatar},
   store,
@@ -53,7 +54,7 @@ export default {
       activeIndex: "1",
       activeIndex2: "1",
       input: '',
-      isLogin:this.$store.state.isLogin
+      isLogin: this.$store.state.isLogin
     };
   },
   methods: {
@@ -74,7 +75,7 @@ export default {
 .Header-search {
   float: left;
   width: 200px;
-  margin: 10px 0px 10px 50px;
+  margin: 10px 0 10px 50px;
 }
 
 .el-menu--horizontal > .el-menu-item {

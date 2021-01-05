@@ -18,8 +18,9 @@ import Footer from '../components/Footer'
 import Sidebar from '../components/Sidebar'
 import Nav2 from '../components/Nav2'
 import Article from '../components/Article'
+
 export default {
-  name:"Main",
+  name: "Main",
   components: {
     Header,
     Nav1,
