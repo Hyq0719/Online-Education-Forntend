@@ -2,20 +2,18 @@
   <div>
     <Sidebar></Sidebar>
     <Header></Header>
-    <Course></Course>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-import Header from "../components/Header";
-import Course from "../components/Course";
-import Sidebar from "../components/Sidebar";
-
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import Sidebar from '../components/Sidebar'
 export default {
-  name: "Courses",
   components: {
     Header,
-    Course,
+    Footer,
     Sidebar,
   },
 }

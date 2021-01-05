@@ -5,7 +5,8 @@ import Main from '../views/Main';
 import Register from '../views/Register';
 import TeacherRegister from '../views/TeacherRegister';
 import Live from '../views/Live';
-import Courses from "../views/Courses";
+import Course from '../views/Course';
+import CourseMenu from '../views/CourseMenu';
 
 Vue.use(Router);
 
@@ -14,7 +15,7 @@ export default new Router({
         {
             path: '/login',
             name: 'Login',
-            component: Login
+            component: Login,
         },
         {
             path: '/',
@@ -37,9 +38,14 @@ export default new Router({
             component: Live,
         },
         {
-            path: '/Courses',
-            name: 'Courses',
-            component: Courses,
+            path: '/course',
+            name: 'Course',
+            component: Course,
+        },
+        {
+            path: '/coursemenu',
+            name: 'CourseMenu',
+            component: CourseMenu,
         },
     ]
 })

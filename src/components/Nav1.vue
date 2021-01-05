@@ -77,16 +77,24 @@
           <span class="demonstration"></span>
           <el-carousel height="455px">
             <el-carousel-item>
-              <img src="../assets/Nav1-p1.jpg" alt="">
+              <router-link to="/course">
+                <img src="../assets/Nav1-p1.jpg" alt="">
+              </router-link>
             </el-carousel-item>
             <el-carousel-item>
-              <img src="../assets/Nav1-p2.jpg" alt="">
+              <router-link to="/course">
+                <img src="../assets/Nav1-p2.jpg" alt="">
+              </router-link>
             </el-carousel-item>
             <el-carousel-item>
-              <img src="../assets/Nav1-p3.jpg" alt="">
+              <router-link to="/course">
+                <img src="../assets/Nav1-p3.jpg" alt="">
+              </router-link>
             </el-carousel-item>
             <el-carousel-item>
-              <img src="../assets/Nav1-p4.jpg" alt="">
+              <router-link to="/course">
+                <img src="../assets/Nav1-p4.jpg" alt="">
+              </router-link>
             </el-carousel-item>
           </el-carousel>
         </div>

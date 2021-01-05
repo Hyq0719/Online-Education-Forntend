@@ -28,7 +28,7 @@
       </el-submenu>
       <el-menu-item index="3">消息中心</el-menu-item>
       <el-menu-item index="4">
-        <router-link to="/Courses">课程</router-link>
+        <router-link to="/coursemenu">课程</router-link>
       </el-menu-item>
       <el-menu-item index="5">
         <router-link to="/live">直播</router-link>

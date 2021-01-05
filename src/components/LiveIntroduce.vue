@@ -71,7 +71,7 @@
 
 <script>
 export default {
-  name: "Introduce",
+  name: "LiveIntroduce",
   data() {
     return {
       activeName: 'first',

@@ -3,7 +3,7 @@
     <Sidebar></Sidebar>
     <Header></Header>
     <Live></Live>
-    <Introduce></Introduce>
+    <LiveIntroduce></LiveIntroduce>
     <Footer></Footer>
   </div>
 </template>
@@ -11,7 +11,7 @@
 <script>
 import Header from '../components/Header'
 import Live from '../components/Live'
-import Introduce from "../components/Introduce";
+import LiveIntroduce from "../components/LiveIntroduce";
 import Footer from '../components/Footer'
 import Sidebar from '../components/Sidebar'
 
@@ -19,7 +19,7 @@ export default {
   components: {
     Header,
     Live,
-    Introduce,
+    LiveIntroduce,
     Footer,
     Sidebar,
   },

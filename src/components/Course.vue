@@ -87,6 +87,12 @@ export default {
     }
   },
   methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
     load() {
       this.loading = true
       setTimeout(() => {
@@ -100,7 +106,7 @@ export default {
 
 <style scoped>
 .el-aside {
-  text-align: center;
+  text-align: left;
   line-height: 20px;
   font-size: 10px;
 }
