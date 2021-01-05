@@ -84,7 +84,7 @@ export default {
   methods: {
     TeacherRegister() {
       let a = new URLSearchParams();
-      a.append('password', this.ruleForm.password);
+      a.append('password', this.ruleForm.checkPass);
       a.append('phone_id', this.ruleForm.phone);
       let that = this;
       axios.post("http://192.168.1.102:8080/api/Teacher/addTeacher", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
