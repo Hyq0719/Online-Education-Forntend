@@ -16,7 +16,7 @@
             </div>
             <div class="Summary">
               <div>
-                <img src="../assets/logo.png">
+                <img src="../assets/logo.png" alt="图片缺失">
                 <h3>课程概述</h3>
               </div>
               <p>
@@ -80,7 +80,7 @@
           <h3>授课老师</h3>
         </div>
         <div class="TeacherHead">
-          <img src="../assets/teacherhead2.png" style="height:100%; width:100%;">
+          <img src="../assets/teacherhead2.png" style="height:100%; width:100%;" alt="图片缺失">
         </div>
         <div class="TeacherName">
           蛙博士
@@ -170,7 +170,7 @@ export default {
 
 .Summary p {
   float: left;
-  margin: 0px;
+  margin: 0;
 }
 
 .Summary h3 {
