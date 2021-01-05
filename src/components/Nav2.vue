@@ -4,31 +4,9 @@
     <div>
       <adview1 class="adview" :img="adpicture[0]"></adview1>
       <adview1 lass="adview" :img="adpicture[1]"></adview1>
-
     </div>
-    <div>
-      <classview1 class="classview" :img=classpicture[0] :star=star[1] :classname=classname[1]></classview1>
-
-      <classview1 class="classview" :img=classpicture[0] :star=star[2] :classname=classname[2]></classview1>
-
-
-      <classview1 class="classview" :img=classpicture[0] :star=star[3] :classname=classname[0]></classview1>
-
-      <classview1 class="classview" :img=classpicture[0] :star=star[4]></classview1>
-
-      <classview1 class="classview_last" :img=classpicture[0] :star=star[5]>></classview1>
-    </div>
-    <div>
-      <classview1 class="classview" :img=classpicture[0] :star=star[6] :classname=classname[1]></classview1>
-
-      <classview1 class="classview" :img=classpicture[0] :star=star[7] :classname=classname[2]></classview1>
-
-
-      <classview1 class="classview" :img=classpicture[0] :star=star[8] :classname=classname[0]></classview1>
-
-      <classview1 class="classview" :img=classpicture[0] :star=star[9]></classview1>
-
-      <classview1 class="classview_last" :img=classpicture[0] :star=star[10]>></classview1>
+    <div v-for="(item,index) in star" v-bind:key="index">
+      <classview1 class="classview" :img=classpicture[index] :star=star[index] :classname=classname[index]></classview1>
     </div>
   </div>
 </template>
@@ -47,7 +25,7 @@
   position: relative;
   width: 35%;
   height: 100px;
-  margin: 0 10% 24px 75px;
+  margin: 0 10% 24px 3%;
   background: #FFFFFF;
   box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
   border-radius: 8px;
@@ -56,29 +34,27 @@
 
 .classview {
   position: relative;
-  width: 216px;
+  width: 212px;
   height: 200px;
   margin: 0 18px 24px 0;
   background: #FFFFFF;
   box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
   border-radius: 8px;
   float: left;
-  /*border: 3px solid #B3C0D1;*/
-  /* transition: all .2s;*/
 }
 
-.classview_last {
-  position: relative;
-  width: 216px;
-  height: 200px;
-  margin: 0 0 24px 0;
-  background: #FFFFFF;
-  box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
-  border-radius: 8px;
-  float: left;
-  /*border: 3px solid #B3C0D1;*/
-  /* transition: all .2s;*/
-}
+/*.classview_last {*/
+/*  position: relative;*/
+/*  width: 212px;*/
+/*  height: 200px;*/
+/*  margin: 0 0 24px 0;*/
+/*  background: #FFFFFF;*/
+/*  box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);*/
+/*  border-radius: 8px;*/
+/*  float: left;*/
+/*  !*border: 3px solid #B3C0D1;*!*/
+/*  !* transition: all .2s;*!*/
+/*}*/
 
 .container {
   width: 1152px;
@@ -102,10 +78,26 @@ export default {
   },
   data() {
     return {
-      adpicture: [require('@/assets/ad1.jpg'), require('@/assets/ad2.jpg')],
-      classpicture: [require('@/assets/class1.jpg')],
-      star: [3, 4, 3.4, 3.5, 2.0, 4, 1, 2.3, 3.4, 3, 3, 3, 3, 3],
-      classname: ['一晚上搞定CSS', '一晚上搞定Vue', '一晚上搞定HTML']
+      adpicture: [require('@/assets/ad1.jpg'),
+        require('@/assets/ad2.jpg')],
+      classpicture: [require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg')],
+      star: [3, 4, 3.4, 3.5, 2.0, 4, 1, 2.3, 3.4, 3],
+      classname: ['一晚上搞定CSS',
+        '一晚上搞定Vue',
+        '一晚上搞定HTML',
+        '7天学会java',
+        '5天学会C++',
+        '8天学会php',
+        '一个月搞定C++对象']
     }
   }
 }

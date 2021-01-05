@@ -1,32 +1,40 @@
 <template>
-  <div class="view">
+  <div>
+    <h5 class="font2">{{ title }}</h5>
     <img :src="img" class="img" alt="">
-    <span class="font">
+    <p class="font">
       {{ content }}
-    </span>
+    </p>
   </div>
 </template>
 
 <style scoped>
-.view {
+h5 {
+  display: inline;
+}
+
+.font2 {
+  font-size: 16px;
+  color: #4d555d;
+  font-weight: 500;
   overflow: hidden;
 }
 
 .font {
   text-align: left;
-  height: 20px;
   word-break: break-all;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 100;
   line-height: 24px;
   color: #1c1f21;
-  overflow: hidden;
+  text-indent: 2em;
+  table-layout: fixed;
 }
 
 .img {
-  float: left;
-  height: 20%;
-  width: 20%;
+  float: right;
+  height: 30%;
+  width: 30%;
   margin: 10px;
 }
 </style>
@@ -42,6 +50,10 @@ export default {
     content: {
       type: String,
       default: '文章'
+    },
+    title: {
+      type: String,
+      default: '标题'
     }
   },
   data() {
