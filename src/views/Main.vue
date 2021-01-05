@@ -2,7 +2,6 @@
   <div>
     <Sidebar></Sidebar>
     <Header></Header>
-    <HeaderLogined></HeaderLogined>
     <Nav1></Nav1>
     <nav2></nav2>
     <Article></Article>
