@@ -1,11 +1,11 @@
 <template>
   <div class="grid-content">
-    <img :src="img" width="300" height="180" class="img" alt="">
+    <img :src="img" width="100%" height="60%" class="img" alt="">
 
     <span class="classname">{{ classname }}</span>
     <p class="info">
       <span class="labelname">{{ label }}</span>
-      <span>   </span>
+      <span>  </span>
       <el-rate
           v-model="star"
           disabled
@@ -15,9 +15,9 @@
     </p>
     <p class="price">￥{{ price }}</p>
   </div>
-</template>
+</template>template
 
-<style>
+<style scoped>
 .info {
   position: relative;
   left: 0;
@@ -31,6 +31,7 @@
 .price {
   margin: 2px;
   font-size: 14px;
+  font-weight: bolder;
   position: absolute;
   left: 10px;
   padding: 0 8px;
@@ -39,8 +40,8 @@
 }
 
 .star {
-  display: inline;
   text-align: right;
+  margin-right: 10px;
 }
 
 .labelname {

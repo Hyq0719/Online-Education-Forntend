@@ -1,12 +1,12 @@
 <template>
   <div class="grid-content">
     <el-row>
-      <img :src="img" class="img" width="700px" height="150px" alt="">
+      <img :src="img" class="img" width="500px" height="100px" alt="">
     </el-row>
   </div>
 </template>
 
-<style>
+<style scoped>
 .img {
   border-radius: 12px;
 }

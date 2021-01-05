@@ -17,7 +17,7 @@
 <style>
 .passage {
   position: relative;
-  width: 500px;
+  width: 30%;
   height: 300px;
   margin: 0 48px 24px 0;
   background: #FFFFFF;
@@ -28,7 +28,7 @@
 
 .passage_last {
   position: relative;
-  width: 500px;
+  width: 30%;
   height: 300px;
   margin: 0 0 24px 0;
   background: #FFFFFF;
@@ -46,13 +46,6 @@
   letter-spacing: 1px;
 }
 
-.container {
-  width: 1596px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 32px 0;
-  /*border: 3px solid #B3C0D1;*/
-}
 </style>
 
 <script>

@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .view {
   overflow: hidden;
 }
@@ -25,6 +25,9 @@
 
 .img {
   float: left;
+  height: 20%;
+  width: 20%;
+  margin: 10px;
 }
 </style>
 

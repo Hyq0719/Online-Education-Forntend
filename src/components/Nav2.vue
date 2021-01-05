@@ -45,9 +45,9 @@
 
 .adview {
   position: relative;
-  width: 700px;
-  height: 150px;
-  margin: 0 24px 24px 75px;
+  width: 35%;
+  height: 100px;
+  margin: 0 10% 24px 75px;
   background: #FFFFFF;
   box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
   border-radius: 8px;
@@ -56,9 +56,9 @@
 
 .classview {
   position: relative;
-  width: 300px;
-  height: 272px;
-  margin: 0 24px 24px 0;
+  width: 216px;
+  height: 200px;
+  margin: 0 18px 24px 0;
   background: #FFFFFF;
   box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
   border-radius: 8px;
@@ -69,8 +69,8 @@
 
 .classview_last {
   position: relative;
-  width: 300px;
-  height: 272px;
+  width: 216px;
+  height: 200px;
   margin: 0 0 24px 0;
   background: #FFFFFF;
   box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
@@ -81,9 +81,10 @@
 }
 
 .container {
-  width: 1596px;
+  width: 1152px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: auto;
   padding: 32px 0;
   /*border: 3px solid #B3C0D1;*/
 }
