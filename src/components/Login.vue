@@ -23,10 +23,13 @@
 </template>
 
 <script>
+import axios from 'axios'
+import {MessageBox} from 'element-ui'
 export default {
   name: "login",
   data() {
     return {
+      apiUrl: 'http://192.168.1.102:8080/api/Student/loginByPassword',
       form: {
         name: "",
         password: "",
@@ -36,7 +39,25 @@ export default {
   },
   methods: {
     Login() {
-      this.$router.push('/')
+      let a = new URLSearchParams();
+      a.append('password', this.form.password);
+      a.append('phone_id', this.form.name);
+      let that=this;
+      axios.post("http://192.168.1.102:8080/api/Student/loginByPassword", a, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
+        console.log(response);
+        if (response.data.code===1000){
+          that.$router.push('/');
+          that.$store.commit('saveIsLogin');
+        }
+        else if(response.data.code===2002){
+          MessageBox.alert('用户不存在')
+        }
+        else if(response.data.code===2003){
+          MessageBox.alert('密码错误')
+        }
+      }, function (err) {
+          console.log(err);
+      })
     },
     Register() {
       this.$router.push('/Register')
@@ -61,5 +82,15 @@ export default {
 
 .el-form-item {
   margin: 20px 0 40px 0;
+}
+
+.error2002{
+  text-align: left;
+  color: red;
+}
+
+.error2003{
+  text-align: left;
+  color: red;
 }
 </style>

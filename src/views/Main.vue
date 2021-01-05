@@ -2,6 +2,7 @@
   <div>
     <Sidebar></Sidebar>
     <Header></Header>
+    <HeaderLogined></HeaderLogined>
     <Nav1></Nav1>
     <nav2></nav2>
     <Article></Article>
@@ -18,8 +19,8 @@ import Footer from '../components/Footer'
 import Sidebar from '../components/Sidebar'
 import Nav2 from '../components/Nav2'
 import Article from '../components/Article'
-
 export default {
+  name:"Main",
   components: {
     Header,
     Nav1,

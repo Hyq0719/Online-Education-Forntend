@@ -16,9 +16,9 @@
       <div class="Header">
         <img src="../assets/Header-search-logo.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0px;"/>
       </div>
-
       <el-menu-item index="1">
-        <router-link to="/login">登录</router-link>
+        <router-link to="/login" class="showInformation" v-if="!isLogin">登录</router-link>
+        <avatar v-if="isLogin"></avatar>
       </el-menu-item>
       <el-submenu index="2">
         <template slot="title">分类</template>
@@ -42,21 +42,26 @@
 </template>
 
 <script>
+import store from '../vuex/store';
+import Avatar from "@/components/Avatar";
 export default {
+  components: {Avatar},
+  store,
   name: "Header",
   data() {
     return {
       activeIndex: "1",
       activeIndex2: "1",
       input: '',
+      isLogin:this.$store.state.isLogin
     };
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
-  },
-};
+  }
+}
 </script>
 
 <style scoped>
@@ -79,4 +84,5 @@ export default {
 .el-menu--horizontal > .el-submenu {
   float: right;
 }
+
 </style>
