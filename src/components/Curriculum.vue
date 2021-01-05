@@ -1,0 +1,187 @@
+<template>
+  <div class="line">
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course1.webp">
+            <h4>高等数学（四）</h4>
+            <h5>同济大学</h5>
+            <h6>兰辉</h6>
+          </div>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course2.webp">
+            <h4>高等数学（二）</h4>
+            <h5>交通大学</h5>
+            <h6>李继承</h6>
+          </div>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course3.webp">
+            <h4>高等数学（三）</h4>
+            <h5>同济大学</h5>
+            <h6>张军</h6>
+          </div>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course4.webp">
+            <h4>高等数学（二）</h4>
+            <h5>山东大学</h5>
+            <h6>姜晓云</h6>
+          </div>
+        </router-link>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course5.webp">
+            <h4>C语言程序设计</h4>
+            <h5>浙江大学</h5>
+            <h6>文凯</h6>
+          </div>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course6.webp">
+            <h4>课堂管理方法与艺术</h4>
+            <h5>爱课程</h5>
+            <h6>王朗</h6>
+          </div>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course7.webp">
+            <h4>天文</h4>
+            <h5>华中科技大学</h5>
+            <h6>徐学军</h6>
+          </div>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course8.webp">
+            <h4>Python网络爬虫</h4>
+            <h5>北京理工大学</h5>
+            <h6>昊天</h6>
+          </div>
+        </router-link>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course9.webp">
+            <h4>Python语言程序设计</h4>
+            <h5>北京理工大学</h5>
+            <h6>昊天</h6>
+          </div>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course10.webp">
+            <h4>程序设计入门</h4>
+            <h5>浙江大学</h5>
+            <h6>文凯</h6>
+          </div>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course11.webp">
+            <h4>形势与政策</h4>
+            <h5>同济大学</h5>
+            <h6>彭庆红</h6>
+          </div>
+        </router-link>
+      </el-col>
+      <el-col :span="6">
+        <router-link to="/course">
+          <div class="grid-content">
+            <img src="../assets/course12.webp">
+            <h4>大学计算机</h4>
+            <h5>同济大学</h5>
+            <h6>李凤霞</h6>
+          </div>
+        </router-link>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Curriculum"
+}
+</script>
+
+<style scoped>
+.line {
+  margin: 20px;
+}
+
+.el-col {
+  border-radius: 10px;
+}
+
+.grid-content {
+  text-align: left;
+  border-radius: 10px;
+  border: #b3c0d1 1px solid;
+  min-height: 36px;
+  height: 320px;
+  margin-bottom: 20px;
+  background: #E9EEF3;
+  box-shadow: 0 0 10px black;
+}
+
+.grid-content img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.grid-content h4 {
+  margin: 5px;
+}
+
+.grid-content h5 {
+  margin: 5px;
+}
+
+.grid-content h6 {
+  margin: 5px;
+}
+
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
+
+a {
+  text-decoration: none;
+}
+
+.router-link-active {
+  text-decoration: none;
+}
+</style>
