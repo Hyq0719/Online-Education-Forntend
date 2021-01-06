@@ -4,7 +4,6 @@
     <span class="classname">{{ classname }}</span>
     <p class="info">
       <span class="labelname">{{ label }}</span>
-      <span>  </span>
       <el-rate
           v-model="star"
           disabled
