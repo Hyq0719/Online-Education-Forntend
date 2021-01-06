@@ -56,14 +56,14 @@
       <div>
         <h3>直播老师</h3>
       </div>
-      <div class="TeacherHead">
-        <img src="../assets/teacherhead.png" style="height:100%; width:100%;">
-      </div>
-      <div class="TeacherName">
-        猴博士
-      </div>
-      <div class="TeacherIntroduce">
-        《猴博士爱讲课》视频讲解
+      <div class="Teacher">
+        <img src="../assets/teacherhead.png" alt="图片缺失">
+        <div class="TeacherName">
+          猴博士
+        </div>
+        <div class="TeacherIntroduce">
+          《猴博士爱讲课》视频讲解
+        </div>
       </div>
     </el-aside>
   </el-container>
@@ -113,22 +113,30 @@ export default {
   height: 500px;
 }
 
-.TeacherHead {
+
+.Teacher {
+  text-align: left;
+}
+
+.Teacher img {
   height: 100px;
-  width: 100px;
-  float: left;
+  width: 35%;
   margin: 10px 10px;
+  float: left;
+  clear: left;
 }
 
 .TeacherName {
   text-align: center;
   font-size: 20px;
   float: left;
+  margin-bottom: 10px;
 }
 
 .TeacherIntroduce {
   float: left;
   font-size: 14px;
+  width: 55%;
 }
 </style>
 <style>

@@ -2,11 +2,6 @@
   <div>
     <Sidebar></Sidebar>
     <Header></Header>
-    <div class="WholeCourse">
-      <h3>
-        全部课程
-      </h3>
-    </div>
     <Curriculum></Curriculum>
     <Footer></Footer>
   </div>
@@ -29,8 +24,5 @@ export default {
 </script>
 
 <style scoped>
-.WholeCourse {
-  margin: 30px 30px;
-  text-align: left;
-}
+
 </style>
