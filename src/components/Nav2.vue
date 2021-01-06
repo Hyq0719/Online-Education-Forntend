@@ -6,7 +6,7 @@
       <adview1 lass="adview" :img="adpicture[1]"></adview1>
     </div>
     <div v-for="(item,index) in star" v-bind:key="index">
-      <classview1 class="classview" :img=classpicture[index] :star=star[index] :classname=classname[index]></classview1>
+      <classview1 class="classview" :img=classpicture[index] :star="item" :classname=classname[index]></classview1>
     </div>
   </div>
 </template>
@@ -61,7 +61,9 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: auto;
+  margin-top: 10px;
   padding: 32px 0;
+  clear: both;
   /*border: 3px solid #B3C0D1;*/
 }
 </style>
