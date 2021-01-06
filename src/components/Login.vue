@@ -30,7 +30,7 @@ export default {
   name: "login",
   data() {
     return {
-      apiUrl: 'http://192.168.1.102:8080/api/Student/loginByPassword',
+      apiUrl: 'http://192.168.43.67:8080/api/Student/loginByPassword',
       form: {
         name: "",
         password: "",
@@ -44,12 +44,12 @@ export default {
       a.append('password', this.form.password);
       a.append('phone_id', this.form.name);
       let that = this;
-      axios.post("http://192.168.1.102:8080/api/Student/loginByPassword", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post("http://192.168.43.67:8080/api/Student/loginByPassword", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/');
           that.$store.commit('saveIsLogin');
-          that.$store.commit('saveData',response.data)
+          that.$store.commit('saveData', response.data)
         } else if (response.data.code === 2002) {
           MessageBox.alert('用户不存在')
         } else if (response.data.code === 2003) {

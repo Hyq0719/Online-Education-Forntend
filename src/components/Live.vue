@@ -6,21 +6,17 @@
     <el-aside width="300px">
       <div class="infinite-list-wrapper" style="overflow:auto; height:464px;">
         <ul
-            class="list"
-            v-infinite-scroll="load"
-            infinite-scroll-disabled="disabled">
-          <li v-for="i in count" v-bind:key='i' class="list-item">{{ i }}</li>
+            class="list">
+          <li v-for="item in list" v-bind:key='item' class="list-item">{{ item }}</li>
         </ul>
-        <p v-if="loading">加载中...</p>
-        <p v-if="noMore">没有更多了</p>
       </div>
       <div>
-        <el-input
-            placeholder="请输入内容"
+        <input
+            type="text"
             v-model="input"
-            clearable
-            size="large">
-        </el-input>
+            @keyup.enter="mySend()"
+        />
+        <button @click="mySend()">发送</button>
       </div>
     </el-aside>
   </el-container>
@@ -33,27 +29,53 @@ export default {
   name: "Live",
   data() {
     return {
-      count: 10,
-      loading: false,
+      count: 0,
+      list: [],
       input: '',
     }
   },
-  computed: {
-    noMore() {
-      return this.count >= 40
-    },
-    disabled() {
-      return this.loading || this.noMore
-    }
+  mounted() {
+    this.initWebSocket();
   },
   methods: {
-    load() {
-      this.loading = true
-      setTimeout(() => {
-        this.count += 2
-        this.loading = false
-      }, 200)
-    }
+    mySend() {
+      console.log('mySend!');
+      let myMsg = {
+        sid: '1',
+        userId: this.$store.state.currentData.data.userId,
+        msg: this.$store.state.currentData.data.nickName + ':' + this.input,
+        count: 0,
+      };
+      let toSend = JSON.stringify(myMsg);
+      this.chatRoomWebsocket.send(toSend); //将消息发送到服务端
+      this.input = '';
+    },
+    initWebSocket() {
+      const wsuri = "ws://" + "192.168.43.67:8080" + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.currentData.data.userId;
+      this.chatRoomWebsocket = new WebSocket(wsuri);
+      this.chatRoomWebsocket.onopen = this.websocketOnOpen;
+      this.chatRoomWebsocket.onerror = this.websocketOnError;
+      this.chatRoomWebsocket.onmessage = this.websocketOnMessage;
+      this.chatRoomWebsocket.onclose = this.websocketOnClose;
+      console.log("123")
+    },
+    websocketOnOpen() {
+      console.log("连接成功");
+    },
+    websocketOnError() {
+      console.log("WebSocket 连接发生错误");
+    },
+    websocketOnMessage(event) {
+      console.log(event);
+      let myEvent = JSON.parse(event.data);
+      console.log(myEvent);
+      this.list.push(myEvent.msg);
+      this.count = myEvent.count;
+    },
+    websocketOnClose(e) {
+      console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean);
+    },
+
   },
   components: {
     Flvjs,
@@ -81,4 +103,16 @@ export default {
   border: #99a9bf 1px solid;
   border-radius: 10px;
 }
+
+ul {
+  padding: 5px;
+}
+
+li {
+  list-style-type: none;
+  text-align: left;
+}
+
 </style>
+
+
