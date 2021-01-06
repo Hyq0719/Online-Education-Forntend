@@ -1,6 +1,12 @@
 <template>
+
   <div class="line">
-    <el-row :gutter="20">
+    <div class="WholeCourse">
+      <h3>
+        全部课程
+      </h3>
+    </div>
+    <el-row :gutter="25">
       <el-col :span="6">
         <router-link to="/course">
           <div class="grid-content">
@@ -41,8 +47,6 @@
           </div>
         </router-link>
       </el-col>
-    </el-row>
-    <el-row :gutter="20">
       <el-col :span="6">
         <router-link to="/course">
           <div class="grid-content">
@@ -83,8 +87,6 @@
           </div>
         </router-link>
       </el-col>
-    </el-row>
-    <el-row :gutter="20">
       <el-col :span="6">
         <router-link to="/course">
           <div class="grid-content">
@@ -136,8 +138,13 @@ export default {
 </script>
 
 <style scoped>
+.WholeCourse {
+  margin: 50px 20px;
+  text-align: left;
+}
+
 .line {
-  margin: 20px;
+  margin: 20px 150px;
 }
 
 .el-col {
@@ -148,11 +155,10 @@ export default {
   text-align: left;
   border-radius: 10px;
   border: #b3c0d1 1px solid;
-  min-height: 36px;
-  height: 320px;
+  min-height: 200px;
   margin-bottom: 20px;
   background: #E9EEF3;
-  box-shadow: 0 0 10px black;
+  box-shadow: 0 0 10px grey;
 }
 
 .grid-content img {
@@ -170,6 +176,7 @@ export default {
 
 .grid-content h6 {
   margin: 5px;
+  margin-bottom: 20px;
 }
 
 .row-bg {
