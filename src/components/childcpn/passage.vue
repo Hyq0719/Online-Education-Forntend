@@ -9,7 +9,10 @@
 </template>
 
 <style scoped>
-div:hover{background-color:#d3dce6;}
+div:hover {
+  background-color: #d3dce6;
+}
+
 h5 {
   display: inline;
 }

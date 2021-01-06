@@ -17,7 +17,10 @@
 </template>template
 
 <style scoped>
-div:hover{background-color:#d3dce6;}
+div:hover {
+  background-color: #d3dce6;
+}
+
 .info {
   position: relative;
   left: 0;
@@ -39,6 +42,7 @@ div:hover{background-color:#d3dce6;}
   box-sizing: border-box;
   color: #2c3e50;
 }
+
 .star {
   text-align: right;
   margin-right: 10px;

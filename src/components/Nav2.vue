@@ -65,7 +65,7 @@
   margin-bottom: auto;
   margin-top: 10px;
   padding: 32px 0;
-  /*clear: both;*/
+  clear: both;
   /*border: 3px solid #B3C0D1;*/
 }
 </style>
