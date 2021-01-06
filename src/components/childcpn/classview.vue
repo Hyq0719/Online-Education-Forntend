@@ -1,7 +1,6 @@
 <template>
   <div class="grid-content">
     <img :src="img" width="100%" height="60%" class="img" alt="">
-
     <span class="classname">{{ classname }}</span>
     <p class="info">
       <span class="labelname">{{ label }}</span>
@@ -18,6 +17,7 @@
 </template>template
 
 <style scoped>
+div:hover{background-color:#d3dce6;}
 .info {
   position: relative;
   left: 0;
@@ -37,8 +37,8 @@
   padding: 0 8px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  color: #2c3e50;
 }
-
 .star {
   text-align: right;
   margin-right: 10px;
@@ -74,7 +74,7 @@
 
 <script>
 export default {
-  name: 'classview1',
+  name: 'Classview1',
   props: {
     img: {
       type: String,

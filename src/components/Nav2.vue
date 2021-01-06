@@ -6,7 +6,9 @@
       <adview1 lass="adview" :img="adpicture[1]"></adview1>
     </div>
     <div v-for="(item,index) in star" v-bind:key="index">
+      <router-link to="/course">
       <classview1 class="classview" :img=classpicture[index] :star="item" :classname=classname[index]></classview1>
+      </router-link>
     </div>
   </div>
 </template>
@@ -63,7 +65,7 @@
   margin-bottom: auto;
   margin-top: 10px;
   padding: 32px 0;
-  clear: both;
+  /*clear: both;*/
   /*border: 3px solid #B3C0D1;*/
 }
 </style>

@@ -9,6 +9,7 @@
 </template>
 
 <style scoped>
+div:hover{background-color:#d3dce6;}
 h5 {
   display: inline;
 }
@@ -41,7 +42,7 @@ h5 {
 
 <script>
 export default {
-  name: 'passage',
+  name: 'Passage',
   props: {
     img: {
       type: String,

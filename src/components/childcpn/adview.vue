@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'classview1',
+  name: 'Adview1',
   props: {
     img: {
       type: String,
