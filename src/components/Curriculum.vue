@@ -138,6 +138,12 @@ export default {
 </script>
 
 <style scoped>
+.grid-content:hover {
+  background-color: #d3dce6;
+  text-decoration:underline;
+  text-decoration-color: #99a9bf;
+  text-decoration-width: auto;
+}
 .WholeCourse {
   margin: 50px 20px;
   text-align: left;

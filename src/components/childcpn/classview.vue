@@ -19,6 +19,9 @@
 <style scoped>
 div:hover {
   background-color: #d3dce6;
+  text-decoration:underline;
+  text-decoration-color: #99a9bf;
+  text-decoration-width: auto;
 }
 
 .info {
