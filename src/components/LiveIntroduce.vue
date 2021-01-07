@@ -7,46 +7,7 @@
         </el-tab-pane>
         <el-tab-pane label="直播评价" name="second">
           <div class="block">
-            <span class="demonstration">课程难度适合</span>
-            <el-rate
-                v-model="value1"
-                :colors="colors"
-                show-score>
-            </el-rate>
-          </div>
-          <div class="block">
-            <span class="demonstration">老师风趣幽默</span>
-            <el-rate
-                v-model="value2"
-                :colors="colors"
-                show-score>
-            </el-rate>
-          </div>
-          <div class="block">
-            <span class="demonstration">老师讲解生动</span>
-            <el-rate
-                v-model="value3"
-                :colors="colors"
-                show-score>
-            </el-rate>
-          </div>
-          <div class="block">
-            <span class="demonstration">课程氛围良好</span>
-            <el-rate
-                v-model="value4"
-                :colors="colors"
-                show-score>
-            </el-rate>
-          </div>
-          <div class="block">
-            <span class="demonstration">直播环境良好</span>
-            <el-rate
-                v-model="value5"
-                :colors="colors"
-                show-score>
-            </el-rate>
-          </div>
-          <div>
+          <classevaluate :evalabel="evaluatelabel" :colors="colors" @pass="fchange"> </classevaluate>
             <el-input type="textarea" class="Comment" v-model="textarea" placeholder="请输入内容"></el-input>
           </div>
         </el-tab-pane>
@@ -70,24 +31,29 @@
 </template>
 
 <script>
+import classevaluate from "@/components/childcpn/classevaluate";
 export default {
   name: "LiveIntroduce",
   data() {
     return {
       activeName: 'first',
-      value1: null,
-      value2: null,
-      value3: null,
-      value4: null,
-      value5: null,
+      value: [null,null,null,null,null],
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       textarea: '',
+      evaluatelabel: ["课程难度适合","老师风趣幽默","老师讲解生动","课程氛围良好","播放环境良好"],
     };
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
     },
+    fchange(num,index){               //接受子组件传递来的评价
+      this.value = num;
+      console.log(this.value,index);
+    },
+  },
+  components:{
+    classevaluate,
   }
 }
 </script>
