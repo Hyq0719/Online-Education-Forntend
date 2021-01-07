@@ -56,5 +56,6 @@ export default {
 .sidebar-list {
   list-style: none;
   padding-inline-start: 0;
+  Padding-left: 0;
 }
 </style>
