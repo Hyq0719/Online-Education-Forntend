@@ -7,7 +7,7 @@
         </el-tab-pane>
         <el-tab-pane label="直播评价" name="second">
           <div class="block">
-          <classevaluate :evalabel="evaluatelabel" :colors="colors" @pass="fchange"> </classevaluate>
+            <classevaluate :evalabel="evaluatelabel" :colors="colors" @pass="fchange"></classevaluate>
             <el-input type="textarea" class="Comment" v-model="textarea" placeholder="请输入内容"></el-input>
           </div>
         </el-tab-pane>
@@ -32,27 +32,28 @@
 
 <script>
 import classevaluate from "@/components/childcpn/classevaluate";
+
 export default {
   name: "LiveIntroduce",
   data() {
     return {
       activeName: 'first',
-      value: [null,null,null,null,null],
+      value: [null, null, null, null, null],
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       textarea: '',
-      evaluatelabel: ["课程难度适合","老师风趣幽默","老师讲解生动","课程氛围良好","播放环境良好"],
+      evaluatelabel: ["课程难度适合", "老师风趣幽默", "老师讲解生动", "课程氛围良好", "播放环境良好"],
     };
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
     },
-    fchange(num,index){               //接受子组件传递来的评价
+    fchange(num, index) {               //接受子组件传递来的评价
       this.value = num;
-      console.log(this.value,index);
+      console.log(this.value, index);
     },
   },
-  components:{
+  components: {
     classevaluate,
   }
 }
