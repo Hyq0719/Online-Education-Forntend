@@ -7,7 +7,7 @@
     </div>
     <div v-for="(item,index) in star" v-bind:key="index">
       <router-link to="/course">
-      <classview1 class="classview" :img=classpicture[index] :star="item" :classname=classname[index]></classview1>
+        <classview1 class="classview" :img=classpicture[index] :star="item" :classname=classname[index]></classview1>
       </router-link>
     </div>
   </div>
