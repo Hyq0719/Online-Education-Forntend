@@ -140,7 +140,7 @@ export default {
 <style scoped>
 .grid-content:hover {
   background-color: #d3dce6;
-  text-decoration:underline;
+  text-decoration:none;
   text-decoration-color: #99a9bf;
   text-decoration-width: auto;
 }

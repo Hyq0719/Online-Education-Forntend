@@ -16,27 +16,34 @@
       <div class="Header">
         <img src="../assets/Header-search-logo.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0;"/>
       </div>
-      <el-menu-item index="1">
-        <router-link to="/login" class="showInformation" v-if="!isLogin">登录</router-link>
-        <avatar v-if="isLogin"></avatar>
-      </el-menu-item>
+      <el-submenu index="1">
+        <template slot="title">
+          <avatar v-if="isLogin" style="float: left;"></avatar>
+          <div class="demo-basic--circle" v-if="!isLogin" style="float: left;">
+            <div class="block"><el-avatar :size="40" :src="circleUrl"></el-avatar></div>
+          </div>
+        </template>
+        <el-menu-item index="1-1">个人信息</el-menu-item>
+        <el-menu-item index="1-2">我的消息</el-menu-item>
+        <el-menu-item index="1-3">设置</el-menu-item>
+        <el-menu-item index="1-4" v-if="!isLogin" @click="Login">登录</el-menu-item>
+        <el-menu-item index="1-4" v-if="isLogin">退出登录</el-menu-item>
+      </el-submenu>
       <el-submenu index="2">
         <template slot="title">分类</template>
         <el-menu-item index="2-1">选项1</el-menu-item>
         <el-menu-item index="2-2">选项2</el-menu-item>
         <el-menu-item index="2-3">选项3</el-menu-item>
       </el-submenu>
-      <el-menu-item index="3">消息中心</el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="3">
         <router-link to="/coursemenu">课程</router-link>
       </el-menu-item>
-      <el-menu-item index="5">
+      <el-menu-item index="4">
         <router-link to="/live">直播</router-link>
       </el-menu-item>
-      <el-menu-item index="6">
+      <el-menu-item index="5">
         <router-link to="/">首页</router-link>
-      </el-menu-item
-      >
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -54,12 +61,16 @@ export default {
       activeIndex: "1",
       activeIndex2: "1",
       input: '',
-      isLogin: this.$store.state.isLogin
+      isLogin: this.$store.state.isLogin,
+      circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
     };
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    Login() {
+      this.$router.push('/Login')
     },
   }
 }
