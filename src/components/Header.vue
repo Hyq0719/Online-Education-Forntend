@@ -20,7 +20,9 @@
         <template slot="title">
           <avatar v-if="isLogin" style="float: left;"></avatar>
           <div class="demo-basic--circle" v-if="!isLogin" style="float: left;">
-            <div class="block"><el-avatar :size="40" :src="circleUrl"></el-avatar></div>
+            <div class="block">
+              <el-avatar :size="40" :src="circleUrl"></el-avatar>
+            </div>
           </div>
         </template>
         <el-menu-item index="1-1">个人信息</el-menu-item>
