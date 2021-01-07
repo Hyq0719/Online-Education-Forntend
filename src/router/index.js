@@ -7,6 +7,7 @@ import TeacherRegister from '../views/TeacherRegister';
 import Live from '../views/Live';
 import Course from '../views/Course';
 import CourseMenu from '../views/CourseMenu';
+import Searchpage from "@/views/Searchpage";
 
 Vue.use(Router);
 
@@ -47,5 +48,10 @@ export default new Router({
             name: 'CourseMenu',
             component: CourseMenu,
         },
+        {
+            path: '/searchpage',
+            name:'searchpage',
+            component: Searchpage,
+        }
     ]
 })

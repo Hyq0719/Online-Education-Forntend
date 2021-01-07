@@ -9,13 +9,17 @@
       <div class="Header">
         <img src="../assets/logo.png" alt="加载失败" style="height:60px; width:60px;"/>
       </div>
-      <div class="Header-search">
-        <el-input placeholder="请输入内容" v-model="input" clearable>
-        </el-input>
-      </div>
-      <div class="Header">
-        <img src="../assets/Header-search-logo.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0;"/>
-      </div>
+      <slot id="search">
+        <div class="Header-search">
+          <el-input placeholder="请输入内容" v-model="input" clearable>
+          </el-input>
+        </div>
+        <div class="Header">
+          <router-link to="/searchpage">
+            <img src="../assets/Header-search-logo.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0;"/>
+          </router-link>
+        </div>
+      </slot>
       <el-submenu index="1">
         <template slot="title">
           <avatar v-if="isLogin" style="float: left;"></avatar>
