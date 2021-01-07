@@ -2,7 +2,7 @@
   <div class="search-box">
     <div class="search-wrap">
       <img src="../assets/logo.png" alt="搜索logo">
-      <input class="search-word" type="text" v-model="input" @keyup.enter="Send()"/>
+      <input class="search-word" type="text" v-model="input" @keyup.enter="Send"/>
       <div>
         <button class="search-bottom" @click="reflash">搜索</button>
       </div>
@@ -19,11 +19,15 @@
     </div>
     <div class="find-wrap">
       <button class="find-bottom" @click="sub()">上一页</button>
-      <div v-for="(item,index) in pagenumber" :key="index">
-        <button class="find-bottom"  @click="add()">{{item}}</button>
-      </div>
+      <button class="find-bottom" @click="sub()">{{ pagenumber[0] }}</button>
+      <button class="find-bottom" @click="sub()">{{ pagenumber[1] }}</button>
+      <button class="find-bottom" @click="sub()">{{ pagenumber[2] }}</button>
+      <button class="find-bottom" @click="add()">{{ pagenumber[3] }}</button>
+      <button class="find-bottom" @click="add()">{{ pagenumber[4] }}</button>
+      <button class="find-bottom" @click="add()">{{ pagenumber[5] }}</button>
+      <button class="find-bottom" @click="add()">{{ pagenumber[6] }}</button>
       <span class="text">***</span>
-      <button class="find-bottom" >{{ totalpage }}</button>
+      <button class="find-bottom">{{ totalpage }}</button>
       <button class="find-bottom" @click="add()">下一页</button>
     </div>
   </div>
@@ -39,52 +43,51 @@ export default {
     },
     add() {
       var x;
-      console.log(this.pagenumber[6]<this.totalpage);
-      if (this.pagenumber[6]<this.totalpage)
-      {
-        for (x=0;x<7;x++) this.pagenumber[x]++;
-        console.log(this.pagenumber[1])
+      if (this.pagenumber[6] < this.totalpage) {
+        for (x = 0; x < 7; x++) this.pagenumber[x]++;
       }
+      this.pagenumber.push(1);
+      this.pagenumber.pop();
     },
     sub() {
       var x;
-      if (this.pagenumber[0]>1)
-    {
-      for (x=0;x<7;x++) this.pagenumber[x]--;
-    }
-  },
-  reflash() {
-  },
-}
-,
-components: {
-  classview
-}
-,
-data()
-{
-  return {
-    input: '',
-    classpicture: [require('@/assets/vue.jpg'),
-      require('@/assets/vue.jpg'),
-      require('@/assets/vue.jpg'),
-      require('@/assets/vue.jpg'),
-      require('@/assets/class1.jpg'),
-      require('@/assets/class1.jpg'),
-      require('@/assets/class1.jpg')],
-    star: [3, 4, 3.4, 3.5, 2.0, 4, 1, 2.3, 3.4, 3],
-    classname: ['一晚上搞定Vue',
-      '两晚上搞定Vue',
-      '三晚上搞定Vue',
-      '7天学会Vue',
-      '5天学会Vue',
-      '8天学会Vue',
-      '一个月搞定Vue组件'],
-    pagenumber: [1, 2, 3, 4, 5, 6, 7],
-    totalpage: 50,
-    showflag: 0,
+      if (this.pagenumber[0] > 1) {
+        for (x = 0; x < 7; x++) this.pagenumber[x]--;
+      }
+      this.pagenumber.push(1);
+      this.pagenumber.pop();
+    },
+    reflash() {
+    },
   }
-}
+  ,
+  components: {
+    classview
+  }
+  ,
+  data() {
+    return {
+      input: '',
+      classpicture: [require('@/assets/vue.jpg'),
+        require('@/assets/vue.jpg'),
+        require('@/assets/vue.jpg'),
+        require('@/assets/vue.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg'),
+        require('@/assets/class1.jpg')],
+      star: [3, 4, 3.4, 3.5, 2.0, 4, 1, 2.3, 3.4, 3],
+      classname: ['一晚上搞定Vue',
+        '两晚上搞定Vue',
+        '三晚上搞定Vue',
+        '7天学会Vue',
+        '5天学会Vue',
+        '8天学会Vue',
+        '一个月搞定Vue组件'],
+      pagenumber: [1, 2, 3, 4, 5, 6, 7],
+      totalpage: 50,
+      showflag: 0,
+    }
+  }
 }
 </script>
 
@@ -183,7 +186,7 @@ hr {
   margin: 0 auto;
   padding: 20px;
   position: relative;
-  width: 640px;
+  width: 700px;
   clear: both;
 }
 
