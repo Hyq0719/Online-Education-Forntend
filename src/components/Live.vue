@@ -7,7 +7,7 @@
       <div class="infinite-list-wrapper" style="overflow:auto; height:464px;">
         <ul
             class="list">
-          <li v-for="item in list" v-bind:key='item' class="list-item">{{ item }}</li>
+          <li v-for="item in list" :key='item' :class="isMyself(item[0])">{{ item[0] }}：{{ item[1] }}</li>
         </ul>
       </div>
       <div>
@@ -38,26 +38,32 @@ export default {
     this.initWebSocket();
   },
   methods: {
+    isMyself(what) {
+      return what == this.$store.state.currentData.data.nickName ? "myself" : "others";
+    },
     mySend() {
-      console.log('mySend!');
-      let myMsg = {
-        sid: '1',
+      // console.log('mySend!');
+      let preMsg = {
         userId: this.$store.state.currentData.data.userId,
-        msg: this.$store.state.currentData.data.nickName + ':' + this.input,
-        count: 0,
+        type: '0',
+        nickName: this.$store.state.currentData.data.nickName,
+        msg: this.input,
       };
-      let toSend = JSON.stringify(myMsg);
+      // console.log(preMsg);
+      let toSend = JSON.stringify(preMsg);
+      // console.log(toSend);
       this.chatRoomWebsocket.send(toSend); //将消息发送到服务端
       this.input = '';
+      // console.log("sended!");
     },
     initWebSocket() {
-      const wsuri = "ws://" + "192.168.43.67:8080" + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.currentData.data.userId;
+      const wsuri = "ws://" + "192.168.1.102:8080" + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.currentData.data.userId + '/' + this.$store.state.currentData.data.nickName;
       this.chatRoomWebsocket = new WebSocket(wsuri);
       this.chatRoomWebsocket.onopen = this.websocketOnOpen;
       this.chatRoomWebsocket.onerror = this.websocketOnError;
       this.chatRoomWebsocket.onmessage = this.websocketOnMessage;
       this.chatRoomWebsocket.onclose = this.websocketOnClose;
-      console.log("123")
+      // console.log("123")
     },
     websocketOnOpen() {
       console.log("连接成功");
@@ -66,11 +72,11 @@ export default {
       console.log("WebSocket 连接发生错误");
     },
     websocketOnMessage(event) {
-      console.log(event);
+      // console.log(event);
       let myEvent = JSON.parse(event.data);
-      console.log(myEvent);
-      this.list.push(myEvent.msg);
-      this.count = myEvent.count;
+      // console.log(myEvent);
+      this.list.push([myEvent.nickName, myEvent.msg]);
+      // console.log(this.list);
     },
     websocketOnClose(e) {
       console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean);
@@ -108,9 +114,32 @@ ul {
   padding: 5px;
 }
 
-li {
+.others {
+  display: block;
   list-style-type: none;
   text-align: left;
+  border: 3px solid #55fddd;
+  border-radius: 5px;
+  background-color: #92f8d9;
+  font-size: 20px;
+  padding: 2px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+  word-break: normal;
+}
+
+.myself {
+  display: block;
+  list-style-type: none;
+  text-align: left;
+  border: 3px solid #55a1fd;
+  border-radius: 5px;
+  background-color: #75a9fc;
+  font-size: 20px;
+  padding: 2px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+  word-break: normal;
 }
 
 </style>
