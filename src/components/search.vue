@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="find-wrap">
-      <button class="find-bottom" @click="sub()">上一页</button>
+      <button class="find-bottom" v-show="showflag" @click="sub()">上一页</button>
       <button class="find-bottom" @click="sub()">{{ pagenumber[0] }}</button>
       <button class="find-bottom" @click="sub()">{{ pagenumber[1] }}</button>
       <button class="find-bottom" @click="sub()">{{ pagenumber[2] }}</button>
@@ -46,6 +46,7 @@ export default {
       if (this.pagenumber[6] < this.totalpage) {
         for (x = 0; x < 7; x++) this.pagenumber[x]++;
       }
+      this.showflag=1;
       this.pagenumber.push(1);
       this.pagenumber.pop();
     },
@@ -54,6 +55,7 @@ export default {
       if (this.pagenumber[0] > 1) {
         for (x = 0; x < 7; x++) this.pagenumber[x]--;
       }
+      if( this.pagenumber[0]==1 ) this.showflag=0;
       this.pagenumber.push(1);
       this.pagenumber.pop();
     },
