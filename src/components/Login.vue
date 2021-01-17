@@ -50,6 +50,7 @@ export default {
           that.$router.push('/');
           that.$store.commit('saveIsLogin');
           that.$store.commit('saveData', response.data)
+          if (this.radio === 2) that.$store.commit('saveIsTeacher');
         } else if (response.data.code === 2002) {
           MessageBox.alert('用户不存在')
         } else if (response.data.code === 2003) {

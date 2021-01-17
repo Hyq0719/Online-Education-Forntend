@@ -8,6 +8,7 @@ import Live from '../views/Live';
 import Course from '../views/Course';
 import CourseMenu from '../views/CourseMenu';
 import Searchpage from "@/views/Searchpage";
+import Classmanagement from "@/views/Classmanagement";
 
 Vue.use(Router);
 
@@ -50,8 +51,13 @@ export default new Router({
         },
         {
             path: '/searchpage',
-            name:'searchpage',
+            name: 'searchpage',
             component: Searchpage,
+        },
+        {
+            path: '/Classmanagement',
+            name: 'Classmanagement',
+            component: Classmanagement,
         }
     ]
 })

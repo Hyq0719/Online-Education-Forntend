@@ -46,7 +46,7 @@ export default {
       if (this.pagenumber[6] < this.totalpage) {
         for (x = 0; x < 7; x++) this.pagenumber[x]++;
       }
-      this.showflag=1;
+      this.showflag = 1;
       this.pagenumber.push(1);
       this.pagenumber.pop();
     },
@@ -55,7 +55,7 @@ export default {
       if (this.pagenumber[0] > 1) {
         for (x = 0; x < 7; x++) this.pagenumber[x]--;
       }
-      if( this.pagenumber[0]==1 ) this.showflag=0;
+      if (this.pagenumber[0] === 1) this.showflag = 0;
       this.pagenumber.push(1);
       this.pagenumber.pop();
     },
