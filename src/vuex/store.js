@@ -8,11 +8,14 @@ export default new Vuex.Store({
         isLogin: false,
         currentData: {},
         isRegister: false,
-        isTeacher: false,
+        isLoginTeacher: false,
     },
     mutations: {
         saveIsLogin(state) {
             state.isLogin = !state.isLogin;
+        },
+        saveIsLoginTeacher(state){
+            state.isLoginTeacher = !state.isLoginTeacher;
         },
         saveData(state, currentData) {
             state.currentData = currentData;
@@ -20,9 +23,6 @@ export default new Vuex.Store({
         saveIsRegister(state) {
             state.isRegister = true;
         },
-        saveIsTeacher(state){             //用户是否注册为老师
-            state.isTeacher = true;
-        }
     }
 })
 

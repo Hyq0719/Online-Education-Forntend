@@ -1,11 +1,11 @@
 <template>
   <div class="login">
     <div>
-      <el-radio v-model="radio" label="1" border>我是学生</el-radio>
-      <el-radio v-model="radio" label="2" border>我是老师</el-radio>
+      <el-button @click="Student">我是学生</el-button>
+      <el-button @click="Teacher">我是老师</el-button>
     </div>
 
-    <h2>登录</h2>
+    <h2>学生登录</h2>
     <el-form ref="form" :model="form" label-width="100px">
       <el-form-item label="账号/昵称：">
         <el-input v-model="form.name" placeholder="请输入账号/昵称"></el-input>
@@ -27,7 +27,7 @@ import axios from 'axios'
 import {MessageBox} from 'element-ui'
 
 export default {
-  name: "login",
+  name: "Login",
   data() {
     return {
       apiUrl: this.Api + '/api/Student/loginByPassword',
@@ -35,7 +35,6 @@ export default {
         name: "",
         password: "",
       },
-      radio: '1',
     };
   },
   methods: {
@@ -50,7 +49,6 @@ export default {
           that.$router.push('/');
           that.$store.commit('saveIsLogin');
           that.$store.commit('saveData', response.data)
-          if (this.radio === 2) that.$store.commit('saveIsTeacher');
         } else if (response.data.code === 2002) {
           MessageBox.alert('用户不存在')
         } else if (response.data.code === 2003) {
@@ -62,6 +60,12 @@ export default {
     },
     Register() {
       this.$router.push('/Register')
+    },
+    Student() {
+      this.$router.push('/Login')
+    },
+    Teacher() {
+      this.$router.push('/Login/Teacher')
     }
   },
 };

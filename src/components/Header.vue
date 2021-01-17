@@ -23,18 +23,26 @@
       <el-submenu index="1">
         <template slot="title">
           <avatar v-if="isLogin" style="float: left;"></avatar>
-          <div class="demo-basic--circle" v-if="!isLogin" style="float: left;">
+
+          <div class="demo-basic--circle" v-if="!isLogin&&!isLoginTeacher" style="float: left;">
             <div class="block">
               <el-avatar :size="40" :src="circleUrl"></el-avatar>
             </div>
           </div>
+
+          <div class="demo-basic--circle" v-if="isLoginTeacher" style="float: left;">
+            <div class="block">
+              <el-avatar shape="square" :size="40" :src="squareUrl"></el-avatar>
+            </div>
+          </div>
+
         </template>
         <el-menu-item index="1-1">个人信息</el-menu-item>
         <el-menu-item index="1-2">我的消息</el-menu-item>
-        <el-menu-item index="1-3" v-if="isTeacher" @click="class_management">管理课程</el-menu-item>
+        <el-menu-item index="1-3" v-if="isLoginTeacher" @click="class_management">管理课程</el-menu-item>
         <el-menu-item index="1-4">设置</el-menu-item>
-        <el-menu-item index="1-5" v-if="!isLogin" @click="Login">登录</el-menu-item>
-        <el-menu-item index="1-5" v-if="isLogin">退出登录</el-menu-item>
+        <el-menu-item index="1-5" v-if="!isLogin&&!isLoginTeacher" @click="Login">登录</el-menu-item>
+        <el-menu-item index="1-5" v-if="isLogin||isLoginTeacher">退出登录</el-menu-item>
       </el-submenu>
       <el-submenu index="2">
         <template slot="title">分类</template>
@@ -69,8 +77,9 @@ export default {
       activeIndex2: "1",
       input: '',
       isLogin: this.$store.state.isLogin,
-      isTeacher: this.$store.state.isTeacher,
+      isLoginTeacher: this.$store.state.isLoginTeacher,
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
     };
   },
   methods: {

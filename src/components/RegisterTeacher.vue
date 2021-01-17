@@ -22,7 +22,7 @@
       </el-form-item>
 
       <div>
-        <el-button type="primary" @click="TeacherRegister">注册</el-button>
+        <el-button type="primary" @click="RegisterTeacher">注册</el-button>
       </div>
 
       <div class="choose">
@@ -36,7 +36,7 @@
 import axios from 'axios'
 
 export default {
-  name: "TeacherRegister",
+  name: "RegisterTeacher",
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === '') {
