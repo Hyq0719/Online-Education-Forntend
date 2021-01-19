@@ -95,21 +95,20 @@ export default {
 <style scoped>
 .el-aside {
   border-radius: 10px;
-  border: #99a9bf 1px solid;
+  border: grey 1px solid;
   color: #333;
 }
 
 .el-main {
   text-align: center;
   border-radius: 10px;
-  border: 1px black solid;
+  border: 1px grey solid;
   color: #333;
   line-height: 30px;
 }
 
 .el-container {
   margin: 50px 100px;
-  height: 500px;
 }
 
 .Teacher {

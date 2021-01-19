@@ -10,6 +10,7 @@ import Course from '../views/Course';
 import CourseMenu from '../views/CourseMenu';
 import Searchpage from "@/views/Searchpage";
 import Classmanagement from "@/views/Classmanagement";
+import Information from '../views/Information';
 
 Vue.use(Router);
 
@@ -64,6 +65,11 @@ export default new Router({
             path: '/Classmanagement',
             name: 'Classmanagement',
             component: Classmanagement,
-        }
+        },
+        {
+            path: '/Information',
+            name: 'Information',
+            component: Information,
+        },
     ]
 })

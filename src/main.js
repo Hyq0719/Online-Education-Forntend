@@ -9,6 +9,7 @@ import router from './router'
 import Vuex from 'vuex'
 import store from './vuex/store';
 import Api from './Api';
+
 Vue.prototype.Api = Api.BASE_URL;
 
 Vue.use(Vuex)

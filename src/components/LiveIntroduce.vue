@@ -3,7 +3,8 @@
     <el-main>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="直播介绍" name="first">
-          <img src="../assets/courseintroduction.png" alt="图片缺失" style="height: 380px; width: 100%;">
+          <img src="../assets/courseintroduction.png" alt="图片缺失" style="width: 100%;">
+          <img src="../assets/courseintroduction1.png" alt="图片缺失" style="width: 100%;">
         </el-tab-pane>
         <el-tab-pane label="直播评价" name="second">
           <div class="block">
@@ -62,14 +63,14 @@ export default {
 <style scoped>
 .el-aside {
   border-radius: 10px;
-  border: #99a9bf 1px solid;
+  border: grey 1px solid;
   color: #333;
   text-align: center;
 }
 
 .el-main {
   border-radius: 10px;
-  border: 1px black solid;
+  border: 1px grey solid;
   color: #333;
   text-align: center;
   line-height: 30px;
@@ -77,7 +78,6 @@ export default {
 
 .el-container {
   margin: 50px 100px;
-  height: 500px;
 }
 
 

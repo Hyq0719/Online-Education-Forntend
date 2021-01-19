@@ -14,7 +14,7 @@ export default new Vuex.Store({
         saveIsLogin(state) {
             state.isLogin = !state.isLogin;
         },
-        saveIsLoginTeacher(state){
+        saveIsLoginTeacher(state) {
             state.isLoginTeacher = !state.isLoginTeacher;
         },
         saveData(state, currentData) {
