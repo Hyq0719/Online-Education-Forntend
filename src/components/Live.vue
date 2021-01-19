@@ -143,7 +143,6 @@ export default {
 }
 
 .el-main {
-  background-color: #E9EEF3;
   color: #333;
   text-align: center;
   padding: 0px;
@@ -152,7 +151,7 @@ export default {
 .el-container {
   margin: 20px 100px;
   height: 506px;
-  border: #99a9bf 1px solid;
+  border: #C0C4CC 1px solid;
   border-radius: 10px;
 }
 
@@ -191,7 +190,7 @@ ul {
 .onlineNumber {
   height: 20px;
   background-color: #fff;
-  border: 1px solid #000000;
+  border: 1px solid #C0C4CC;
   border-radius: 5px;
   font-size: 18px;
 }

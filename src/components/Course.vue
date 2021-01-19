@@ -112,7 +112,6 @@ export default {
 }
 
 .el-main {
-  background-color: #E9EEF3;
   color: #333;
   text-align: center;
   padding: 0;
@@ -121,7 +120,7 @@ export default {
 .el-container {
   margin: 20px 100px;
   height: 580px;
-  border: #99a9bf 1px solid;
+  border: #C0C4CC 1px solid;
   border-radius: 10px;
 }
 </style>

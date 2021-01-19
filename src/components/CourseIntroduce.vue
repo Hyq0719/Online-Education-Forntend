@@ -95,14 +95,14 @@ export default {
 <style scoped>
 .el-aside {
   border-radius: 10px;
-  border: grey 1px solid;
+  border: #C0C4CC 1px solid;
   color: #333;
 }
 
 .el-main {
   text-align: center;
   border-radius: 10px;
-  border: 1px grey solid;
+  border: 1px #C0C4CC solid;
   color: #333;
   line-height: 30px;
 }

@@ -160,11 +160,11 @@ export default {
 .grid-content {
   text-align: left;
   border-radius: 10px;
-  border: #b3c0d1 1px solid;
+  border: #E4E7ED 1px solid;
   min-height: 200px;
   margin-bottom: 20px;
-  background: #E9EEF3;
-  box-shadow: 0 0 10px grey;
+  background: #F2F6FC;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
 }
 
 .grid-content img {
