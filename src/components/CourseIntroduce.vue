@@ -29,7 +29,7 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="课程评价" name="second">
-              <classevaluate :evalabel="evaluatelabel" :colors="colors" @pass="fchange"> </classevaluate>
+            <classevaluate :evalabel="evaluatelabel" :colors="colors" @pass="fchange"></classevaluate>
             <div>
               <el-input type="textarea" class="Comment" v-model="textarea" placeholder="请输入内容"></el-input>
             </div>
@@ -40,8 +40,9 @@
         <div>
           <h3>授课老师</h3>
         </div>
+        <el-divider></el-divider>
         <div class="Teacher">
-            <img src="../assets/teacherhead.png" alt="图片缺失">
+          <img src="../assets/teacherhead.png" alt="图片缺失">
           <div class="TeacherName">
             猴博士
           </div>
@@ -71,19 +72,19 @@ export default {
   data() {
     return {
       activeName: 'first',
-      value: [null,null,null,null,null],
+      value: [null, null, null, null, null],
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       textarea: '',
-      evaluatelabel: ["课程难度适合","老师风趣幽默","老师讲解生动","课程氛围良好","播放环境良好"],
+      evaluatelabel: ["课程难度适合", "老师风趣幽默", "老师讲解生动", "课程氛围良好", "播放环境良好"],
     };
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
     },
-    fchange(num,index){               //接受子组件传递来的评价
+    fchange(num, index) {               //接受子组件传递来的评价
       this.value = num;
-      console.log(this.value,index);
+      console.log(this.value, index);
     }
   },
   components: {

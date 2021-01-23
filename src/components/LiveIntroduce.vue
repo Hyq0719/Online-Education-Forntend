@@ -18,6 +18,7 @@
       <div>
         <h3>直播老师</h3>
       </div>
+      <el-divider></el-divider>
       <div class="Teacher">
         <img src="../assets/teacherhead.png" alt="图片缺失">
         <div class="TeacherName">

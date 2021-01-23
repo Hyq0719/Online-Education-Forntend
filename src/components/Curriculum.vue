@@ -1,129 +1,19 @@
 <template>
-
   <div class="line">
     <div class="WholeCourse">
       <h3>
         全部课程
       </h3>
     </div>
+    <el-divider></el-divider>
     <el-row :gutter="25">
-      <el-col :span="6">
+      <el-col :span="6" v-for="item in course" v-bind:key="item.id">
         <router-link to="/course">
           <div class="grid-content">
-            <img src="../assets/course1.webp">
-            <h4>高等数学（四）</h4>
-            <h5>同济大学</h5>
-            <h6>兰辉</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course2.webp">
-            <h4>高等数学（二）</h4>
-            <h5>交通大学</h5>
-            <h6>李继承</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course3.webp">
-            <h4>高等数学（三）</h4>
-            <h5>同济大学</h5>
-            <h6>张军</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course4.webp">
-            <h4>高等数学（二）</h4>
-            <h5>山东大学</h5>
-            <h6>姜晓云</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course5.webp">
-            <h4>C语言程序设计</h4>
-            <h5>浙江大学</h5>
-            <h6>文凯</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course6.webp">
-            <h4>课堂管理方法与艺术</h4>
-            <h5>爱课程</h5>
-            <h6>王朗</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course7.webp">
-            <h4>天文</h4>
-            <h5>华中科技大学</h5>
-            <h6>徐学军</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course8.webp">
-            <h4>Python网络爬虫</h4>
-            <h5>北京理工大学</h5>
-            <h6>昊天</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course9.webp">
-            <h4>Python语言程序设计</h4>
-            <h5>北京理工大学</h5>
-            <h6>昊天</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course10.webp">
-            <h4>程序设计入门</h4>
-            <h5>浙江大学</h5>
-            <h6>文凯</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course11.webp">
-            <h4>形势与政策</h4>
-            <h5>同济大学</h5>
-            <h6>彭庆红</h6>
-          </div>
-        </router-link>
-      </el-col>
-      <el-col :span="6">
-        <router-link to="/course">
-          <div class="grid-content">
-            <img src="../assets/course12.webp">
-            <h4>大学计算机</h4>
-            <h5>同济大学</h5>
-            <h6>李凤霞</h6>
+            <img :src="item.src" alt="图片缺失">
+            <h4>{{ item.name }}</h4>
+            <h5>{{ item.school }}</h5>
+            <h6>{{ item.teacher }}</h6>
           </div>
         </router-link>
       </el-col>
@@ -133,17 +23,168 @@
 
 <script>
 export default {
-  name: "Curriculum"
+  name: "Curriculum",
+  data() {
+    return {
+      course: [
+        {
+          name: "高等数学1",
+          school: "浙江大学",
+          teacher: "老师1",
+          src: require('../assets/course1.webp'),
+        },
+        {
+          name: "高等数学2",
+          school: "上海大学",
+          teacher: "老师2",
+          src: require('../assets/course2.webp'),
+        },
+        {
+          name: "高等数学3",
+          school: "同济大学",
+          teacher: "老师3",
+          src: require('../assets/course3.webp'),
+        },
+        {
+          name: "高等数学4",
+          school: "北京大学",
+          teacher: "老师4",
+          src: require('../assets/course4.webp'),
+        },
+        {
+          name: "高等数学5",
+          school: "清华大学",
+          teacher: "老师5",
+          src: require('../assets/course5.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course6.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course7.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course8.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course9.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course10.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course11.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course12.webp'),
+        },
+        {
+          name: "高等数学1",
+          school: "浙江大学",
+          teacher: "老师1",
+          src: require('../assets/course1.webp'),
+        },
+        {
+          name: "高等数学2",
+          school: "上海大学",
+          teacher: "老师2",
+          src: require('../assets/course2.webp'),
+        },
+        {
+          name: "高等数学3",
+          school: "同济大学",
+          teacher: "老师3",
+          src: require('../assets/course3.webp'),
+        },
+        {
+          name: "高等数学4",
+          school: "北京大学",
+          teacher: "老师4",
+          src: require('../assets/course4.webp'),
+        },
+        {
+          name: "高等数学5",
+          school: "清华大学",
+          teacher: "老师5",
+          src: require('../assets/course5.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course6.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course7.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course8.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course9.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course10.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course11.webp'),
+        },
+        {
+          name: "高等数学6",
+          school: "上海大学",
+          teacher: "老师6",
+          src: require('../assets/course12.webp'),
+        },
+      ]
+    }
+  }
 }
 </script>
 
 <style scoped>
 .grid-content:hover {
   background-color: #d3dce6;
-  text-decoration:none;
+  text-decoration: none;
   text-decoration-color: #99a9bf;
   text-decoration-width: auto;
 }
+
 .WholeCourse {
   margin: 50px 20px;
   text-align: left;

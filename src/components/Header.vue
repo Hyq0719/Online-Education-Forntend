@@ -42,7 +42,7 @@
         <el-menu-item index="1-3" v-if="isLoginTeacher" @click="class_management">管理课程</el-menu-item>
         <el-menu-item index="1-4">设置</el-menu-item>
         <el-menu-item index="1-5" v-if="!isLogin&&!isLoginTeacher" @click="Login">登录</el-menu-item>
-        <el-menu-item index="1-5" v-if="isLogin||isLoginTeacher" >退出登录</el-menu-item>
+        <el-menu-item index="1-5" v-if="isLogin||isLoginTeacher">退出登录</el-menu-item>
       </el-submenu>
       <el-submenu index="2">
         <template slot="title">分类</template>
@@ -108,7 +108,7 @@ export default {
 
 .Header-search {
   float: left;
-  width: 200px;
+  width: 300px;
   margin: 10px 0 10px 50px;
 }
 

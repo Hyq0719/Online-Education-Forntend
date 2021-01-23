@@ -7,7 +7,7 @@
       <el-header class="onlineNumber">{{ myCount }}人正在观看</el-header>
       <el-tabs type="card" v-model="activeList" stretch>
         <el-tab-pane label="聊天室" name="first">
-          <div class="infinite-list-wrapper" style="overflow:auto; height:344px;">
+          <div class="infinite-list-wrapper">
             <ul
                 class="list">
               <li v-for="item in list" :key='item' :class="isMyself(item[0])">{{ item[0] }}：{{ item[1] }}</li>
@@ -15,15 +15,15 @@
           </div>
           <el-footer>
             <input
+                class="communicate"
                 type="text"
                 v-model="input"
                 @keyup.enter="mySend()"
             />
-            <button @click="mySend()">发送</button>
           </el-footer>
         </el-tab-pane>
         <el-tab-pane label="在线用户" name="second">
-          <div class="infinite-list-wrapper" style="overflow:auto; height:344px;">
+          <div class="infinite-list-wrapper">
             <ul class="list">
               <li v-for="value in userList" :key="value" class="users">{{ value }}</li>
             </ul>
@@ -85,7 +85,7 @@ export default {
       let a = new URLSearchParams();
       let that = this;
       a.append('sid', '1');
-      axios.post("http://192.168.1.102:8080/api/WebSocket/onlineStudents", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post(this.Api + "/api/WebSocket/onlineStudents", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         // console.log(response);
         if (response.data.code === 1000) {
           // console.log('OK');
@@ -159,6 +159,15 @@ ul {
   padding: 5px;
 }
 
+.el-tab-pane {
+  text-align: center;
+}
+
+.infinite-list-wrapper {
+  height: 324px;
+  overflow: auto;
+}
+
 .others {
   display: block;
   list-style-type: none;
@@ -190,8 +199,6 @@ ul {
 .onlineNumber {
   height: 20px;
   background-color: #fff;
-  border: 1px solid #C0C4CC;
-  border-radius: 5px;
   font-size: 18px;
 }
 
@@ -205,6 +212,10 @@ ul {
   overflow: hidden;
 }
 
+.communicate {
+  width: 95%;
+  height: 40px;
+}
 </style>
 
 

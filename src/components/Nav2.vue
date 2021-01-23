@@ -3,7 +3,7 @@
     <h3 class="tiltlefont">新手入门</h3>
     <div>
       <adview1 class="adview" :img="adpicture[0]"></adview1>
-      <adview1 lass="adview" :img="adpicture[1]"></adview1>
+      <adview1 class="adview" :img="adpicture[1]"></adview1>
     </div>
     <div v-for="(item,index) in star" v-bind:key="index">
       <router-link to="/course">
