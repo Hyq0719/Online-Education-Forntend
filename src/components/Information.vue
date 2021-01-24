@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-aside width="300px">
-        <img src="../assets/studentheader.jpg" alt="图片缺失" >
+        <img src="../assets/studentheader.jpg" alt="图片缺失">
         <h3>游客1234567890</h3>
         <h6>ID:1234567890</h6>
       </el-aside>
@@ -73,17 +73,17 @@ export default {
   line-height: 20px;
 }
 
-.el-aside img{
+.el-aside img {
   margin-top: 30px;
   width: 150px;
   height: 150px;
 }
 
-.el-aside h3{
+.el-aside h3 {
   margin-bottom: 10px;
 }
 
-.el-aside h6{
+.el-aside h6 {
   margin-top: 10px;
 }
 
