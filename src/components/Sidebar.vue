@@ -2,7 +2,7 @@
   <div class="sidebar">
     <ul class="sidebar-list">
       <li class="sidebar-item">
-        <span class="sidebar-text"><router-link to="/Feedback">意见反馈</router-link></span>
+        <span class="sidebar-text"><router-link to="/Feedback" >意见反馈</router-link></span>
       </li>
       <li class="sidebar-item">
         <span class="sidebar-text">帮助中心</span>
@@ -57,5 +57,15 @@ export default {
   list-style: none;
   padding-inline-start: 0;
   Padding-left: 0;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #ffd04b;
+}
+
+a {
+  text-decoration: none;
+  color: #99a9bf;
 }
 </style>
