@@ -13,11 +13,23 @@
           <el-form-item label="昵称：">
             <el-input v-model="information.name"></el-input>
           </el-form-item>
-          <el-form-item label="城市：">
-            <el-input v-model="information.city"></el-input>
+          <el-form-item label="手机号：">
+            <el-input v-model="information.phone"></el-input>
           </el-form-item>
           <el-form-item label="性别：">
             <el-input v-model="information.sex"></el-input>
+          </el-form-item>
+          <el-form-item label="学校：">
+            <el-input v-model="information.school"></el-input>
+          </el-form-item>
+          <el-form-item label="专业：">
+            <el-input v-model="information.major"></el-input>
+          </el-form-item>
+          <el-form-item label="年级：">
+            <el-input v-model="information.grade"></el-input>
+          </el-form-item>
+          <el-form-item label="城市：">
+            <el-input v-model="information.city"></el-input>
           </el-form-item>
           <el-form-item label="个性签名：">
             <el-input v-model="information.signature"></el-input>
@@ -35,8 +47,12 @@ export default {
     return {
       information: {
         name: '',
-        city: '',
+        phone: '',
         sex: '',
+        school: '',
+        major: '',
+        grade: '',
+        city: '',
         signature: '',
       }
     }
