@@ -93,14 +93,13 @@ export default {
       this.$router.push('/Login')
     },
     Logout() {
-      this.$store.commit('saveIsLogin');
+      this.$router.push('/Login');
+      if (this.isLogin) {
+        this.$store.commit('saveIsLogin');
+      } else {
+        this.$store.commit('saveIsLoginTeacher');
+      }
     },
-    // axios.post(this.Api + "/api/Student/loginByPassword").then(function (response) {
-    //   console.log(response);
-    //   that.$store.commit('saveIsLogin');
-    // }, function (err) {
-    //   console.log(err);
-    // })
     Information() {
       this.$router.push('/Information')
     },
