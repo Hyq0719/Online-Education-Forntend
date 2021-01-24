@@ -67,7 +67,7 @@ export default {
 
 .el-aside {
   border-radius: 10px;
-  border: 1px grey solid;
+  border: #C0C4CC 1px solid;
   color: #333;
   text-align: center;
   line-height: 20px;
@@ -89,7 +89,7 @@ export default {
 
 .el-main {
   border-radius: 10px;
-  border: 1px grey solid;
+  border: #C0C4CC 1px solid;
   color: #333;
   text-align: left;
   line-height: 30px;
