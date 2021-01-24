@@ -129,4 +129,13 @@ export default {
   float: right;
 }
 
+a:hover {
+  text-decoration: none;
+  color: #ffd04b;
+}
+
+a {
+  text-decoration: none;
+  color: #99a9bf;
+}
 </style>

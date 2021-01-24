@@ -60,7 +60,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 a:hover {
   text-decoration: none;
   color: #ffd04b;
