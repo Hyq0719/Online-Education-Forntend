@@ -42,7 +42,7 @@
         <el-menu-item index="1-3" v-if="isLoginTeacher" @click="class_management">管理课程</el-menu-item>
         <el-menu-item index="1-4">设置</el-menu-item>
         <el-menu-item index="1-5" v-if="!isLogin&&!isLoginTeacher" @click="Login">登录</el-menu-item>
-        <el-menu-item index="1-5" v-if="isLogin||isLoginTeacher">退出登录</el-menu-item>
+        <el-menu-item index="1-5" v-if="isLogin||isLoginTeacher" @click="Logout">注销</el-menu-item>
       </el-submenu>
       <el-submenu index="2">
         <template slot="title">分类</template>
@@ -92,6 +92,15 @@ export default {
     Login() {
       this.$router.push('/Login')
     },
+    Logout() {
+      this.$store.commit('saveIsLogin');
+    },
+    // axios.post(this.Api + "/api/Student/loginByPassword").then(function (response) {
+    //   console.log(response);
+    //   that.$store.commit('saveIsLogin');
+    // }, function (err) {
+    //   console.log(err);
+    // })
     Information() {
       this.$router.push('/Information')
     },

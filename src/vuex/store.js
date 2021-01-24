@@ -8,7 +8,7 @@ export default new Vuex.Store({
         isLogin: false,
         currentData: {},
         isRegister: false,
-        isLoginTeacher: true,
+        isLoginTeacher: false,
     },
     mutations: {
         saveIsLogin(state) {
