@@ -11,6 +11,9 @@ import CourseMenu from '../views/CourseMenu';
 import Searchpage from "@/views/Searchpage";
 import Classmanagement from "@/views/Classmanagement";
 import Information from '../views/Information';
+import Feedback from "@/views/Feedback";
+import Classmanagement_student from "@/components/classmanagement/student";
+import Classmanagement_class from "@/components/classmanagement/class";
 
 Vue.use(Router);
 
@@ -65,11 +68,27 @@ export default new Router({
             path: '/Classmanagement',
             name: 'Classmanagement',
             component: Classmanagement,
+            children: [{
+
+                path: 'student',
+                name: 'Classmanagement_student',
+                component: Classmanagement_student,
+            },
+                {
+                    path: 'class',
+                    name: 'Classmanagement_class',
+                    component: Classmanagement_class,
+                }]
         },
         {
             path: '/Information',
             name: 'Information',
             component: Information,
         },
+        {
+            path: '/Feedback',
+            name: Feedback,
+            component: Feedback,
+        }
     ]
 })

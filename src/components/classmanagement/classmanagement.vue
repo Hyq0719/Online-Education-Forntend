@@ -3,11 +3,14 @@
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
       <el-menu :default-openeds="['1', '3']">
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>班级管理</template>
+          <template slot="title"><i class="el-icon-message"></i>学生管理</template>
           <el-menu-item-group>
-            <el-menu-item index="1-1">班级一</el-menu-item>
-            <el-menu-item index="1-2">班级二</el-menu-item>
+            <el-menu-item index="1-1"><router-link to="/Classmanagement/student">班级一</router-link></el-menu-item>
+            <el-menu-item index="1-2"><router-link to="/Classmanagement/student">班级二</router-link></el-menu-item>
           </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="2">
+          <template slot="title"><i class="el-icon-message"></i><router-link to="/Classmanagement/class">班级管理</router-link></template>
         </el-submenu>
       </el-menu>
     </el-aside>
@@ -26,14 +29,7 @@
       </el-header>
 
       <el-main>
-        <el-table :data="tableData">
-          <el-table-column prop="studentID" label="学号" width="140">
-          </el-table-column>
-          <el-table-column prop="name" label="姓名" width="120">
-          </el-table-column>
-          <el-table-column prop="grade" label="成绩">
-          </el-table-column>
-        </el-table>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
