@@ -3,8 +3,9 @@
     <el-main>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="直播介绍" name="first">
-          <img src="../assets/courseintroduction.png" alt="图片缺失" style="width: 100%;">
-          <img src="../assets/courseintroduction1.png" alt="图片缺失" style="width: 100%;">
+          <img src="../assets/courseintroduction1.png" alt="图片缺失">
+          <img src="../assets/courseintroduction2.png" alt="图片缺失">
+          <img src="../assets/courseintroduction.png" alt="图片缺失">
         </el-tab-pane>
         <el-tab-pane label="直播评价" name="second">
           <div class="block">
@@ -81,6 +82,9 @@ export default {
   margin: 50px 100px;
 }
 
+.el-tab-pane img {
+  width: 100%;
+}
 
 .Teacher {
   text-align: left;

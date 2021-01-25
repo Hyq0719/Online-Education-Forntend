@@ -18,6 +18,14 @@
         </router-link>
       </el-col>
     </el-row>
+
+    <div class="block">
+      <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="100">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -233,9 +241,15 @@ export default {
 
 a {
   text-decoration: none;
+  color: #1c1f21;
 }
 
 .router-link-active {
   text-decoration: none;
+}
+
+.block {
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 </style>

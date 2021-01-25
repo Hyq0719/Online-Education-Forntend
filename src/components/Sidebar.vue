@@ -68,4 +68,13 @@ a {
   text-decoration: none;
   color: #99a9bf;
 }
+
+a {
+  text-decoration: none;
+  color: #99a9bf;
+}
+
+.router-link-active {
+  text-decoration: none;
+}
 </style>

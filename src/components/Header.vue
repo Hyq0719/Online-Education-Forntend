@@ -20,30 +20,24 @@
           </router-link>
         </div>
       </slot>
-      <el-submenu index="1">
+      <el-submenu index="1" v-if="isLogin||isLoginTeacher">
         <template slot="title">
           <avatar v-if="isLogin" style="float: left;"></avatar>
-
-          <div class="demo-basic--circle" v-if="!isLogin&&!isLoginTeacher" style="float: left;">
-            <div class="block">
-              <el-avatar :size="40" :src="circleUrl"></el-avatar>
-            </div>
-          </div>
-
           <div class="demo-basic--circle" v-if="isLoginTeacher" style="float: left;">
             <div class="block">
               <el-avatar shape="square" :size="40" :src="squareUrl"></el-avatar>
             </div>
           </div>
-
         </template>
         <el-menu-item index="1-1" @click="Information">个人信息</el-menu-item>
         <el-menu-item index="1-2">我的消息</el-menu-item>
         <el-menu-item index="1-3" v-if="isLoginTeacher" @click="class_management">管理课程</el-menu-item>
         <el-menu-item index="1-4">设置</el-menu-item>
-        <el-menu-item index="1-5" v-if="!isLogin&&!isLoginTeacher" @click="Login">登录</el-menu-item>
-        <el-menu-item index="1-5" v-if="isLogin||isLoginTeacher">退出登录</el-menu-item>
+        <el-menu-item index="1-6" @click="Logout">注销</el-menu-item>
       </el-submenu>
+      <el-menu-item index="1">
+        <router-link to="/login">登录/注册</router-link>
+      </el-menu-item>
       <el-submenu index="2">
         <template slot="title">分类</template>
         <el-menu-item index="2-1">选项1</el-menu-item>
@@ -90,7 +84,15 @@ export default {
       console.log(key, keyPath);
     },
     Login() {
-      this.$router.push('/Login')
+      this.$router.push('/login')
+    },
+    Logout() {
+      this.$router.push('/login');
+      if (this.isLogin) {
+        this.$store.commit('saveIsLogin');
+      } else {
+        this.$store.commit('saveIsLoginTeacher');
+      }
     },
     Information() {
       this.$router.push('/Information')
@@ -120,4 +122,13 @@ export default {
   float: right;
 }
 
+a:hover {
+  text-decoration: none;
+  color: #ffd04b;
+}
+
+a {
+  text-decoration: none;
+  color: #99a9bf;
+}
 </style>

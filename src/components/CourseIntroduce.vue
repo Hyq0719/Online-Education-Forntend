@@ -14,11 +14,12 @@
                 </p>
               </div>
             </div>
-            <div class="Summary">
+            <div class="content">
               <div>
                 <img src="../assets/logo.png" alt="图片缺失">
                 <h3>课程概述</h3>
               </div>
+              <div class="clear"></div>
               <p>
                 《电路》课程是自动化专业及其相近专业的必修课程，是学生学习和掌握电路基本理论知识和电路分析基本方法的专业基础课程。本课程在教学内容方面侧重于基本知识、基本理论和基本分析方法的讲解；另外独立开设的实验课程培养相应的实践能力。
 
@@ -26,6 +27,32 @@
 
                 该课程不仅为后续专业课的学习打基础，对发展学生科学思维、培养学生分析问题、解决问题也具有十分重要的作用，同时也为学生今后从事自动化专业相关领域的实际工作打下必要的理论基础。
               </p>
+            </div>
+            <div class="content">
+              <div>
+                <img src="../assets/logo.png" alt="图片缺失">
+                <h3>授课目标</h3>
+              </div>
+              <div class="clear"></div>
+              <ul>
+                <li>增强学生对恶意代码攻击机理的理解</li>
+                <li>促进学生掌握恶意代码检测机理</li>
+                <li>提升学生恶意代码分析能力</li>
+                <li>帮助学生进一步构建网络攻防博弈思维</li>
+                <li>提升学生在恶意代码领域的创新思维与综合实践能力</li>
+              </ul>
+            </div>
+            <div class="content">
+              <div>
+                <img src="../assets/logo.png" alt="图片缺失">
+                <h3>预备知识</h3>
+              </div>
+              <div class="clear"></div>
+              <ul>
+                <li>操作系统基础知识</li>
+                <li>基本的汇编基础</li>
+                <li>基本的脚本语言基础</li>
+              </ul>
             </div>
           </el-tab-pane>
           <el-tab-pane label="课程评价" name="second">
@@ -147,28 +174,33 @@ export default {
   float: right;
 }
 
-.Summary {
-  float: left;
+.content {
   text-align: left;
 }
 
-.Summary p {
-  float: left;
-  margin: 0;
+.content p {
+
 }
 
-.Summary h3 {
+.content h3 {
   float: left;
   margin: 30px 10px 10px 10px;
 }
 
-.Summary img {
+.content img {
   float: left;
   height: 40px;
   width: 40px;
   margin: 30px 10px 10px 10px;
 }
 
+.content ul {
+  margin-top: 0;
+}
+
+.clear {
+  clear: both;
+}
 </style>
 <style>
 .Comment textarea.el-textarea__inner {
