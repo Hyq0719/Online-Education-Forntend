@@ -14,6 +14,7 @@ import Information from '../views/Information';
 import Feedback from "@/views/Feedback";
 import Classmanagement_student from "@/components/classmanagement/student";
 import Classmanagement_class from "@/components/classmanagement/class";
+import Classmanagement_upload from "@/components/classmanagement/upload";
 
 Vue.use(Router);
 
@@ -68,17 +69,24 @@ export default new Router({
             path: '/Classmanagement',
             name: 'Classmanagement',
             component: Classmanagement,
-            children: [{
+            children: [
+                {
 
-                path: 'student',
-                name: 'Classmanagement_student',
-                component: Classmanagement_student,
-            },
+                    path: 'student',
+                    name: 'Classmanagement_student',
+                    component: Classmanagement_student,
+                },
                 {
                     path: 'class',
                     name: 'Classmanagement_class',
                     component: Classmanagement_class,
-                }]
+                },
+                {
+
+                    path: 'upload',
+                    name: 'Classmanagement_upload',
+                    component: Classmanagement_upload,
+                },]
         },
         {
             path: '/Information',

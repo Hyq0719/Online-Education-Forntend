@@ -5,33 +5,20 @@
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>学生管理</template>
           <el-menu-item-group>
-            <el-menu-item index="1-1"><router-link to="/Classmanagement/student">班级一</router-link></el-menu-item>
-            <el-menu-item index="1-2"><router-link to="/Classmanagement/student">班级二</router-link></el-menu-item>
+            <el-menu-item index="1-1"><router-link to="/Classmanagement/student">学生列表</router-link></el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="2">
-          <template slot="title"><i class="el-icon-message"></i><router-link to="/Classmanagement/class">班级管理</router-link></template>
+          <template slot="title"><i class="el-icon-message"></i>课程管理</template>
+          <el-menu-item-group>
+            <el-menu-item index="3-1"><router-link to="/Classmanagement/class">课程列表</router-link></el-menu-item>
+            <el-menu-item index="3-2"><router-link to="/Classmanagement/upload">上传课程</router-link></el-menu-item>
+          </el-menu-item-group>
         </el-submenu>
       </el-menu>
     </el-aside>
 
-    <el-container>
-      <el-header style="text-align: right; font-size: 12px">
-        <el-dropdown>
-          <i class="el-icon-setting" style="margin-right: 15px"></i>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <span>课程一</span>
-      </el-header>
-
-      <el-main>
-        <router-view></router-view>
-      </el-main>
-    </el-container>
+    <router-view></router-view>
   </el-container>
 </template>
 
@@ -45,6 +32,7 @@
 </style>
 
 <script>
+
 export default {
   name: 'Classmanagement',
   data() {
@@ -56,6 +44,9 @@ export default {
     return {
       tableData: Array(20).fill(item)
     }
+  },
+  components: {
+
   }
 };
 </script>
