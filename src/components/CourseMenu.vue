@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: "Curriculum",
+  name: "CourseMenu",
   data() {
     return {
       course: [

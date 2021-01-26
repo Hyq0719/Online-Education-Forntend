@@ -62,7 +62,7 @@ export default {
     };
 
     return {
-      apiUrl: this.Api + '/api/Student/addStudent',
+      apiUrl: 'http://' + this.Api + '/api/Student/addStudent',
       ruleForm: {
         name: '',
         pass: '',
@@ -89,7 +89,7 @@ export default {
       a.append('password', this.ruleForm.checkPass);
       a.append('phone_id', this.ruleForm.phone);
       let that = this;
-      axios.post(this.Api + '/api/Student/addStudent', a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post('http://' + this.Api + '/api/Student/addStudent', a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/login');

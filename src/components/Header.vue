@@ -35,22 +35,50 @@
         <el-menu-item index="1-4">设置</el-menu-item>
         <el-menu-item index="1-6" @click="Logout">注销</el-menu-item>
       </el-submenu>
-      <el-menu-item index="1">
+      <el-menu-item index="1" v-if="!isLogin&&!isLoginTeacher">
         <router-link to="/login">登录/注册</router-link>
       </el-menu-item>
+      <el-menu-item index="2">
+        <el-popover
+            placement="bottom"
+            width="300"
+            trigger="hover">
+          <h3>大学课程</h3>
+          <div>
+            <el-button @click="CourseMenu" v-for="item in college" v-bind:key="item.id" class="CourseMenu">{{
+                item
+              }}
+            </el-button>
+          </div>
+          <el-divider></el-divider>
+          <h3>升学课程</h3>
+          <div>
+            <el-button @click="CourseMenu" v-for="item in graduate" v-bind:key="item.id" class="CourseMenu">{{
+                item
+              }}
+            </el-button>
+          </div>
+          <el-divider></el-divider>
+          <h3>终身学习课程</h3>
+          <div>
+            <el-button @click="CourseMenu" v-for="item in lifelong" v-bind:key="item.id" class="CourseMenu">{{
+                item
+              }}
+            </el-button>
+          </div>
+          <el-button @click="CourseMenu" slot="reference" class="course" plain>课程</el-button>
+        </el-popover>
+      </el-menu-item>
       <el-submenu index="2">
-        <template slot="title">分类</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
+        <template slot="title">课程</template>
+        <el-menu-item index="2-1" @click="CourseMenu">计算机</el-menu-item>
+        <el-menu-item index="2-2" @click="CourseMenu">金融</el-menu-item>
+        <el-menu-item index="2-3" @click="CourseMenu">数学</el-menu-item>
       </el-submenu>
       <el-menu-item index="3">
-        <router-link to="/coursemenu">课程</router-link>
+        <router-link to="/liveMenu">直播</router-link>
       </el-menu-item>
       <el-menu-item index="4">
-        <router-link to="/live">直播</router-link>
-      </el-menu-item>
-      <el-menu-item index="5">
         <router-link to="/">首页</router-link>
       </el-menu-item>
     </el-menu>
@@ -74,11 +102,17 @@ export default {
       isLoginTeacher: this.$store.state.isLoginTeacher,
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
+      college: ['所有课程', '免费课程', '热门课程', '计算机', '数学', '金融', '计算机', '数学', '金融'],
+      graduate: ['考研21', '考研20', '期末不挂', '英语学习'],
+      lifelong: ['名师专栏'],
     };
   },
   methods: {
     class_management() {
       this.$router.push('/Classmanagement')
+    },
+    CourseMenu() {
+      this.$router.push('/coursemenu')
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -130,5 +164,17 @@ a:hover {
 a {
   text-decoration: none;
   color: #99a9bf;
+}
+
+.CourseMenu {
+  margin: 5px;
+  width: 90px;
+  font-size: 12px;
+}
+
+.course {
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 </style>
