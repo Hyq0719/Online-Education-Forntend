@@ -102,7 +102,7 @@ export default {
       })
     },
     initWebSocket() {
-      const wsuri = "ws://" + "192.168.1.102:8080" + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.currentData.data.userId + '/' + this.$store.state.currentData.data.nickName;
+      const wsuri = "ws://" + this.Api + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.currentData.data.userId + '/' + this.$store.state.currentData.data.nickName;
       this.chatRoomWebsocket = new WebSocket(wsuri);
       this.chatRoomWebsocket.onopen = this.websocketOnOpen;
       this.chatRoomWebsocket.onerror = this.websocketOnError;

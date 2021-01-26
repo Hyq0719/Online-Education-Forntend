@@ -30,7 +30,7 @@ export default {
   name: "LoginTeacher",
   data() {
     return {
-      apiUrl: this.Api + '/api/Teacher/loginByPassword',
+      apiUrl: 'http://' + this.Api + '/api/Teacher/loginByPassword',
       form: {
         name: "",
         password: "",
@@ -43,7 +43,7 @@ export default {
       a.append('password', this.form.password);
       a.append('phone_id', this.form.name);
       let that = this;
-      axios.post(this.Api + "/api/Teacher/loginByPassword", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post('http://' + this.Api + "/api/Teacher/loginByPassword", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/');

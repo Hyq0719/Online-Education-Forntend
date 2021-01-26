@@ -17,10 +17,10 @@ import VBarrage from '@/components/VBarrage/index.vue'
 
 export default {
   name: "VideoPlayer",
-  components:{
+  components: {
     VBarrage
   },
-  data () {
+  data() {
     return {
       arr: [],
       isPause: false,
@@ -29,12 +29,12 @@ export default {
       direction: 'default'
     }
   },
-  mounted () {
+  mounted() {
     this.initTestData();
   },
   methods: {
     // 初始化模拟弹幕数据
-    initTestData () {
+    initTestData() {
       let arr = [
         '这个课有点意思',
         '明天期末考试',
@@ -58,7 +58,7 @@ export default {
       }
     },
     // 发送弹幕
-    sendBarrage () {
+    sendBarrage() {
       if (this.arr.length > 1 && this.sendContent != '' && this.sendContent != null) {
         this.arr.unshift({
           content: this.sendContent,
@@ -89,7 +89,7 @@ export default {
 
 <style scoped>
 .myVedio {
-  height: 100%;
+  height: 550px;
   width: 100%;
   margin: 0 auto;
 }

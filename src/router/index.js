@@ -6,6 +6,7 @@ import Main from '../views/Main';
 import Register from '../views/Register';
 import RegisterTeacher from '../views/RegisterTeacher';
 import Live from '../views/Live';
+import LiveMenu from '../views/LiveMenu';
 import Course from '../views/Course';
 import CourseMenu from '../views/CourseMenu';
 import Searchpage from "@/views/Searchpage";
@@ -49,6 +50,11 @@ export default new Router({
             path: '/live',
             name: 'Live',
             component: Live,
+        },
+        {
+            path: '/livemenu',
+            name: 'LiveMenu',
+            component: LiveMenu,
         },
         {
             path: '/course',
