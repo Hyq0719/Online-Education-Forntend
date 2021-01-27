@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         isLogin: false,
-        currentData: {},
+        userData: {},
+        courseData: {},
         isRegister: false,
         isLoginTeacher: false,
     },
@@ -17,8 +18,11 @@ export default new Vuex.Store({
         saveIsLoginTeacher(state) {
             state.isLoginTeacher = !state.isLoginTeacher;
         },
-        saveData(state, currentData) {
-            state.currentData = currentData;
+        saveData(state, userData) {
+            state.userData = userData;
+        },
+        saveCourseData(state, courseData) {
+            state.courseData = courseData;
         },
         saveIsRegister(state) {
             state.isRegister = true;

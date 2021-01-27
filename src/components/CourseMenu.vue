@@ -179,7 +179,10 @@ export default {
           teacher: "老师6",
           src: require('../assets/course12.webp'),
         },
-      ]
+      ],
+      information: {
+        name: this.$store.state.courseData.name,
+      }
     }
   }
 }

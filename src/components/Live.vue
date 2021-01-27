@@ -85,7 +85,7 @@ export default {
       let a = new URLSearchParams();
       let that = this;
       a.append('sid', '1');
-      axios.post(this.Api + "/api/WebSocket/onlineStudents", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post("http://" + this.Api + "/api/WebSocket/onlineStudents", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         // console.log(response);
         if (response.data.code === 1000) {
           // console.log('OK');

@@ -8,27 +8,27 @@
       </el-aside>
       <el-main class="Information">
         <h2>个人信息</h2>
-        <el-button @click="Change">编辑</el-button>
+        <el-button @click="Change">完成</el-button>
         <div class="clear"></div>
         <el-divider></el-divider>
         <el-form ref="form" :model="information" label-width="100px">
           <el-form-item label="昵称：">
-            <h4>{{ information.nickName }}</h4>
+            <el-input v-model="information.nickName"></el-input>
           </el-form-item>
           <el-form-item label="手机号：">
-            <h4>{{ information.phoneId }}</h4>
+            <el-input v-model="information.phoneId"></el-input>
           </el-form-item>
           <el-form-item label="性别：">
-            <h4>{{ information.sex }}</h4>
+            <el-input v-model="information.sex"></el-input>
           </el-form-item>
           <el-form-item label="学校：">
-            <h4>{{ information.school }}</h4>
+            <el-input v-model="information.school"></el-input>
           </el-form-item>
           <el-form-item label="专业：">
-            <h4>{{ information.majorContent }}</h4>
+            <el-input v-model="information.majorContent"></el-input>
           </el-form-item>
           <el-form-item label="年级：">
-            <h4>{{ information.grade }}</h4>
+            <el-input v-model="information.grade"></el-input>
           </el-form-item>
         </el-form>
       </el-main>
@@ -37,8 +37,10 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Information",
+  name: "InformationChange",
   data() {
     return {
       information: {
@@ -52,6 +54,7 @@ export default {
         school: this.$store.state.userData.school,
         sex: this.$store.state.userData.sex,
         userId: this.$store.state.userData.userId,
+
         vip: this.$store.state.userData.vip,
         wechatId: this.$store.state.userData.wechatId,
         studentPicUrl: this.$store.state.userData.studentPicUrl,
@@ -60,7 +63,37 @@ export default {
   },
   methods: {
     Change() {
-      this.$router.push('/Information/Change')
+      // let params = {
+      //   grade:"this.information.grade",
+      //   majorId:"this.information.majorId",
+      //   nickName:"this.information.nickName",
+      //   picUrl:"this.information.studentPicUrl",
+      //   school:"this.information.school",
+      //   sex:"this.information.sex",
+      // }
+      // let a={
+      //   studentDto:JSON.stringify(params),
+      //   user_id:this.information.userId,
+      // }
+      let a = new URLSearchParams();
+      let studentDto = new FormData();
+      studentDto.append('grade', this.information.grade);
+      studentDto.append('majorId', this.information.majorId);
+      studentDto.append('nickName', this.information.nickName);
+      studentDto.append('picUrl', this.information.studentPicUrl);
+      studentDto.append('school', this.information.school);
+      studentDto.append('sex', this.information.sex);
+      a.append('studentDto', JSON.stringify(studentDto));
+      a.append('user_id', this.information.userId);
+      console.log(JSON.stringify(studentDto));
+      let that = this;
+      axios.post("http://" + this.Api + "/api/Student/completeStudentById", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        that.$router.push('/Information');
+        // that.$store.commit('saveData', response.data.data)
+      }, function (err) {
+        console.log(err);
+      })
     },
   }
 }
@@ -107,15 +140,6 @@ body > .el-container {
 
 .el-input {
   width: 50%;
-}
-
-.Change {
-  float: right;
-}
-
-.Information h4 {
-  margin: 0;
-  font-weight: 400;
 }
 
 .Information h2 {
