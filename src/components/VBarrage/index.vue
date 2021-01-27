@@ -375,7 +375,7 @@ export default {
   }
 
   100% {
-    transform: translate3d(-500px, 0, 0); //如果直接用百分比，是以弹幕长度为标准
+    transform: translate3d(-600px, 0, 0); //如果直接用百分比，是以弹幕长度为标准
   }
 }
 
