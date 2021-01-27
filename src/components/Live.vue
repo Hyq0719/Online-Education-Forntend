@@ -1,6 +1,6 @@
 <template>
-  <el-container>
-    <el-main  style="position: relative">
+  <el-container style="overflow :hidden">
+    <el-main style="position: relative;overflow :hidden">
       <Flvjs></Flvjs>
       <v-barrage :arr="arr"
                  :isPause="isPause"
@@ -93,14 +93,14 @@ export default {
     },
     // 发送弹幕
     isMyself(what) {
-      return what == this.$store.state.userData.data.nickName ? "myself" : "others";
+      return what == this.$store.state.userData.nickName ? "myself" : "others";
     },
     mySend() {
       // console.log('mySend!');
       let preMsg = {
-        userId: this.$store.state.userData.data.userId,
+        userId: this.$store.state.userData.userId,
         type: '0',
-        nickName: this.$store.state.userData.data.nickName,
+        nickName: this.$store.state.userData.nickName,
         msg: this.input,
         timer: '',
       };
@@ -160,7 +160,7 @@ export default {
       })
     },
     initWebSocket() {
-      const wsuri = "ws://" + this.Api + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.userData.data.userId + '/' + this.$store.state.userData.data.nickName;
+      const wsuri = "ws://" + this.Api + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.userData.userId + '/' + this.$store.state.userData.nickName;
       this.chatRoomWebsocket = new WebSocket(wsuri);
       this.chatRoomWebsocket.onopen = this.websocketOnOpen;
       this.chatRoomWebsocket.onerror = this.websocketOnError;
@@ -194,32 +194,8 @@ export default {
 </script>
 
 <style scoped>
-.el-aside {
-  overflow: hidden;
-  text-align: center;
-  line-height: 20px;
-  font-size: 10px;
-}
-
-.el-main {
-  color: #333;
-  text-align: center;
-  padding: 0px;
-}
-
-.el-container {
-  margin: 20px 100px;
-  height: 506px;
-  border: #C0C4CC 1px solid;
-  border-radius: 10px;
-}
-
 ul {
   padding: 5px;
-}
-
-.el-tab-pane {
-  text-align: center;
 }
 
 .infinite-list-wrapper {

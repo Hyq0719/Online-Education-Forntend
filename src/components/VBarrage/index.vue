@@ -30,7 +30,7 @@ export default {
       default: 80
     }
   },
-  data () {
+  data() {
     return {
       // 每行弹幕数最大值
       MAX_DM_COUNT: 5,
@@ -59,12 +59,11 @@ export default {
       ]
     };
   },
-  computed: {
-  },
-  created () {
+  computed: {},
+  created() {
 
   },
-  mounted () {
+  mounted() {
     this.barrageMainDm = this.$refs.barrageMainDm;
     // 缓存容器宽度
     this.barMainWidth = this.barrageMainDm.clientWidth;
@@ -76,22 +75,22 @@ export default {
     document.addEventListener("visibilitychange", this.visibilitychangeFn);
   },
   watch: {
-    arr (list) {
+    arr(list) {
       this.barrages = list;
     },
-    isPause (val) {
+    isPause(val) {
       if (val) {
         this.pauseDm();
       } else {
         this.playDm();
       }
     },
-    percent (val) {
+    percent(val) {
       this.CHANNEL_COUNT = val / 10;
     }
   },
   methods: {
-    visibilitychangeFn () {
+    visibilitychangeFn() {
       if (!document.hidden) {
         //处于当前页面
         this.playDm();
@@ -102,7 +101,7 @@ export default {
         this.intervalDM = null;
       }
     },
-    init () {
+    init() {
       // let wrapper = this.$refs.barrageMainDm;
       // 先new一些div 重复利用这些DOM
       for (let j = 0; j < this.CHANNEL_COUNT; j++) {
@@ -117,7 +116,7 @@ export default {
           dom.style.top = j * (this.barrageMainDm.clientHeight / this.CHANNEL_COUNT) + 'px';
           console.log(dom.style.top)
           // 每次到animationend结束的时候 就是弹幕划出屏幕了 将DOM位置重置 再放回DOM池
-          dom.addEventListener('animationend', ( ) => {
+          dom.addEventListener('animationend', () => {
             // 初始化dom样式
             dom.className = 'barrage-item';
             dom.style.transform = `translate3d(${this.barMainWidth}px,0,0)`
@@ -154,25 +153,25 @@ export default {
     /**
      * 获取一个可以发射弹幕的通道 没有则返回-1
      */
-    getChannel () {
+    getChannel() {
       for (let i = 0; i < this.CHANNEL_COUNT; i++) {
         if (this.hasPosition[i] && this.domPool[i].length) return i;
       }
       return -1;
     },
     /**
-    * 获取一个可以发射顶部弹幕的通道 没有则返回-1
-    */
-    getTopChannel () {
+     * 获取一个可以发射顶部弹幕的通道 没有则返回-1
+     */
+    getTopChannel() {
       for (let i = 0; i < this.CHANNEL_COUNT; i++) {
         if (this.hasTopPosition[i]) return i;
       }
       return -1;
     },
     /**
-    * 根据DOM和弹幕信息 发射弹幕
-    */
-    shootDanmu (domItem, dmItem, channel) {
+     * 根据DOM和弹幕信息 发射弹幕
+     */
+    shootDanmu(domItem, dmItem, channel) {
       // 设置当前通道为false
       this.hasPosition[channel] = false;
       //获取dom
@@ -215,7 +214,7 @@ export default {
         this.hasPosition[channel] = true;
       }, dom.clientWidth * 10 + 1000);
     },
-    shootTopDanmu (dmItem, channel) {
+    shootTopDanmu(dmItem, channel) {
       // 设置当前通道为false
       this.hasTopPosition[channel] = false;
       //获取dom
@@ -244,24 +243,24 @@ export default {
         this.hasTopPosition[channel] = true;
       })
       this.barrageMainDm.appendChild(dom); // 一定要在获取宽度和执行动画之前渲染dom
-      dom.style.transform = `translate3d(${ 50 - (dom.clientWidth)}px,${channel * dom.clientHeight}px,0)`
+      dom.style.transform = `translate3d(${-(dom.clientWidth) / 2}px,${channel * dom.clientHeight}px,0)`
       dom.style.animation = 'barrage-fade 3s';
     },
     // 获取空闲通道中空闲的dom
-    getFreeChannelDom (channel) {
+    getFreeChannelDom(channel) {
       let item;
       item = this.domPool[channel].find(it => !it.isFree)
       return item
     },
     // 暂停弹幕
-    pauseDm () {
+    pauseDm() {
       if (this.intervalDM) {
         clearInterval(this.intervalDM)
         this.intervalDM = null;
       }
     },
     // 播放弹幕
-    playDm () {
+    playDm() {
       // 每隔1ms从弹幕池里获取弹幕（如果有的话）并发射
       let self = this; // 这里取一个self this 为了方便调试的时候看到this具体内容
       self.intervalDM = setInterval(() => {
@@ -295,23 +294,23 @@ export default {
       }, self.interValTime);
     }
   },
-  components: {
-
-  },
+  components: {},
 };
 </script>
-<style  lang="scss">
+<style lang="scss">
 .barrage-wrapper {
   * {
     margin: 3px;
-    padding: 0px;
+    padding: 0;
   }
+
   z-index: 1;
   position: absolute;
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
+
   .barrage-item {
     z-index: 99;
     position: absolute;
@@ -333,17 +332,20 @@ export default {
     font-weight: bold;
     line-height: 1.125;
     opacity: 1;
-    text-shadow: rgb(0, 0, 0) 1px 0px 1px, rgb(0, 0, 0) 0px 1px 1px,
-      rgb(0, 0, 0) 0px -1px 1px, rgb(0, 0, 0) -1px 0px 1px;
+    text-shadow: rgb(0, 0, 0) 1px 0 1px, rgb(0, 0, 0) 0 1px 1px,
+    rgb(0, 0, 0) 0 -1px 1px, rgb(0, 0, 0) -1px 0 1px;
+
     &:hover {
       color: red;
       animation-play-state: paused !important;
       z-index: 150;
     }
   }
+
   .top-item {
     z-index: 100;
   }
+
   .barrage-main {
     //border: 2px solid blue;
     width: 100%;
@@ -352,6 +354,7 @@ export default {
     overflow: hidden;
     // background: #000;
   }
+
   .barrage-main-dm {
     position: absolute;
     width: 100%;
@@ -360,19 +363,22 @@ export default {
     top: 0;
   }
 }
+
 .self-dm {
   border: 2px solid #87ceeb;
   box-sizing: border-box;
 }
+
 @keyframes barrage-run {
   0% {
-    transform: translate3d(350%, 0, 0);
+    transform: translate3d(500px, 0, 0);
   }
 
   100% {
-    transform: translate3d(-350%, 0, 0);
+    transform: translate3d(-500px, 0, 0); //如果直接用百分比，是以弹幕长度为标准
   }
 }
+
 @keyframes barrage-fade {
   0% {
     visibility: visible;
@@ -383,11 +389,13 @@ export default {
     // opacity: 0;
   }
 }
+
 .ani-pause {
   & div {
     animation-play-state: paused !important;
   }
 }
+
 .ani-running {
   & div {
     animation-play-state: running !important;
