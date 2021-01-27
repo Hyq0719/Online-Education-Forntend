@@ -8,36 +8,33 @@
       </el-aside>
       <el-main class="Information">
         <h2>个人信息</h2>
-        <el-button @click="Change">完成</el-button>
         <div class="clear"></div>
         <el-divider></el-divider>
         <el-form ref="form" :model="information" label-width="100px">
           <el-form-item label="昵称：">
-            <el-input v-model="information.nickName"></el-input>
-          </el-form-item>
-          <el-form-item label="手机号：">
-            <el-input v-model="information.phoneId"></el-input>
+            <el-input v-model="information.nickName" :disabled="change"></el-input>
           </el-form-item>
           <el-form-item label="性别：">
-            <el-input v-model="information.sex"></el-input>
+            <el-input v-model="information.sex" :disabled="change"></el-input>
           </el-form-item>
           <el-form-item label="学校：">
-            <el-input v-model="information.school"></el-input>
-          </el-form-item>
-          <el-form-item label="专业：">
-            <el-input v-model="information.majorContent"></el-input>
+            <el-input v-model="information.school" :disabled="change"></el-input>
           </el-form-item>
           <el-form-item label="年级：">
-            <el-input v-model="information.grade"></el-input>
+            <el-input v-model="information.grade" :disabled="change"></el-input>
           </el-form-item>
         </el-form>
+        <div class="Button">
+          <el-button type="primary" @click="ChangeInformation">修改完成</el-button>
+          <el-button @click="ChangeRouter">确认返回</el-button>
+        </div>
       </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   name: "InformationChange",
@@ -54,48 +51,43 @@ export default {
         school: this.$store.state.userData.school,
         sex: this.$store.state.userData.sex,
         userId: this.$store.state.userData.userId,
-
         vip: this.$store.state.userData.vip,
         wechatId: this.$store.state.userData.wechatId,
         studentPicUrl: this.$store.state.userData.studentPicUrl,
-      }
+      },
+      change: false,
     }
   },
   methods: {
-    Change() {
-      // let params = {
-      //   grade:"this.information.grade",
-      //   majorId:"this.information.majorId",
-      //   nickName:"this.information.nickName",
-      //   picUrl:"this.information.studentPicUrl",
-      //   school:"this.information.school",
-      //   sex:"this.information.sex",
-      // }
-      // let a={
-      //   studentDto:JSON.stringify(params),
-      //   user_id:this.information.userId,
-      // }
-      // let a = new URLSearchParams();
-      // let studentDto = new FormData();
-      // studentDto.append('grade', this.information.grade);
-      // studentDto.append('majorId', this.information.majorId);
-      // studentDto.append('nickName', this.information.nickName);
-      // studentDto.append('picUrl', this.information.studentPicUrl);
-      // studentDto.append('school', this.information.school);
-      // studentDto.append('sex', this.information.sex);
-      // a.append('studentDto', JSON.stringify(studentDto));
-      // a.append('user_id', this.information.userId);
-      // console.log(JSON.stringify(studentDto));
-      // let that = this;
-      // axios.post("http://" + this.Api + "/api/Student/completeStudentById", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-      //   console.log(response);
-      //   that.$router.push('/Information');
-      //   // that.$store.commit('saveData', response.data.data)
-      // }, function (err) {
-      //   console.log(err);
-      // })
-      this.$router.push('/Information');
+    ChangeInformation() {
+      let that = this;
+      let params = {
+        grade: this.information.grade,
+        majorId: this.information.majorId,
+        nickname: this.information.nickName,
+        picUrl: this.information.studentPicUrl,
+        school: this.information.school,
+        sex: this.information.sex,
+      }
+      let a = new URLSearchParams();
+      a.append('user_id', this.information.userId);
+      axios.post("http://" + this.Api + "/api/Student/completeStudentById?" + a, params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+        console.log(response);
+        axios.post("http://" + that.Api + "/api/Student/getStudentbyId?" + a).then(function (res) {
+          console.log(res);
+          that.$store.commit('saveData', res.data.data);
+          that.change = true;
+        }, function (err) {
+          console.log(err);
+        })
+      }, function (err) {
+        console.log(err);
+      })
     },
+    ChangeRouter() {
+      this.$router.push('/information');
+    }
+
   }
 }
 </script>
@@ -147,8 +139,11 @@ body > .el-container {
   float: left;
 }
 
+.Button {
+  text-align: center;
+}
+
 .Information button {
-  float: right;
   margin: 20px;
 }
 

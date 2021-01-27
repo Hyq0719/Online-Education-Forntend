@@ -18,6 +18,12 @@ export default new Vuex.Store({
         saveIsLoginTeacher(state) {
             state.isLoginTeacher = !state.isLoginTeacher;
         },
+        // ChangeData(state, params) {
+        //     state.userData.nickName = params.nickname;
+        //     state.userData.grade = params.grade;
+        //     state.userData.school = params.school;
+        //     state.userData.sex = params.sex;
+        // },
         saveData(state, userData) {
             state.userData = userData;
         },
