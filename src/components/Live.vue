@@ -98,9 +98,9 @@ export default {
     mySend() {
       // console.log('mySend!');
       let preMsg = {
-        userId: this.$store.state.currentData.data.userId,
+        userId: this.$store.state.userData.userId,
         type: '0',
-        nickName: this.$store.state.currentData.data.nickName,
+        nickName: this.$store.state.userData.nickName,
         msg: this.input,
         timer: '',
       };
@@ -153,14 +153,14 @@ export default {
           for (let i in response.data.data.student) {
             that.userList.push(response.data.data.student[i]);
           }
-          console.log(that.userList);
+          // console.log(that.userList);
         }
       }, function (err) {
         console.log(err);
       })
     },
     initWebSocket() {
-      const wsuri = "ws://" + this.Api + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.currentData.data.userId + '/' + this.$store.state.currentData.data.nickName;
+      const wsuri = "ws://" + this.Api + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.userData.userId + '/' + this.$store.state.userData.nickName;
       this.chatRoomWebsocket = new WebSocket(wsuri);
       this.chatRoomWebsocket.onopen = this.websocketOnOpen;
       this.chatRoomWebsocket.onerror = this.websocketOnError;
