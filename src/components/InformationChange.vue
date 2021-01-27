@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "InformationChange",
@@ -75,25 +75,26 @@ export default {
       //   studentDto:JSON.stringify(params),
       //   user_id:this.information.userId,
       // }
-      let a = new URLSearchParams();
-      let studentDto = new FormData();
-      studentDto.append('grade', this.information.grade);
-      studentDto.append('majorId', this.information.majorId);
-      studentDto.append('nickName', this.information.nickName);
-      studentDto.append('picUrl', this.information.studentPicUrl);
-      studentDto.append('school', this.information.school);
-      studentDto.append('sex', this.information.sex);
-      a.append('studentDto', JSON.stringify(studentDto));
-      a.append('user_id', this.information.userId);
-      console.log(JSON.stringify(studentDto));
-      let that = this;
-      axios.post("http://" + this.Api + "/api/Student/completeStudentById", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response);
-        that.$router.push('/Information');
-        // that.$store.commit('saveData', response.data.data)
-      }, function (err) {
-        console.log(err);
-      })
+      // let a = new URLSearchParams();
+      // let studentDto = new FormData();
+      // studentDto.append('grade', this.information.grade);
+      // studentDto.append('majorId', this.information.majorId);
+      // studentDto.append('nickName', this.information.nickName);
+      // studentDto.append('picUrl', this.information.studentPicUrl);
+      // studentDto.append('school', this.information.school);
+      // studentDto.append('sex', this.information.sex);
+      // a.append('studentDto', JSON.stringify(studentDto));
+      // a.append('user_id', this.information.userId);
+      // console.log(JSON.stringify(studentDto));
+      // let that = this;
+      // axios.post("http://" + this.Api + "/api/Student/completeStudentById", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      //   console.log(response);
+      //   that.$router.push('/Information');
+      //   // that.$store.commit('saveData', response.data.data)
+      // }, function (err) {
+      //   console.log(err);
+      // })
+      this.$router.push('/Information');
     },
   }
 }
