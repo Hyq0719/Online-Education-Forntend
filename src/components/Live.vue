@@ -93,14 +93,14 @@ export default {
     },
     // 发送弹幕
     isMyself(what) {
-      return what == this.$store.state.currentData.data.nickName ? "myself" : "others";
+      return what == this.$store.state.userData.data.nickName ? "myself" : "others";
     },
     mySend() {
       // console.log('mySend!');
       let preMsg = {
-        userId: this.$store.state.currentData.data.userId,
+        userId: this.$store.state.userData.data.userId,
         type: '0',
-        nickName: this.$store.state.currentData.data.nickName,
+        nickName: this.$store.state.userData.data.nickName,
         msg: this.input,
         timer: '',
       };
@@ -143,7 +143,7 @@ export default {
       let a = new URLSearchParams();
       let that = this;
       a.append('sid', '1');
-      axios.post("http://" + this.Api + "/api/WebSocket/onlineStudents", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post(this.Api + "/api/WebSocket/onlineStudents", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         // console.log(response);
         if (response.data.code === 1000) {
           // console.log('OK');
@@ -160,7 +160,7 @@ export default {
       })
     },
     initWebSocket() {
-      const wsuri = "ws://" + this.Api + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.currentData.data.userId + '/' + this.$store.state.currentData.data.nickName;
+      const wsuri = "ws://" + this.Api + "/websocket/" + "1" + "/" + "0" + "/" + this.$store.state.userData.data.userId + '/' + this.$store.state.userData.data.nickName;
       this.chatRoomWebsocket = new WebSocket(wsuri);
       this.chatRoomWebsocket.onopen = this.websocketOnOpen;
       this.chatRoomWebsocket.onerror = this.websocketOnError;
