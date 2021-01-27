@@ -12,7 +12,7 @@
           <div class="grid-content">
             <img :src="item.src" alt="图片缺失">
             <h4>{{ item.name }}</h4>
-            <h5>{{ item.school }}</h5>
+            <!--            <h5>{{ item.school }}</h5>-->
             <h6>{{ item.teacher }}</h6>
           </div>
         </router-link>
@@ -36,153 +36,31 @@ export default {
     return {
       course: [
         {
-          name: "高等数学1",
-          school: "浙江大学",
-          teacher: "老师1",
+          name: this.$store.state.courseData[0].name,
+          teacher: this.$store.state.courseData[0].teacherId,
           src: require('../assets/course1.webp'),
         },
         {
-          name: "高等数学2",
-          school: "上海大学",
-          teacher: "老师2",
+          name: this.$store.state.courseData[1].name,
+          teacher: this.$store.state.courseData[1].teacherId,
           src: require('../assets/course2.webp'),
         },
         {
-          name: "高等数学3",
-          school: "同济大学",
-          teacher: "老师3",
+          name: this.$store.state.courseData[2].name,
+          teacher: this.$store.state.courseData[2].teacherId,
           src: require('../assets/course3.webp'),
         },
         {
-          name: "高等数学4",
-          school: "北京大学",
-          teacher: "老师4",
+          name: this.$store.state.courseData[3].name,
+          teacher: this.$store.state.courseData[3].teacherId,
           src: require('../assets/course4.webp'),
         },
         {
-          name: "高等数学5",
-          school: "清华大学",
-          teacher: "老师5",
+          name: this.$store.state.courseData[4].name,
+          teacher: this.$store.state.courseData[4].teacherId,
           src: require('../assets/course5.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course6.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course7.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course8.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course9.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course10.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course11.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course12.webp'),
-        },
-        {
-          name: "高等数学1",
-          school: "浙江大学",
-          teacher: "老师1",
-          src: require('../assets/course1.webp'),
-        },
-        {
-          name: "高等数学2",
-          school: "上海大学",
-          teacher: "老师2",
-          src: require('../assets/course2.webp'),
-        },
-        {
-          name: "高等数学3",
-          school: "同济大学",
-          teacher: "老师3",
-          src: require('../assets/course3.webp'),
-        },
-        {
-          name: "高等数学4",
-          school: "北京大学",
-          teacher: "老师4",
-          src: require('../assets/course4.webp'),
-        },
-        {
-          name: "高等数学5",
-          school: "清华大学",
-          teacher: "老师5",
-          src: require('../assets/course5.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course6.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course7.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course8.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course9.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course10.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course11.webp'),
-        },
-        {
-          name: "高等数学6",
-          school: "上海大学",
-          teacher: "老师6",
-          src: require('../assets/course12.webp'),
         },
       ],
-      information: {
-        name: this.$store.state.courseData.name,
-      }
     }
   }
 }
@@ -228,9 +106,9 @@ export default {
   margin: 5px;
 }
 
-.grid-content h5 {
-  margin: 5px;
-}
+/*.grid-content h5 {*/
+/*  margin: 5px;*/
+/*}*/
 
 .grid-content h6 {
   margin: 5px;
