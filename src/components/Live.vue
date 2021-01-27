@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-main  style="position: relative">
+    <el-main style="position: relative">
       <Flvjs></Flvjs>
       <v-barrage :arr="arr"
                  :isPause="isPause"
@@ -93,7 +93,7 @@ export default {
     },
     // 发送弹幕
     isMyself(what) {
-      return what == this.$store.state.currentData.data.nickName ? "myself" : "others";
+      return what == this.$store.state.userData.nickName ? "myself" : "others";
     },
     mySend() {
       // console.log('mySend!');
