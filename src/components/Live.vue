@@ -194,6 +194,30 @@ export default {
 </script>
 
 <style scoped>
+.el-tab-pane {
+  text-align: center;
+}
+
+.el-aside {
+  overflow: hidden;
+  text-align: center;
+  line-height: 20px;
+  font-size: 10px;
+}
+
+.el-main {
+  color: #333;
+  text-align: center;
+  padding: 0px;
+}
+
+.el-container {
+  margin: 20px 100px;
+  height: 506px;
+  border: #C0C4CC 1px solid;
+  border-radius: 10px;
+}
+
 ul {
   padding: 5px;
 }
