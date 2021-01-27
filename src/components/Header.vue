@@ -69,12 +69,6 @@
           <el-button @click="CourseMenu" slot="reference" class="course" plain>课程</el-button>
         </el-popover>
       </el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">课程</template>
-        <el-menu-item index="2-1" @click="CourseMenu">计算机</el-menu-item>
-        <el-menu-item index="2-2" @click="CourseMenu">金融</el-menu-item>
-        <el-menu-item index="2-3" @click="CourseMenu">数学</el-menu-item>
-      </el-submenu>
       <el-menu-item index="3">
         <router-link to="/liveMenu">直播</router-link>
       </el-menu-item>
@@ -88,6 +82,7 @@
 <script>
 import store from '../vuex/store';
 import Avatar from "@/components/Avatar";
+import axios from "axios";
 
 export default {
   components: {Avatar},
@@ -112,7 +107,14 @@ export default {
       this.$router.push('/Classmanagement')
     },
     CourseMenu() {
-      this.$router.push('/coursemenu')
+      let that = this;
+      axios.get("http://" + this.Api + "/api/Course/getClass", {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        that.$router.push('/coursemenu');
+        that.$store.commit('saveCourseData', response.data);
+      }, function (err) {
+        console.log(err);
+      })
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -129,7 +131,7 @@ export default {
       }
     },
     Information() {
-      this.$router.push('/Information')
+      this.$router.push('/Information');
     },
   }
 }

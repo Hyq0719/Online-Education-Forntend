@@ -48,7 +48,7 @@ export default {
         if (response.data.code === 1000) {
           that.$router.push('/');
           that.$store.commit('saveIsLogin');
-          that.$store.commit('saveData', response.data)
+          that.$store.commit('saveData', response.data.data)
         } else if (response.data.code === 2002) {
           MessageBox.alert('用户不存在')
         } else if (response.data.code === 2003) {

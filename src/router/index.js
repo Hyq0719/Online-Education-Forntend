@@ -12,6 +12,7 @@ import CourseMenu from '../views/CourseMenu';
 import Searchpage from "@/views/Searchpage";
 import Classmanagement from "@/views/Classmanagement";
 import Information from '../views/Information';
+import InformationChange from '../views/InformationChange';
 import Feedback from "@/views/Feedback";
 import Classmanagement_student from "@/components/classmanagement/student";
 import Classmanagement_class from "@/components/classmanagement/class";
@@ -98,6 +99,11 @@ export default new Router({
             path: '/Information',
             name: 'Information',
             component: Information,
+        },
+        {
+            path: '/Information/change',
+            name: 'InformationChange',
+            component: InformationChange,
         },
         {
             path: '/Feedback',
