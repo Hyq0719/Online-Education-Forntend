@@ -206,8 +206,9 @@ export default {
       // 设置弹幕的位置信息 性能优化 left -> transform
       // dom.style.transform = `translateX(${-dom.clientWidth}px)`;
       // dom.style.transform = `translate3d(${-dom.clientWidth}px,0,0)`; // css硬件加速
-      dom.className = dmItem.isSelf ? 'barrage-item self-dm' : 'barrage-item';
-      dom.style.animation = 'barrage-run 5s linear';
+      dom.className = dmItem.isSelf ? 'barrage-it' +
+          'em self-dm' : 'barrage-item';
+      dom.style.animation = 'barrage-run 8s linear';
       // 弹幕全部显示之后 才能开始下一条弹幕
       // 大概 dom.clientWidth * 10 的时间 该条弹幕就从右边全部划出到可见区域 再加1秒保证弹幕之间距离
       setTimeout(() => {
@@ -243,7 +244,7 @@ export default {
         this.hasTopPosition[channel] = true;
       })
       this.barrageMainDm.appendChild(dom); // 一定要在获取宽度和执行动画之前渲染dom
-      dom.style.transform = `translate3d(${this.barMainWidth / 2 - (dom.clientWidth / 2)}px,${channel * dom.clientHeight}px,0)`
+      dom.style.transform = `translate3d(${ 50 - (dom.clientWidth)}px,${channel * dom.clientHeight}px,0)`
       dom.style.animation = 'barrage-fade 3s';
     },
     // 获取空闲通道中空闲的dom
@@ -365,11 +366,11 @@ export default {
 }
 @keyframes barrage-run {
   0% {
-    transform: translate3d(500px, 0, 0);
+    transform: translate3d(350%, 0, 0);
   }
 
   100% {
-    transform: translate3d(-600%, 0, 0);
+    transform: translate3d(-350%, 0, 0);
   }
 }
 @keyframes barrage-fade {

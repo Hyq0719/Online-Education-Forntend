@@ -1,7 +1,12 @@
 <template>
   <el-container>
-    <el-main>
+    <el-main  style="position: relative">
       <Flvjs></Flvjs>
+      <v-barrage :arr="arr"
+                 :isPause="isPause"
+                 :percent="100"
+      >
+      </v-barrage>
     </el-main>
     <el-aside width="300px">
       <el-header class="onlineNumber">{{ myCount }}人正在观看</el-header>
@@ -38,6 +43,7 @@
 <script>
 import Flvjs from '../components/Flvjs'
 import axios from "axios";
+import VBarrage from '@/components/VBarrage/index.vue'
 
 export default {
   name: "Live",
@@ -48,9 +54,14 @@ export default {
       userList: [],
       input: '',
       activeList: 'first',
+      arr: [],                   //弹幕内容
+      isPause: false,
+      isJs: false,
+      direction: 'default'
     }
   },
   mounted() {
+    this.initTestData();   //初始化弹幕数据
     this.initWebSocket();
     this.updateStudentNumber();
     this.mySetInterval();
@@ -59,6 +70,28 @@ export default {
     this.websocketOnClose();
   },
   methods: {
+    // 初始化模拟弹幕数据
+    initTestData() {
+      let arr = [
+        '这个课有点意思',
+      ]
+      for (let i = 0; i < 6; i++) {
+        for (let index = 0; index < 10; index++) {
+          if (index % 2 == 0) {
+            this.arr.push({
+              direction: 'top',
+              content: arr[parseInt(Math.random() * arr.length)]
+            })
+          } else {
+            this.arr.push({
+              direction: 'default',
+              content: arr[parseInt(Math.random() * arr.length)]
+            })
+          }
+        }
+      }
+    },
+    // 发送弹幕
     isMyself(what) {
       return what == this.$store.state.currentData.data.nickName ? "myself" : "others";
     },
@@ -75,6 +108,31 @@ export default {
       let toSend = JSON.stringify(preMsg);
       // console.log(toSend);
       this.chatRoomWebsocket.send(toSend); //将消息发送到服务端
+
+
+      if (this.arr.length > 1 && this.input != '' && this.input != null) {   //发送弹幕
+        this.arr.unshift({
+          content: this.input,
+          direction: this.direction,
+          isSelf: true,
+          style: {
+            color: 'red',
+            fontSize: '25px'
+          },
+          isJs: this.isJs
+        });
+      } else {
+        this.arr.push({
+          content: this.input,
+          direction: this.direction,
+          isSelf: true,
+          style: {
+            color: 'red'
+          },
+          isJs: this.isJs
+        });
+      }
+
       this.input = '';
       // console.log("sended!");
     },
@@ -130,6 +188,7 @@ export default {
   },
   components: {
     Flvjs,
+    VBarrage,
   },
 }
 </script>
