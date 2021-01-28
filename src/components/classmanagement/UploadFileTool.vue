@@ -1,6 +1,6 @@
 <template>
     <fragment>
-        <el-upload action="#" :file-list="fileList" multiple :accept="accept" :before-upload="beforeUploadChange" class="el-upload-file">
+        <el-upload action="#" :file-list="fileList" multiple :accept="accept" :before-upload="beforeUploadChange">
             <el-tag slot="default" class="notLineFeed alncnt el-upload-file-tag" size="medium" effect="dark"><i class="el-icon-folder-add"/></el-tag>
             <div slot="file" slot-scope="{file}">
                 <el-tag class="el-upload-file-tag" size="medium" :type="file.typeObj.tagType">
@@ -135,7 +135,7 @@
         }
     };
 </script>
-<style>
+<style scoped>
 .alnrit {
   text-align: right;
 }

@@ -140,10 +140,6 @@ export default {
   },
 };
 </script>
-<style>
-
-.el-upload-file {
-  width: 200px;
-}
+<style scoped>
 
 </style>
