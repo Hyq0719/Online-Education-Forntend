@@ -5,57 +5,20 @@
     </el-main>
     <el-aside width="300px">
       <el-menu
-          :default-openeds="['1']"
-          default-active="2"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose">
-        <el-submenu index="1">
+          @open="Chapter(item.courseChapterPK.chapterId,item.courseChapterPK.courseId,item.courseChapterPK,item.chapterIntro,index)"
+          @close="handleClose"
+          v-for="(item,index) in this.$store.state.chapterData" v-bind:key="index">
+        <el-submenu :index="String(index)">
           <template slot="title">
             <i class="el-icon-menu"></i>
-            <span>章节一：数理统计不挂科</span>
+            <span>{{ item.chapterIntro }}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="1-1">课时1：基础知识</el-menu-item>
-            <el-menu-item index="1-2">课时2：用矩估计法进行点估计</el-menu-item>
-            <el-menu-item index="1-3">课时3：区间估计</el-menu-item>
-            <el-menu-item index="1-4">课时4：假设检验</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-menu"></i>
-            <span>章节二</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="1-1">课时1</el-menu-item>
-            <el-menu-item index="1-2">课时2</el-menu-item>
-            <el-menu-item index="1-3">课时3</el-menu-item>
-            <el-menu-item index="1-4">课时4</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="3">
-          <template slot="title">
-            <i class="el-icon-menu"></i>
-            <span>章节三</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="1-1">课时1</el-menu-item>
-            <el-menu-item index="1-2">课时2</el-menu-item>
-            <el-menu-item index="1-3">课时3</el-menu-item>
-            <el-menu-item index="1-4">课时4</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="4">
-          <template slot="title">
-            <i class="el-icon-menu"></i>
-            <span>章节四</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="1-1">课时1</el-menu-item>
-            <el-menu-item index="1-2">课时2</el-menu-item>
-            <el-menu-item index="1-3">课时3</el-menu-item>
-            <el-menu-item index="1-4">课时4</el-menu-item>
+            <el-menu-item :index="1+String(index1)" v-for="(value,index1) in item.video"
+                          v-bind:key="index1">
+              {{ value.videoName }}
+            </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -65,6 +28,7 @@
 
 <script>
 import VideoPlayer from "../components/VideoPlayer";
+import axios from "axios";
 
 export default {
   name: "Course",
@@ -73,17 +37,7 @@ export default {
   },
   data() {
     return {
-      count: 10,
-      loading: false,
       input: '',
-    }
-  },
-  computed: {
-    noMore() {
-      return this.count >= 40
-    },
-    disabled() {
-      return this.loading || this.noMore
     }
   },
   methods: {
@@ -93,13 +47,21 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
-    load() {
-      this.loading = true
-      setTimeout(() => {
-        this.count += 2
-        this.loading = false
-      }, 200)
-    }
+    Chapter(chapterId, courseId, courseChapterPK, chapterIntro, index) {
+      // console.log(courseId);
+      // console.log(courseChapterPK);
+      let that = this;
+      let a = new URLSearchParams();
+      a.append('chapterId', chapterId);
+      a.append('courseId', courseId);
+      axios.post("http://" + this.Api + "/api/Course/getCourseChapterViedo", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        that.$store.commit('saveVideo', {video: response.data.data, chapterIntro, courseChapterPK, index})
+        console.log(index);
+      }, function (err) {
+        console.log(err);
+      })
+    },
   },
 }
 </script>
