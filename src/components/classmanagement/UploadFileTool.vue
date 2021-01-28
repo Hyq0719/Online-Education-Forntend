@@ -8,7 +8,7 @@
                         <i :class="file.typeObj.icon" :style="`color:${file.typeObj.color}`" class="largeTitle"></i>
                         {{ file.name }}
                     </el-col>
-                    <el-col :span="8" class="alnrit">
+                    <el-col :span="8" class="alnrit" >
                         <!--<i class="el-icon-view" @click="handleView(file)"></i>-->
                         <i class="el-icon-download" @click="handleDownload(file)"></i>
                         <i class="el-icon-delete" @click="handleRemove(file)"></i>
@@ -135,3 +135,35 @@
         }
     };
 </script>
+<style>
+.alnrit {
+  text-align: right;
+}
+.alncnt {
+  text-align: center;
+}
+.tableClass {
+  /* 表格文字 */
+  font-size: 13px;
+}
+.notLineFeed {
+  /* 单行文字超出省略 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+}
+.largeTitle {
+  /* 大标题文字 */
+  font-size: 20px;
+  font-weight: 500;
+}
+.el-upload-file-tag .el-icon-view:hover,
+.el-upload-file-tag .el-icon-delete:hover,
+.el-upload-file-tag .el-icon-download:hover {
+  color: #409EFF;
+  border-radius: 10px;
+  padding: 2px;
+  background: rgba(64, 158, 255, 0.56);
+}
+</style>
