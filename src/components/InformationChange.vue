@@ -8,26 +8,23 @@
       </el-aside>
       <el-main class="Information">
         <h2>个人信息</h2>
+        <el-button type="primary" @click="ChangeInformation">修改完成</el-button>
         <div class="clear"></div>
         <el-divider></el-divider>
         <el-form ref="form" :model="information" label-width="100px">
           <el-form-item label="昵称：">
-            <el-input v-model="information.nickName" :disabled="change"></el-input>
+            <el-input v-model="information.nickName"></el-input>
           </el-form-item>
           <el-form-item label="性别：">
-            <el-input v-model="information.sex" :disabled="change"></el-input>
+            <el-input v-model="information.sex"></el-input>
           </el-form-item>
           <el-form-item label="学校：">
-            <el-input v-model="information.school" :disabled="change"></el-input>
+            <el-input v-model="information.school"></el-input>
           </el-form-item>
           <el-form-item label="年级：">
-            <el-input v-model="information.grade" :disabled="change"></el-input>
+            <el-input v-model="information.grade"></el-input>
           </el-form-item>
         </el-form>
-        <div class="Button">
-          <el-button type="primary" @click="ChangeInformation">修改完成</el-button>
-          <el-button @click="ChangeRouter">确认返回</el-button>
-        </div>
       </el-main>
     </el-container>
   </div>
@@ -55,7 +52,6 @@ export default {
         wechatId: this.$store.state.userData.wechatId,
         studentPicUrl: this.$store.state.userData.studentPicUrl,
       },
-      change: false,
     }
   },
   methods: {
@@ -75,8 +71,8 @@ export default {
         console.log(response);
         axios.post("http://" + that.Api + "/api/Student/getStudentbyId?" + a).then(function (res) {
           console.log(res);
+          that.$router.push('/information');
           that.$store.commit('saveData', res.data.data);
-          that.change = true;
         }, function (err) {
           console.log(err);
         })
@@ -84,10 +80,6 @@ export default {
         console.log(err);
       })
     },
-    ChangeRouter() {
-      this.$router.push('/information');
-    }
-
   }
 }
 </script>
@@ -139,11 +131,8 @@ body > .el-container {
   float: left;
 }
 
-.Button {
-  text-align: center;
-}
-
 .Information button {
+  float: right;
   margin: 20px;
 }
 

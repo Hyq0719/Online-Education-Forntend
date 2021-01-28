@@ -7,13 +7,12 @@
     </div>
     <el-divider></el-divider>
     <el-row :gutter="25">
-      <el-col :span="6" v-for="item in course" v-bind:key="item.id">
-        <router-link to="/course">
+      <el-col :span="6" v-for="(item,index) in this.$store.state.courseData" v-bind:key="index">
+        <router-link to="/course" @click.native="Chapter(item.courseId)">
           <div class="grid-content">
             <img :src="item.src" alt="图片缺失">
             <h4>{{ item.name }}</h4>
-            <!--            <h5>{{ item.school }}</h5>-->
-            <h6>{{ item.teacher }}</h6>
+            <h6>{{ item.teacherId }}</h6>
           </div>
         </router-link>
       </el-col>
@@ -30,38 +29,32 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "CourseMenu",
   data() {
     return {
       course: [
         {
-          name: this.$store.state.courseData[0].name,
-          teacher: this.$store.state.courseData[0].teacherId,
           src: require('../assets/course1.webp'),
-        },
-        {
-          name: this.$store.state.courseData[1].name,
-          teacher: this.$store.state.courseData[1].teacherId,
-          src: require('../assets/course2.webp'),
-        },
-        {
-          name: this.$store.state.courseData[2].name,
-          teacher: this.$store.state.courseData[2].teacherId,
-          src: require('../assets/course3.webp'),
-        },
-        {
-          name: this.$store.state.courseData[3].name,
-          teacher: this.$store.state.courseData[3].teacherId,
-          src: require('../assets/course4.webp'),
-        },
-        {
-          name: this.$store.state.courseData[4].name,
-          teacher: this.$store.state.courseData[4].teacherId,
-          src: require('../assets/course5.webp'),
         },
       ],
     }
+  },
+  methods: {
+    Chapter(courseId) {
+      console.log(courseId);
+      let that = this;
+      let a = new URLSearchParams();
+      a.append('courseId', courseId);
+      axios.get("http://" + this.Api + "/api/Course/getCourseChapter/{courseId}?" + a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        that.$store.commit('saveChapterData', response.data.data)
+      }, function (err) {
+        console.log(err);
+      })
+    },
   }
 }
 </script>
@@ -103,7 +96,7 @@ export default {
 }
 
 .grid-content h4 {
-  margin: 5px;
+  margin: 10px;
 }
 
 /*.grid-content h5 {*/
@@ -111,7 +104,7 @@ export default {
 /*}*/
 
 .grid-content h6 {
-  margin: 5px;
+  margin: 10px;
   margin-bottom: 20px;
 }
 
