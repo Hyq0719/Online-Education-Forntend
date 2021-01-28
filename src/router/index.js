@@ -14,7 +14,6 @@ import Classmanagement from "@/views/Classmanagement";
 import Information from '../views/Information';
 import InformationChange from '../views/InformationChange';
 import Feedback from "@/views/Feedback";
-import Classmanagement_student from "@/components/classmanagement/student";
 import Classmanagement_class from "@/components/classmanagement/class";
 import Classmanagement_upload from "@/components/classmanagement/upload";
 
@@ -77,12 +76,6 @@ export default new Router({
             name: 'Classmanagement',
             component: Classmanagement,
             children: [
-                {
-
-                    path: 'student',
-                    name: 'Classmanagement_student',
-                    component: Classmanagement_student,
-                },
                 {
                     path: 'class',
                     name: 'Classmanagement_class',

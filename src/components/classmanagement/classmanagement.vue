@@ -3,12 +3,6 @@
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
       <el-menu :default-openeds="['1', '3']">
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>学生管理</template>
-          <el-menu-item-group>
-            <el-menu-item index="1-1"><router-link to="/Classmanagement/student">学生列表</router-link></el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="2">
           <template slot="title"><i class="el-icon-message"></i>课程管理</template>
           <el-menu-item-group>
             <el-menu-item index="3-1"><router-link to="/Classmanagement/class">课程列表</router-link></el-menu-item>
