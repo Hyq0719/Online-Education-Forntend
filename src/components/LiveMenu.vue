@@ -210,7 +210,7 @@ export default {
   text-align: left;
   border-radius: 10px;
   border: #E4E7ED 1px solid;
-  height: 220px;
+  height: 260px;
   margin-bottom: 30px;
   box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
 }
