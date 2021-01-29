@@ -48,8 +48,8 @@ export default {
       let that = this;
       let a = new URLSearchParams();
       a.append('courseId', courseId);
-      axios.get("http://" + this.Api + "/api/Course/getCourseChapter/{courseId}?" + a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response);
+      axios.post("http://" + this.Api + "/api/Course/getCourseDisplay", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response.data);
         that.$store.commit('saveChapterData', response.data.data)
       }, function (err) {
         console.log(err);
@@ -84,10 +84,9 @@ export default {
   text-align: left;
   border-radius: 10px;
   border: #E4E7ED 1px solid;
-  min-height: 200px;
-  margin-bottom: 20px;
-  background: #F2F6FC;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+  height: 220px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
 }
 
 .grid-content img {

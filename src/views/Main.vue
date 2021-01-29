@@ -5,7 +5,6 @@
     <Nav1></Nav1>
     <nav2></nav2>
     <Article></Article>
-    <div style="height:1000px;"></div>
     <Footer></Footer>
 
   </div>

@@ -6,18 +6,22 @@
     <el-aside width="300px">
       <el-menu
           class="el-menu-vertical-demo"
-          @open="Chapter(item.courseChapterPK.chapterId,item.courseChapterPK.courseId,item.courseChapterPK,item.chapterIntro,index)"
+          @open="handleOpen"
           @close="handleClose"
           v-for="(item,index) in this.$store.state.chapterData" v-bind:key="index">
         <el-submenu :index="String(index)">
           <template slot="title">
             <i class="el-icon-menu"></i>
-            <span>{{ item.chapterIntro }}</span>
+            <span>{{ index }}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item :index="1+String(index1)" v-for="(value,index1) in item.video"
-                          v-bind:key="index1">
+            <el-menu-item :index="1+String(index1)" v-for="(value,index1) in item.VideoList"
+                          v-bind:key="'1'+index1">
               {{ value.videoName }}
+            </el-menu-item>
+            <el-menu-item :index="2+String(index1)" v-for="(value,index1) in item.TaskList"
+                          v-bind:key="'2'+index1">
+              {{ value.taskName }}
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -28,7 +32,6 @@
 
 <script>
 import VideoPlayer from "../components/VideoPlayer";
-import axios from "axios";
 
 export default {
   name: "Course",
@@ -41,26 +44,11 @@ export default {
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    handleOpen(key) {
+      console.log(key.chapterIntro);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    },
-    Chapter(chapterId, courseId, courseChapterPK, chapterIntro, index) {
-      // console.log(courseId);
-      // console.log(courseChapterPK);
-      let that = this;
-      let a = new URLSearchParams();
-      a.append('chapterId', chapterId);
-      a.append('courseId', courseId);
-      axios.post("http://" + this.Api + "/api/Course/getCourseChapterViedo", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response);
-        that.$store.commit('saveVideo', {video: response.data.data, chapterIntro, courseChapterPK, index})
-        console.log(index);
-      }, function (err) {
-        console.log(err);
-      })
     },
   },
 }

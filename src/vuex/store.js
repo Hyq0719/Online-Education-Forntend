@@ -8,7 +8,7 @@ export default new Vuex.Store({
         isLogin: false,
         userData: {},
         courseData: {},
-        chapterData: [],
+        chapterData: {},
         isRegister: false,
         isLoginTeacher: false,
     },
@@ -27,12 +27,6 @@ export default new Vuex.Store({
         },
         saveChapterData(state, chapterData) {
             state.chapterData = chapterData;
-        },
-        saveVideo(state, videoData) {
-            let video = videoData.video;
-            let chapterIntro = videoData.chapterIntro;
-            let courseChapterPK = videoData.courseChapterPK;
-            state.chapterData.splice(videoData.index, 1, {video, chapterIntro, courseChapterPK});
         },
         saveIsRegister(state) {
             state.isRegister = true;

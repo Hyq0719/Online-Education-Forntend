@@ -1,5 +1,5 @@
 <template>
-  <div class="line">
+  <div class="live">
     <div class="WholeCourse">
       <h3>
         全部直播
@@ -36,7 +36,7 @@ export default {
     return {
       course: [
         {
-          name: "高等数学1",
+          name: "高等da数学1",
           school: "浙江大学",
           teacher: "老师1",
           src: require('../assets/live1.webp'),
@@ -63,25 +63,25 @@ export default {
           name: "高等数学5",
           school: "清华大学",
           teacher: "老师5",
-          src: require('../assets/live1.webp'),
+          src: require('../assets/course5.webp'),
         },
         {
           name: "高等数学6",
           school: "上海大学",
           teacher: "老师6",
-          src: require('../assets/live2.webp'),
+          src: require('../assets/course6.webp'),
         },
         {
           name: "高等数学6",
           school: "上海大学",
           teacher: "老师6",
-          src: require('../assets/live3.webp'),
+          src: require('../assets/course7.webp'),
         },
         {
           name: "高等数学6",
           school: "上海大学",
           teacher: "老师6",
-          src: require('../assets/live4.webp'),
+          src: require('../assets/course8.webp'),
         },
         {
           name: "高等数学6",
@@ -198,7 +198,7 @@ export default {
   text-align: left;
 }
 
-.line {
+.live {
   margin: 20px 150px;
 }
 
@@ -210,10 +210,9 @@ export default {
   text-align: left;
   border-radius: 10px;
   border: #E4E7ED 1px solid;
-  min-height: 200px;
-  margin-bottom: 20px;
-  background: #F2F6FC;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+  height: 220px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
 }
 
 .grid-content img {

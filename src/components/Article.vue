@@ -4,20 +4,18 @@
     <div v-for="(item,index) in picture" v-bind:key="item">
       <passage class='passage' :title=title[index] :img=picture[index] :content=content[index]></passage>
     </div>
+    <div class="clear"></div>
   </div>
 </template>
 
-<style>
+<style scoped>
 .passage {
-  width: 29%;
-  height: auto;
-  margin: 0 auto 24px 0;
-  padding: 15px 16px 15px 16px;
-  background: #FFFFFF;
-  box-shadow: 0 6px 10px 0 rgba(95, 101, 105, 0.15);
-  border-radius: 8px;
+  width: 26%;
+  margin: 20px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
+  border-radius: 10px;
   float: left;
-  overflow: hidden;
 }
 
 .tiltlefont {
@@ -29,6 +27,15 @@
   letter-spacing: 1px;
 }
 
+.container {
+  margin: 10px 200px;
+  padding: 32px 0;
+  clear: both;
+}
+
+.clear {
+  clear: both;
+}
 </style>
 
 <script>
@@ -55,7 +62,7 @@ export default {
         "是一种以个人计算机和分布式网络计算为基础，主要面向专业应用领域，具备强大的数据运算与图形、图像处理能力，为满足工程设计、动画制作、科学研究、软件开发、金融管理、信息服务、模拟仿真等专业领域而设计开发的高性能计算机。工作站最突出的特点是具有很强的图形交换能力。\n" +
         "无盘工作站是指无软盘、无硬盘、无光驱连入局域网的计算机。在网络系统中，把工作站端使用的操作系统和应用软件被全部放在服务器上，系统管理员只要完成服务器上的管理和维护，软件的升级和安装也只需要配置一次后，则整个网络中的所有计算机就都可以使用新软件。所以无盘工作站具有节省费用、系统的安全性高、易管理性和易维护性等优点，这对网络管理员来说具有很大的吸引力。",
         "计算机（computer）俗称电脑，是现代一种用于高速计算的电子计算机器，可以进行数值计算，又可以进行逻辑计算，还具有存储记忆功能。是能够按照程序运行，自动、高速处理海量数据的现代化智能电子设备。\n" + "（1）分类：可分为超级计算机、工业控制计算机、网络计算机、个人计算机、嵌入式计算机五类"],
-      title: ["服务器小知识","工作站小知识",'是无盘工作站','集线器小知识', '计算机网络', '计算机硬盘','什么是计算机'],
+      title: ["服务器小知识", "工作站小知识", '是无盘工作站', '集线器小知识', '计算机网络', '计算机硬盘', '什么是计算机'],
     }
   }
 }
