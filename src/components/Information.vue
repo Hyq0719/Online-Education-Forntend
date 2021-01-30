@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-aside width="300px">
-        <img src="../assets/studentheader.jpg" alt="图片缺失">
+        <img src="../assets/studentheader1.jpg" alt="图片缺失">
         <h3>{{ information.nickName }}</h3>
         <h6>ID:{{ information.userId }}</h6>
       </el-aside>

@@ -94,6 +94,22 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  margin: 10px 200px;
+  padding: 32px 0;
+  clear: both;
+}
+
+.classview {
+  position: relative;
+  width: 22%;
+  height: 240px;
+  margin: 15px;
+  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
+  border-radius: 8px;
+  float: left;
+}
+
 button:hover {
   background-color: #99ccff;
   text-decoration: none;

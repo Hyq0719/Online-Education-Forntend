@@ -259,6 +259,7 @@ ul {
   height: 20px;
   background-color: #fff;
   font-size: 18px;
+  padding: 20px;
 }
 
 .users {
