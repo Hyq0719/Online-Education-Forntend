@@ -5,28 +5,13 @@
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>课程管理</template>
           <el-menu-item-group>
-            <el-menu-item index="3-1">
+            <el-menu-item index="1-1">
               <router-link to="/Classmanagement/class">课程列表</router-link>
             </el-menu-item>
-            <el-submenu index="1-1">
-              <template slot="title"><i></i>课程上传</template>
-              <el-menu-item-group>
-                <el-menu-item index="3-1">
-                  <router-link to="/Classmanagement/buildClass">上传新课程</router-link>
-                </el-menu-item>
-                <el-menu-item index="3-2">
-                  <router-link to="/Classmanagement/updateClass">更新课程</router-link>
-                </el-menu-item>
+            <el-menu-item index="1-1">
+              <router-link to="/Classmanagement/Upload">课程上传</router-link>
+            </el-menu-item>
 
-                <el-menu-item-group>
-
-                </el-menu-item-group>
-              </el-menu-item-group>
-            </el-submenu>
-
-            <el-menu-item-group>
-
-            </el-menu-item-group>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>

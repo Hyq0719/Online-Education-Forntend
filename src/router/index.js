@@ -15,8 +15,8 @@ import Information from '../views/Information';
 import InformationChange from '../views/InformationChange';
 import Feedback from "@/views/Feedback";
 import Classmanagement_class from "@/components/classmanagement/class";
-import buildClass from "@/components/classmanagement/buildClass";
 import updateClass from "@/components/classmanagement/updateClass";
+import Upload from "@/components/classmanagement/Upload";
 
 Vue.use(Router);
 
@@ -89,9 +89,9 @@ export default new Router({
                     component: updateClass,
                 },
                 {
-                    path: 'buildClass',
-                    name: 'buildClass',
-                    component: buildClass,
+                    path: 'Upload',
+                    name: 'Upload',
+                    component: Upload,
                 }]
         },
         {
