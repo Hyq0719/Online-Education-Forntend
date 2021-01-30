@@ -297,7 +297,7 @@ export default {
   components: {},
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .barrage-wrapper {
   * {
     margin: 3px;

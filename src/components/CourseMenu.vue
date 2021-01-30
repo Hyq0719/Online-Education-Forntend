@@ -49,7 +49,6 @@ export default {
       let a = new URLSearchParams();
       a.append('courseId', courseId);
       axios.post("http://" + this.Api + "/api/Course/getCourseDisplay", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response.data);
         that.$store.commit('saveChapterData', response.data.data)
       }, function (err) {
         console.log(err);

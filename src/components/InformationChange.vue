@@ -12,6 +12,17 @@
         <div class="clear"></div>
         <el-divider></el-divider>
         <el-form ref="form" :model="information" label-width="100px">
+          <el-form-item label="头像：">
+            <el-upload
+                class="avatar-uploader"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
           <el-form-item label="昵称：">
             <el-input v-model="information.nickName"></el-input>
           </el-form-item>
@@ -20,6 +31,16 @@
           </el-form-item>
           <el-form-item label="学校：">
             <el-input v-model="information.school"></el-input>
+          </el-form-item>
+          <el-form-item label="专业：">
+            <el-select v-model="information.majorContent" clearable placeholder="请选择你的专业" @change="changeMajor">
+              <el-option
+                  v-for="item in majors"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="年级：">
             <el-input v-model="information.grade"></el-input>
@@ -52,9 +73,24 @@ export default {
         wechatId: this.$store.state.userData.wechatId,
         studentPicUrl: this.$store.state.userData.studentPicUrl,
       },
+      majors: [
+        {
+          value: '1',
+          label: '计算机'
+        },
+        {
+          value: '2',
+          label: '数学'
+        },],
+      value: this.$store.state.userData.major.majorContent,
+      imageUrl: '',
     }
   },
   methods: {
+    changeMajor(value) {
+      console.log(value);
+      this.information.majorId = value;
+    },
     ChangeInformation() {
       let that = this;
       let params = {
@@ -79,6 +115,21 @@ export default {
       }, function (err) {
         console.log(err);
       })
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
     },
   }
 }
@@ -123,7 +174,35 @@ body > .el-container {
   margin-bottom: 40px;
 }
 
+.avatar-uploader-icon {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+
+.avatar-uploader-icon:hover {
+  border-color: #409EFF;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+
 .el-input {
+  width: 50%;
+}
+
+.el-select {
   width: 50%;
 }
 

@@ -12,7 +12,7 @@
         <el-submenu :index="String(index)">
           <template slot="title">
             <i class="el-icon-menu"></i>
-            <span>{{ index }}</span>
+            <span>{{ JSON.parse(index).chapterIntro }}</span>
           </template>
           <el-menu-item-group>
             <el-menu-item :index="1+String(index1)" v-for="(value,index1) in item.VideoList"
@@ -44,8 +44,8 @@ export default {
     }
   },
   methods: {
-    handleOpen(key) {
-      console.log(key.chapterIntro);
+    handleOpen(index) {
+      console.log(index);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
