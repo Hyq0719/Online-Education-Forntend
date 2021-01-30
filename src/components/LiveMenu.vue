@@ -36,7 +36,7 @@ export default {
     return {
       course: [
         {
-          name: "高等da数学1",
+          name: "高等数学1",
           school: "浙江大学",
           teacher: "老师1",
           src: require('../assets/live1.webp'),
@@ -200,10 +200,6 @@ export default {
 
 .live {
   margin: 20px 150px;
-}
-
-.el-col {
-  border-radius: 10px;
 }
 
 .grid-content {

@@ -75,10 +75,6 @@ export default {
   margin: 20px 150px;
 }
 
-.el-col {
-  border-radius: 10px;
-}
-
 .grid-content {
   text-align: left;
   border-radius: 10px;

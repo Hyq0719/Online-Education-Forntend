@@ -22,6 +22,9 @@ Vue.use(VueCoreVideoPlayer, {
 })
 Vue.use(router)
 Vue.config.productionTip = false
+router.afterEach((to, from, next) => {
+    window.scrollTo(0, 0);
+})
 
 new Vue({
     render: h => h(App),

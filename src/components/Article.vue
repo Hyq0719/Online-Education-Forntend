@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <h3 class="tiltlefont">精彩手记</h3>
+    <h2>作业墙</h2>
+    <el-divider></el-divider>
     <div v-for="(item,index) in picture" v-bind:key="item">
       <passage class='passage' :title=title[index] :img=picture[index] :content=content[index]></passage>
     </div>
@@ -31,6 +32,12 @@
   margin: 10px 200px;
   padding: 32px 0;
   clear: both;
+}
+
+.container h2 {
+  text-align: left;
+  margin: 60px 20px 20px 20px;
+  letter-spacing: 2px;
 }
 
 .clear {
