@@ -1,12 +1,12 @@
 <template>
   <el-container>
     <el-header style="text-align: right; font-size: 12px">
-      <button class="headerbutton" @click="open">确认上传</button>
+      <el-button type="primary" class="headerbutton" @click="open">确认上传</el-button>
     </el-header>
 
     <el-main>
-      <div style="width: 800px">
-        <el-form label-width="160px">
+      <div style="width: 450px">
+        <el-form label-width="100px">
           <el-form-item label="课程ID号" style="width: 300px">
             <el-input v-model="form.name"
                       placeholder="请输入内容"
@@ -73,6 +73,7 @@ export default {
         //   });
         // }
       });
+      this.$emit('close',false);
     },
   }
 }
@@ -82,16 +83,7 @@ export default {
 .headerbutton {
   cursor: pointer;
   float: right;
-  color: #fff;
-  background: #00a1d6;
-  font-size: 16px;
-  letter-spacing: 2px;
-  line-height: 42px;
-  text-align: center;
-  width: 90px;
-  border-radius: 4px;
-  margin: 8px 0;
-  border: none;
+  margin-top: 12px;
 }
 
 .el-tag + .el-tag {

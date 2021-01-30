@@ -70,29 +70,30 @@
       </el-row>
     </el-row>
 
-
     <el-drawer
         title="新建课程"
-        :before-close="handleClose1"
-        :visible.sync="dialog2"
-        direction="rtl"
-        ref="drawer"
-        size="850px"
-    >
-      <update-class></update-class>
-
-    </el-drawer>
-    <el-drawer
-        title="上传课程"
         :before-close="handleClose1"
         :visible.sync="dialog"
         direction="rtl"
         ref="drawer"
         size="850px"
+
     >
-      <build-class></build-class>
+      <build-class @close="drawerClose"></build-class>
 
     </el-drawer>
+    <el-drawer
+        title="上传课程"
+        :before-close="handleClose1"
+        :visible.sync="dialog2"
+        direction="rtl"
+        ref="drawer"
+        size="500px"
+    >
+      <update-class @close="drawerClose"></update-class>
+
+    </el-drawer>
+
   </div>
 
 </template>
@@ -144,6 +145,10 @@ export default {
           })
           .catch(_ => {
           });
+    },
+    drawerClose(data){
+      this.dialog=data;
+      this.dialog2=data;
     }
   },
 

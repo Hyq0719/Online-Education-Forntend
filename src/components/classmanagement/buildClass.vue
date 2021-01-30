@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-        <el-button type="primary" class="headerbutton" @click="$refs.drawer.closeDrawer()" :loading="loading">
+        <el-button type="primary" class="headerbutton" @click="closed" :loading="loading">
           {{ loading ? '提交中 ...' : '确认上传' }}
         </el-button>
       </el-header>
@@ -17,12 +17,12 @@
             </el-form-item>
             <el-form-item>
               <span slot="label" class="emphasize">上传课程介绍：</span>
-              <el-inputb
+              <el-input
                   type="textarea"
                   :rows="4"
                   placeholder="请输入内容"
                   v-model="formbuild.intro">
-              </el-inputb>
+              </el-input>
             </el-form-item>
             <el-form-item label="选择课程类别">
               <el-select v-model="selectvalue" placeholder="请选择" style="float: left;margin: 10px 24px">
@@ -66,6 +66,7 @@ export default {
   name: "buildClass",
   data() {
     return {
+      loading: false,
       formbuild: {              //课程基本属性
         name: '',
         intro: '',
@@ -127,6 +128,12 @@ export default {
           })
           .catch(_ => {
           });
+    },
+    closed(){
+      this.$alert('上传成功，待审核', '提示', {
+        confirmButtonText: '确定',
+      });
+      this.$emit('close',false);
     }
   },
 }
