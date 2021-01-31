@@ -21,7 +21,7 @@
   </el-container>
 </template>
 
-<style>
+<style scoped>
 
 .el-carousel__item img {
   height: 100%;

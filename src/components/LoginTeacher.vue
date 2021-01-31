@@ -40,15 +40,27 @@ export default {
   methods: {
     Login() {
       let a = new URLSearchParams();
+      let b = new URLSearchParams();
       a.append('password', this.form.password);
       a.append('phone_id', this.form.name);
       let that = this;
-      axios.post('http://' + this.Api + "/api/Teacher/loginByPassword", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post('http://' + that.Api + "/api/Teacher/loginByPassword", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/');
           that.$store.commit('saveIsLoginTeacher');
-          that.$store.commit('saveData', response.data)
+          that.$store.commit('saveData', response.data);
+          let c=that.$store.state.userData.data.userId
+          b.append("teacherId",c);
+
+          b.append("sort",1);
+          b.append("page",1);
+          axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId",b).then(function (res) {
+            console.log(res);
+            if (response.data.code === 1000) {
+              that.$store.commit('saveTeacherClassData',res.data)
+            }
+          })
         } else if (response.data.code === 2002) {
           MessageBox.alert('用户不存在')
         } else if (response.data.code === 2003) {

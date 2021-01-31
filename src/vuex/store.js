@@ -9,6 +9,7 @@ export default new Vuex.Store({
         userData: {},
         courseData: {},
         chapterData: {},
+        teacherClassData: {},
         isRegister: false,
         isLoginTeacher: false,
     },
@@ -27,6 +28,9 @@ export default new Vuex.Store({
         },
         saveChapterData(state, chapterData) {
             state.chapterData = chapterData;
+        },
+        saveTeacherClassData(state,teacherClassData){
+            state.teacherClassData=teacherClassData;
         },
         saveIsRegister(state) {
             state.isRegister = true;

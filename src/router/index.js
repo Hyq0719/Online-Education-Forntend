@@ -83,7 +83,6 @@ export default new Router({
                     component: Classmanagement_class,
                 },
                 {
-
                     path: 'updateClass',
                     name: 'updateClass',
                     component: updateClass,
