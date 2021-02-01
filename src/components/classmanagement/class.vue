@@ -40,20 +40,14 @@
           <h5 style="margin: 10px 24px;float: left">创建章节</h5>
         </el-row>
         <el-form :inline="true"  label-width="80px" style="margin: 20px 0 10px 0">
-        <el-form-item label="章节号" label-position="left" style="width: 300px;margin-bottom: 0">
-          <el-input
-                    placeholder="请输入内容"
-                    maxlength="2"
-                    show-word-limit></el-input>
-        </el-form-item>
         <el-form-item label="章节名称" style="width: 300px;margin-bottom: 0">
-          <el-input
+          <el-input v-model="chapterIntro"
                     placeholder="请输入内容"
                     maxlength="10"
                     show-word-limit></el-input>
         </el-form-item>
           <el-form-item style="width: 300px;margin-bottom: 0" >
-            <el-button type="primary" @click="sendChapter" style="float: right">创建<i
+            <el-button type="primary" @click="sendChapter()" style="float: right">创建<i
                 class="el-icon-upload el-icon--right"></i></el-button>
           </el-form-item>
         </el-form>
@@ -122,14 +116,14 @@
         <el-table-column prop="videoName" label="视频名称">
         </el-table-column>
         <el-table-column label="操作" width="400px">
-          <template slot-scope="scope">
+<!--          <template slot-scope="scope">-->
             <el-button-group>
               <el-button type="primary" icon="el-icon-edit" @click="dialog2 = true">修改视频</el-button>
               <el-button type="primary" icon="el-icon-delete"
                          @click.native.prevent="deleteRow()">删除课程
               </el-button>
             </el-button-group>
-          </template>
+<!--          </template>-->
         </el-table-column>
       </el-table>
     </el-main>
@@ -195,6 +189,7 @@ export default {
       classData: this.$store.state.teacherData.teacherClassData,
       chapterData: this.$store.state.teacherData.teacherChapterData,
       videoData: this.$store.state.teacherData.teacherVideoData,
+      chapterIntro:"",
     }
   },
   components: {
@@ -210,11 +205,11 @@ export default {
 
     async openChapter(id) {
       let that = this;
-      await axios.get("http://"+that.Api+"/api/Course/getCourseChapter/"+id).then(function (res) {
+      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id).then(function (res) {
         // console.log(res);
-        that.$store.commit("saveTeacherChapterData",res.data.data)
+        that.$store.commit("saveTeacherChapterData", res.data.data)
       })
-      that.chapterData= that.$store.state.teacherData.teacherChapterData;
+      that.chapterData = that.$store.state.teacherData.teacherChapterData;
       that.classview = false;
       that.chapterview = true;
       that.videoview = false;
@@ -235,13 +230,13 @@ export default {
       this.$store.commit("savebreadcrumb", breadcrumb)
     },
 
-    async openVideo(course,chapter){
+    async openVideo(course, chapter) {
       let that = this;
-      await axios.post("http://"+that.Api+"/api/Course/getCourseChapterViedo?chapterId="+chapter+"&courseId="+course).then(function (res) {
-        that.$store.commit("saveTeacherVideoData",res.data.data);
+      await axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + chapter + "&courseId=" + course).then(function (res) {
+        that.$store.commit("saveTeacherVideoData", res.data.data);
         console.log(res)
       })
-      that.videoData= that.$store.state.teacherData.teacherVideoData;
+      that.videoData = that.$store.state.teacherData.teacherVideoData;
       that.classview = false;
       that.chapterview = false;
       that.videoview = true;
@@ -275,17 +270,34 @@ export default {
           });
     },
 
-    drawerClose(data){
-      this.dialog=data;
-      this.dialog1=data;
-      this.dialog2=data;
+    drawerClose(data) {
+      this.dialog = data;
+      this.dialog1 = data;
+      this.dialog2 = data;
     },
 
-    sendVideo(){},
+    sendVideo() {
+    },
 
-    sendChapter(){},
+    async sendChapter() {
+      let that = this;
+      let a = new URLSearchParams();
+      let course = this.chapterData[0].courseChapterPK.courseId;
+      let chapter = this.chapterData.length+1;
+      let intro =this.chapterIntro;
+      a.append('courseId', course);
+      a.append('chapterId', chapter);
+      a.append('intro', intro);
+      await axios.post("http://" + that.Api + "/api/Course/addCourseChapter" ,a,{headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (res) {
+        console.log(res);
+      })
+      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + course).then(function (res) {
+        // console.log(res);
+        that.$store.commit("saveTeacherChapterData", res.data.data)
+      })
+      that.chapterData = that.$store.state.teacherData.teacherChapterData;
+    },
   },
-
   mounted:function () {
 
     let breadcrumb = [
