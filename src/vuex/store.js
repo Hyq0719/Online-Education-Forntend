@@ -9,7 +9,12 @@ export default new Vuex.Store({
         userData: {},
         courseData: {},
         chapterData: {},
-        teacherClassData: {},
+        teacherData: {
+            teacherClassData: [],
+            teacherChapterData: [],
+            teacherVideoData: [],
+        },   //教师管理后台用的
+        breadcrumb:[],
         isRegister: false,
         isLoginTeacher: false,
     },
@@ -29,8 +34,17 @@ export default new Vuex.Store({
         saveChapterData(state, chapterData) {
             state.chapterData = chapterData;
         },
-        saveTeacherClassData(state,teacherClassData){
-            state.teacherClassData=teacherClassData;
+        saveTeacherClassData(state, teacherClassData) {
+            state.teacherData.teacherClassData = teacherClassData;
+        },
+        saveTeacherChapterData(state, teacherChapterData) {
+            state.teacherData.teacherChapterData = teacherChapterData;
+        },
+        saveTeacherVideoData(state, teacherVideoData) {
+            state.teacherData.teacherVideoData = teacherVideoData;
+        },
+        savebreadcrumb(state,breadcrumb){
+            state.breadcrumb=breadcrumb;
         },
         saveIsRegister(state) {
             state.isRegister = true;

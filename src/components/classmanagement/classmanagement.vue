@@ -1,6 +1,6 @@
 <template>
   <el-container style="height: 700px; border: 1px solid #eee">
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+    <el-aside width="200px" style="background-color: rgb(238,241,246)">
       <el-menu :default-openeds="['1', '3']">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>课程管理</template>
@@ -9,15 +9,20 @@
               <router-link to="/Classmanagement/class">课程列表</router-link>
             </el-menu-item>
             <el-menu-item index="1-1">
-              <router-link to="/Classmanagement/Upload">课程上传</router-link>
+              <router-link to="/Classmanagement/buildClass">创建课程</router-link>
             </el-menu-item>
 
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
     </el-aside>
-
-    <router-view></router-view>
+    <el-container>
+      <el-header>
+        <classbread :breadcrumb=breadcrumb>
+        </classbread>
+      </el-header>
+      <router-view></router-view>
+    </el-container>
   </el-container>
 </template>
 
@@ -31,20 +36,27 @@
 </style>
 
 <script>
-
+import classbread from "@/components/classmanagement/classbread";
 export default {
   name: 'Classmanagement',
-  data() {
-    const item = {
-      studentID: '20190502',
-      name: '王小虎',
-      grade: '98'
-    };
-    return {
-      tableData: Array(20).fill(item)
-    }
+  components: {
+    classbread
   },
-  components: {}
+  mounted:function () {
+
+    let breadcrumb = [
+      {
+        link: '/Classmanagement',
+        title: '课程管理'
+      }
+    ]
+    this.$store.commit("savebreadcrumb", breadcrumb)
+  },
+  computed: {
+    breadcrumb:function () {
+      return this.$store.state.breadcrumb
+    },
+  }
 };
 </script>
 

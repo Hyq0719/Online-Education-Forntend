@@ -58,7 +58,7 @@ export default {
           axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId",b).then(function (res) {
             console.log(res);
             if (response.data.code === 1000) {
-              that.$store.commit('saveTeacherClassData',res.data)
+              that.$store.commit('saveTeacherClassData',res.data.data)
             }
           })
         } else if (response.data.code === 2002) {
@@ -67,7 +67,7 @@ export default {
           MessageBox.alert('密码错误')
         }
       }, function (err) {
-        console.log(err);
+        console.log(err) ;
       })
     },
     Register() {

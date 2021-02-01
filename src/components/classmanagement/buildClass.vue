@@ -1,62 +1,64 @@
 <template>
   <div>
-    <el-container>
-      <el-header style="text-align: right; font-size: 12px">
-        <el-button type="primary" class="headerbutton" @click="closed" :loading="loading">
-          {{ loading ? '提交中 ...' : '确认上传' }}
-        </el-button>
-      </el-header>
-      <el-main>
-        <div style="width: 800px">
-          <el-form label-width="160px">
-            <el-form-item label="课程名称" style="width: 300px">
-              <el-input v-model="formbuild.name"
-                        placeholder="请输入内容"
-                        maxlength="10"
-                        show-word-limit></el-input>
-            </el-form-item>
-            <el-form-item>
-              <span slot="label" class="emphasize">上传课程介绍：</span>
-              <el-input
-                  type="textarea"
-                  :rows="4"
-                  placeholder="请输入内容"
-                  v-model="formbuild.intro">
-              </el-input>
-            </el-form-item>
-            <el-form-item label="选择课程类别">
-              <el-select v-model="selectvalue" placeholder="请选择" style="float: left;margin: 10px 24px">
-                <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="是否为vip课程">
-              <el-switch
-                  v-model="formbuild.Isvip"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                  style="float: left;margin: 10px 24px">
-              </el-switch>
-            </el-form-item>
-            <el-form-item label="上传课程封面" style="width: 600px">
-              <el-col class="normal" :span="24"> 请注意课程封面只能上传一张图片，且上传图片的大小最大为2MB</el-col>
-              <UploadImgTool :imgNum="imgNum"></UploadImgTool>
-            </el-form-item>
-            <!--          <el-form-item>-->
-            <!--            &lt;!&ndash;默认上传&ndash;&gt;-->
-            <!--            <span slot="label" class="emphasize">上传课程视频：</span>-->
-            <!--            <el-col class="normal" :span="24">请上传视频</el-col>-->
-            <!--            <UploadFileTool></UploadFileTool>-->
-            <!--          </el-form-item>-->
-          </el-form>
-        </div>
-      </el-main>
-    </el-container>
+    <div class="title" style="overflow: hidden;width: 700px;margin-top: 20px" >
+      <h3 style="display: inline">
+        修改课程
+      </h3>
+      <el-button type="primary" class="headerbutton" @click="closed" :loading="loading">
+        {{ loading ? '提交中 ...' : '确认修改' }}
+      </el-button>
+        <el-divider></el-divider>
+    </div>
+    <el-main>
+      <div style="width: 800px">
+        <el-form label-width="160px">
+          <el-form-item label="课程名称" style="width: 300px">
+            <el-input v-model="formbuild.name"
+                      placeholder="请输入内容"
+                      maxlength="10"
+                      show-word-limit></el-input>
+          </el-form-item>
+          <el-form-item>
+            <span slot="label" class="emphasize">上传课程介绍：</span>
+            <el-input
+                type="textarea"
+                :rows="4"
+                placeholder="请输入内容"
+                v-model="formbuild.intro">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="选择课程类别">
+            <el-select v-model="selectvalue" placeholder="请选择" style="float: left;margin: 10px 24px">
+              <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="是否为vip课程">
+            <el-switch
+                v-model="formbuild.Isvip"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                style="float: left;margin: 10px 24px">
+            </el-switch>
+          </el-form-item>
+          <el-form-item label="上传课程封面" style="width: 600px">
+            <el-col class="normal" :span="24"> 请注意课程封面只能上传一张图片，且上传图片的大小最大为2MB</el-col>
+            <UploadImgTool :imgNum="imgNum"></UploadImgTool>
+          </el-form-item>
+          <!--          <el-form-item>-->
+          <!--            &lt;!&ndash;默认上传&ndash;&gt;-->
+          <!--            <span slot="label" class="emphasize">上传课程视频：</span>-->
+          <!--            <el-col class="normal" :span="24">请上传视频</el-col>-->
+          <!--            <UploadFileTool></UploadFileTool>-->
+          <!--          </el-form-item>-->
+        </el-form>
+      </div>
+    </el-main>
   </div>
 </template>
 
@@ -89,7 +91,6 @@ export default {
   },
   components: {
     UploadImgTool: () => import('@/components/classmanagement/UploadlmgTool'),
-    // UploadFileTool: () => import('@/components/classmanagement/UploadFileTool'),
   },
   methods: {
     open() {         //弹窗
@@ -144,7 +145,7 @@ export default {
 .headerbutton {
   cursor: pointer;
   float: right;
-  margin-top: 12px;
+  margin-top: 0px;
 }
 
 
@@ -156,5 +157,11 @@ export default {
 .el-tag + .el-tag {
   margin-left: 10px;
 }
-
+.el-drawer__header{
+  margin-bottom: 10px;
+}
+.title {
+  margin: 10px 30px;
+  text-align: left;
+}
 </style>

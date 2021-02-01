@@ -10,13 +10,17 @@ import LiveMenu from '../views/LiveMenu';
 import Course from '../views/Course';
 import CourseMenu from '../views/CourseMenu';
 import Searchpage from "@/views/Searchpage";
-import Classmanagement from "@/views/Classmanagement";
+import classManagement from "@/views/Classmanagement";
 import Information from '../views/Information';
 import InformationChange from '../views/InformationChange';
 import Feedback from "@/views/Feedback";
-import Classmanagement_class from "@/components/classmanagement/class";
-import updateClass from "@/components/classmanagement/updateClass";
-import Upload from "@/components/classmanagement/Upload";
+import classManagementClass from "@/components/classmanagement/class";
+import updateClass from "@/components/classmanagement/editVideo";
+import Upload from "@/components/classmanagement/Upload"
+import classBread from "@/components/classmanagement/classbread";
+import chapterManagement from "@/components/classmanagement/editchapter";
+import buildClass from "@/components/classmanagement/buildClassPage";
+
 
 Vue.use(Router);
 
@@ -74,13 +78,13 @@ export default new Router({
         },
         {
             path: '/Classmanagement',
-            name: 'Classmanagement',
-            component: Classmanagement,
+            name: 'classManagement',
+            component: classManagement,
             children: [
                 {
-                    path: 'class',
-                    name: 'Classmanagement_class',
-                    component: Classmanagement_class,
+                  path:'buildClass',
+                  name:'buildClass',
+                  component: buildClass,
                 },
                 {
                     path: 'updateClass',
@@ -91,8 +95,23 @@ export default new Router({
                     path: 'Upload',
                     name: 'Upload',
                     component: Upload,
+                },
+                {
+                    path: 'classBread',
+                    name: 'classBread',
+                    component: classBread,
+                },
+                {
+                    path: 'chapter',
+                    name: 'chapterManagement',
+                    component: chapterManagement,
+                },
+                {
+                    path: 'class',
+                    name: 'classManagementClass',
+                    component: classManagementClass,
                 }]
-        },
+            },
         {
             path: '/Information',
             name: 'Information',

@@ -131,8 +131,8 @@ export default {
 
   },
   components: {
-    buildClass: () => import('@/components/classmanagement/buildClass'),
-    updateClass: () => import('@/components/classmanagement/updateClass')
+    buildClass: () => import('@/components/classmanagement/buildClassPage'),
+    updateClass: () => import('@/components/classmanagement/editVideo')
   },
   methods: {
     deleteRow(index, rows) {
