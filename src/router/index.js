@@ -9,6 +9,8 @@ import Live from '../views/Live';
 import LiveMenu from '../views/LiveMenu';
 import Course from '../views/Course';
 import CourseMenu from '../views/CourseMenu';
+import Task from '../views/Task';
+import TaskMenu from '../views/TaskMenu';
 import Searchpage from "@/views/Searchpage";
 import Classmanagement from "@/views/Classmanagement";
 import Information from '../views/Information';
@@ -66,6 +68,16 @@ export default new Router({
             path: '/coursemenu',
             name: 'CourseMenu',
             component: CourseMenu,
+        },
+        {
+            path: '/task',
+            name: 'Task',
+            component: Task,
+        },
+        {
+            path: '/taskmenu',
+            name: 'TaskMenu',
+            component: TaskMenu,
         },
         {
             path: '/searchpage',

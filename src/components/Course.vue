@@ -16,11 +16,11 @@
           </template>
           <el-menu-item-group>
             <el-menu-item :index="1+String(index1)" v-for="(value,index1) in item.VideoList"
-                          v-bind:key="'1'+index1">
+                          v-bind:key="'1'+index1" class="video">
               {{ value.videoName }}
             </el-menu-item>
             <el-menu-item :index="2+String(index1)" v-for="(value,index1) in item.TaskList"
-                          v-bind:key="'2'+index1">
+                          v-bind:key="'2'+index1" class="task" @click="TaskMenu">
               {{ value.taskName }}
             </el-menu-item>
           </el-menu-item-group>
@@ -44,8 +44,11 @@ export default {
     }
   },
   methods: {
-    handleOpen(index) {
-      console.log(index);
+    TaskMenu() {
+      this.$router.push('/taskmenu');
+    },
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
@@ -72,5 +75,13 @@ export default {
   height: 580px;
   border: #C0C4CC 1px solid;
   border-radius: 10px;
+}
+
+.video {
+  color: #409EFF;
+}
+
+.task {
+  color: #67C23A;
 }
 </style>
