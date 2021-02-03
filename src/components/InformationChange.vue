@@ -15,10 +15,9 @@
           <el-form-item label="头像：">
             <el-upload
                 class="avatar-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action=""
                 :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload">
+                :http-request="uploadHttp">
               <img v-if="imageUrl" :src="imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
@@ -53,6 +52,7 @@
 
 <script>
 import axios from "axios";
+import ossClient from "../aliyun.oss.client";
 
 export default {
   name: "InformationChange",
@@ -84,6 +84,13 @@ export default {
         },],
       value: this.$store.state.userData.major.majorContent,
       imageUrl: '',
+      images: [],
+      uploadConf: {
+        region: 'oss-cn-shanghai',
+        accessKeyId: 'LTAI4GGsTQ35tQcWWDVNKwqG',
+        accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
+        bucket: 'shu-online-edu',
+      },
     }
   },
   methods: {
@@ -116,20 +123,22 @@ export default {
         console.log(err);
       })
     },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
+    async uploadHttp({file}) {
+      console.log(file);
+      let that = this;
+      let f = await this.$Api.compressImg(file)
+      console.log(f);
+      const fileName = `pic/${Date.parse(new Date())}`;  //定义唯一的文件名
+      ossClient(this.uploadConf).put(fileName, f, {
+        'ContentType': 'image/jpeg'
+      }).then(({res, url, name}) => {
+        if (res && res.status == 200) {
+          that.imageUrl = url;
+          console.log(`阿里云OSS上传图片成功回调`, res, url, name);
+        }
+      }).catch((err) => {
+        console.log(`阿里云OSS上传图片失败回调`, err);
+      });
     },
   }
 }
