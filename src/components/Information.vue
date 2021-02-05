@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container>
+    <el-container v-if="isLogin">
       <el-aside width="300px">
         <img src="../assets/studentheader1.jpg" alt="图片缺失">
         <h3>{{ information.nickName }}</h3>
@@ -33,6 +33,36 @@
         </el-form>
       </el-main>
     </el-container>
+    <el-container v-if="isLoginTeacher">
+      <el-aside width="300px">
+        <img src="../assets/studentheader3.jpg" alt="图片缺失">
+        <h3>{{ informationTeacher.name }}</h3>
+        <h6>ID:{{ informationTeacher.userId }}</h6>
+      </el-aside>
+      <el-main class="Information">
+        <h2>个人信息</h2>
+        <el-button @click="Change">编辑</el-button>
+        <div class="clear"></div>
+        <el-divider></el-divider>
+        <el-form ref="form" :model="information" label-width="100px">
+          <el-form-item label="姓名：">
+            <h4>{{ informationTeacher.name }}</h4>
+          </el-form-item>
+          <el-form-item label="手机号：">
+            <h4>{{ informationTeacher.phoneId }}</h4>
+          </el-form-item>
+          <el-form-item label="性别：">
+            <h4>{{ informationTeacher.sex }}</h4>
+          </el-form-item>
+          <el-form-item label="学校：">
+            <h4>{{ informationTeacher.school }}</h4>
+          </el-form-item>
+          <el-form-item label="专业：">
+            <h4>{{ informationTeacher.majorContent }}</h4>
+          </el-form-item>
+        </el-form>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -55,7 +85,23 @@ export default {
         vip: this.$store.state.userData.vip,
         wechatId: this.$store.state.userData.wechatId,
         studentPicUrl: this.$store.state.userData.studentPicUrl,
-      }
+      },
+      informationTeacher: {
+        major: this.$store.state.userData.major,
+        majorContent: this.$store.state.userData.major.majorContent,
+        majorId: this.$store.state.userData.majorId,
+        name: this.$store.state.userData.name,
+        password: this.$store.state.userData.password,
+        phoneId: this.$store.state.userData.phoneId,
+        school: this.$store.state.userData.school,
+        sex: this.$store.state.userData.sex,
+        userId: this.$store.state.userData.userId,
+        wechatId: this.$store.state.userData.wechatId,
+        teacherPicUrl: this.$store.state.userData.studentPicUrl,
+        teacherStatus: this.$store.state.userData.teacherStatus,
+      },
+      isLogin: this.$store.state.isLogin,
+      isLoginTeacher: this.$store.state.isLoginTeacher,
     }
   },
   methods: {

@@ -5,34 +5,38 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        isLogin: false,
+        isLogin: JSON.parse(sessionStorage.getItem('isLogin')) || false,
         userData: {},
-        courseData: {},
-        chapterData: {},
+        courseData: JSON.parse(sessionStorage.getItem('courseData')),
+        chapterData: JSON.parse(sessionStorage.getItem('chapterData')),
         teacherData: {
             teacherClassData: [],
             teacherChapterData: [],
             teacherVideoData: [],
         },   //教师管理后台用的
-        breadcrumb:[],
+        breadcrumb: [],
         isRegister: false,
-        isLoginTeacher: false,
+        isLoginTeacher: JSON.parse(sessionStorage.getItem('isLoginTeacher')) || false,
     },
     mutations: {
         saveIsLogin(state) {
             state.isLogin = !state.isLogin;
+            sessionStorage.setItem('isLogin', JSON.stringify(state.isLogin));
         },
         saveIsLoginTeacher(state) {
             state.isLoginTeacher = !state.isLoginTeacher;
+            sessionStorage.setItem('isLoginTeacher', JSON.stringify(state.isLoginTeacher));
         },
         saveData(state, userData) {
             state.userData = userData;
         },
         saveCourseData(state, courseData) {
-            state.courseData = courseData
+            state.courseData = courseData;
+            sessionStorage.setItem('courseData', JSON.stringify(state.courseData));
         },
         saveChapterData(state, chapterData) {
             state.chapterData = chapterData;
+            sessionStorage.setItem('chapterData', JSON.stringify(state.chapterData));
         },
         saveTeacherClassData(state, teacherClassData) {
             state.teacherData.teacherClassData = teacherClassData;
@@ -43,8 +47,8 @@ export default new Vuex.Store({
         saveTeacherVideoData(state, teacherVideoData) {
             state.teacherData.teacherVideoData = teacherVideoData;
         },
-        savebreadcrumb(state,breadcrumb){
-            state.breadcrumb=breadcrumb;
+        savebreadcrumb(state, breadcrumb) {
+            state.breadcrumb = breadcrumb;
         },
         saveIsRegister(state) {
             state.isRegister = true;

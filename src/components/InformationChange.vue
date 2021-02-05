@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container>
+    <el-container v-if="isLogin">
       <el-aside width="300px">
         <img src="../assets/studentheader1.jpg" alt="图片缺失">
         <h3>{{ information.nickName }}</h3>
@@ -47,6 +47,50 @@
         </el-form>
       </el-main>
     </el-container>
+    <el-container v-if="isLoginTeacher">
+      <el-aside width="300px">
+        <img src="../assets/studentheader3.jpg" alt="图片缺失">
+        <h3>{{ informationTeacher.name }}</h3>
+        <h6>ID:{{ informationTeacher.userId }}</h6>
+      </el-aside>
+      <el-main class="Information">
+        <h2>个人信息</h2>
+        <el-button type="primary" @click="ChangeInformationTeacher">修改完成</el-button>
+        <div class="clear"></div>
+        <el-divider></el-divider>
+        <el-form ref="form" :model="informationTeacher" label-width="100px">
+          <el-form-item label="头像：">
+            <el-upload
+                class="avatar-uploader"
+                action=""
+                :show-file-list="false"
+                :http-request="uploadHttp">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="姓名：">
+            <el-input v-model="informationTeacher.name"></el-input>
+          </el-form-item>
+          <el-form-item label="性别：">
+            <el-input v-model="informationTeacher.sex"></el-input>
+          </el-form-item>
+          <el-form-item label="学校：">
+            <el-input v-model="informationTeacher.school"></el-input>
+          </el-form-item>
+          <el-form-item label="专业：">
+            <el-select v-model="informationTeacher.majorContent" clearable placeholder="请选择你的专业" @change="changeMajor">
+              <el-option
+                  v-for="item in majors"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -73,6 +117,22 @@ export default {
         wechatId: this.$store.state.userData.wechatId,
         studentPicUrl: this.$store.state.userData.studentPicUrl,
       },
+      informationTeacher: {
+        major: this.$store.state.userData.major,
+        majorContent: this.$store.state.userData.major.majorContent,
+        majorId: this.$store.state.userData.majorId,
+        name: this.$store.state.userData.name,
+        password: this.$store.state.userData.password,
+        phoneId: this.$store.state.userData.phoneId,
+        school: this.$store.state.userData.school,
+        sex: this.$store.state.userData.sex,
+        userId: this.$store.state.userData.userId,
+        wechatId: this.$store.state.userData.wechatId,
+        teacherPicUrl: this.$store.state.userData.teacherPicUrl,
+        teacherStatus: this.$store.state.userData.teacherStatus,
+      },
+      isLogin: this.$store.state.isLogin,
+      isLoginTeacher: this.$store.state.isLoginTeacher,
       majors: [
         {
           value: '1',
@@ -97,6 +157,7 @@ export default {
     changeMajor(value) {
       console.log(value);
       this.information.majorId = value;
+      this.informationTeacher.majorId = value;
     },
     ChangeInformation() {
       let that = this;
@@ -112,7 +173,31 @@ export default {
       a.append('user_id', this.information.userId);
       axios.post("http://" + this.Api + "/api/Student/completeStudentById?" + a, params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
-        axios.post("http://" + that.Api + "/api/Student/getStudentbyId?" + a).then(function (res) {
+        axios.post("http://" + that.Api + "/api/Student/getStudentById?" + a).then(function (res) {
+          console.log(res);
+          that.$router.push('/information');
+          that.$store.commit('saveData', res.data.data);
+        }, function (err) {
+          console.log(err);
+        })
+      }, function (err) {
+        console.log(err);
+      })
+    },
+    ChangeInformationTeacher() {
+      let that = this;
+      let params = {
+        majorId: this.informationTeacher.majorId,
+        name: this.informationTeacher.name,
+        school: this.informationTeacher.school,
+        sex: this.informationTeacher.sex,
+        picUrl: this.informationTeacher.teacherPicUrl,
+      }
+      let a = new URLSearchParams();
+      a.append('user_id', this.informationTeacher.userId);
+      axios.post("http://" + this.Api + "/api/Teacher/completeTeacherById?" + a, params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+        console.log(response);
+        axios.post("http://" + that.Api + "/api/Teacher/getTeacherById?" + a).then(function (res) {
           console.log(res);
           that.$router.push('/information');
           that.$store.commit('saveData', res.data.data);

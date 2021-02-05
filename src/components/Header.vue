@@ -38,41 +38,38 @@
       <el-menu-item index="1" v-if="!isLogin&&!isLoginTeacher">
         <router-link to="/login">登录/注册</router-link>
       </el-menu-item>
-      <el-menu-item index="2">
+      <el-menu-item index="2" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <el-popover
             placement="bottom"
             width="300"
             trigger="hover">
           <h3>大学课程</h3>
           <div>
-            <el-button @click="CourseMenu" v-for="item in college" v-bind:key="item.id" class="CourseMenu">{{
-                item
-              }}
+            <el-button @click="CourseMenu" v-for="item in college" v-bind:key="item.id" class="CourseMenu">
+              {{ item }}
             </el-button>
           </div>
           <el-divider></el-divider>
           <h3>升学课程</h3>
           <div>
-            <el-button @click="CourseMenu" v-for="item in graduate" v-bind:key="item.id" class="CourseMenu">{{
-                item
-              }}
+            <el-button @click="CourseMenu" v-for="item in graduate" v-bind:key="item.id" class="CourseMenu">
+              {{ item }}
             </el-button>
           </div>
           <el-divider></el-divider>
           <h3>终身学习课程</h3>
           <div>
-            <el-button @click="CourseMenu" v-for="item in lifelong" v-bind:key="item.id" class="CourseMenu">{{
-                item
-              }}
+            <el-button @click="CourseMenu" v-for="item in lifelong" v-bind:key="item.id" class="CourseMenu">
+              {{ item }}
             </el-button>
           </div>
           <el-button @click="CourseMenu" slot="reference" class="course" plain>课程</el-button>
         </el-popover>
       </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="3" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <router-link to="/liveMenu">直播</router-link>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="4" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <router-link to="/">首页</router-link>
       </el-menu-item>
     </el-menu>

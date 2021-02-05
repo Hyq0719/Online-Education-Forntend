@@ -47,18 +47,17 @@ export default {
       axios.post('http://' + that.Api + "/api/Teacher/loginByPassword", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
-          that.$router.push('/');
+          that.$router.push('/Classmanagement');
           that.$store.commit('saveIsLoginTeacher');
-          that.$store.commit('saveData', response.data);
-          let c=that.$store.state.userData.data.userId
-          b.append("teacherId",c);
-
-          b.append("sort",1);
-          b.append("page",1);
-          axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId",b).then(function (res) {
+          that.$store.commit('saveData', response.data.data);
+          let c = that.$store.state.userData.userId
+          b.append("teacherId", c);
+          b.append("sort", 1);
+          b.append("page", 1);
+          axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId", b).then(function (res) {
             console.log(res);
             if (response.data.code === 1000) {
-              that.$store.commit('saveTeacherClassData',res.data.data)
+              that.$store.commit('saveTeacherClassData', res.data.data)
             }
           })
         } else if (response.data.code === 2002) {
@@ -67,7 +66,7 @@ export default {
           MessageBox.alert('密码错误')
         }
       }, function (err) {
-        console.log(err) ;
+        console.log(err);
       })
     },
     Register() {

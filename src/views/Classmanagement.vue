@@ -1,7 +1,9 @@
 <template>
   <div>
     <Sidebar></Sidebar>
-    <Header></Header>
+    <Header>
+      <div></div>
+    </Header>
     <classmanagement></classmanagement>
   </div>
 </template>
