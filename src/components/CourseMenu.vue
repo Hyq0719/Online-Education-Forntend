@@ -8,7 +8,7 @@
     <el-divider></el-divider>
     <el-row :gutter="25">
       <el-col :span="6" v-for="(item,index) in this.$store.state.courseData" v-bind:key="index">
-        <router-link to="/course" @click.native="Chapter(item.courseId)">
+        <router-link :to="{path:'/course',query:{courseId:item.courseId}}">
           <div class="grid-content">
             <img :src="item.src" alt="图片缺失">
             <h4>{{ item.name }}</h4>
@@ -35,21 +35,18 @@ export default {
   name: "CourseMenu",
   data() {
     return {
-      course: [
-        {
-          src: require('../assets/course1.webp'),
-        },
-      ],
+      course: [],
     }
   },
+  mounted() {
+    this.CourseMenu();
+  },
   methods: {
-    Chapter(courseId) {
-      console.log(courseId);
+    CourseMenu() {
       let that = this;
-      let a = new URLSearchParams();
-      a.append('courseId', courseId);
-      axios.post("http://" + this.Api + "/api/Course/getCourseDisplay", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        that.$store.commit('saveChapterData', response.data.data)
+      axios.get("http://" + this.Api + "/api/Course/getClass", {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        that.$store.commit('saveCourseData', response.data);
       }, function (err) {
         console.log(err);
       })

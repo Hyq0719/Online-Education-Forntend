@@ -39,12 +39,13 @@ export default {
   },
   methods: {
     Login() {
-      let a = new URLSearchParams();
       let b = new URLSearchParams();
-      a.append('password', this.form.password);
-      a.append('phone_id', this.form.name);
+      let params = {
+        password: this.form.password,
+        phone: this.form.name,
+      }
       let that = this;
-      axios.post('http://' + that.Api + "/api/Teacher/loginByPassword", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post('http://' + that.Api + "/api/Teacher/loginByPassword", params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/Classmanagement');
@@ -52,6 +53,9 @@ export default {
           that.$store.commit('saveData', response.data.data);
           if (!response.data.data.teacherPicUrl) {
             that.$store.commit('saveAvatarTeacher')
+          }
+          if (!response.data.data.major) {
+            that.$store.commit('saveMajor')
           }
           let c = that.$store.state.userData.userId
           b.append("teacherId", c);

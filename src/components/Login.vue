@@ -39,19 +39,37 @@ export default {
   },
   methods: {
     Login() {
-      let a = new URLSearchParams();
-      a.append('password', this.form.password);
-      a.append('phone_id', this.form.name);
+      let params = {
+        password: this.form.password,
+        phone: this.form.name,
+      }
       let that = this;
-      axios.post("http://" + this.Api + "/api/Student/loginByPassword", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post("http://" + this.Api + "/api/Student/loginByPassword", params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/');
           that.$store.commit('saveIsLogin');
           that.$store.commit('saveData', response.data.data)
+          that.$store.commit('saveJWT', response.headers.authorization)
           if (!response.data.data.studentPicUrl) {
             that.$store.commit('saveAvatar')
           }
+          if (!response.data.data.major) {
+            that.$store.commit('saveMajor')
+          }
+          let a = new URLSearchParams;
+          let JWT = that.$store.state.JWT;
+          a.append("user_id", response.data.data.userId)
+          axios.post("http://" + that.Api + "/api/Student/findAllPreferences?" + a, null, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': JWT,
+            }
+          }).then(function (response) {
+            console.log(response);
+          }, function (err) {
+            console.log(err);
+          })
         } else if (response.data.code === 2002) {
           MessageBox.alert('用户不存在')
         } else if (response.data.code === 2003) {

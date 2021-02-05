@@ -41,22 +41,25 @@
             trigger="hover">
           <h3>大学课程</h3>
           <div>
-            <el-button @click="CourseMenu" v-for="item in college" v-bind:key="item.id" class="CourseMenu">
-              {{ item }}
+            <el-button @click="CourseMenu" v-for="item in college" v-bind:key="item.id" class="CourseMenu">{{
+                item
+              }}
             </el-button>
           </div>
           <el-divider></el-divider>
           <h3>升学课程</h3>
           <div>
-            <el-button @click="CourseMenu" v-for="item in graduate" v-bind:key="item.id" class="CourseMenu">
-              {{ item }}
+            <el-button @click="CourseMenu" v-for="item in graduate" v-bind:key="item.id" class="CourseMenu">{{
+                item
+              }}
             </el-button>
           </div>
           <el-divider></el-divider>
           <h3>终身学习课程</h3>
           <div>
-            <el-button @click="CourseMenu" v-for="item in lifelong" v-bind:key="item.id" class="CourseMenu">
-              {{ item }}
+            <el-button @click="CourseMenu" v-for="item in lifelong" v-bind:key="item.id" class="CourseMenu">{{
+                item
+              }}
             </el-button>
           </div>
           <el-button @click="CourseMenu" slot="reference" class="course" plain>课程</el-button>
@@ -73,13 +76,8 @@
 </template>
 
 <script>
-import store from '../vuex/store';
-import Avatar from "@/components/Avatar";
-import axios from "axios";
 
 export default {
-  components: {Avatar},
-  store,
   name: "Header",
   data() {
     return {
@@ -99,14 +97,7 @@ export default {
       this.$router.push('/Classmanagement')
     },
     CourseMenu() {
-      let that = this;
-      axios.get("http://" + this.Api + "/api/Course/getClass", {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response);
-        that.$router.push('/coursemenu');
-        that.$store.commit('saveCourseData', response.data);
-      }, function (err) {
-        console.log(err);
-      })
+      this.$router.push('/coursemenu');
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

@@ -32,6 +32,7 @@
 
 <script>
 import VideoPlayer from "../components/VideoPlayer";
+import axios from "axios";
 
 export default {
   name: "Course",
@@ -41,7 +42,11 @@ export default {
   data() {
     return {
       input: '',
+      courseId: this.$route.query.courseId,
     }
+  },
+  mounted() {
+    this.Chapter();
   },
   methods: {
     TaskMenu() {
@@ -52,6 +57,17 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    Chapter() {
+      console.log(this.courseId);
+      let that = this;
+      let a = new URLSearchParams();
+      a.append('courseId', this.courseId);
+      axios.post("http://" + this.Api + "/api/Course/getCourseDisplay", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        that.$store.commit('saveChapterData', response.data.data)
+      }, function (err) {
+        console.log(err);
+      })
     },
   },
 }

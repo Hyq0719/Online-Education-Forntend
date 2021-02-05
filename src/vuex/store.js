@@ -1,14 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VueCookies from 'vue-cookies'
 
 Vue.use(Vuex)
+Vue.use(VueCookies)
 
 export default new Vuex.Store({
     state: {
         isLogin: JSON.parse(sessionStorage.getItem('isLogin')) || false,
-        userData: JSON.parse(sessionStorage.getItem('userData')),
-        courseData: JSON.parse(sessionStorage.getItem('courseData')),
-        chapterData: JSON.parse(sessionStorage.getItem('chapterData')),
+        JWT: JSON.parse(VueCookies.get('JWT')) || false,
+        userData: JSON.parse(sessionStorage.getItem('userData')) || false,
+        courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
+        chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
         teacherData: {
             teacherClassData: [],
             teacherChapterData: [],
@@ -27,12 +30,22 @@ export default new Vuex.Store({
             state.isLoginTeacher = !state.isLoginTeacher;
             sessionStorage.setItem('isLoginTeacher', JSON.stringify(state.isLoginTeacher));
         },
+        saveJWT(state, JWT) {
+            state.JWT = JWT;
+            VueCookies.set('JWT', JSON.stringify(state.JWT), "7D");
+        },
         saveAvatar(state) {
             state.userData.studentPicUrl = 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png';
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
         saveAvatarTeacher(state) {
             state.userData.teacherPicUrl = 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png';
+            sessionStorage.setItem('userData', JSON.stringify(state.userData));
+        },
+        saveMajor(state) {
+            state.userData.major = {
+                majorContent: '',
+            }
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
         saveData(state, userData) {
