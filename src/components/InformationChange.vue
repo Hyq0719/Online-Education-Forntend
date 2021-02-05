@@ -2,7 +2,7 @@
   <div>
     <el-container v-if="isLogin">
       <el-aside width="300px">
-        <img src="../assets/studentheader1.jpg" alt="图片缺失">
+        <img :src="information.studentPicUrl" alt="图片缺失">
         <h3>{{ information.nickName }}</h3>
         <h6>ID:{{ information.userId }}</h6>
       </el-aside>
@@ -49,7 +49,7 @@
     </el-container>
     <el-container v-if="isLoginTeacher">
       <el-aside width="300px">
-        <img src="../assets/studentheader3.jpg" alt="图片缺失">
+        <img :src="informationTeacher.teacherPicUrl" alt="图片缺失">
         <h3>{{ informationTeacher.name }}</h3>
         <h6>ID:{{ informationTeacher.userId }}</h6>
       </el-aside>
@@ -213,12 +213,19 @@ export default {
       let that = this;
       let f = await this.$Api.compressImg(file)
       console.log(f);
-      const fileName = `pic/${Date.parse(new Date())}`;  //定义唯一的文件名
+      let fileName = `${this.$store.state.userData.userId}_Header`;  //定义唯一的文件名
+      if (this.isLogin) {
+        fileName = `pic/Student/` + fileName;
+      } else {
+        fileName = `pic/Teacher/` + fileName;
+      }
       ossClient(this.uploadConf).put(fileName, f, {
         'ContentType': 'image/jpeg'
       }).then(({res, url, name}) => {
         if (res && res.status == 200) {
           that.imageUrl = url;
+          that.information.studentPicUrl = url;
+          that.informationTeacher.teacherPicUrl = url;
           console.log(`阿里云OSS上传图片成功回调`, res, url, name);
         }
       }).catch((err) => {

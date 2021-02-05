@@ -2,7 +2,7 @@
   <div>
     <el-container v-if="isLogin">
       <el-aside width="300px">
-        <img src="../assets/studentheader1.jpg" alt="图片缺失">
+        <img :src="information.studentPicUrl" alt="图片缺失">
         <h3>{{ information.nickName }}</h3>
         <h6>ID:{{ information.userId }}</h6>
       </el-aside>
@@ -35,7 +35,7 @@
     </el-container>
     <el-container v-if="isLoginTeacher">
       <el-aside width="300px">
-        <img src="../assets/studentheader3.jpg" alt="图片缺失">
+        <img :src="informationTeacher.teacherPicUrl" alt="图片缺失">
         <h3>{{ informationTeacher.name }}</h3>
         <h6>ID:{{ informationTeacher.userId }}</h6>
       </el-aside>
@@ -97,7 +97,7 @@ export default {
         sex: this.$store.state.userData.sex,
         userId: this.$store.state.userData.userId,
         wechatId: this.$store.state.userData.wechatId,
-        teacherPicUrl: this.$store.state.userData.studentPicUrl,
+        teacherPicUrl: this.$store.state.userData.teacherPicUrl,
         teacherStatus: this.$store.state.userData.teacherStatus,
       },
       isLogin: this.$store.state.isLogin,

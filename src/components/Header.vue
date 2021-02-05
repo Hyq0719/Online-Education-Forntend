@@ -20,14 +20,10 @@
           </router-link>
         </div>
       </slot>
-      <el-submenu index="1" v-if="isLogin||isLoginTeacher">
+      <el-submenu index="1" v-if="isLogin||isLoginTeacher" class="avatar">
         <template slot="title">
-          <avatar v-if="isLogin" style="float: left;"></avatar>
-          <div class="demo-basic--circle" v-if="isLoginTeacher" style="float: left;">
-            <div class="block">
-              <el-avatar shape="square" :size="40" :src="squareUrl"></el-avatar>
-            </div>
-          </div>
+          <img v-if="isLogin" :src="this.studentPicUrl" alt="头像加载失败"/>
+          <img v-if="isLoginTeacher" :src="this.teacherPicUrl" alt="头像加载失败"/>
         </template>
         <el-menu-item index="1-1" @click="Information">个人信息</el-menu-item>
         <el-menu-item index="1-2">我的消息</el-menu-item>
@@ -88,12 +84,11 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      activeIndex2: "1",
       input: '',
+      studentPicUrl: this.$store.state.userData.studentPicUrl,
+      teacherPicUrl: this.$store.state.userData.teacherPicUrl,
       isLogin: this.$store.state.isLogin,
       isLoginTeacher: this.$store.state.isLoginTeacher,
-      circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
       college: ['所有课程', '免费课程', '热门课程', '计算机', '数学', '金融', '计算机', '数学', '金融'],
       graduate: ['考研21', '考研20', '期末不挂', '英语学习'],
       lifelong: ['名师专栏'],
@@ -135,6 +130,13 @@ export default {
 </script>
 
 <style scoped>
+.avatar img {
+  height: 40px;
+  width: 40px;
+  margin: 10px 0px;
+  float: left;
+}
+
 .Header {
   float: left;
   height: 60px;

@@ -50,6 +50,9 @@ export default {
           that.$router.push('/Classmanagement');
           that.$store.commit('saveIsLoginTeacher');
           that.$store.commit('saveData', response.data.data);
+          if (!response.data.data.teacherPicUrl) {
+            that.$store.commit('saveAvatarTeacher')
+          }
           let c = that.$store.state.userData.userId
           b.append("teacherId", c);
           b.append("sort", 1);

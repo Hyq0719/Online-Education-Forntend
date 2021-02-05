@@ -49,6 +49,9 @@ export default {
           that.$router.push('/');
           that.$store.commit('saveIsLogin');
           that.$store.commit('saveData', response.data.data)
+          if (!response.data.data.studentPicUrl) {
+            that.$store.commit('saveAvatar')
+          }
         } else if (response.data.code === 2002) {
           MessageBox.alert('用户不存在')
         } else if (response.data.code === 2003) {

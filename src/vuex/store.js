@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         isLogin: JSON.parse(sessionStorage.getItem('isLogin')) || false,
-        userData: {},
+        userData: JSON.parse(sessionStorage.getItem('userData')),
         courseData: JSON.parse(sessionStorage.getItem('courseData')),
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')),
         teacherData: {
@@ -27,8 +27,17 @@ export default new Vuex.Store({
             state.isLoginTeacher = !state.isLoginTeacher;
             sessionStorage.setItem('isLoginTeacher', JSON.stringify(state.isLoginTeacher));
         },
+        saveAvatar(state) {
+            state.userData.studentPicUrl = 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png';
+            sessionStorage.setItem('userData', JSON.stringify(state.userData));
+        },
+        saveAvatarTeacher(state) {
+            state.userData.teacherPicUrl = 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png';
+            sessionStorage.setItem('userData', JSON.stringify(state.userData));
+        },
         saveData(state, userData) {
             state.userData = userData;
+            sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
         saveCourseData(state, courseData) {
             state.courseData = courseData;
