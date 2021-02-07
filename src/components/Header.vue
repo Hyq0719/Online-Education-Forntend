@@ -69,7 +69,7 @@
         <router-link to="/liveMenu">直播</router-link>
       </el-menu-item>
       <el-menu-item index="4" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
-        <router-link to="/">首页</router-link>
+        <router-link to="/main">首页</router-link>
       </el-menu-item>
     </el-menu>
   </div>

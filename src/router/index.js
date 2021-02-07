@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from '../views/Login';
 import LoginTeacher from '../views/LoginTeacher';
 import Main from '../views/Main';
+import Index from '../views/Index';
 import Register from '../views/Register';
 import RegisterTeacher from '../views/RegisterTeacher';
 import Live from '../views/Live';
@@ -40,6 +41,11 @@ export default new Router({
         },
         {
             path: '/',
+            name: 'Index',
+            component: Index,
+        },
+        {
+            path: '/main',
             name: 'Main',
             component: Main,
         },
@@ -94,9 +100,9 @@ export default new Router({
             component: classManagement,
             children: [
                 {
-                  path:'buildClass',
-                  name:'buildClass',
-                  component: buildClass,
+                    path: 'buildClass',
+                    name: 'buildClass',
+                    component: buildClass,
                 },
                 {
                     path: 'updateClass',
@@ -123,7 +129,7 @@ export default new Router({
                     name: 'classManagementClass',
                     component: classManagementClass,
                 }]
-            },
+        },
         {
             path: '/Information',
             name: 'Information',

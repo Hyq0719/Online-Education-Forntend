@@ -9,6 +9,7 @@ export default new Vuex.Store({
     state: {
         isLogin: JSON.parse(sessionStorage.getItem('isLogin')) || false,
         JWT: JSON.parse(VueCookies.get('JWT')) || false,
+        Preferences: JSON.parse(sessionStorage.getItem('Preferences')) || false,
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
@@ -33,6 +34,10 @@ export default new Vuex.Store({
         saveJWT(state, JWT) {
             state.JWT = JWT;
             VueCookies.set('JWT', JSON.stringify(state.JWT), "7D");
+        },
+        savePreferences(state, Preferences) {
+            state.Preferences = Preferences;
+            sessionStorage.setItem('Preferences', JSON.stringify(state.Preferences));
         },
         saveAvatar(state) {
             state.userData.studentPicUrl = 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png';

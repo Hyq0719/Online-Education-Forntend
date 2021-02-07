@@ -45,7 +45,7 @@ export default {
       courseId: this.$route.query.courseId,
     }
   },
-  mounted() {
+  created() {
     this.Chapter();
   },
   methods: {

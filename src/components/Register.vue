@@ -2,29 +2,24 @@
   <div class="login">
     <h2>学生注册</h2>
     <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="昵称：">
-        <el-input v-model="ruleForm.name" placeholder="请输入昵称"></el-input>
+      <el-form-item label="手机号：">
+        <el-input class="phone" v-model="ruleForm.phone" placeholder="请输入手机号"></el-input>
+        <el-button class="code" type="primary" @click="Code">发送验证码</el-button>
       </el-form-item>
-
+      <el-form-item label="验证码：">
+        <el-input v-model="ruleForm.code" placeholder="请输入验证码"></el-input>
+      </el-form-item>
       <el-form-item label="密码：" prop="pass">
         <el-input type="password" v-model="ruleForm.pass" autocomplete="off" placeholder="请输入密码"
                   show-password></el-input>
       </el-form-item>
-
       <el-form-item label="请确认密码：" prop="checkPass">
         <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off" placeholder="请再次输入密码"
                   show-password></el-input>
       </el-form-item>
-
-      <el-form-item label="手机号：">
-        <el-input class="phone" v-model="ruleForm.phone" placeholder="请输入手机号"></el-input>
-        <el-button class="code" type="primary">发送验证码</el-button>
-      </el-form-item>
-
       <div>
         <el-button type="primary" @click="StudentRegister">注册</el-button>
       </div>
-
       <div class="choose">
         <el-link :underline="false" @click="TeacherRegister">我是老师</el-link>
       </div>
@@ -64,10 +59,10 @@ export default {
     return {
       apiUrl: 'http://' + this.Api + '/api/Student/addStudent',
       ruleForm: {
-        name: '',
         pass: '',
         checkPass: '',
         phone: '',
+        code: '',
       },
 
       rules: {
@@ -84,12 +79,23 @@ export default {
     };
   },
   methods: {
-    StudentRegister() {
+    Code() {
       let a = new URLSearchParams();
-      a.append('password', this.ruleForm.checkPass);
       a.append('phone_id', this.ruleForm.phone);
+      axios.post('http://' + this.Api + '/api/Student/checkByPhoneId', a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+      }, function (err) {
+        console.log(err);
+      })
+    },
+    StudentRegister() {
+      let params = {
+        code: this.ruleForm.code,
+        password: this.ruleForm.checkPass,
+        phone: this.ruleForm.phone,
+      }
       let that = this;
-      axios.post('http://' + this.Api + '/api/Student/addStudent', a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+      axios.post('http://' + this.Api + '/api/Student/addStudent', params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/login');

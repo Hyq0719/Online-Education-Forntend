@@ -4,7 +4,6 @@
       <el-aside width="300px">
         <img :src="information.studentPicUrl" alt="图片缺失">
         <h3>{{ information.nickName }}</h3>
-        <h6>ID:{{ information.userId }}</h6>
       </el-aside>
       <el-main class="Information">
         <h2>个人信息</h2>
@@ -51,7 +50,6 @@
       <el-aside width="300px">
         <img :src="informationTeacher.teacherPicUrl" alt="图片缺失">
         <h3>{{ informationTeacher.name }}</h3>
-        <h6>ID:{{ informationTeacher.userId }}</h6>
       </el-aside>
       <el-main class="Information">
         <h2>个人信息</h2>
@@ -257,10 +255,6 @@ export default {
 
 .el-aside h3 {
   margin-bottom: 10px;
-}
-
-.el-aside h6 {
-  margin-top: 10px;
 }
 
 .el-main {

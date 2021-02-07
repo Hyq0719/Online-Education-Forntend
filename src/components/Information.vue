@@ -4,7 +4,6 @@
       <el-aside width="300px">
         <img :src="information.studentPicUrl" alt="图片缺失">
         <h3>{{ information.nickName }}</h3>
-        <h6>ID:{{ information.userId }}</h6>
       </el-aside>
       <el-main class="Information">
         <h2>个人信息</h2>
@@ -30,6 +29,11 @@
           <el-form-item label="年级：">
             <h4>{{ information.grade }}</h4>
           </el-form-item>
+          <el-form-item label="兴趣：">
+            <h4 v-for="(item,index) in this.$store.state.Preferences" v-bind:key="index">{{
+                item.prefer.preferContent
+              }}</h4>
+          </el-form-item>
         </el-form>
       </el-main>
     </el-container>
@@ -37,7 +41,6 @@
       <el-aside width="300px">
         <img :src="informationTeacher.teacherPicUrl" alt="图片缺失">
         <h3>{{ informationTeacher.name }}</h3>
-        <h6>ID:{{ informationTeacher.userId }}</h6>
       </el-aside>
       <el-main class="Information">
         <h2>个人信息</h2>
@@ -67,6 +70,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Information",
   data() {
@@ -104,9 +109,29 @@ export default {
       isLoginTeacher: this.$store.state.isLoginTeacher,
     }
   },
+  created() {
+    this.Preferences();
+  },
   methods: {
     Change() {
       this.$router.push('/Information/Change')
+    },
+    Preferences() {
+      let a = new URLSearchParams;
+      let JWT = this.$store.state.JWT;
+      let that = this;
+      a.append("user_id", this.$store.state.userData.userId)
+      axios.post("http://" + this.Api + "/api/Student/findAllPreferences?" + a, null, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log(response);
+        that.$store.commit('savePreferences', response.data.data)
+      }, function (err) {
+        console.log(err);
+      })
     },
   }
 }
@@ -133,10 +158,6 @@ export default {
 
 .el-aside h3 {
   margin-bottom: 10px;
-}
-
-.el-aside h6 {
-  margin-top: 10px;
 }
 
 .el-main {
