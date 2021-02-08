@@ -6,7 +6,6 @@
     <nav2></nav2>
     <Article></Article>
     <Footer></Footer>
-
   </div>
 </template>
 
