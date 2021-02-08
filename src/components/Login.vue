@@ -47,7 +47,7 @@ export default {
       axios.post("http://" + this.Api + "/api/Student/loginByPassword", params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
-          that.$router.push('/information');
+          that.$router.push('/main');
           that.$store.commit('saveIsLogin');
           that.$store.commit('saveData', response.data.data)
           that.$store.commit('saveJWT', response.headers.authorization)

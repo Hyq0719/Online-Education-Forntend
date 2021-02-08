@@ -20,7 +20,7 @@
           </router-link>
         </div>
       </slot>
-      <el-submenu index="1" v-if="isLogin||isLoginTeacher" class="avatar">
+      <el-submenu index="2" v-if="isLogin||isLoginTeacher" class="avatar">
         <template slot="title">
           <img v-if="isLogin" :src="this.studentPicUrl" alt="头像加载失败"/>
           <img v-if="isLoginTeacher" :src="this.teacherPicUrl" alt="头像加载失败"/>
@@ -31,10 +31,13 @@
         <el-menu-item index="1-4">设置</el-menu-item>
         <el-menu-item index="1-6" @click="Logout">注销</el-menu-item>
       </el-submenu>
-      <el-menu-item index="1" v-if="!isLogin&&!isLoginTeacher">
+      <el-menu-item index="1" v-if="isLogin||isLoginTeacher">
+        <router-link to="/VIP">开通VIP</router-link>
+      </el-menu-item>
+      <el-menu-item index="2" v-if="!isLogin&&!isLoginTeacher">
         <router-link to="/login">登录/注册</router-link>
       </el-menu-item>
-      <el-menu-item index="2" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
+      <el-menu-item index="3" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <el-popover
             placement="bottom"
             width="300"
@@ -65,10 +68,10 @@
           <el-button @click="CourseMenu" slot="reference" class="course" plain>课程</el-button>
         </el-popover>
       </el-menu-item>
-      <el-menu-item index="3" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
+      <el-menu-item index="4" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <router-link to="/liveMenu">直播</router-link>
       </el-menu-item>
-      <el-menu-item index="4" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
+      <el-menu-item index="5" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <router-link to="/main">首页</router-link>
       </el-menu-item>
     </el-menu>
@@ -76,6 +79,8 @@
 </template>
 
 <script>
+
+import VueCookies from "vue-cookies";
 
 export default {
   name: "Header",
@@ -112,6 +117,8 @@ export default {
       } else {
         this.$store.commit('saveIsLoginTeacher');
       }
+      sessionStorage.clear();
+      VueCookies.remove('JWT');
     },
     Information() {
       this.$router.push('/Information');

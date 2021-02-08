@@ -8,6 +8,7 @@ Vue.use(VueCookies)
 export default new Vuex.Store({
     state: {
         isLogin: JSON.parse(sessionStorage.getItem('isLogin')) || false,
+        Phone: JSON.parse(sessionStorage.getItem('Phone')) || false,
         JWT: JSON.parse(VueCookies.get('JWT')) || false,
         Preferences: JSON.parse(sessionStorage.getItem('Preferences')) || false,
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
@@ -19,7 +20,6 @@ export default new Vuex.Store({
             teacherVideoData: [],
         },   //教师管理后台用的
         breadcrumb: [],
-        isRegister: false,
         isLoginTeacher: JSON.parse(sessionStorage.getItem('isLoginTeacher')) || false,
     },
     mutations: {
@@ -30,6 +30,10 @@ export default new Vuex.Store({
         saveIsLoginTeacher(state) {
             state.isLoginTeacher = !state.isLoginTeacher;
             sessionStorage.setItem('isLoginTeacher', JSON.stringify(state.isLoginTeacher));
+        },
+        savePhone(state, Phone) {
+            state.Phone = Phone;
+            sessionStorage.setItem('Phone', JSON.stringify(state.Phone));
         },
         saveJWT(state, JWT) {
             state.JWT = JWT;
@@ -76,9 +80,6 @@ export default new Vuex.Store({
         },
         savebreadcrumb(state, breadcrumb) {
             state.breadcrumb = breadcrumb;
-        },
-        saveIsRegister(state) {
-            state.isRegister = true;
         },
     }
 })

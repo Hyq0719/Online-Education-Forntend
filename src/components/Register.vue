@@ -23,8 +23,6 @@
       <div class="choose">
         <el-link :underline="false" @click="TeacherRegister">我是老师</el-link>
       </div>
-
-
     </el-form>
   </div>
 </template>
@@ -45,7 +43,6 @@ export default {
         callback();
       }
     };
-
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'));
@@ -55,7 +52,6 @@ export default {
         callback();
       }
     };
-
     return {
       apiUrl: 'http://' + this.Api + '/api/Student/addStudent',
       ruleForm: {
@@ -64,7 +60,6 @@ export default {
         phone: '',
         code: '',
       },
-
       rules: {
         pass: [
           {validator: validatePass, trigger: 'blur'}
@@ -74,7 +69,6 @@ export default {
           {validator: validatePass2, trigger: 'blur'}
         ],
       },
-
       radio: true,
     };
   },
@@ -98,8 +92,11 @@ export default {
       axios.post('http://' + this.Api + '/api/Student/addStudent', params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
-          that.$router.push('/login');
-          that.$store.commit('saveIsRegister');
+          that.$router.push('/main');
+          that.$store.commit('saveIsLogin');
+          that.$store.commit('savePhone', params.phone);
+          that.$store.commit('saveAvatar')
+          that.$store.commit('saveMajor')
         }
       }, function (err) {
         console.log(err);

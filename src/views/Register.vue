@@ -3,6 +3,7 @@
     <Sidebar></Sidebar>
     <Header></Header>
     <Register></Register>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -10,12 +11,14 @@
 import Register from '../components/Register'
 import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
+import Footer from '../components/Footer'
 
 export default {
   components: {
     Register,
     Header,
     Sidebar,
+    Footer,
   },
 }
 </script>

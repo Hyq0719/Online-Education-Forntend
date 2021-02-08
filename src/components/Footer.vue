@@ -30,7 +30,7 @@ export default {
   float: left;
   height: 100px;
   width: 100px;
-  margin: 10px 0 10px 150px;
+  margin: 10px 10px 10px 150px;
 }
 
 .text {
