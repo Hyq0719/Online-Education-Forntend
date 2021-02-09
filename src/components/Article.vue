@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="ARTICLE">
     <h2>作业墙</h2>
     <el-divider></el-divider>
     <div v-for="(item,index) in picture" v-bind:key="item">
@@ -28,13 +28,14 @@
   letter-spacing: 1px;
 }
 
-.container {
-  margin: 10px 200px;
+.ARTICLE {
+  width: 1100px;
+  margin: auto;
   padding: 32px 0;
   clear: both;
 }
 
-.container h2 {
+.ARTICLE h2 {
   text-align: left;
   margin: 60px 20px 20px 20px;
   letter-spacing: 2px;

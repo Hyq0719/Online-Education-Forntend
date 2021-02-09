@@ -41,7 +41,8 @@ export default {
 
 <style scoped>
 .taskTitle {
-  margin: 20px 150px;
+  margin: 20px auto;
+  width: 1100px;
 }
 
 .taskTitle button {

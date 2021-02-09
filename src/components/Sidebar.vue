@@ -29,7 +29,7 @@ export default {
 .sidebar {
   z-index: 66;
   position: fixed;
-  right: 0;
+  left: 0;
   padding: 0 16px;
   top: 50%;
   transform: translateY(-50%);
@@ -67,14 +67,5 @@ a:hover {
 a {
   text-decoration: none;
   color: #99a9bf;
-}
-
-a {
-  text-decoration: none;
-  color: #99a9bf;
-}
-
-.router-link-active {
-  text-decoration: none;
 }
 </style>

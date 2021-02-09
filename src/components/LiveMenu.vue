@@ -1,5 +1,5 @@
 <template>
-  <div class="live">
+  <div class="LIVE">
     <div class="WholeCourse">
       <h3>
         全部直播
@@ -18,7 +18,6 @@
         </router-link>
       </el-col>
     </el-row>
-
     <div class="block">
       <el-pagination
           background
@@ -198,8 +197,9 @@ export default {
   text-align: left;
 }
 
-.live {
-  margin: 20px 150px;
+.LIVE {
+  margin: auto;
+  width: 1100px;
 }
 
 .grid-content {

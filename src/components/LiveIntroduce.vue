@@ -1,36 +1,38 @@
 <template>
-  <el-container>
-    <el-main>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="直播介绍" name="first">
-          <img src="../assets/courseintroduction1.png" alt="图片缺失">
-          <img src="../assets/courseintroduction2.png" alt="图片缺失">
-          <img src="../assets/courseintroduction.png" alt="图片缺失">
-        </el-tab-pane>
-        <el-tab-pane label="直播评价" name="second">
-          <div class="block">
-            <classevaluate :evalabel="evaluatelabel" :colors="colors" @pass="fchange"></classevaluate>
-            <el-input type="textarea" class="Comment" v-model="textarea" placeholder="请输入内容"></el-input>
+  <div class="LIVEINTRODUCE">
+    <el-container>
+      <el-main>
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="直播介绍" name="first">
+            <img src="../assets/courseintroduction1.png" alt="图片缺失">
+            <img src="../assets/courseintroduction2.png" alt="图片缺失">
+            <img src="../assets/courseintroduction.png" alt="图片缺失">
+          </el-tab-pane>
+          <el-tab-pane label="直播评价" name="second">
+            <div class="block">
+              <classevaluate :evalabel="evaluatelabel" :colors="colors" @pass="fchange"></classevaluate>
+              <el-input type="textarea" class="Comment" v-model="textarea" placeholder="请输入内容"></el-input>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </el-main>
+      <el-aside>
+        <div>
+          <h3>直播老师</h3>
+        </div>
+        <el-divider></el-divider>
+        <div class="Teacher">
+          <img src="../assets/teacherhead.png" alt="图片缺失">
+          <div class="TeacherName">
+            猴博士
           </div>
-        </el-tab-pane>
-      </el-tabs>
-    </el-main>
-    <el-aside width="300px">
-      <div>
-        <h3>直播老师</h3>
-      </div>
-      <el-divider></el-divider>
-      <div class="Teacher">
-        <img src="../assets/teacherhead.png" alt="图片缺失">
-        <div class="TeacherName">
-          猴博士
+          <div class="TeacherIntroduce">
+            《猴博士爱讲课》视频讲解
+          </div>
         </div>
-        <div class="TeacherIntroduce">
-          《猴博士爱讲课》视频讲解
-        </div>
-      </div>
-    </el-aside>
-  </el-container>
+      </el-aside>
+    </el-container>
+  </div>
 </template>
 
 <script>
@@ -63,11 +65,16 @@ export default {
 </script>
 
 <style scoped>
+.LIVEINTRODUCE{
+  margin: auto;
+  width: 1100px;
+}
 .el-aside {
   border-radius: 10px;
   border: #C0C4CC 1px solid;
   color: #333;
   text-align: center;
+  width: 300px;
 }
 
 .el-main {
@@ -79,7 +86,7 @@ export default {
 }
 
 .el-container {
-  margin: 50px 100px;
+  margin: 50px 0;
 }
 
 .el-tab-pane img {

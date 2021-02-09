@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container v-if="isLogin">
-      <el-aside width="300px">
+      <el-aside>
         <img :src="information.studentPicUrl" alt="图片缺失">
         <h3>{{ information.nickName }}</h3>
       </el-aside>
@@ -38,7 +38,7 @@
       </el-main>
     </el-container>
     <el-container v-if="isLoginTeacher">
-      <el-aside width="300px">
+      <el-aside>
         <img :src="informationTeacher.teacherPicUrl" alt="图片缺失">
         <h3>{{ informationTeacher.name }}</h3>
       </el-aside>
@@ -139,7 +139,8 @@ export default {
 
 <style scoped>
 .el-container {
-  margin: 50px 100px;
+  margin: 50px auto;
+  width: 1100px;
 }
 
 .el-aside {
@@ -148,6 +149,7 @@ export default {
   color: #333;
   text-align: center;
   line-height: 20px;
+  width: 300px;
 }
 
 .el-aside img {

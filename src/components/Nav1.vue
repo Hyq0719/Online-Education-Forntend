@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-container style="margin:0px 200px; height: 500px;">
+  <div class="NAV1">
+    <el-container>
       <el-main>
         <div class="block">
           <span class="demonstration"></span>
@@ -39,6 +39,15 @@ export default {
 </script>
 
 <style scoped>
+.NAV1 {
+  width: 1100px;
+  margin: auto;
+}
+
+.el-container {
+  height: 500px;
+}
+
 .el-carousel__item img {
   height: 100%;
   width: 100%;

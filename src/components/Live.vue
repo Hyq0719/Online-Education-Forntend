@@ -1,43 +1,45 @@
 <template>
-  <el-container style="overflow :hidden">
-    <el-main style="position: relative;overflow :hidden">
-      <Flvjs></Flvjs>
-      <v-barrage :arr="arr"
-                 :isPause="isPause"
-                 :percent="100"
-      >
-      </v-barrage>
-    </el-main>
-    <el-aside width="300px">
-      <el-header class="onlineNumber">{{ myCount }}人正在观看</el-header>
-      <el-tabs type="card" v-model="activeList" stretch>
-        <el-tab-pane label="聊天室" name="first">
-          <div class="infinite-list-wrapper">
-            <ul
-                class="list">
-              <li v-for="item in list" :key='item' :class="isMyself(item[0])">{{ item[0] }}：{{ item[1] }}</li>
-            </ul>
-          </div>
-          <el-footer>
-            <input
-                class="communicate"
-                type="text"
-                v-model="input"
-                @keyup.enter="mySend()"
-            />
-          </el-footer>
-        </el-tab-pane>
-        <el-tab-pane label="在线用户" name="second">
-          <div class="infinite-list-wrapper">
-            <ul class="list">
-              <li v-for="value in userList" :key="value" class="users">{{ value }}</li>
-            </ul>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
+  <div class="LIVE">
+    <el-container>
+      <el-main>
+        <Flvjs></Flvjs>
+        <v-barrage :arr="arr"
+                   :isPause="isPause"
+                   :percent="100"
+        >
+        </v-barrage>
+      </el-main>
+      <el-aside>
+        <el-header class="onlineNumber">{{ myCount }}人正在观看</el-header>
+        <el-tabs type="card" v-model="activeList" stretch>
+          <el-tab-pane label="聊天室" name="first">
+            <div class="infinite-list-wrapper">
+              <ul
+                  class="list">
+                <li v-for="item in list" :key='item' :class="isMyself(item[0])">{{ item[0] }}：{{ item[1] }}</li>
+              </ul>
+            </div>
+            <el-footer>
+              <input
+                  class="communicate"
+                  type="text"
+                  v-model="input"
+                  @keyup.enter="mySend()"
+              />
+            </el-footer>
+          </el-tab-pane>
+          <el-tab-pane label="在线用户" name="second">
+            <div class="infinite-list-wrapper">
+              <ul class="list">
+                <li v-for="value in userList" :key="value" class="users">{{ value }}</li>
+              </ul>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
 
-    </el-aside>
-  </el-container>
+      </el-aside>
+    </el-container>
+  </div>
 </template>
 
 <script>
@@ -194,6 +196,11 @@ export default {
 </script>
 
 <style scoped>
+.LIVE {
+  margin: auto;
+  width: 1100px;
+}
+
 .el-tab-pane {
   text-align: center;
 }
@@ -203,19 +210,23 @@ export default {
   text-align: center;
   line-height: 20px;
   font-size: 10px;
+  width: 300px;
 }
 
 .el-main {
   color: #333;
   text-align: center;
   padding: 0px;
+  position: relative;
+  overflow: hidden;
 }
 
 .el-container {
-  margin: 20px 100px;
+  margin: 20px 0;
   height: 506px;
   border: #C0C4CC 1px solid;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 ul {

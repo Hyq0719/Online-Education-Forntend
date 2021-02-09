@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video id="videoElement" controls autoplay muted style="width:100%; height:504px;"></video>
+    <video id="videoElement" controls autoplay muted></video>
     <!--      <button @click="play">播放</button>-->
     <!--      <button @click="reload">重新加载</button>-->
   </div>
@@ -44,5 +44,8 @@ export default {
 </script>
 
 <style scoped>
-
+#videoElement {
+  width: 100%;
+  height: 504px;
+}
 </style>

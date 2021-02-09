@@ -95,7 +95,8 @@ export default {
 
 <style scoped>
 .container {
-  margin: 10px 200px;
+  width: 1100px;
+  margin: 10px auto;
   padding: 32px 0;
   clear: both;
 }

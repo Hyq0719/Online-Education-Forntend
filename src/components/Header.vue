@@ -1,22 +1,21 @@
 <template>
-  <div>
+  <div class="Header">
     <el-menu
         :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
     >
-      <div class="Header">
-        <img src="../assets/logo.png" alt="加载失败" style="height:60px; width:60px;"/>
+      <div class="Header-Img">
+        <img src="../assets/logo.png" alt="加载失败"/>
       </div>
       <slot id="search">
         <div class="Header-search">
-          <el-input placeholder="请输入内容" v-model="input" clearable>
-          </el-input>
+          <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
         </div>
-        <div class="Header">
+        <div class="Header-logo">
           <router-link to="/searchpage">
-            <img src="../assets/Header-search-logo.jpg" alt="加载失败" style="height:40px; width:40px; margin:10px 0;"/>
+            <img src="../assets/Header-search-logo.jpg" alt="加载失败"/>
           </router-link>
         </div>
       </slot>
@@ -79,7 +78,6 @@
 </template>
 
 <script>
-
 import VueCookies from "vue-cookies";
 
 export default {
@@ -128,15 +126,13 @@ export default {
 </script>
 
 <style scoped>
-.avatar img {
-  height: 40px;
-  width: 40px;
-  margin: 10px 0px;
+.Header-Img {
   float: left;
+  height: 60px;
+  width: 60px;
 }
 
-.Header {
-  float: left;
+.Header-Img img {
   height: 60px;
   width: 60px;
 }
@@ -145,6 +141,24 @@ export default {
   float: left;
   width: 300px;
   margin: 10px 0 10px 50px;
+}
+
+.Header-logo img {
+  text-align: left;
+  float: left;
+}
+
+.Header-logo img {
+  height: 40px;
+  width: 40px;
+  margin: 10px 0;
+}
+
+.avatar img {
+  height: 40px;
+  width: 40px;
+  margin: 10px 0px;
+  float: left;
 }
 
 .el-menu--horizontal > .el-menu-item {

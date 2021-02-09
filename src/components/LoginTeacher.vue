@@ -4,7 +4,6 @@
       <el-button @click="Student">我是学生</el-button>
       <el-button @click="Teacher">我是老师</el-button>
     </div>
-
     <h2>老师登录</h2>
     <el-form ref="form" :model="form" label-width="100px">
       <el-form-item label="真实姓名：">
@@ -13,7 +12,6 @@
       <el-form-item label="密码：">
         <el-input placeholder="请输入密码" v-model="form.password" show-password></el-input>
       </el-form-item>
-
       <div>
         <el-button type="primary" @click="Login">登录</el-button>
         <el-button @click="Register">注册</el-button>

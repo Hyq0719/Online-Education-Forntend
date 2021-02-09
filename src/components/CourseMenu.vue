@@ -1,6 +1,6 @@
 <template>
-  <div class="line">
-    <div class="WholeCourse">
+  <div class="Course">
+    <div class="Course-Title">
       <h3>
         全部课程
       </h3>
@@ -17,7 +17,6 @@
         </router-link>
       </el-col>
     </el-row>
-
     <div class="block">
       <el-pagination
           background
@@ -63,13 +62,14 @@ export default {
   text-decoration-width: auto;
 }
 
-.WholeCourse {
+.Course-Title {
   margin: 50px 20px;
   text-align: left;
 }
 
-.line {
-  margin: 20px 150px;
+.Course {
+  margin: 20px auto;
+  width: 1100px;
 }
 
 .grid-content {

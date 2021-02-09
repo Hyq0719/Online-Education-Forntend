@@ -63,7 +63,7 @@
           </el-tab-pane>
         </el-tabs>
       </el-main>
-      <el-aside width="300px">
+      <el-aside>
         <div>
           <h3>授课老师</h3>
         </div>
@@ -125,6 +125,7 @@ export default {
   border-radius: 10px;
   border: #C0C4CC 1px solid;
   color: #333;
+  width: 300px;
 }
 
 .el-main {
@@ -136,7 +137,8 @@ export default {
 }
 
 .el-container {
-  margin: 50px 100px;
+  margin: 50px auto;
+  width: 1100px;
 }
 
 .Teacher {

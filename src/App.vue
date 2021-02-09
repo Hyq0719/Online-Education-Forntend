@@ -12,6 +12,7 @@ export default {
 
 <style>
 #app {
+  min-width: 1200px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

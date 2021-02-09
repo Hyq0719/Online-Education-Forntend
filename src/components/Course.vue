@@ -3,7 +3,7 @@
     <el-main>
       <VideoPlayer></VideoPlayer>
     </el-main>
-    <el-aside width="300px">
+    <el-aside>
       <el-menu
           class="el-menu-vertical-demo"
           @open="handleOpen"
@@ -78,6 +78,7 @@ export default {
   text-align: left;
   line-height: 20px;
   font-size: 10px;
+  width: 300px;
 }
 
 .el-main {
@@ -87,7 +88,8 @@ export default {
 }
 
 .el-container {
-  margin: 20px 100px;
+  margin: 20px auto;
+  width: 1100px;
   height: 580px;
   border: #C0C4CC 1px solid;
   border-radius: 10px;
