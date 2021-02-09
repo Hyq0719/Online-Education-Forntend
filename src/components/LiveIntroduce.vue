@@ -1,5 +1,5 @@
 <template>
-  <div class="LIVEINTRODUCE">
+  <div>
     <el-container>
       <el-main>
         <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -65,10 +65,6 @@ export default {
 </script>
 
 <style scoped>
-.LIVEINTRODUCE{
-  margin: auto;
-  width: 1100px;
-}
 .el-aside {
   border-radius: 10px;
   border: #C0C4CC 1px solid;
@@ -86,7 +82,8 @@ export default {
 }
 
 .el-container {
-  margin: 50px 0;
+  width: 1100px;
+  margin: 50px auto;
 }
 
 .el-tab-pane img {

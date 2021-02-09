@@ -1,6 +1,6 @@
 <template>
-  <div class="LIVE">
-    <div class="WholeCourse">
+  <div class="Live">
+    <div class="Live-title">
       <h3>
         全部直播
       </h3>
@@ -192,12 +192,12 @@ export default {
   text-decoration-width: auto;
 }
 
-.WholeCourse {
+.Live-title {
   margin: 50px 20px;
   text-align: left;
 }
 
-.LIVE {
+.Live {
   margin: auto;
   width: 1100px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="LIVE">
+  <div>
     <el-container>
       <el-main>
         <Flvjs></Flvjs>
@@ -196,11 +196,6 @@ export default {
 </script>
 
 <style scoped>
-.LIVE {
-  margin: auto;
-  width: 1100px;
-}
-
 .el-tab-pane {
   text-align: center;
 }
@@ -222,7 +217,8 @@ export default {
 }
 
 .el-container {
-  margin: 20px 0;
+  width: 1100px;
+  margin: 20px auto;
   height: 506px;
   border: #C0C4CC 1px solid;
   border-radius: 10px;
