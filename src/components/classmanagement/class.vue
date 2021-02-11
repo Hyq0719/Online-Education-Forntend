@@ -205,7 +205,11 @@ export default {
 
     async openChapter(id) {
       let that = this;
-      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id).then(function (res) {
+      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id,{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': that.$store.state.JWT,
+        }}).then(function (res) {
         // console.log(res);
         that.$store.commit("saveTeacherChapterData", res.data.data)
       })
@@ -232,7 +236,12 @@ export default {
 
     async openVideo(course, chapter) {
       let that = this;
-      await axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + chapter + "&courseId=" + course).then(function (res) {
+      await axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + chapter + "&courseId=" + course,{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': that.$store.state.JWT,
+        }
+      }).then(function (res) {
         that.$store.commit("saveTeacherVideoData", res.data.data);
         console.log(res)
       })
@@ -288,10 +297,18 @@ export default {
       a.append('courseId', course);
       a.append('chapterId', chapter);
       a.append('intro', intro);
-      await axios.post("http://" + that.Api + "/api/Course/addCourseChapter" ,a,{headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (res) {
+      await axios.post("http://" + that.Api + "/api/Course/addCourseChapter" ,a,{
+        headers: {'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': that.$store.state.JWT,
+          }}).then(function (res) {
         console.log(res);
       })
-      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + course).then(function (res) {
+      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + course,{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': that.$store.state.JWT,
+        }
+      }).then(function (res) {
         // console.log(res);
         that.$store.commit("saveTeacherChapterData", res.data.data)
       })

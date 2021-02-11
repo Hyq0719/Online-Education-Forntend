@@ -49,6 +49,7 @@ export default {
           that.$router.push('/Classmanagement');
           that.$store.commit('saveIsLoginTeacher');
           that.$store.commit('saveData', response.data.data);
+          that.$store.commit('saveJWT', response.headers.authorization);
           if (!response.data.data.teacherPicUrl) {
             that.$store.commit('saveAvatarTeacher')
           }
@@ -59,7 +60,11 @@ export default {
           b.append("teacherId", c);
           b.append("sort", 1);
           b.append("page", 1);
-          axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId", b).then(function (res) {
+          axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId", b,
+              {headers:{
+                  'Authorization': that.$store.state.JWT,
+                }}
+          ).then(function (res) {
             console.log(res);
             if (response.data.code === 1000) {
               that.$store.commit('saveTeacherClassData', res.data.data)
