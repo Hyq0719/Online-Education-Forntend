@@ -3,25 +3,39 @@
     <div class="BackCourse-button">
       <el-button @click="GoBackCourse">返回课程</el-button>
     </div>
-    <div class="task" v-for="(item,index) in this.$store.state.chapterData" v-bind:key="index">
-      <h3>{{ JSON.parse(index).chapterIntro }}</h3>
-      <el-divider></el-divider>
-      <el-row :gutter="25">
-        <el-col :span="6" v-for="(value,indexTask) in item.TaskList" v-bind:key="indexTask">
-          <div class="grid-content">
-            <div class="content">
-              <h4>{{ value.taskName }}</h4>
-              <h6>开始时间：2021-01-21 10:00</h6>
-              <h6>截止时间：2021-02-24 12:00</h6>
-              <h6>作业状态：待做</h6>
-            </div>
-            <div class="state">
-              <el-button @click="Task">做作业</el-button>
-            </div>
+    <el-menu
+        default-active="1"
+        :default-openeds="chapterId"
+        class="el-menu-vertical-demo"
+        @open="handleOpen"
+        @close="handleClose"
+        v-for="(item,index) in this.$store.state.chapterData" v-bind:key="index">
+      <el-submenu :index="String(index)">
+        <template slot="title">
+          <div class="el-submenu-title">
+            <i class="el-icon-menu"></i>
+            <span slot="title">{{ item.courseChapterJson.chapterIntro }}</span>
           </div>
-        </el-col>
-      </el-row>
-    </div>
+        </template>
+        <div class="task">
+          <el-row :gutter="25">
+            <el-col :span="6" v-for="(value,indexTask) in item.TaskList" v-bind:key="indexTask">
+              <div class="grid-content">
+                <div class="content">
+                  <h4>{{ value.taskName }}</h4>
+                  <h6>开始时间：2021-01-21 10:00</h6>
+                  <h6>截止时间：2021-02-24 12:00</h6>
+                  <h6>作业状态：待做</h6>
+                </div>
+                <div class="state">
+                  <el-button @click="Task">做作业</el-button>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </el-submenu>
+    </el-menu>
   </div>
 </template>
 
@@ -29,12 +43,23 @@
 
 export default {
   name: "TaskMenu",
+  data() {
+    return {
+      chapterId: [this.$route.query.chapterId],
+    }
+  },
   methods: {
     GoBackCourse() {
       this.$router.push('/course')
     },
     Task() {
       this.$router.push('/task')
+    },
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
     },
   },
 }
@@ -44,6 +69,7 @@ export default {
 .taskMenu {
   margin: 20px auto;
   width: 1100px;
+  text-align: left;
 }
 
 .BackCourse-button {
@@ -57,9 +83,18 @@ export default {
   margin: 0 20px;
 }
 
-.task h3 {
-  margin: 50px 20px;
-  text-align: left;
+.el-menu-vertical-demo {
+  border-right: 0;
+  margin: 20px auto;
+}
+
+.el-submenu-title {
+  font-size: 18px;
+
+}
+
+.task {
+  margin: 30px auto;
 }
 
 .grid-content {
