@@ -30,7 +30,7 @@
         <el-menu-item index="1-4">设置</el-menu-item>
         <el-menu-item index="1-6" @click="Logout">注销</el-menu-item>
       </el-submenu>
-      <el-menu-item index="1" v-if="isLogin||isLoginTeacher">
+      <el-menu-item index="1" v-if="isLogin">
         <router-link to="/VIP">开通VIP</router-link>
       </el-menu-item>
       <el-menu-item index="2" v-if="!isLogin&&!isLoginTeacher">

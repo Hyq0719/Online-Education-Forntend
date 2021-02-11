@@ -1,6 +1,8 @@
 <template>
-  <div class="taskTitle">
-    <el-button @click="GoBackCourse">返回课程</el-button>
+  <div class="taskMenu">
+    <div class="BackCourse-button">
+      <el-button @click="GoBackCourse">返回课程</el-button>
+    </div>
     <div class="task" v-for="(item,index) in this.$store.state.chapterData" v-bind:key="index">
       <h3>{{ JSON.parse(index).chapterIntro }}</h3>
       <el-divider></el-divider>
@@ -16,7 +18,6 @@
             <div class="state">
               <el-button @click="Task">做作业</el-button>
             </div>
-            <div class="clear"></div>
           </div>
         </el-col>
       </el-row>
@@ -40,13 +41,17 @@ export default {
 </script>
 
 <style scoped>
-.taskTitle {
+.taskMenu {
   margin: 20px auto;
   width: 1100px;
 }
 
-.taskTitle button {
-  float: right;
+.BackCourse-button {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.taskMenu button {
   background: #409eff;
   color: white;
   margin: 0 20px;
@@ -80,10 +85,11 @@ export default {
 .state {
   height: 50px;
   background: #e8eeda;
+  flex-direction: row-reverse;
+  display: flex;
 }
 
 .state button {
-  float: right;
   background: #7b9e31;
   color: white;
   margin: 5px;
@@ -96,9 +102,5 @@ a {
 
 .router-link-active {
   text-decoration: none;
-}
-
-.clear {
-  clear: both;
 }
 </style>
