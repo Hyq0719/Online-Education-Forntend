@@ -15,9 +15,9 @@ export default new Vuex.Store({
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
         teacherData: {
-            teacherClassData: [],
-            teacherChapterData: [],
-            teacherVideoData: [],
+            teacherClassData: JSON.parse(sessionStorage.getItem('teacherClassData')) || false,
+            teacherChapterData: JSON.parse(sessionStorage.getItem('teacherChapterData')) || false,
+            teacherVideoData: JSON.parse(sessionStorage.getItem('teacherVideoData')) || false,
         },   //教师管理后台用的
         breadcrumb: [],
         isLoginTeacher: JSON.parse(sessionStorage.getItem('isLoginTeacher')) || false,
@@ -71,12 +71,15 @@ export default new Vuex.Store({
         },
         saveTeacherClassData(state, teacherClassData) {
             state.teacherData.teacherClassData = teacherClassData;
+            sessionStorage.setItem('teacherClassData', JSON.stringify(state.teacherData.teacherClassData));
         },
         saveTeacherChapterData(state, teacherChapterData) {
             state.teacherData.teacherChapterData = teacherChapterData;
+            sessionStorage.setItem('teacherChapterData', JSON.stringify(state.teacherData.teacherChapterData));
         },
         saveTeacherVideoData(state, teacherVideoData) {
             state.teacherData.teacherVideoData = teacherVideoData;
+            sessionStorage.setItem('teacherVideoData', JSON.stringify(state.teacherData.teacherVideoData));
         },
         savebreadcrumb(state, breadcrumb) {
             state.breadcrumb = breadcrumb;

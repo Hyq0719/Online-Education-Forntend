@@ -3,7 +3,7 @@
   <el-container>
 
     <el-main v-show="classview">
-      <el-table :data="classData">
+      <el-table :data="classData.list">
         <el-table-column prop="name" label="课程名称">
         </el-table-column>
         <el-table-column label="是否为vip课程">
@@ -310,7 +310,8 @@ export default {
         title: '课程列表'
       }
     ]
-    this.$store.commit("savebreadcrumb", breadcrumb)
+    this.$store.commit("savebreadcrumb", breadcrumb);
+    console.log(this.classData);
   },
 }
 </script>
