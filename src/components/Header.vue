@@ -43,7 +43,7 @@
             trigger="hover">
           <h3>大学课程</h3>
           <div>
-            <el-button @click="CourseMenu" v-for="item in college" v-bind:key="item.id" class="CourseMenu">{{
+            <el-button @click="CourseMenuPrefer(index)" v-for="(item,index) in college" v-bind:key="item.id" class="CourseMenu">{{
                 item
               }}
             </el-button>
@@ -64,7 +64,7 @@
               }}
             </el-button>
           </div>
-          <el-button @click="CourseMenu" slot="reference" class="course" plain>课程</el-button>
+          <el-button slot="reference" class="course" plain>课程</el-button>
         </el-popover>
       </el-menu-item>
       <el-menu-item index="4" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
@@ -79,6 +79,7 @@
 
 <script>
 import VueCookies from "vue-cookies";
+import axios from "axios";
 
 export default {
   name: "Header",
@@ -90,7 +91,7 @@ export default {
       teacherPicUrl: this.$store.state.userData.teacherPicUrl,
       isLogin: this.$store.state.isLogin,
       isLoginTeacher: this.$store.state.isLoginTeacher,
-      college: ['所有课程', '免费课程', '热门课程', '计算机', '数学', '金融', '计算机', '数学', '金融'],
+      college: ['程序设计', '免费课程', '计算机基础课', '计算机', '数学', '金融', '计算机', '数学', '金融'],
       graduate: ['考研21', '考研20', '期末不挂', '英语学习'],
       lifelong: ['名师专栏'],
     };
@@ -101,6 +102,20 @@ export default {
     },
     CourseMenu() {
       this.$router.push('/coursemenu');
+    },
+    CourseMenuPrefer(index) {
+      this.$router.push({path: '/coursemenu', query: {preferId: index+1}});
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("page", 1)
+      a.append("preferId", index+1)
+      a.append("sort", 1)
+      axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        that.$store.commit('saveCourseData', response.data.data);
+      }, function (err) {
+        console.log(err);
+      })
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -181,7 +196,6 @@ a {
 
 .CourseMenu {
   margin: 5px;
-  width: 90px;
   font-size: 12px;
 }
 
