@@ -14,6 +14,7 @@ export default new Vuex.Store({
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
+        RelatedCourses: JSON.parse(sessionStorage.getItem('RelatedCourses')) || false,
         teacherData: {
             teacherClassData: JSON.parse(sessionStorage.getItem('teacherClassData')) || false,
             teacherChapterData: JSON.parse(sessionStorage.getItem('teacherChapterData')) || false,
@@ -68,6 +69,10 @@ export default new Vuex.Store({
         saveChapterData(state, chapterData) {
             state.chapterData = chapterData;
             sessionStorage.setItem('chapterData', JSON.stringify(state.chapterData));
+        },
+        saveRelatedCourses(state, RelatedCourses) {
+            state.RelatedCourses = RelatedCourses;
+            sessionStorage.setItem('RelatedCourses', JSON.stringify(state.RelatedCourses));
         },
         saveTeacherClassData(state, teacherClassData) {
             state.teacherData.teacherClassData = teacherClassData;

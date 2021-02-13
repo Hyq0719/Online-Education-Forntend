@@ -2,7 +2,7 @@
   <div class="Course">
     <div class="Course-Title">
       <h3>
-        {{ course[this.$route.query.preferId - 1] }}
+        {{ course[preferId - 1] }}
       </h3>
     </div>
     <div class="new-best-hot">
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       course: ['程序设计', '免费课程', '计算机基础课'],
-      preferId: [this.$route.query.preferId],
+      preferId: this.$route.query.preferId,
       needVip: 2,
       sort: 1,
     }
@@ -54,13 +54,13 @@ export default {
     // this.CourseMenu();
   },
   methods: {
-    CourseChoose(sort,needVip) {
+    CourseChoose(sort, needVip) {
       let that = this;
       let a = new URLSearchParams;
       a.append("page", 1)
       a.append("preferId", this.preferId)
       a.append("sort", sort)
-      if(needVip!=2){
+      if (needVip != 2) {
         a.append("needVip", needVip)
         axios.post("http://" + this.Api + "/api/Course/getCourseByNeedVipAndPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
           console.log(response);
@@ -70,8 +70,7 @@ export default {
         }, function (err) {
           console.log(err);
         })
-      }
-      else{
+      } else {
         axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
           console.log(response);
           that.$store.commit('saveCourseData', response.data.data);
@@ -90,13 +89,6 @@ export default {
 .Course {
   margin: 20px auto;
   width: 1100px;
-}
-
-.grid-content:hover {
-  background-color: #d3dce6;
-  text-decoration: none;
-  text-decoration-color: #99a9bf;
-  text-decoration-width: auto;
 }
 
 .Course-Title {
@@ -134,6 +126,13 @@ export default {
 
 .grid-content h6 {
   margin: 10px 10px 20px 10px;
+}
+
+.grid-content:hover {
+  background-color: #d3dce6;
+  text-decoration: none;
+  text-decoration-color: #99a9bf;
+  text-decoration-width: auto;
 }
 
 .row-bg {

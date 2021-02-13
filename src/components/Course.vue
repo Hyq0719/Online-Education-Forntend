@@ -101,12 +101,13 @@ export default {
   color: #333;
   text-align: center;
   padding: 0;
+  overflow: hidden;
 }
 
 .el-container {
   margin: 20px auto;
   width: 1100px;
-  height: 580px;
+  height: 550px;
   border: #C0C4CC 1px solid;
   border-radius: 10px;
 }

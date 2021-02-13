@@ -4,22 +4,11 @@
       <el-main>
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="课程介绍" name="first">
-            <div class="Team">
-              <p>
-                《电路》课程是电气工程及其自动化专业、自动化专业、测控技术与仪器专业的专业基础必修课。通过本课程的学习，使学生掌握电路理论的基本知识、基本分析计算方法和基本实验技能，为学习后继相关课程准备必要的电路理论知识，为从事工程技术工作、科学研究以及开拓性技术领域打下坚实的基础。
-              </p>
-              <div class="TeamName">
-                <p>
-                  —— 课程团队
-                </p>
-              </div>
-            </div>
             <div class="content">
-              <div>
+              <div class="content-Title">
                 <img src="../assets/logo.png" alt="图片缺失">
                 <h3>课程概述</h3>
               </div>
-              <div class="clear"></div>
               <p>
                 《电路》课程是自动化专业及其相近专业的必修课程，是学生学习和掌握电路基本理论知识和电路分析基本方法的专业基础课程。本课程在教学内容方面侧重于基本知识、基本理论和基本分析方法的讲解；另外独立开设的实验课程培养相应的实践能力。
 
@@ -29,29 +18,16 @@
               </p>
             </div>
             <div class="content">
-              <div>
+              <div class="content-Title">
                 <img src="../assets/logo.png" alt="图片缺失">
                 <h3>授课目标</h3>
               </div>
-              <div class="clear"></div>
               <ul>
                 <li>增强学生对恶意代码攻击机理的理解</li>
                 <li>促进学生掌握恶意代码检测机理</li>
                 <li>提升学生恶意代码分析能力</li>
                 <li>帮助学生进一步构建网络攻防博弈思维</li>
                 <li>提升学生在恶意代码领域的创新思维与综合实践能力</li>
-              </ul>
-            </div>
-            <div class="content">
-              <div>
-                <img src="../assets/logo.png" alt="图片缺失">
-                <h3>预备知识</h3>
-              </div>
-              <div class="clear"></div>
-              <ul>
-                <li>操作系统基础知识</li>
-                <li>基本的汇编基础</li>
-                <li>基本的脚本语言基础</li>
               </ul>
             </div>
           </el-tab-pane>
@@ -69,43 +45,70 @@
         </div>
         <el-divider></el-divider>
         <div class="Teacher">
-          <img src="../assets/teacherhead.png" alt="图片缺失">
-          <div class="TeacherName">
-            猴博士
-          </div>
-          <div class="TeacherIntroduce">
-            《猴博士爱讲课》视频讲解
-          </div>
-        </div>
-        <div class="Teacher">
-          <img src="../assets/teacherhead2.png" alt="图片缺失">
-          <div class="TeacherName">
-            青蛙博士
-          </div>
-          <div class="TeacherIntroduce">
-            《青蛙博士爱讲课》视频讲解
+          <img :src="data[0].courseChapterJson.course.teacher.teacherPicUrl" alt="图片缺失">
+          <div class="Teacher-Introduce">
+            <div class="TeacherName">
+              {{ data[0].courseChapterJson.course.teacher.name }}
+            </div>
+            <div class="TeacherSchool">
+              {{ data[0].courseChapterJson.course.teacher.school }}
+            </div>
           </div>
         </div>
       </el-aside>
     </el-container>
+    <div class="RelatedCourses">
+      <div class="RelatedCourses-Title">
+        <h3>
+          相关课程
+        </h3>
+      </div>
+      <el-row :gutter="25">
+        <el-col :span="6" v-for="(item,index) in this.$store.state.RelatedCourses" v-bind:key="index">
+          <router-link :to="{path:'/course',query:{courseId:item.courseId}}">
+            <div class="grid-content">
+              <img :src="item.src" alt="图片缺失">
+              <h4>{{ item.name }}</h4>
+              <h6>{{ item.teacherId }}</h6>
+            </div>
+          </router-link>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
 <script>
 import classevaluate from "./childcpn/classevaluate";
+import axios from "axios";
 
 export default {
   name: "CourseIntroduce",
   data() {
     return {
       activeName: 'first',
+      data: this.$store.state.chapterData,
       value: [null, null, null, null, null],
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       textarea: '',
       evaluatelabel: ["课程难度适合", "老师风趣幽默", "老师讲解生动", "课程氛围良好", "播放环境良好"],
     };
   },
+  created() {
+    this.RelatedCourse();
+  },
   methods: {
+    RelatedCourse() {
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("courseId", this.data[0].courseChapterJson.course.courseId)
+      axios.post("http://" + this.Api + "/api/Course/getRelatedCourses?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        that.$store.commit('saveRelatedCourses', response.data.data);
+      }, function (err) {
+        console.log(err);
+      })
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
@@ -143,54 +146,38 @@ export default {
 
 .Teacher {
   text-align: left;
+  display: flex;
 }
 
 .Teacher img {
   height: 100px;
-  width: 35%;
+  width: 100px;
   margin: 10px 10px;
-  float: left;
-  clear: left;
 }
 
 .TeacherName {
-  text-align: center;
   font-size: 20px;
-  float: left;
-  margin-bottom: 10px;
+  margin: 10px;
 }
 
-.TeacherIntroduce {
-  float: left;
+.TeacherSchool {
+  margin: 10px;
   font-size: 14px;
-  width: 55%;
-}
-
-.Team {
-  text-align: left;
-  float: left;
-  background: #d3dce6;
-}
-
-.TeamName {
-  float: right;
 }
 
 .content {
   text-align: left;
 }
 
-.content p {
-
+.content-Title {
+  display: flex;
 }
 
 .content h3 {
-  float: left;
   margin: 30px 10px 10px 10px;
 }
 
 .content img {
-  float: left;
   height: 40px;
   width: 40px;
   margin: 30px 10px 10px 10px;
@@ -200,8 +187,48 @@ export default {
   margin-top: 0;
 }
 
-.clear {
-  clear: both;
+.RelatedCourses {
+  margin: 50px auto;
+  width: 1100px;
+}
+
+.RelatedCourses-Title {
+  margin: 50px 20px 30px 20px;
+  text-align: left;
+}
+
+.grid-content {
+  text-align: left;
+  border-radius: 10px;
+  border: #E4E7ED 1px solid;
+  height: 240px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
+}
+
+.grid-content img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.grid-content h4 {
+  margin: 10px;
+}
+
+.grid-content h6 {
+  margin: 10px 10px 20px 10px;
+}
+
+.grid-content:hover {
+  background-color: #d3dce6;
+  text-decoration: none;
+  text-decoration-color: #99a9bf;
+  text-decoration-width: auto;
+}
+
+a {
+  text-decoration: none;
+  color: #1c1f21;
 }
 </style>
 <style>
