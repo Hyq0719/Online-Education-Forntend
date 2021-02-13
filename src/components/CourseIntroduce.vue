@@ -132,15 +132,13 @@
 
 <script>
 import classevaluate from "./childcpn/classevaluate";
-import axios from "axios";
-import {MessageBox} from "element-ui";
 
 export default {
   name: "CourseIntroduce",
   data() {
     return {
       activeName: 'first',
-      value: [null],
+      value: [null, null, null, null, null],
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       textarea: '',
       evaluateLabel: ["课程打分"],

@@ -12,15 +12,15 @@
         <el-submenu :index="String(index)">
           <template slot="title">
             <i class="el-icon-menu"></i>
-            <span>{{ JSON.parse(index).chapterIntro }}</span>
+            <span>{{ item.courseChapterJson.chapterIntro }}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item :index="1+String(index1)" v-for="(value,index1) in item.VideoList"
-                          v-bind:key="'1'+index1" class="video">
+            <el-menu-item :index="1+String(indexItem)" v-for="(value,indexItem) in item.VideoList"
+                          v-bind:key="'1'+indexItem" class="video">
               {{ value.videoName }}
             </el-menu-item>
-            <el-menu-item :index="2+String(index1)" v-for="(value,index1) in item.TaskList"
-                          v-bind:key="'2'+index1" class="task" @click="TaskMenu">
+            <el-menu-item :index="2+String(indexItem)" v-for="(value,indexItem) in item.TaskList"
+                          v-bind:key="'2'+indexItem" class="task" @click="TaskMenu(index)">
               {{ value.taskName }}
             </el-menu-item>
           </el-menu-item-group>
@@ -43,14 +43,16 @@ export default {
     return {
       input: '',
       courseId: this.$route.query.courseId,
+      data: [],
     }
   },
   created() {
     this.Chapter();
   },
   methods: {
-    TaskMenu() {
-      this.$router.push('/taskmenu');
+    TaskMenu(index) {
+      console.log(index);
+      this.$router.push({path: '/taskmenu', query: {chapterId: index}});
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -64,7 +66,21 @@ export default {
       let a = new URLSearchParams();
       a.append('courseId', this.courseId);
       axios.post("http://" + this.Api + "/api/Course/getCourseDisplay", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        that.$store.commit('saveChapterData', response.data.data)
+        console.log(response.data.data);
+        let data = response.data.data;
+        for (let courseChapter in data) {
+          let courseChapterJson = JSON.parse(courseChapter)
+          let VideoList = data[courseChapter].VideoList;
+          let TaskList = data[courseChapter].TaskList;
+          let courseInformation = {
+            courseChapterJson,
+            VideoList,
+            TaskList,
+          }
+          that.data.push(courseInformation)
+        }
+        that.$store.commit('saveChapterData', that.data)
+        console.log(that.data)
       }, function (err) {
         console.log(err);
       })
@@ -85,12 +101,13 @@ export default {
   color: #333;
   text-align: center;
   padding: 0;
+  overflow: hidden;
 }
 
 .el-container {
   margin: 20px auto;
   width: 1100px;
-  height: 580px;
+  height: 550px;
   border: #C0C4CC 1px solid;
   border-radius: 10px;
 }
