@@ -14,6 +14,7 @@ export default new Vuex.Store({
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
+        commentData: JSON.parse(sessionStorage.getItem('commentData')) || false,
         teacherData: {
             teacherClassData: JSON.parse(sessionStorage.getItem('teacherClassData')) || false,
             teacherChapterData: JSON.parse(sessionStorage.getItem('teacherChapterData')) || false,
@@ -83,6 +84,10 @@ export default new Vuex.Store({
         },
         savebreadcrumb(state, breadcrumb) {
             state.breadcrumb = breadcrumb;
+        },
+        saveCommentData(state,commentData) {
+            state.commentData =commentData;
+            sessionStorage.setItem('commentData', JSON.stringify(state.commentData));
         },
     }
 })

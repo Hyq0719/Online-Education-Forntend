@@ -6,7 +6,7 @@
           <template slot="title"><i class="el-icon-message"></i>课程管理</template>
           <el-menu-item-group>
             <el-menu-item index="1-1">
-              <router-link to="/Classmanagement/class">课程列表</router-link>
+              <router-link :to="{name:'classManagementClass',params:{id:1}}">课程列表</router-link>
             </el-menu-item>
             <el-menu-item index="1-1">
               <router-link to="/Classmanagement/buildClass">创建课程</router-link>
@@ -42,16 +42,16 @@ export default {
   components: {
     classbread
   },
-  mounted:function () {
-
-    let breadcrumb = [
-      {
-        link: '/Classmanagement',
-        title: '课程管理'
-      }
-    ]
-    this.$store.commit("savebreadcrumb", breadcrumb)
-  },
+  // mounted:function () {
+  //
+  //   let breadcrumb = [
+  //     {
+  //       link: '/Classmanagement',
+  //       title: '课程管理'
+  //     }
+  //   ]
+  //   this.$store.commit("savebreadcrumb", breadcrumb)
+  // },
   computed: {
     breadcrumb:function () {
       return this.$store.state.breadcrumb

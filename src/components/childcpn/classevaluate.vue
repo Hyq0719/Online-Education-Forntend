@@ -1,7 +1,7 @@
 <template>
   <div>
   <div v-for="(item,index) in evalabel" v-bind:key="index">
-    <div class="evaluatebox">
+    <div class="evaluateBox">
       <span class="demonstration">{{item}}</span>
       <el-rate
           v-model="num[index]"
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "classevaluate",
+  name: "classEvaluate",
   props: {
     evalabel: {
       tpye: Array,
@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return{
-      num: [null,null,null,null,null],
+      num: [null],
     }
   },
   methods: {
@@ -54,7 +54,7 @@ export default {
   margin: 0;
 }
 
-.evaluatebox {
+.evaluateBox {
   width: 100%;
   height: 16%;
   margin: 2%;

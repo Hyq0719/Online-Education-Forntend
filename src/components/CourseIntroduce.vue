@@ -56,10 +56,41 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="课程评价" name="second">
-            <classevaluate :evalabel="evaluatelabel" :colors="colors" @pass="fchange"></classevaluate>
+            <el-card >
+            <classevaluate :evalabel="evaluateLabel" :colors="colors" @pass="fchange"></classevaluate>
             <div>
               <el-input type="textarea" class="Comment" v-model="textarea" placeholder="请输入内容"></el-input>
             </div>
+              <el-button round style="float: right;margin: 20px" @click="commentCourse">评价课程</el-button>
+            </el-card>
+
+            <el-card :body-style="{ padding: '20px'}" v-for="(item,index) in comment" :key="index" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">
+                  <div style="float: left;width: 100px;overflow: hidden">
+                    <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">
+                    <div>小周</div>
+                  </div>
+                  <el-divider direction="vertical" style="float: left;display: block"></el-divider>
+                  <div style="float:left">
+                    <div style="text-align:left"> {{item.content}}</div>
+                  </div>
+                </el-card>
+<!--            <el-card :body-style="{ padding: '20px'}" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">-->
+<!--              <div style="float: left;width: 100px;overflow: hidden">-->
+<!--                <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">-->
+<!--              </div>-->
+<!--              <div >-->
+<!--                <div style="text-align: left"> 老师讲的很好</div>-->
+<!--              </div>-->
+<!--            </el-card>-->
+<!--            <el-card :body-style="{ padding: '20px'}" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">-->
+<!--              <div style="float: left;width: 100px;overflow: hidden">-->
+<!--                <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">-->
+<!--              </div>-->
+<!--              <div >-->
+<!--                <div style="text-align: left"> 我想问一个问题</div>-->
+<!--              </div>-->
+<!--            </el-card>-->
+
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -93,16 +124,19 @@
 
 <script>
 import classevaluate from "./childcpn/classevaluate";
+import axios from "axios";
+import {MessageBox} from "element-ui";
 
 export default {
   name: "CourseIntroduce",
   data() {
     return {
       activeName: 'first',
-      value: [null, null, null, null, null],
+      value: [null],
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       textarea: '',
-      evaluatelabel: ["课程难度适合", "老师风趣幽默", "老师讲解生动", "课程氛围良好", "播放环境良好"],
+      evaluateLabel: ["课程打分"],
+      comment:this.$store.state.commentData,
     };
   },
   methods: {
@@ -112,10 +146,66 @@ export default {
     fchange(num, index) {               //接受子组件传递来的评价
       this.value = num;
       console.log(this.value, index);
-    }
+    },
+    commentCourse() {
+      let that = this;
+      if (that.value[0] == null & that.textarea == '')
+      {
+        that.$notify.info({
+          title: '警告',
+          message: '请输入评价或打分',
+          type: 'warning',
+        })
+      }
+        else {
+        that.$confirm('确定要提交评论吗？')
+            .then( _ => {
+              let that=this;
+              let JWT = that.$store.state.JWT;
+              let params = {
+                comment: that.textarea,
+                commentMark: that.value[0],
+                courseId: that.$route.query.courseId,
+                studentId: that.$store.state.userData.userId,
+              };
+              axios.post("http://" + that.Api + "/api/Student/commentCourseByCourseId", params, {
+                headers: {
+                  'Content-Type' : 'application/json',
+                  'Authorization': JWT,
+                }}).then(function (response) {
+                console.log(response);
+                if (response.data.code === 1000) {
+                  console.log("提交成功");
+                  that.value=null;
+                  that.textarea='';
+                }}, function (err) {
+                console.log(err);
+              })
+            })}
+    },
   },
   components: {
     classevaluate,
+  },
+  mounted:function () {
+    let that=this;
+    let JWT = that.$store.state.JWT;
+    let a = new URLSearchParams();
+    a.append('courseId', that.$route.query.courseId);
+    a.append('page', 1);
+    a.append('sort', 1);
+    axios.post("http://" + that.Api + "/api/Course/getCourseComments", a, {
+      headers: {
+        'Authorization': JWT,
+      }}).then(function (response) {
+      console.log(response);
+      if (response.data.code === 1000) {
+        that.$store.commit("saveCommentData",response.data.data.list);
+        console.log(that.$store.state.commentData);
+        that.comment=this.$store.state.commentData;
+      }}, function (err) {
+      console.log(err);
+    })
   }
 }
 </script>

@@ -126,8 +126,9 @@ export default new Router({
                     component: chapterManagement,
                 },
                 {
-                    path: 'class',
+                    path: 'class/:id',
                     name: 'classManagementClass',
+                    props: true,
                     component: classManagementClass,
                 }]
         },

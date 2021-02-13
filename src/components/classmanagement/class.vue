@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{id}}
   <el-container>
 
     <el-main v-show="classview">
@@ -178,6 +179,7 @@ import axios from "axios";
 
 export default {
   name: "Classmanagement_class",
+  props:['id'],
   data() {
     return {
       dialog: false,
@@ -203,9 +205,9 @@ export default {
       // 待加入后台删除
     },
 
-    async openChapter(id) {
+    openChapter(id) {
       let that = this;
-      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id,{
+       axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id,{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': that.$store.state.JWT,
@@ -214,29 +216,30 @@ export default {
         that.$store.commit("saveTeacherChapterData", res.data.data)
       })
       that.chapterData = that.$store.state.teacherData.teacherChapterData;
-      that.classview = false;
-      that.chapterview = true;
-      that.videoview = false;
+
+      that.$router.push({name:'classManagementClass',params:{id:2}});
+      window.reload();
+
       let breadcrumb = [
         {
           link: '/Classmanagement',
           title: '课程管理'
         },
         {
-          link: '/Classmanagement/class',
+          link: {name:'classManagementClass',params:{id:1}},
           title: '课程列表'
         },
         {
-          link: '/Classmanagement/class',
+          link: {name:'classManagementClass',params:{id:2}},
           title: '章节管理'
         }
       ]
       this.$store.commit("savebreadcrumb", breadcrumb)
     },
 
-    async openVideo(course, chapter) {
+    openVideo(course, chapter) {
       let that = this;
-      await axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + chapter + "&courseId=" + course,{
+       axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + chapter + "&courseId=" + course,{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': that.$store.state.JWT,
@@ -246,24 +249,24 @@ export default {
         console.log(res)
       })
       that.videoData = that.$store.state.teacherData.teacherVideoData;
-      that.classview = false;
-      that.chapterview = false;
-      that.videoview = true;
+
+      that.$router.push({name:'classManagementClass',params:{id:3}});
+      window.reload();
       let breadcrumb = [
         {
           link: '/Classmanagement',
           title: '课程管理'
         },
         {
-          link: '/Classmanagement/class',
+          link: {name:'classManagementClass',params:{id:1}},
           title: '列表管理'
         },
         {
-          link: '/Classmanagement/class',
+          link: {name:'classManagementClass',params:{id:2}},
           title: '章节管理'
         },
         {
-          link: '/Classmanagement/class',
+          link: {name:'classManagementClass',params:{id:3}},
           title: '视频管理'
         },
       ]
@@ -317,18 +320,143 @@ export default {
   },
   mounted:function () {
 
-    let breadcrumb = [
+    // console.log(this.classData);
+    let that=this;
+      let a=that.$route.params.id;
+      console.log(a);
+    if (a==1)
+    {
+      that.classview = true;
+      that.chapterview = false;
+      that.videoview = false;
+      let breadcrumb = [
+        {
+          link: '/Classmanagement',
+          title: '课程管理'
+        },
+        {
+          link: {name:'classManagementClass',params:{id:1}},
+          title: '课程列表'
+        }
+      ]
+      this.$store.commit("savebreadcrumb", breadcrumb);
+    }
+    else if (a==2)
+    {
+      that.classview = false;
+      that.chapterview = true;
+      that.videoview = false;
+      let breadcrumb = [
+        {
+          link: '/Classmanagement',
+          title: '课程管理'
+        },
+        {
+          link: {name:'classManagementClass',params:{id:1}},
+          title: '课程列表'
+        },
+        {
+          link: {name:'classManagementClass',params:{id:2}},
+          title: '章节管理'
+        }
+      ]
+      this.$store.commit("savebreadcrumb", breadcrumb)
+    }
+    else if (a==3)
+    {
+      that.classview = false;
+      that.chapterview = false;
+      that.videoview = true;
+      let breadcrumb = [
+        {
+          link: '/Classmanagement',
+          title: '课程管理'
+        },
+        {
+          link: {name:'classManagementClass',params:{id:1}},
+          title: '列表管理'
+        },
+        {
+          link: {name:'classManagementClass',params:{id:2}},
+          title: '章节管理'
+        },
+        {
+          link: {name:'classManagementClass',params:{id:3}},
+          title: '视频管理'
+        },
+      ]
+      this.$store.commit("savebreadcrumb", breadcrumb)
+    }
+  },
+  watch: {
+    id(id) {
+      let that=this;
+      let a=id;
+      console.log(a);
+      if (a==1)
       {
-        link: '/Classmanagement',
-        title: '课程管理'
-      },
-      {
-        link: '/Classmanagement/class',
-        title: '课程列表'
+        that.classview = true;
+        that.chapterview = false;
+        that.videoview = false;
+        let breadcrumb = [
+          {
+            link: '/Classmanagement',
+            title: '课程管理'
+          },
+          {
+            link: {name:'classManagementClass',params:{id:1}},
+            title: '课程列表'
+          }
+        ]
+        this.$store.commit("savebreadcrumb", breadcrumb);
       }
-    ]
-    this.$store.commit("savebreadcrumb", breadcrumb);
-    console.log(this.classData);
+      else if (a==2)
+      {
+        that.classview = false;
+        that.chapterview = true;
+        that.videoview = false;
+        let breadcrumb = [
+          {
+            link: '/Classmanagement',
+            title: '课程管理'
+          },
+          {
+            link: {name:'classManagementClass',params:{id:1}},
+            title: '课程列表'
+          },
+          {
+            link: {name:'classManagementClass',params:{id:2}},
+            title: '章节管理'
+          }
+        ]
+        this.$store.commit("savebreadcrumb", breadcrumb)
+      }
+      else if (a==3)
+      {
+        that.classview = false;
+        that.chapterview = false;
+        that.videoview = true;
+        let breadcrumb = [
+          {
+            link: '/Classmanagement',
+            title: '课程管理'
+          },
+          {
+            link: {name:'classManagementClass',params:{id:1}},
+            title: '列表管理'
+          },
+          {
+            link: {name:'classManagementClass',params:{id:2}},
+            title: '章节管理'
+          },
+          {
+            link: {name:'classManagementClass',params:{id:3}},
+            title: '视频管理'
+          },
+        ]
+        this.$store.commit("savebreadcrumb", breadcrumb)
+      }
+    },
   },
 }
 </script>
