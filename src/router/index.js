@@ -24,6 +24,8 @@ import Upload from "@/components/classmanagement/Upload"
 import classBread from "@/components/classmanagement/classbread";
 import chapterManagement from "@/components/classmanagement/editchapter";
 import buildClass from "@/components/classmanagement/buildClassPage";
+import commentAnalyze from "@/components/classmanagement/commentAnalyze";
+import commentList from "@/components/classmanagement/commentList";
 
 
 Vue.use(Router);
@@ -130,7 +132,19 @@ export default new Router({
                     name: 'classManagementClass',
                     props: true,
                     component: classManagementClass,
-                }]
+                },
+                {
+                    path: 'commentAnalyze',
+                    name: 'commentAnalyze',
+                    component: commentAnalyze,
+                    children: [{
+                        path: 'commentList',
+                        name: 'commentList',
+                        component: commentList,
+                    }]
+
+                }
+            ]
         },
         {
             path: '/Information',

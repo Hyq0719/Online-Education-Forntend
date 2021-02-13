@@ -56,40 +56,48 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="课程评价" name="second">
-            <el-card >
-            <classevaluate :evalabel="evaluateLabel" :colors="colors" @pass="fchange"></classevaluate>
-            <div>
-              <el-input type="textarea" class="Comment" v-model="textarea" placeholder="请输入内容"></el-input>
-            </div>
+
+            <el-card :body-style="{ padding: '20px'}" v-show="evaluateBox"
+                     style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">
+              <classevaluate :evalabel="evaluateLabel" :colors="colors" @pass="fchange"></classevaluate>
+              <div>
+                <el-input type="textarea" class="Comment" v-model="textarea" placeholder="请输入内容"></el-input>
+              </div>
               <el-button round style="float: right;margin: 20px" @click="commentCourse">评价课程</el-button>
             </el-card>
 
-            <el-card :body-style="{ padding: '20px'}" v-for="(item,index) in comment" :key="index" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">
-                  <div style="float: left;width: 100px;overflow: hidden">
-                    <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">
-                    <div>小周</div>
-                  </div>
-                  <el-divider direction="vertical" style="float: left;display: block"></el-divider>
-                  <div style="float:left">
-                    <div style="text-align:left"> {{item.content}}</div>
-                  </div>
-                </el-card>
-<!--            <el-card :body-style="{ padding: '20px'}" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">-->
-<!--              <div style="float: left;width: 100px;overflow: hidden">-->
-<!--                <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">-->
-<!--              </div>-->
-<!--              <div >-->
-<!--                <div style="text-align: left"> 老师讲的很好</div>-->
-<!--              </div>-->
-<!--            </el-card>-->
-<!--            <el-card :body-style="{ padding: '20px'}" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">-->
-<!--              <div style="float: left;width: 100px;overflow: hidden">-->
-<!--                <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">-->
-<!--              </div>-->
-<!--              <div >-->
-<!--                <div style="text-align: left"> 我想问一个问题</div>-->
-<!--              </div>-->
-<!--            </el-card>-->
+            <el-card :body-style="{ padding: '20px'}" v-show="currentComment"
+                     style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">
+              <div style="float:left;overflow: hidden">
+                <div style="text-align:left"> 我的评价：</div>
+              </div>
+              <div style="float:left;overflow: hidden">
+                <div style="text-align:left"> {{ currentUserComment.content }}</div>
+              </div>
+            </el-card>
+
+            <el-card :body-style="{ padding: '20px'}" v-for="(item,index) in comment" :key="index"
+                     style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">
+              <div style="float:left;overflow: hidden">
+                <div style="text-align:left"> {{ item.content }}</div>
+              </div>
+            </el-card>
+            <!--            <el-card :body-style="{ padding: '20px'}" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">-->
+            <!--              <div style="float: left;width: 100px;overflow: hidden">-->
+            <!--                <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">-->
+            <!--              </div>-->
+            <!--              <div >-->
+            <!--                <div style="text-align: left"> 老师讲的很好</div>-->
+            <!--              </div>-->
+            <!--            </el-card>-->
+            <!--            <el-card :body-style="{ padding: '20px'}" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">-->
+            <!--              <div style="float: left;width: 100px;overflow: hidden">-->
+            <!--                <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">-->
+            <!--              </div>-->
+            <!--              <div >-->
+            <!--                <div style="text-align: left"> 我想问一个问题</div>-->
+            <!--              </div>-->
+            <!--            </el-card>-->
 
           </el-tab-pane>
         </el-tabs>
@@ -136,7 +144,10 @@ export default {
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       textarea: '',
       evaluateLabel: ["课程打分"],
-      comment:this.$store.state.commentData,
+      comment: this.$store.state.commentData,
+      evaluateBox: true,
+      currentComment: false,
+      currentUserComment: {},
     };
   },
   methods: {
@@ -149,18 +160,16 @@ export default {
     },
     commentCourse() {
       let that = this;
-      if (that.value[0] == null & that.textarea == '')
-      {
+      if (that.value[0] == null & that.textarea == '') {
         that.$notify.info({
           title: '警告',
           message: '请输入评价或打分',
           type: 'warning',
         })
-      }
-        else {
+      } else {
         that.$confirm('确定要提交评论吗？')
-            .then( _ => {
-              let that=this;
+            .then(_ => {
+              let that = this;
               let JWT = that.$store.state.JWT;
               let params = {
                 comment: that.textarea,
@@ -170,25 +179,49 @@ export default {
               };
               axios.post("http://" + that.Api + "/api/Student/commentCourseByCourseId", params, {
                 headers: {
-                  'Content-Type' : 'application/json',
+                  'Content-Type': 'application/json',
                   'Authorization': JWT,
-                }}).then(function (response) {
+                }
+              }).then(function (response) {
                 console.log(response);
                 if (response.data.code === 1000) {
                   console.log("提交成功");
-                  that.value=null;
-                  that.textarea='';
-                }}, function (err) {
+
+                  let b = new URLSearchParams();
+                  b.append('course_id', that.$route.query.courseId);
+                  b.append('user_id', that.$store.state.userData.userId);
+                  axios.post("http://" + that.Api + "/api/Student/getCourseCommentByStudentAndCourse", b, {
+                    headers: {
+                      'Authorization': JWT,
+                    }
+                  }).then(function (response) {
+                    console.log(response);
+                    if (response.data.code === 1000) {
+                      if (response.data.data == null) ;
+                      else {
+                        that.currentUserComment = response.data.data;
+                        that.evaluateBox = false;
+                        that.currentComment = true;
+                      }
+                      that.comment = this.$store.state.commentData;
+
+                    }
+                  }, function (err) {
+                    console.log(err);
+                  });
+                }
+              }, function (err) {
                 console.log(err);
               })
-            })}
+            })
+      }
     },
   },
   components: {
     classevaluate,
   },
-  mounted:function () {
-    let that=this;
+  mounted: function () {
+    let that = this;
     let JWT = that.$store.state.JWT;
     let a = new URLSearchParams();
     a.append('courseId', that.$route.query.courseId);
@@ -197,15 +230,39 @@ export default {
     axios.post("http://" + that.Api + "/api/Course/getCourseComments", a, {
       headers: {
         'Authorization': JWT,
-      }}).then(function (response) {
+      }
+    }).then(function (response) {
       console.log(response);
       if (response.data.code === 1000) {
-        that.$store.commit("saveCommentData",response.data.data.list);
+        that.$store.commit("saveCommentData", response.data.data.list);
         console.log(that.$store.state.commentData);
-        that.comment=this.$store.state.commentData;
-      }}, function (err) {
+        that.comment = this.$store.state.commentData;
+      }
+    }, function (err) {
       console.log(err);
-    })
+    });
+
+    let b = new URLSearchParams();
+    b.append('course_id', that.$route.query.courseId);
+    b.append('user_id', that.$store.state.userData.userId);
+    axios.post("http://" + that.Api + "/api/Student/getCourseCommentByStudentAndCourse", b, {
+      headers: {
+        'Authorization': JWT,
+      }
+    }).then(function (response) {
+      console.log(response);
+      if (response.data.code === 1000) {
+        if (response.data.data == null) ;
+        else {
+          that.currentUserComment = response.data.data;
+          that.evaluateBox = false;
+          that.currentComment = true;
+        }
+        that.comment = this.$store.state.commentData;
+      }
+    }, function (err) {
+      console.log(err);
+    });
   }
 }
 </script>
