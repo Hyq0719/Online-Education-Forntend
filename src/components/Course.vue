@@ -48,18 +48,9 @@ export default {
   },
   created() {
     this.Chapter();
+    this.RelatedCourse();
   },
   methods: {
-    TaskMenu(index) {
-      console.log(index);
-      this.$router.push({path: '/taskmenu', query: {chapterId: index}});
-    },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
     Chapter() {
       console.log(this.courseId);
       let that = this;
@@ -67,6 +58,7 @@ export default {
       a.append('courseId', this.courseId);
       axios.post("http://" + this.Api + "/api/Course/getCourseDisplay", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log(response.data.data);
+        that.data = [];
         let data = response.data.data;
         for (let courseChapter in data) {
           let courseChapterJson = JSON.parse(courseChapter)
@@ -84,6 +76,27 @@ export default {
       }, function (err) {
         console.log(err);
       })
+    },
+    RelatedCourse() {
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("courseId", this.courseId)
+      axios.post("http://" + this.Api + "/api/Course/getRelatedCourses?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        that.$store.commit('saveRelatedCourses', response.data.data);
+      }, function (err) {
+        console.log(err);
+      })
+    },
+    TaskMenu(index) {
+      console.log(index);
+      this.$router.push({path: '/taskmenu', query: {chapterId: index}});
+    },
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
     },
   },
 }

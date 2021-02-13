@@ -22,13 +22,16 @@ export default {
           }
         }).then(function (response) {
           that.$router.push('/main');
-          that.$store.commit('saveIsLogin');
+          if (response.data.data.teacherPicUrl != null) {
+            that.$store.commit('saveIsLoginTeacher');
+          } else {
+            that.$store.commit('saveIsLogin');
+          }
           that.$store.commit('saveData', response.data.data)
         }, function (err) {
           console.log(err);
         })
-      }
-      else{
+      } else {
         this.$router.push('/main');
       }
     },

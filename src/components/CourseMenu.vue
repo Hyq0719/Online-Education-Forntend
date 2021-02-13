@@ -2,19 +2,21 @@
   <div class="Course">
     <div class="Course-Title">
       <h3>
-        {{ course[preferId - 1] }}
+        {{ course[this.$route.query.preferId - 1] }}
       </h3>
     </div>
     <div class="new-best-hot">
-      <el-button plain type="success" @click="CourseChoose(1,needVip)">最新课程</el-button>
-      <el-button plain type="success" @click="CourseChoose(2,needVip)">最好课程</el-button>
-      <el-button plain type="success" @click="CourseChoose(3,needVip)">最热课程</el-button>
+      <el-radio-group v-model="radio">
+        <el-radio-button @click.native="CourseChoose(1,needVip)" label="最新课程"></el-radio-button>
+        <el-radio-button @click.native="CourseChoose(2,needVip)" label="最好课程"></el-radio-button>
+        <el-radio-button @click.native="CourseChoose(3,needVip)" label="最热课程"></el-radio-button>
+      </el-radio-group>
     </div>
     <el-divider></el-divider>
     <div class="free-vip">
-      <el-button type="primary" plain @click="CourseChoose(sort,2)">全部课程</el-button>
-      <el-button type="primary" plain @click="CourseChoose(sort,0)">免费课程</el-button>
-      <el-button type="primary" plain @click="CourseChoose(sort,1)">付费课程</el-button>
+      <el-radio v-model="radioVip" @click.native="CourseChoose(sort,2)" label="1">全部课程</el-radio>
+      <el-radio v-model="radioVip" @click.native="CourseChoose(sort,0)" label="2">免费课程</el-radio>
+      <el-radio v-model="radioVip" @click.native="CourseChoose(sort,1)" label="3">付费课程</el-radio>
     </div>
     <el-row :gutter="25">
       <el-col :span="6" v-for="(item,index) in this.$store.state.courseData.list" v-bind:key="index">
@@ -48,17 +50,17 @@ export default {
       preferId: this.$route.query.preferId,
       needVip: 2,
       sort: 1,
+      radio: '最新课程',
+      radioVip: '1',
     }
-  },
-  created() {
-    // this.CourseMenu();
   },
   methods: {
     CourseChoose(sort, needVip) {
       let that = this;
       let a = new URLSearchParams;
+      let preferId = this.$route.query.preferId;
       a.append("page", 1)
-      a.append("preferId", this.preferId)
+      a.append("preferId", preferId)
       a.append("sort", sort)
       if (needVip != 2) {
         a.append("needVip", needVip)
@@ -103,7 +105,16 @@ export default {
 
 .free-vip {
   text-align: left;
-  margin: 20px auto;
+  margin: 20px;
+}
+
+.el-radio-button {
+  margin: auto 10px;
+}
+
+/deep/ .el-radio-button__inner {
+  border: 1px solid #DCDFE6;
+  border-radius: 4px;
 }
 
 .grid-content {

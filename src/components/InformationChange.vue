@@ -25,7 +25,14 @@
             <el-input v-model="information.nickName"></el-input>
           </el-form-item>
           <el-form-item label="性别：">
-            <el-input v-model="information.sex"></el-input>
+            <el-select v-model="information.sex" clearable placeholder="请选择你的性别" @change="changeSex">
+              <el-option
+                  v-for="item in sex"
+                  :key="item"
+                  :label="item"
+                  :value="item">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="学校：">
             <el-input v-model="information.school"></el-input>
@@ -41,7 +48,14 @@
             </el-select>
           </el-form-item>
           <el-form-item label="年级：">
-            <el-input v-model="information.grade"></el-input>
+            <el-select v-model="information.grade" clearable placeholder="请选择你的年级" @change="changeGrade">
+              <el-option
+                  v-for="item in grade"
+                  :key="item"
+                  :label="item"
+                  :value="item">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-form>
       </el-main>
@@ -71,7 +85,14 @@
             <el-input v-model="informationTeacher.name"></el-input>
           </el-form-item>
           <el-form-item label="性别：">
-            <el-input v-model="informationTeacher.sex"></el-input>
+            <el-select v-model="information.sex" clearable placeholder="请选择你的性别" @change="changeSex">
+              <el-option
+                  v-for="item in sexTeacher"
+                  :key="item"
+                  :label="item"
+                  :value="item">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="学校：">
             <el-input v-model="informationTeacher.school"></el-input>
@@ -134,13 +155,15 @@ export default {
       majors: [
         {
           value: '1',
-          label: '计算机'
+          label: '计算机',
         },
         {
           value: '2',
-          label: '数学'
+          label: '数学',
         },],
-      value: this.$store.state.userData.major.majorContent,
+      sex: ['男', '女', '保密'],
+      sexTeacher: ['男', '女'],
+      grade: [1, 2, 3, 4],
       imageUrl: '',
       images: [],
       uploadConf: {
@@ -157,6 +180,15 @@ export default {
       this.information.majorId = value;
       this.informationTeacher.majorId = value;
     },
+    changeSex(value) {
+      console.log(value);
+      this.information.sex = value;
+      this.informationTeacher.sex = value;
+    },
+    changeGrade(value) {
+      console.log(value);
+      this.information.grade = value;
+    },
     ChangeInformation() {
       let that = this;
       let params = {
@@ -168,10 +200,21 @@ export default {
         sex: this.information.sex,
       }
       let a = new URLSearchParams();
+      let JWT = this.$store.state.JWT;
       a.append('user_id', this.information.userId);
-      axios.post("http://" + this.Api + "/api/Student/completeStudentById?" + a, params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+      axios.post("http://" + this.Api + "/api/Student/completeStudentById?" + a, params, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
         console.log(response);
-        axios.post("http://" + that.Api + "/api/Student/getStudentById?" + a).then(function (res) {
+        axios.post("http://" + that.Api + "/api/Student/getStudentById?" + a, null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': JWT,
+          }
+        }).then(function (res) {
           console.log(res);
           that.$router.push('/information');
           that.$store.commit('saveData', res.data.data);
@@ -192,10 +235,21 @@ export default {
         picUrl: this.informationTeacher.teacherPicUrl,
       }
       let a = new URLSearchParams();
+      let JWT = this.$store.state.JWT;
       a.append('user_id', this.informationTeacher.userId);
-      axios.post("http://" + this.Api + "/api/Teacher/completeTeacherById?" + a, params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+      axios.post("http://" + this.Api + "/api/Teacher/completeTeacherById?" + a, params, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
         console.log(response);
-        axios.post("http://" + that.Api + "/api/Teacher/getTeacherById?" + a).then(function (res) {
+        axios.post("http://" + that.Api + "/api/Teacher/getTeacherById?" + a, null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': JWT,
+          }
+        }).then(function (res) {
           console.log(res);
           that.$router.push('/information');
           that.$store.commit('saveData', res.data.data);

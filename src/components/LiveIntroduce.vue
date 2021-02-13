@@ -4,9 +4,32 @@
       <el-main>
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="直播介绍" name="first">
-            <img src="../assets/courseintroduction1.png" alt="图片缺失">
-            <img src="../assets/courseintroduction2.png" alt="图片缺失">
-            <img src="../assets/courseintroduction.png" alt="图片缺失">
+            <div class="content">
+              <div class="content-Title">
+                <img src="../assets/logo.png" alt="图片缺失">
+                <h3>课程概述</h3>
+              </div>
+              <p>
+                《电路》课程是自动化专业及其相近专业的必修课程，是学生学习和掌握电路基本理论知识和电路分析基本方法的专业基础课程。本课程在教学内容方面侧重于基本知识、基本理论和基本分析方法的讲解；另外独立开设的实验课程培养相应的实践能力。
+
+                本课程内容包括：电路的基本概念与基本定律、电阻电路的等效变换、线性电路的基本分析方法、基本定理、含有理想运放的电路分析、正弦交流电路的稳态分析、含有互感的电路、三相电路、双口网络、一阶电路的时域分析、二阶电路的时域分析等内容。
+
+                该课程不仅为后续专业课的学习打基础，对发展学生科学思维、培养学生分析问题、解决问题也具有十分重要的作用，同时也为学生今后从事自动化专业相关领域的实际工作打下必要的理论基础。
+              </p>
+            </div>
+            <div class="content">
+              <div class="content-Title">
+                <img src="../assets/logo.png" alt="图片缺失">
+                <h3>授课目标</h3>
+              </div>
+              <ul>
+                <li>增强学生对恶意代码攻击机理的理解</li>
+                <li>促进学生掌握恶意代码检测机理</li>
+                <li>提升学生恶意代码分析能力</li>
+                <li>帮助学生进一步构建网络攻防博弈思维</li>
+                <li>提升学生在恶意代码领域的创新思维与综合实践能力</li>
+              </ul>
+            </div>
           </el-tab-pane>
           <el-tab-pane label="直播评价" name="second">
             <div class="block">
@@ -86,8 +109,26 @@ export default {
   margin: 50px auto;
 }
 
-.el-tab-pane img {
-  width: 100%;
+.content {
+  text-align: left;
+}
+
+.content-Title {
+  display: flex;
+}
+
+.content h3 {
+  margin: 30px 10px 10px 10px;
+}
+
+.content img {
+  height: 40px;
+  width: 40px;
+  margin: 30px 10px 10px 10px;
+}
+
+.content ul {
+  margin-top: 0;
 }
 
 .Teacher {

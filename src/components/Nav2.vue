@@ -2,14 +2,19 @@
   <div class="NAV2">
     <h2>最近直播</h2>
     <el-divider></el-divider>
-    <el-row :gutter="60" class="course">
-      <el-col :span="8" v-for="item in live" v-bind:key="item.id">
+    <el-row :gutter="25" class="course">
+      <el-col :span="6" v-for="item in live" v-bind:key="item.id">
         <router-link to="/live">
-          <div class="grid-content">
-            <img :src="item.src" alt="图片缺失">
-            <h4>{{ item.name }}</h4>
-            <h5>{{ item.school }}</h5>
-            <h6>{{ item.teacher }}</h6>
+          <div class="live-grid-content">
+            <h6>{{ item.time }}</h6>
+            <div class="live-content">
+              <img :src="item.src" alt="图片缺失">
+              <div class="live-content-text">
+                <h4>{{ item.name }}</h4>
+                <h5>{{ item.school }}</h5>
+                <h6>{{ item.teacher }}</h6>
+              </div>
+            </div>
           </div>
         </router-link>
       </el-col>
@@ -52,22 +57,32 @@ export default {
     return {
       live: [
         {
+          time: "02月16日 19:00开始",
           name: "高等数学1",
           school: "浙江大学",
           teacher: "老师1",
-          src: require('../assets/course9.webp'),
+          src: require('../assets/teacherhead1.jpg'),
         },
         {
+          time: "02月16日 19:00开始",
           name: "高等数学2",
           school: "上海大学",
           teacher: "老师2",
-          src: require('../assets/live4.webp'),
+          src: require('../assets/teacherhead5.jpg'),
         },
         {
+          time: "02月16日 19:00开始",
           name: "高等数学3",
           school: "同济大学",
           teacher: "老师3",
-          src: require('../assets/live3.webp'),
+          src: require('../assets/teacherhead3.png'),
+        },
+        {
+          time: "02月16日 19:00开始",
+          name: "高等数学1",
+          school: "浙江大学",
+          teacher: "老师1",
+          src: require('../assets/teacherhead4.jpg'),
         },
       ],
       comment: [
@@ -120,26 +135,47 @@ export default {
 </script>
 
 <style scoped>
-.grid-content:hover {
+.NAV2 {
+  width: 1100px;
+  margin: auto;
+  padding: 32px 0;
+  clear: both;
+}
+
+.NAV2 h2 {
+  text-align: left;
+  margin: 60px 20px 20px 20px;
+  letter-spacing: 2px;
+}
+
+.live-grid-content {
+  text-align: left;
+  border-radius: 10px;
+  border: #E4E7ED 1px solid;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
+}
+
+.live-grid-content:hover {
   background-color: #d3dce6;
   text-decoration: none;
   text-decoration-color: #99a9bf;
   text-decoration-width: auto;
 }
 
-.grid-content {
-  text-align: left;
-  border-radius: 10px;
-  border: #E4E7ED 1px solid;
-  height: 300px;
-  margin-bottom: 30px;
-  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
+.live-content {
+  display: flex;
+}
+
+.live-content-text {
+
 }
 
 .course img {
-  padding: 4px;
-  border-radius: 10px;
-  width: 97%;
+  margin: 10px;
+  border-radius: 100px;
+  height: 70px;
+  width: 70px;
 }
 
 .course h4 {
@@ -159,27 +195,30 @@ a {
   color: #1c1f21;
 }
 
-.NAV2 {
-  width: 1100px;
-  margin: auto;
-  padding: 32px 0;
-  clear: both;
-}
-
-.NAV2 h2 {
-  text-align: left;
-  margin: 60px 20px 20px 20px;
-  letter-spacing: 2px;
-}
-
 .classview {
   position: relative;
   width: 22%;
-  height: 240px;
+  height: 200px;
   margin: 15px;
   box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
   border-radius: 8px;
   float: left;
+}
+
+.grid-content {
+  text-align: left;
+  border-radius: 10px;
+  border: #E4E7ED 1px solid;
+  height: 300px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
+}
+
+.grid-content:hover {
+  background-color: #d3dce6;
+  text-decoration: none;
+  text-decoration-color: #99a9bf;
+  text-decoration-width: auto;
 }
 
 .comment img {
