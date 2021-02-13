@@ -132,6 +132,7 @@
 
 <script>
 import classevaluate from "./childcpn/classevaluate";
+import axios from "axios";
 
 export default {
   name: "CourseIntroduce",
