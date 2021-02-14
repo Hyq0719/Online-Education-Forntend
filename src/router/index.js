@@ -26,6 +26,7 @@ import chapterManagement from "@/components/classmanagement/editchapter";
 import buildClass from "@/components/classmanagement/buildClassPage";
 import commentAnalyze from "@/components/classmanagement/commentAnalyze";
 import commentList from "@/components/classmanagement/commentList";
+import commentClass from "@/components/classmanagement/commentClass";
 
 
 Vue.use(Router);
@@ -132,6 +133,12 @@ export default new Router({
                     name: 'classManagementClass',
                     props: true,
                     component: classManagementClass,
+                },
+                {
+                    path: 'commentClass/:id',
+                    name: 'commentClass',
+                    props: true,
+                    component: commentClass,
                 },
                 {
                     path: 'commentAnalyze',

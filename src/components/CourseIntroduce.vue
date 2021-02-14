@@ -42,38 +42,62 @@
               <el-button round style="float: right;margin: 20px" @click="commentCourse">评价课程</el-button>
             </el-card>
 
-            <el-card :body-style="{ padding: '20px'}" v-show="currentComment"
+            <el-card :body-style="{ padding: '20px'}" v-show="evaluateBox2"
                      style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">
-              <div style="float:left;overflow: hidden">
-                <div style="text-align:left"> 我的评价：</div>
+              <classevaluate :evalabel="evaluateLabel" :colors="colors" @pass="fchange"></classevaluate>
+              <div>
+                <el-input type="textarea" class="Comment" v-model="textarea" placeholder="请输入内容"></el-input>
               </div>
-              <div style="float:left;overflow: hidden">
-                <div style="text-align:left"> {{ currentUserComment.content }}</div>
+              <div>
+                <el-button round style="float: right;margin: 20px" @click="commentCourse">评价课程</el-button>
+                <el-button round style="float: right;margin: 20px" @click="exitEditComment">取消评价</el-button>
               </div>
             </el-card>
 
-            <el-card :body-style="{ padding: '20px'}" v-for="(item,index) in comment" :key="index"
-                     style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">
-              <div style="float:left;overflow: hidden">
-                <div style="text-align:left"> {{ item.content }}</div>
+            <el-card :body-style="{ padding: '5px'}" v-show="currentComment"
+                     style="position: relative;margin: 5px;overflow: hidden;min-height: 80px">
+              <div style="overflow: hidden">
+                <div style="text-align:left;font-size: 12px;margin: 0 10px">
+                  <div style="display: inline;margin-right: 20px"> {{ currentUserComment.time }}</div>
+                  <div style="display: inline;margin-right: 20px"> 点赞数：{{ currentUserComment.likes }}</div>
+                  <el-rate style="display: inline"
+                           v-model="currentUserComment.commentMark"
+                           disabled
+                           show-score
+                           text-color="#ff9900"
+                           score-template="{value}">
+                  </el-rate>
+                </div>
+              </div>
+              <div style="overflow: hidden;text-align:left;margin: 10px 10px">
+                <div style="display: inline;color: red;font-size: 16px"> 我的评价：</div>
+                <div style="display:inline;font-size: 16px"> {{ currentUserComment.content }}</div>
+                <div style="display:inline;width: 400px">
+                  <el-button round style="float: right" @click="editComment">编辑</el-button>
+                </div>
               </div>
             </el-card>
-            <!--            <el-card :body-style="{ padding: '20px'}" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">-->
-            <!--              <div style="float: left;width: 100px;overflow: hidden">-->
-            <!--                <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">-->
-            <!--              </div>-->
-            <!--              <div >-->
-            <!--                <div style="text-align: left"> 老师讲的很好</div>-->
-            <!--              </div>-->
-            <!--            </el-card>-->
-            <!--            <el-card :body-style="{ padding: '20px'}" style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">-->
-            <!--              <div style="float: left;width: 100px;overflow: hidden">-->
-            <!--                <img src="@/assets/user1.jpg" width="60px" height="60px" style="vertical-align: top">-->
-            <!--              </div>-->
-            <!--              <div >-->
-            <!--                <div style="text-align: left"> 我想问一个问题</div>-->
-            <!--              </div>-->
-            <!--            </el-card>-->
+
+
+            <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in comment" :key="index"
+                     style="position: relative;margin: 5px;overflow: hidden;min-height: 80px">
+              <div style="overflow: hidden">
+                <div style="text-align:left;font-size: 12px;margin: 0 10px">
+                  <div style="display: inline;margin-right: 20px"> {{ item.time }}</div>
+                  <div style="display: inline;margin-right: 20px"> 点赞数：{{ item.likes }}</div>
+                  <el-rate style="display: inline"
+                           v-model="item.commentMark"
+                           disabled
+                           show-score
+                           text-color="#ff9900"
+                           score-template="{value}">
+                  </el-rate>
+                </div>
+              </div>
+              <div style="overflow: hidden;margin: 10px 10px">
+                <div style="float:left;text-align:left;font-size: 16px"> {{ item.content }}</div>
+              </div>
+            </el-card>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -125,18 +149,29 @@ export default {
   data() {
     return {
       activeName: 'first',
-      value: [null, null, null, null, null],
+      value: [null],
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       textarea: '',
       evaluateLabel: ["课程打分"],
       comment: this.$store.state.commentData,
       evaluateBox: true,
+      evaluateBox2: false,
       currentComment: false,
       currentUserComment: {},
       chapterData: this.$store.state.chapterData,
     };
   },
   methods: {
+    editComment() {
+      this.textarea = this.currentUserComment.content
+      this.evaluateBox2 = true;
+      this.currentComment = false;
+    },
+    exitEditComment() {
+      this.textarea = ''
+      this.evaluateBox2 = false;
+      this.currentComment = true;
+    },
     Chapter() {
       this.$router.go(0);
     },
@@ -190,9 +225,11 @@ export default {
                       else {
                         that.currentUserComment = response.data.data;
                         that.evaluateBox = false;
+                        that.evaluateBox2 = false;
                         that.currentComment = true;
+                        that.displayComment();
                       }
-                      that.comment = this.$store.state.commentData;
+                      that.comment = that.$store.state.commentData;
 
                     }
                   }, function (err) {
@@ -205,6 +242,28 @@ export default {
             })
       }
     },
+    displayComment() {
+      let that = this;
+      let JWT = that.$store.state.JWT;
+      let a = new URLSearchParams();
+      a.append('courseId', that.$route.query.courseId);
+      a.append('page', 1);
+      a.append('sort', 1);
+      axios.post("http://" + that.Api + "/api/Course/getCourseComments", a, {
+        headers: {
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        // console.log(response);
+        if (response.data.code === 1000) {
+          that.$store.commit("saveCommentData", response.data.data.list);
+          // console.log(that.$store.state.commentData);
+          that.comment = that.$store.state.commentData;
+        }
+      }, function (err) {
+        console.log(err);
+      });
+    }
   },
   components: {
     classevaluate,
@@ -212,25 +271,7 @@ export default {
   mounted: function () {
     let that = this;
     let JWT = that.$store.state.JWT;
-    let a = new URLSearchParams();
-    a.append('courseId', that.$route.query.courseId);
-    a.append('page', 1);
-    a.append('sort', 1);
-    axios.post("http://" + that.Api + "/api/Course/getCourseComments", a, {
-      headers: {
-        'Authorization': JWT,
-      }
-    }).then(function (response) {
-      // console.log(response);
-      if (response.data.code === 1000) {
-        that.$store.commit("saveCommentData", response.data.data.list);
-        // console.log(that.$store.state.commentData);
-        that.comment = this.$store.state.commentData;
-      }
-    }, function (err) {
-      console.log(err);
-    });
-
+    that.displayComment();
     let b = new URLSearchParams();
     b.append('course_id', that.$route.query.courseId);
     b.append('user_id', that.$store.state.userData.userId);
@@ -247,7 +288,7 @@ export default {
           that.evaluateBox = false;
           that.currentComment = true;
         }
-        that.comment = this.$store.state.commentData;
+        that.comment = that.$store.state.commentData;
       }
     }, function (err) {
       console.log(err);

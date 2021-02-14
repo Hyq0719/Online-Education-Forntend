@@ -207,9 +207,9 @@ export default {
       // 待加入后台删除
     },
 
-    openChapter(id) {
+    async openChapter(id) {
       let that = this;
-      axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id, {
+      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': that.$store.state.JWT,
@@ -238,9 +238,9 @@ export default {
       this.$store.commit("savebreadcrumb", breadcrumb)
     },
 
-    openVideo(course, chapter) {
+    async openVideo(course, chapter) {
       let that = this;
-      axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + chapter + "&courseId=" + course, {
+      await axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + chapter + "&courseId=" + course, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': that.$store.state.JWT,
@@ -455,19 +455,6 @@ export default {
 
 <style scoped>
 
-.search-bottom {
-  cursor: pointer;
-  float: left;
-  color: #fff;
-  background: #00a1d6;
-  font-size: 14px;
-  letter-spacing: 2px;
-  line-height: 20px;
-  text-align: center;
-  width: 90px;
-  border-radius: 4px;
-  border: none;
-}
 
 button:hover {
   background-color: #99ccff;

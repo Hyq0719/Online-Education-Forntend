@@ -2,7 +2,6 @@
   <div>
     <div class="search-box">
       <div class="search-wrap">
-        <img src="@/assets/logo.png" alt="找不到图片">
         <input class="search-word" type="text" placeholder="请输入要查找的课程ID" v-model="input" @keyup.enter="findComment"/>
         <div>
           <button class="search-bottom" @click="findComment">搜索课程</button>
@@ -43,7 +42,7 @@ export default {
         if (response.data.code === 1000) {
           that.$store.commit("saveCommentData", response.data.data.list);
           console.log(that.$store.state.commentData);
-          that.comment = this.$store.state.commentData;
+          that.comment = that.$store.state.commentData;
         }
       }, function (err) {
         console.log(err);

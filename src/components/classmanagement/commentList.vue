@@ -14,7 +14,7 @@
     </div>
     <div v-show="chartView" style="overflow: hidden">
       <el-col style="height: 400px;width: 500px;overflow: hidden">
-        <ECharts id="PolylineChart" :data="option"></ECharts>
+        <ECharts id="PolylineChart" :data="option" height="300px" width="400px"></ECharts>
       </el-col>
     </div>
   </div>
@@ -62,31 +62,31 @@ export default {
         },
         series: [
           {
-            name: '邮件营销',
+            name: '五星',
             type: 'line',
             stack: '总量',
             data: [120, 132, 101, 134, 90, 230, 210]
           },
           {
-            name: '联盟广告',
+            name: '四星',
             type: 'line',
             stack: '总量',
             data: [220, 182, 191, 234, 290, 330, 310]
           },
           {
-            name: '视频广告',
+            name: '三星',
             type: 'line',
             stack: '总量',
             data: [150, 232, 201, 154, 190, 330, 410]
           },
           {
-            name: '直接访问',
+            name: '二星',
             type: 'line',
             stack: '总量',
             data: [320, 332, 301, 334, 390, 330, 320]
           },
           {
-            name: '搜索引擎',
+            name: '一星',
             type: 'line',
             stack: '总量',
             data: [820, 932, 901, 934, 1290, 1330, 1320]
