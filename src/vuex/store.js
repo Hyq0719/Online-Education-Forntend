@@ -97,7 +97,7 @@ export default new Vuex.Store({
         },
         saveAnalysisComment(state, analysisComment) {
             state.teacherData.analysisComment = analysisComment;
-            sessionStorage.setItem('commentData', JSON.stringify(state.teacherData.analysisComment));
+            sessionStorage.setItem('analysisComment', JSON.stringify(state.teacherData.analysisComment));
         },
     }
 })
