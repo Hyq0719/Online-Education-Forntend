@@ -8,9 +8,9 @@
             <el-menu-item index="1-1">
               <router-link :to="{name:'classManagementClass',params:{id:1}}">课程列表</router-link>
             </el-menu-item>
-            <el-menu-item index="1-2">
-              <router-link to="/Classmanagement/buildClass">创建课程</router-link>
-            </el-menu-item>
+<!--            <el-menu-item index="1-2">-->
+<!--              <router-link to="/Classmanagement/buildClass">创建课程</router-link>-->
+<!--            </el-menu-item>-->
             <el-menu-item index="1-2">
               <router-link :to="{name:'commentClass',params:{id:1}}">课程评论</router-link>
             </el-menu-item>

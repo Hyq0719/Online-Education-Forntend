@@ -2,7 +2,7 @@
   <div>
     <el-container>
 
-      <el-main v-show="classview">
+      <el-main v-show="classview" style="overflow:hidden;position: relative;height: 600px">
         <el-table :data="classData.list">
           <el-table-column prop="name" label="课程名称">
           </el-table-column>
@@ -32,7 +32,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <div style="position: absolute;bottom: 20px;left: 20px">
+          <el-button circle @click="dialogVisible = true">
+            <i class="el-icon-circle-plus-outline"></i>
+          </el-button>
+        </div>
       </el-main>
+
+      <el-dialog title="修改课程" :visible.sync="dialogVisible">
+        <build-class-page></build-class-page>
+      </el-dialog>
 
       <el-main v-show="chapterview">
         <el-row class="box-wrapper" style="height: auto">
@@ -190,6 +199,7 @@ export default {
       classview: true,
       chapterview: false,
       videoview: false,
+      dialogVisible: false,
       classData: this.$store.state.teacherData.teacherClassData,
       chapterData: this.$store.state.teacherData.teacherChapterData,
       videoData: this.$store.state.teacherData.teacherVideoData,
@@ -199,7 +209,8 @@ export default {
   components: {
     buildClass: () => import('@/components/classmanagement/buildClass'),
     editupdate: () => import('@/components/classmanagement/editchapter'),
-    editVideo: () => import('@/components/classmanagement/editVideo')
+    editVideo: () => import('@/components/classmanagement/editVideo'),
+    buildClassPage: () => import('@/components/classmanagement/buildClassPage')
   },
   methods: {
 
