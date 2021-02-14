@@ -14,12 +14,13 @@ export default new Vuex.Store({
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
-        commentData: JSON.parse(sessionStorage.getItem('commentData')) || false,
+        commentData: JSON.parse(sessionStorage.getItem('commentData')) || [],
         RelatedCourses: JSON.parse(sessionStorage.getItem('RelatedCourses')) || false,
         teacherData: {
             teacherClassData: JSON.parse(sessionStorage.getItem('teacherClassData')) || [],
             teacherChapterData: JSON.parse(sessionStorage.getItem('teacherChapterData')) || [],
             teacherVideoData: JSON.parse(sessionStorage.getItem('teacherVideoData')) || [],
+            analysisComment: JSON.parse(sessionStorage.getItem('analysisComment')) || {},
         },   //教师管理后台用的
         breadcrumb: [],
         isLoginTeacher: JSON.parse(sessionStorage.getItem('isLoginTeacher')) || false,
@@ -93,6 +94,10 @@ export default new Vuex.Store({
         saveCommentData(state, commentData) {
             state.commentData = commentData;
             sessionStorage.setItem('commentData', JSON.stringify(state.commentData));
+        },
+        saveAnalysisComment(state, analysisComment) {
+            state.teacherData.analysisComment = analysisComment;
+            sessionStorage.setItem('commentData', JSON.stringify(state.teacherData.analysisComment));
         },
     }
 })

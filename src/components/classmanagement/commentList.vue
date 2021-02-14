@@ -3,7 +3,9 @@
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="具体评论" name="first">具体评论</el-tab-pane>
       <el-tab-pane label="评论分析" name="second">数据可视化</el-tab-pane>
+      <el-tab-pane label="搜索评论" name="third">搜索评论</el-tab-pane>
     </el-tabs>
+
     <div v-show="commentView" style="width: 700px">
       <el-card :body-style="{ padding: '20px'}" v-for="(item,index) in comment" :key="index"
                style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">
@@ -12,11 +14,14 @@
         </div>
       </el-card>
     </div>
+
     <div v-show="chartView" style="overflow: hidden">
       <el-col style="height: 400px;width: 500px;overflow: hidden">
         <ECharts id="PolylineChart" :data="option" height="300px" width="400px"></ECharts>
       </el-col>
     </div>
+
+
   </div>
 </template>
 
@@ -97,6 +102,7 @@ export default {
       comment: this.$store.state.commentData,
       commentView: true,
       chartView: false,
+      searchView: false,
     }
   },
   components: {
@@ -111,6 +117,10 @@ export default {
       } else if (tab.index == 1) {
         this.chartView = true;
         this.commentView = false;
+      } else if (tab.index == 2) {
+        this.chartView = false;
+        this.commentView = false;
+        this.searchView =true;
       }
     }
   },
@@ -135,5 +145,47 @@ export default {
 </script>
 
 <style scoped>
+.search-wrap {
+  height: 44px;
+  margin: 0 auto;
+  position: relative;
+  width: 587px;
+}
 
+.search-word {
+  height: 18px;
+  box-shadow: none;
+  padding: 11px 15px;
+  background: transparent;
+  width: 296px;
+  border: 2px solid #ccd0d7;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #222;
+  float: left;
+  margin-right: 10px;
+}
+
+.search-bottom {
+  cursor: pointer;
+  float: left;
+  color: #fff;
+  background: #00a1d6;
+  font-size: 16px;
+  letter-spacing: 2px;
+  line-height: 42px;
+  text-align: center;
+  width: 90px;
+  border-radius: 4px;
+  border: none;
+}
+
+.search-box {
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 0;
+  padding-top: 40px;
+  overflow: hidden;
+  clear: both;
+}
 </style>
