@@ -26,10 +26,17 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="具体评论" name="first">具体评论</el-tab-pane>
         <el-tab-pane label="评论分析" name="second">数据可视化</el-tab-pane>
-        <el-tab-pane label="搜索评论" name="third">搜索评论</el-tab-pane>
       </el-tabs>
 
       <div v-show="commentView">
+        <div class="search-box">
+          <div class="search-wrap">
+            <input class="search-word" type="text" placeholder="请输入要查找的关键字" v-model="input" @keyup.enter="findComment"/>
+            <div>
+              <button class="search-bottom" @click="findComment">搜索评论</button>
+            </div>
+          </div>
+        </div>
         <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in comment" :key="index"
                  style="position: relative;margin: 5px;overflow: hidden;min-height: 80px">
           <div style="overflow: hidden">
@@ -67,19 +74,6 @@
         </el-row>
       </div>
 
-      <div v-show="searchView">
-        <div class="search-box">
-          <div class="search-wrap">
-            <input class="search-word" type="text" placeholder="请输入要查找的关键字" v-model="input" @keyup.enter="findComment"/>
-            <div>
-              <button class="search-bottom" @click="findComment">搜索评论</button>
-            </div>
-          </div>
-        </div>
-        <el-container>
-          <router-view></router-view>
-        </el-container>
-      </div>
 
     </div>
 
@@ -103,7 +97,6 @@ export default {
       analysisComment: this.$store.state.teacherData.analysisComment,
       commentView: true,
       chartView: false,
-      searchView: false,
       chartBarView: false,
       optionc: 1,
       option1: {
@@ -268,15 +261,9 @@ export default {
       if (tab.index == 0) {
         this.chartView = false;
         this.commentView = true;
-        this.searchView = false;
       } else if (tab.index == 1) {
         this.chartView = true;
         this.commentView = false;
-        this.searchView = false;
-      } else if (tab.index == 2) {
-        this.chartView = false;
-        this.commentView = false;
-        this.searchView = true;
       }
     },
   },
