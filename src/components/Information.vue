@@ -30,9 +30,28 @@
             <h4>{{ information.grade }}</h4>
           </el-form-item>
           <el-form-item label="兴趣：">
-            <h4 v-for="(item,index) in this.$store.state.Preferences" v-bind:key="index">{{
-                item.prefer.preferContent
-              }}</h4>
+            <div v-if="!IsEditPrefer">
+              <h4 v-for="(item,index) in this.$store.state.StudentPreferences" v-bind:key="index">{{
+                  item.prefer.preferContent
+                }}</h4>
+              <el-link type="primary" @click="EditPrefer()" :underline="false" icon="el-icon-edit">编辑偏好兴趣</el-link>
+            </div>
+            <div v-if="IsEditPrefer">
+              <el-select v-model="selectedPrefer" placeholder="请选择你的兴趣偏好" multiple>
+                <el-option-group
+                    v-for="group in options"
+                    :key="group.majorContent"
+                    :label="group.majorContent">
+                  <el-option
+                      v-for="item in group.prefer"
+                      :key="item.preferId"
+                      :label="item.preferContent"
+                      :value="item.preferId">
+                  </el-option>
+                </el-option-group>
+              </el-select>
+              <el-link type="primary" @click="SavePrefer()" :underline="false" icon="el-icon-edit">保存偏好兴趣</el-link>
+            </div>
           </el-form-item>
         </el-form>
       </el-main>
@@ -76,6 +95,9 @@ export default {
   name: "Information",
   data() {
     return {
+      options: this.$store.state.AllMajor,
+      selectedPrefer: [],
+      StudentPrefer: this.$store.state.StudentPreferences,
       information: {
         grade: this.$store.state.userData.grade,
         major: this.$store.state.userData.major,
@@ -107,16 +129,53 @@ export default {
       },
       isLogin: this.$store.state.isLogin,
       isLoginTeacher: this.$store.state.isLoginTeacher,
+      IsEditPrefer: false,
     }
   },
   created() {
-    this.Preferences();
+    this.StudentPreferences();
   },
   methods: {
     Change() {
       this.$router.push('/Information/Change')
     },
-    Preferences() {
+    EditPrefer() {
+      this.IsEditPrefer = !this.IsEditPrefer;
+    },
+    SavePrefer() {
+      this.IsEditPrefer = !this.IsEditPrefer;
+      let that = this;
+      let JWT = this.$store.state.JWT;
+      let a = new URLSearchParams;
+      a.append("prefers", this.selectedPrefer)
+      a.append("user_id", this.$store.state.userData.userId)
+      axios.post("http://" + this.Api + "/api/Student/collectPreferences?" + a, null, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log(response);
+        console.log(that.selectedPrefer);
+        that.StudentPrefer = [];
+        let Prefer = that.$store.state.Prefer;
+        for (let i = 0; i < that.selectedPrefer.length; i++) {
+          for (let j = 0; j < Prefer.length; j++) {
+            if (Prefer[j].preferId == that.selectedPrefer[i]) {
+              let prefer = {
+                prefer: Prefer[j],
+              };
+              that.StudentPrefer.push(prefer);
+            }
+          }
+        }
+        console.log(that.StudentPrefer);
+        that.$store.commit('saveStudentPreferences', that.StudentPrefer)
+      }, function (err) {
+        console.log(err);
+      })
+    },
+    StudentPreferences() {
       let a = new URLSearchParams;
       let JWT = this.$store.state.JWT;
       let that = this;
@@ -128,7 +187,11 @@ export default {
         }
       }).then(function (response) {
         console.log(response);
-        that.$store.commit('savePreferences', response.data.data)
+        for (let i = 0; i < response.data.data.length; i++) {
+          that.selectedPrefer.push(response.data.data[i].prefer.preferId)
+        }
+        console.log(that.selectedPrefer);
+        that.$store.commit('saveStudentPreferences', response.data.data)
       }, function (err) {
         console.log(err);
       })
@@ -172,14 +235,6 @@ export default {
 
 body > .el-container {
   margin-bottom: 40px;
-}
-
-.el-input {
-  width: 50%;
-}
-
-.Change {
-  float: right;
 }
 
 .Information h4 {

@@ -10,7 +10,9 @@ export default new Vuex.Store({
         isLogin: JSON.parse(sessionStorage.getItem('isLogin')) || false,
         Phone: JSON.parse(sessionStorage.getItem('Phone')) || false,
         JWT: JSON.parse(VueCookies.get('JWT')) || false,
-        Preferences: JSON.parse(sessionStorage.getItem('Preferences')) || false,
+        StudentPreferences: JSON.parse(sessionStorage.getItem('StudentPreferences')) || false,
+        Prefer: JSON.parse(sessionStorage.getItem('Prefer')) || false,
+        AllMajor: JSON.parse(sessionStorage.getItem('AllMajor')) || false,
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
@@ -42,9 +44,9 @@ export default new Vuex.Store({
             state.JWT = JWT;
             VueCookies.set('JWT', JSON.stringify(state.JWT), "7D");
         },
-        savePreferences(state, Preferences) {
-            state.Preferences = Preferences;
-            sessionStorage.setItem('Preferences', JSON.stringify(state.Preferences));
+        saveStudentPreferences(state, StudentPreferences) {
+            state.StudentPreferences = StudentPreferences;
+            sessionStorage.setItem('StudentPreferences', JSON.stringify(state.StudentPreferences));
         },
         saveAvatar(state) {
             state.userData.studentPicUrl = 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png';
@@ -63,6 +65,14 @@ export default new Vuex.Store({
         saveData(state, userData) {
             state.userData = userData;
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
+        },
+        savePrefer(state, Prefer) {
+            state.Prefer = Prefer;
+            sessionStorage.setItem('Prefer', JSON.stringify(state.Prefer));
+        },
+        saveAllMajor(state, AllMajor) {
+            state.AllMajor = AllMajor;
+            sessionStorage.setItem('AllMajor', JSON.stringify(state.AllMajor));
         },
         saveCourseData(state, courseData) {
             state.courseData = courseData;

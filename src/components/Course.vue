@@ -32,7 +32,6 @@
 
 <script>
 import VideoPlayer from "../components/VideoPlayer";
-import axios from "axios";
 
 export default {
   name: "Course",
@@ -42,52 +41,9 @@ export default {
   data() {
     return {
       input: '',
-      courseId: this.$route.query.courseId,
-      data: [],
     }
   },
-  created() {
-    this.Chapter();
-    this.RelatedCourse();
-  },
   methods: {
-    Chapter() {
-      console.log(this.courseId);
-      let that = this;
-      let a = new URLSearchParams();
-      a.append('courseId', this.courseId);
-      axios.post("http://" + this.Api + "/api/Course/getCourseDisplay", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response.data.data);
-        that.data = [];
-        let data = response.data.data;
-        for (let courseChapter in data) {
-          let courseChapterJson = JSON.parse(courseChapter)
-          let VideoList = data[courseChapter].VideoList;
-          let TaskList = data[courseChapter].TaskList;
-          let courseInformation = {
-            courseChapterJson,
-            VideoList,
-            TaskList,
-          }
-          that.data.push(courseInformation)
-        }
-        that.$store.commit('saveChapterData', that.data)
-        console.log(that.data)
-      }, function (err) {
-        console.log(err);
-      })
-    },
-    RelatedCourse() {
-      let that = this;
-      let a = new URLSearchParams;
-      a.append("courseId", this.courseId)
-      axios.post("http://" + this.Api + "/api/Course/getRelatedCourses?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response);
-        that.$store.commit('saveRelatedCourses', response.data.data);
-      }, function (err) {
-        console.log(err);
-      })
-    },
     TaskMenu(index) {
       console.log(index);
       this.$router.push({path: '/taskmenu', query: {chapterId: index}});
