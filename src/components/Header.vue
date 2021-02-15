@@ -172,7 +172,7 @@ export default {
 .avatar img {
   height: 40px;
   width: 40px;
-  margin: 10px 0px;
+  margin: 10px 0;
   float: left;
 }
 
