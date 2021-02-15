@@ -19,13 +19,17 @@
         </el-submenu>
       </el-menu>
     </el-aside>
+
     <el-container>
       <el-header>
         <classbread :breadcrumb=breadcrumb>
         </classbread>
       </el-header>
+      <el-main>
       <router-view></router-view>
+      </el-main>
     </el-container>
+
   </el-container>
 </template>
 

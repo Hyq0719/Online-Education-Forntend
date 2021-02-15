@@ -1,7 +1,7 @@
 <template>
   <div>
       <el-main>
-        <div style="width: 480px">
+        <div style="width: 550px">
           <el-form label-width="160px">
             <el-form-item label="课程名称" style="width: 300px">
               <el-input v-model="formbuild.name"
@@ -37,12 +37,12 @@
                   style="float: left;margin: 10px 24px">
               </el-switch>
             </el-form-item>
-            <el-form-item label="上传课程封面" style="width: 600px">
-              <el-col class="normal" :span="24"> 请注意课程封面只能上传一张图片，且上传图片的大小最大为2MB</el-col>
-              <UploadImgTool :imgNum="imgNum"></UploadImgTool>
+            <el-form-item label="上传课程封面" style="width: 550px">
+              <el-col class="normal" :span="24"> 课程封面只能上传一张图片，且上传图片的大小最大为2MB</el-col>
             </el-form-item>
+            <UploadImgTool :imgNum="imgNum"></UploadImgTool>
             <el-form-item style="position: relative;margin: 0;padding: 0">
-              <el-button type="primary" class="headerbutton" @click="closed" :loading="loading" style="position: absolute;left: 100px">
+              <el-button type="primary" class="headerbutton" @click="closed" :loading="loading" style="position: absolute;left: 60px">
                 {{ loading ? '提交中 ...' : '确认上传' }}
               </el-button>
             </el-form-item>
@@ -128,19 +128,6 @@ export default {
       this.$emit('close',false);
     }
   },
-  mounted() {
-    let breadcrumb = [
-      {
-        link: '/Classmanagement',
-        title: '课程管理'
-      },
-      {
-        link: '/Classmanagement/buildClass',
-        title: '创建课程'
-      },
-    ]
-    this.$store.commit("savebreadcrumb", breadcrumb)
-  }
 }
 </script>
 

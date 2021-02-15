@@ -1,8 +1,7 @@
 <template>
   <div>
-    <el-container>
 
-      <el-main v-show="classview" style="overflow:hidden;position: relative;height: 600px">
+      <el-main v-show="classview" style="overflow:hidden;position: relative;height: 580px">
         <el-table :data="classData.list">
           <el-table-column prop="name" label="课程名称">
           </el-table-column>
@@ -32,15 +31,21 @@
             </template>
           </el-table-column>
         </el-table>
-        <div style="position: absolute;bottom: 20px;left: 20px">
-          <el-button circle @click="dialogVisible = true">
+
+        <div >
+          <el-button circle @click="dialogVisible = true" style="position: absolute;bottom: 80px;left: 20px">
             <i class="el-icon-circle-plus-outline"></i>
           </el-button>
+          <el-pagination  style="position: absolute;bottom: 0;left: 300px"
+              background
+              layout="prev, pager, next"
+              :total="100">
+          </el-pagination>
         </div>
       </el-main>
 
       <el-dialog title="修改课程" :visible.sync="dialogVisible">
-        <build-class-page></build-class-page>
+        <build-class-page @close="closeDialog"></build-class-page>
       </el-dialog>
 
       <el-main v-show="chapterview">
@@ -140,7 +145,6 @@
         </el-table>
       </el-main>
 
-    </el-container>
 
     <el-drawer
         title="新建课程"
@@ -213,7 +217,9 @@ export default {
     buildClassPage: () => import('@/components/classmanagement/buildClassPage')
   },
   methods: {
-
+    closeDialog(){
+      this.dialogVisible=false;
+    },
     deleteRow() {
       // 待加入后台删除
     },
@@ -478,7 +484,7 @@ button:hover {
   border: #1c1f21 solid 1px;
   border-radius: 6px;
   margin: 16px 30px;
-  width: 1100px;
+  width: 1000px;
   overflow: hidden;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }

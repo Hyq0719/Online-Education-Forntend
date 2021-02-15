@@ -24,7 +24,7 @@
 
     <div v-show="analyzeView">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="具体评论" name="first">具体评论</el-tab-pane>
+        <el-tab-pane label="具体评论" name="first"></el-tab-pane>
         <el-tab-pane label="评论分析" name="second">数据可视化</el-tab-pane>
       </el-tabs>
 
