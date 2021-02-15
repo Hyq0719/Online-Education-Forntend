@@ -112,13 +112,13 @@
         </div>
         <el-divider></el-divider>
         <div class="Teacher">
-          <img :src="chapterData[0].courseChapterJson.course.teacher.teacherPicUrl" alt="图片缺失">
+          <img :src="this.$store.state.chapterData[0].courseChapterJson.course.teacher.teacherPicUrl" alt="图片缺失">
           <div class="Teacher-Introduce">
             <div class="TeacherName">
-              {{ chapterData[0].courseChapterJson.course.teacher.name }}
+              {{ this.$store.state.chapterData[0].courseChapterJson.course.teacher.name }}
             </div>
             <div class="TeacherSchool">
-              {{ chapterData[0].courseChapterJson.course.teacher.school }}
+              {{ this.$store.state.chapterData[0].courseChapterJson.course.teacher.school }}
             </div>
           </div>
         </div>
@@ -164,7 +164,6 @@ export default {
       evaluateBox2: false,
       currentComment: false,
       currentUserComment: {},
-      chapterData: this.$store.state.chapterData,
     };
   },
   methods: {

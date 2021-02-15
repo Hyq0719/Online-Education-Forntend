@@ -14,6 +14,7 @@ import Course from "../components/Course";
 import Sidebar from "../components/Sidebar";
 import Footer from '../components/Footer'
 import CourseIntroduce from "../components/CourseIntroduce";
+import axios from "axios";
 
 export default {
   components: {
@@ -22,6 +23,57 @@ export default {
     Sidebar,
     CourseIntroduce,
     Footer,
+  },
+  data() {
+    return {
+      courseId: this.$route.query.courseId,
+      data: [],
+    }
+  },
+  created() {
+    this.Chapter();
+    this.RelatedCourse();
+  },
+  methods: {
+    //获取章节及视频任务信息
+    Chapter() {
+      console.log(this.courseId);
+      let that = this;
+      let a = new URLSearchParams();
+      a.append('courseId', this.courseId);
+      axios.post("http://" + this.Api + "/api/Course/getCourseDisplay", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response.data.data);
+        that.data = [];
+        let data = response.data.data;
+        for (let courseChapter in data) {
+          let courseChapterJson = JSON.parse(courseChapter)
+          let VideoList = data[courseChapter].VideoList;
+          let TaskList = data[courseChapter].TaskList;
+          let courseInformation = {
+            courseChapterJson,
+            VideoList,
+            TaskList,
+          }
+          that.data.push(courseInformation)
+        }
+        that.$store.commit('saveChapterData', that.data)
+        console.log(that.data)
+      }, function (err) {
+        console.log(err);
+      })
+    },
+    //获取相关课程信息
+    RelatedCourse() {
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("courseId", this.courseId)
+      axios.post("http://" + this.Api + "/api/Course/getRelatedCourses?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log(response);
+        that.$store.commit('saveRelatedCourses', response.data.data);
+      }, function (err) {
+        console.log(err);
+      })
+    },
   },
 }
 </script>

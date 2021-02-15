@@ -44,7 +44,7 @@
           <h3>大学课程</h3>
           <div>
             <el-button @click="CourseMenuPrefer(index)" v-for="(item,index) in college" v-bind:key="item.id" class="CourseMenu">{{
-                item
+                item.preferContent
               }}
             </el-button>
           </div>
@@ -91,7 +91,7 @@ export default {
       teacherPicUrl: this.$store.state.userData.teacherPicUrl,
       isLogin: this.$store.state.isLogin,
       isLoginTeacher: this.$store.state.isLoginTeacher,
-      college: ['程序设计', '免费课程', '计算机基础课', '计算机', '数学', '金融', '计算机', '数学', '金融'],
+      college: this.$store.state.Prefer,
       graduate: ['考研21', '考研20', '期末不挂', '英语学习'],
       lifelong: ['名师专栏'],
     };

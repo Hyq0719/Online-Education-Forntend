@@ -2,7 +2,7 @@
   <div class="Course">
     <div class="Course-Title">
       <h3>
-        {{ course[this.$route.query.preferId - 1] }}
+        {{ course[this.$route.query.preferId - 1].preferContent }}
       </h3>
     </div>
     <div class="new-best-hot">
@@ -33,7 +33,7 @@
       <el-pagination
           background
           layout="prev, pager, next"
-          :total="100">
+          :total="this.$store.state.courseData.total_element">
       </el-pagination>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
   name: "CourseMenu",
   data() {
     return {
-      course: ['程序设计', '免费课程', '计算机基础课'],
+      course: this.$store.state.Prefer,
       preferId: this.$route.query.preferId,
       needVip: 2,
       sort: 1,
