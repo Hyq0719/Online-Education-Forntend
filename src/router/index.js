@@ -25,6 +25,8 @@ import classBread from "@/components/classmanagement/classbread";
 import chapterManagement from "@/components/classmanagement/editchapter";
 import buildClass from "@/components/classmanagement/buildClassPage";
 import commentClass from "@/components/classmanagement/commentClass";
+import liveManagement from "@/components/classmanagement/liveManagement";
+import blank from "@/components/classmanagement/blank";
 
 
 Vue.use(Router);
@@ -137,6 +139,16 @@ export default new Router({
                     name: 'commentClass',
                     props: true,
                     component: commentClass,
+                },
+                {
+                    path:'liveManagement',
+                    name:'liveManagement',
+                    component:liveManagement,
+                },
+                {
+                    path:'blank',
+                    name:'blank',
+                    component:blank,
                 },
             ]
         },

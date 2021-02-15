@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     class_management() {
-      this.$router.push('/Classmanagement')
+      this.$router.push('/Classmanagement/blank')
     },
     CourseMenu() {
       this.$router.push('/coursemenu');

@@ -240,7 +240,7 @@ export default {
       that.$router.push({name: 'classManagementClass', params: {id: 2}});
       let breadcrumb = [
         {
-          link: '/Classmanagement',
+          link: '/Classmanagement/blank',
           title: '课程管理'
         },
         {
@@ -271,7 +271,7 @@ export default {
       that.$router.push({name: 'classManagementClass', params: {id: 3}});
       let breadcrumb = [
         {
-          link: '/Classmanagement',
+          link: '/Classmanagement/blank',
           title: '课程管理'
         },
         {
@@ -349,7 +349,7 @@ export default {
       that.videoview = false;
       let breadcrumb = [
         {
-          link: '/Classmanagement',
+          link: '/Classmanagement/blank',
           title: '课程管理'
         },
         {
@@ -364,7 +364,7 @@ export default {
       that.videoview = false;
       let breadcrumb = [
         {
-          link: '/Classmanagement',
+          link: '/Classmanagement/blank',
           title: '课程管理'
         },
         {
@@ -383,7 +383,7 @@ export default {
       that.videoview = true;
       let breadcrumb = [
         {
-          link: '/Classmanagement',
+          link: '/Classmanagement/blank',
           title: '课程管理'
         },
         {
@@ -413,7 +413,7 @@ export default {
         that.videoview = false;
         let breadcrumb = [
           {
-            link: '/Classmanagement',
+            link: '/Classmanagement/blank',
             title: '课程管理'
           },
           {
@@ -428,7 +428,7 @@ export default {
         that.videoview = false;
         let breadcrumb = [
           {
-            link: '/Classmanagement',
+            link: '/Classmanagement/blank',
             title: '课程管理'
           },
           {
@@ -447,7 +447,7 @@ export default {
         that.videoview = true;
         let breadcrumb = [
           {
-            link: '/Classmanagement',
+            link: '/Classmanagement/blank',
             title: '课程管理'
           },
           {

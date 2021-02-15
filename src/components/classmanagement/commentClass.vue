@@ -276,7 +276,7 @@ export default {
       that.analyzeView = false;
       let breadcrumb = [
         {
-          link: '/Classmanagement',
+          link: '/Classmanagement/blank',
           title: '课程管理'
         },
         {
@@ -290,7 +290,7 @@ export default {
       that.analyzeView = true;
       let breadcrumb = [
         {
-          link: '/Classmanagement',
+          link: '/Classmanagement/blank',
           title: '课程管理'
         },
         {
@@ -315,7 +315,7 @@ export default {
         that.analyzeView = false;
         let breadcrumb = [
           {
-            link: '/Classmanagement',
+            link: '/Classmanagement/blank',
             title: '课程管理'
           },
           {
@@ -329,7 +329,7 @@ export default {
         that.analyzeView = true;
         let breadcrumb = [
           {
-            link: '/Classmanagement',
+            link: '/Classmanagement/blank',
             title: '课程管理'
           },
           {

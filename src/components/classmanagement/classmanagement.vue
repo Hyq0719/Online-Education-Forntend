@@ -8,11 +8,11 @@
             <el-menu-item index="1-1">
               <router-link :to="{name:'classManagementClass',params:{id:1}}">课程列表</router-link>
             </el-menu-item>
-<!--            <el-menu-item index="1-2">-->
-<!--              <router-link to="/Classmanagement/buildClass">创建课程</router-link>-->
-<!--            </el-menu-item>-->
             <el-menu-item index="1-2">
               <router-link :to="{name:'commentClass',params:{id:1}}">课程评论</router-link>
+            </el-menu-item>
+            <el-menu-item index="1-3">
+              <router-link :to="{name:'liveManagement'}">直播管理</router-link>
             </el-menu-item>
 
           </el-menu-item-group>
@@ -50,16 +50,16 @@ export default {
   components: {
     classbread
   },
-  // mounted:function () {
-  //
-  //   let breadcrumb = [
-  //     {
-  //       link: '/Classmanagement',
-  //       title: '课程管理'
-  //     }
-  //   ]
-  //   this.$store.commit("savebreadcrumb", breadcrumb)
-  // },
+  mounted:function () {
+
+    let breadcrumb = [
+      {
+        link: '/Classmanagement/blank',
+        title: '课程管理'
+      }
+    ]
+    this.$store.commit("savebreadcrumb", breadcrumb)
+  },
   computed: {
     breadcrumb: function () {
       return this.$store.state.breadcrumb
