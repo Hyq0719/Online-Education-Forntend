@@ -23,6 +23,7 @@ export default new Vuex.Store({
             teacherChapterData: JSON.parse(sessionStorage.getItem('teacherChapterData')) || [],
             teacherVideoData: JSON.parse(sessionStorage.getItem('teacherVideoData')) || [],
             analysisComment: JSON.parse(sessionStorage.getItem('analysisComment')) || {},
+            liveData: JSON.parse(sessionStorage.getItem('liveData')) || [],
         },   //教师管理后台用的
         breadcrumb: [],
         isLoginTeacher: JSON.parse(sessionStorage.getItem('isLoginTeacher')) || false,
@@ -108,6 +109,10 @@ export default new Vuex.Store({
         saveAnalysisComment(state, analysisComment) {
             state.teacherData.analysisComment = analysisComment;
             sessionStorage.setItem('analysisComment', JSON.stringify(state.teacherData.analysisComment));
+        },
+        saveLiveData(state, liveData) {
+            state.teacherData.liveData = liveData;
+            sessionStorage.setItem('liveData', JSON.stringify(state.teacherData.liveData));
         },
     }
 })

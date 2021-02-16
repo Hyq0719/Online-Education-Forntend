@@ -66,14 +66,10 @@ export default {
                 }}
           ).then(function (res) {
             console.log(res);
-            if (response.data.code === 1000) {
+            if (res.data.code === 1000) {
               that.$store.commit('saveTeacherClassData', res.data.data);
             }
           });
-        } else if (response.data.code === 2002) {
-          MessageBox.alert('用户不存在');
-        } else if (response.data.code === 2003) {
-          MessageBox.alert('密码错误');
         }
       }, function (err) {
         console.log(err);

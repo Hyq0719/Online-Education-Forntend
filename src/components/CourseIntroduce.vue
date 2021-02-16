@@ -93,9 +93,11 @@
                            score-template="{value}">
                   </el-rate>
                   <div style="float: right;margin-top: 20px">
-                    <el-button icon="el-icon-check" circle class="commentStar"
-                               @click="commentStar(item,index)"></el-button>
-                    <div style="margin-right: 30px"> 点赞数：{{ item.likes }}</div>
+                    <el-button  circle class="commentStar"
+                               @click="commentStar(item,index)">
+                      <img src="@/assets/damuzhi.png" width="20px" height="20px">
+                    </el-button>
+                    <div style="text-align: center"> {{ item.likes }}</div>
                   </div>
                 </div>
               </div>
@@ -168,6 +170,7 @@ export default {
   methods: {
     async commentStar(item, index) {
       let that = this;
+      if (that.$store.state.isLogin !== false){
       let JWT = that.$store.state.JWT;
       document.getElementsByClassName('commentStar')[index].classList.toggle("pink");
       if (document.getElementsByClassName('commentStar')[index].classList[4] !== "pink") {          //取消点赞
@@ -203,7 +206,11 @@ export default {
           }
         }, function (err) {
           console.log(err);
-        });
+        });}
+      }
+      else {
+        that.$message.error('请登陆后评论');
+        that.$router.push('/login');
       }
     },
     editComment() {
@@ -299,16 +306,15 @@ export default {
           'Authorization': JWT,
         }
       }).then(function (response) {
-        // console.log(response);
         if (response.data.code === 1000) {
           that.$store.commit("saveCommentData", response.data.data.list);
-          // console.log(that.$store.state.commentData);
           that.comment = that.$store.state.commentData;
-          let i = 0;
+
+          if (that.$store.state.isLogin !== false) {
           let clist = new Array();
           console.log("查看全部评论：", that.comment);
           let c = that.comment;
-          for (i = 0; i < c.length; i++) {
+          for (let i = 0; i < c.length; i++) {
             clist[i] = c[i].commentId;
           }
           console.log("查看评论的ID:", clist);
@@ -335,7 +341,8 @@ export default {
             }
           }, function (err) {
             console.log(err);
-          });
+          });}
+
         }
       }, function (err) {
         console.log(err);
@@ -349,27 +356,35 @@ export default {
     let that = this;
     let JWT = that.$store.state.JWT;
     that.displayComment();
-    let b = new URLSearchParams();
-    b.append('course_id', that.$route.query.courseId);
-    b.append('user_id', that.$store.state.userData.userId);
-    axios.post("http://" + that.Api + "/api/Student/getCourseCommentByStudentAndCourse", b, {
-      headers: {
-        'Authorization': JWT,
-      }
-    }).then(function (response) {
-      console.log("获取评论成功");
-      if (response.data.code === 1000) {
-        if (response.data.data == null) ;
-        else {
-          that.currentUserComment = response.data.data;
-          that.evaluateBox = false;
-          that.currentComment = true;
+    console.log("用户信息："+that.$store.state.userData);
+    if (that.$store.state.isLogin !== false) {
+      let b = new URLSearchParams();
+      b.append('course_id', that.$route.query.courseId);
+      b.append('user_id', that.$store.state.userData.userId);
+      axios.post("http://" + that.Api + "/api/Student/getCourseCommentByStudentAndCourse", b, {
+        headers: {
+          'Authorization': JWT,
         }
-        that.comment = that.$store.state.commentData;
-      }
-    }, function (err) {
-      console.log(err);
-    });
+      }).then(function (response) {
+        console.log("获取评论成功");
+        if (response.data.code === 1000) {
+          if (response.data.data == null) ;
+          else {
+            that.currentUserComment = response.data.data;
+            that.evaluateBox = false;
+            that.currentComment = true;
+          }
+          that.comment = that.$store.state.commentData;
+        }
+      }, function (err) {
+        console.log(err);
+      });
+    }
+    else
+    {
+      that.evaluateBox= false;
+      console.log("关闭评论")
+    }
   },
 };
 </script>
@@ -391,7 +406,7 @@ export default {
 }
 
 .pink {
-  background-color: pink;
+  background-color: #00CCFF;
 }
 
 .el-container {
@@ -485,8 +500,7 @@ a {
   text-decoration: none;
   color: #1c1f21;
 }
-</style>
-<style>
+
 .Comment textarea.el-textarea__inner {
   padding: 10px 10px 90px 10px;
 }

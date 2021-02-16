@@ -39,12 +39,12 @@
           <el-pagination  style="position: absolute;bottom: 0;left: 300px"
               background
               layout="prev, pager, next"
-              :total="100">
+              :total="1">
           </el-pagination>
         </div>
       </el-main>
 
-      <el-dialog title="修改课程" :visible.sync="dialogVisible">
+      <el-dialog title="创建课程" :visible.sync="dialogVisible">
         <build-class-page @close="closeDialog"></build-class-page>
       </el-dialog>
 
@@ -343,7 +343,7 @@ export default {
     let that = this;
     let a = that.$route.params.id;
     console.log(a);
-    if (a == 1) {
+    if (a === 1) {
       that.classview = true;
       that.chapterview = false;
       that.videoview = false;
@@ -358,7 +358,7 @@ export default {
         }
       ]
       this.$store.commit("savebreadcrumb", breadcrumb);
-    } else if (a == 2) {
+    } else if (a === 2) {
       that.classview = false;
       that.chapterview = true;
       that.videoview = false;
@@ -377,7 +377,7 @@ export default {
         }
       ]
       this.$store.commit("savebreadcrumb", breadcrumb)
-    } else if (a == 3) {
+    } else if (a === 3) {
       that.classview = false;
       that.chapterview = false;
       that.videoview = true;
@@ -407,7 +407,7 @@ export default {
       let that = this;
       let a = id;
       console.log(a);
-      if (a == 1) {
+      if (a === 1) {
         that.classview = true;
         that.chapterview = false;
         that.videoview = false;
@@ -422,7 +422,7 @@ export default {
           }
         ]
         this.$store.commit("savebreadcrumb", breadcrumb);
-      } else if (a == 2) {
+      } else if (a === 2) {
         that.classview = false;
         that.chapterview = true;
         that.videoview = false;
@@ -441,7 +441,7 @@ export default {
           }
         ]
         this.$store.commit("savebreadcrumb", breadcrumb)
-      } else if (a == 3) {
+      } else if (a === 3) {
         that.classview = false;
         that.chapterview = false;
         that.videoview = true;
