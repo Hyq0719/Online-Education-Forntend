@@ -15,16 +15,16 @@ export default {
       let that = this;
       //获取偏好
       let major_id = new URLSearchParams;
-      major_id.append("major_id", 1)
+      major_id.append("major_id", 1);
       await axios.post("http://" + this.Api + "/api/Major/getPreferByMajor?" + major_id, null, {
         headers: {
           'Content-Type': 'application/json',
         }
       }).then(function (response) {
-        that.$store.commit('savePrefer', response.data.data)
+        that.$store.commit('savePrefer', response.data.data);
       }, function (err) {
         console.log(err);
-      })
+      });
       //获取专业+偏好
       await axios.get("http://" + this.Api + "/api/Major/findAllMajor", {
         headers: {
@@ -37,7 +37,7 @@ export default {
         for (let i = 0; i < MajorData.length; i++) {
           // console.log(MajorData[i]);
           let a = new URLSearchParams;
-          a.append("major_id", MajorData[i].majorId)
+          a.append("major_id", MajorData[i].majorId);
           await axios.post("http://" + that.Api + "/api/Major/getPreferByMajor?" + a, null, {
             headers: {
               'Content-Type': 'application/json',
@@ -59,12 +59,12 @@ export default {
             // console.log(AllMajor);
           }, function (err) {
             console.log(err);
-          })
+          });
         }
-        that.$store.commit('saveAllMajor', AllMajor)
+        that.$store.commit('saveAllMajor', AllMajor);
       }, function (err) {
         console.log(err);
-      })
+      });
       //JWT登录
       if (!this.$store.state.isLogin && !this.$store.state.isLoginTeacher && this.$store.state.JWT) {
         let that = this;
@@ -79,16 +79,16 @@ export default {
           } else {
             that.$store.commit('saveIsLogin');
           }
-          that.$store.commit('saveData', response.data.data)
+          that.$store.commit('saveData', response.data.data);
         }, function (err) {
           console.log(err);
-        })
+        });
       }
       //跳转首页
       await this.$router.push('/main');
     },
   },
-}
+};
 </script>
 
 <style scoped>

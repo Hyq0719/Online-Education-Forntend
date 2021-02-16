@@ -178,10 +178,10 @@ export default {
           teacher: "老师6",
           src: require('../assets/course12.webp'),
         },
-      ]
-    }
-  }
-}
+      ],
+    };
+  },
+};
 </script>
 
 <style scoped>

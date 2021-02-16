@@ -50,7 +50,7 @@
 
 <script>
 import Header from "../components/Header";
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
 
 export default {
   name: "feedback",
@@ -75,9 +75,9 @@ export default {
         label: '其他意见'
       },],
       value: ''
-    }
+    };
   },
-}
+};
 </script>
 
 <style scoped>

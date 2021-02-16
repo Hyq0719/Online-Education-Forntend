@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 import Login from '../views/Login';
 import LoginTeacher from '../views/LoginTeacher';
 import Main from '../views/Main';
@@ -20,7 +20,7 @@ import VIP from '../views/VIP';
 import Feedback from "@/views/Feedback";
 import classManagementClass from "@/components/classmanagement/class";
 import updateClass from "@/components/classmanagement/editVideo";
-import Upload from "@/components/classmanagement/Upload"
+import Upload from "@/components/classmanagement/Upload";
 import classBread from "@/components/classmanagement/classbread";
 import chapterManagement from "@/components/classmanagement/editchapter";
 import buildClass from "@/components/classmanagement/buildClassPage";
@@ -171,6 +171,6 @@ export default new Router({
             path: '/Feedback',
             name: Feedback,
             component: Feedback,
-        }
-    ]
-})
+        },
+    ],
+});

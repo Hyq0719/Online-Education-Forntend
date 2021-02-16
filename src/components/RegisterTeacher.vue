@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   name: "RegisterTeacher",
@@ -43,7 +43,6 @@ export default {
         callback();
       }
     };
-
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'));
@@ -80,33 +79,32 @@ export default {
         console.log(response);
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     TeacherRegister() {
       let params = {
         code: this.ruleForm.code,
         password: this.ruleForm.checkPass,
         phone: this.ruleForm.phone,
-      }
+      };
       let that = this;
       axios.post('http://' + this.Api + '/api/Teacher/addTeacher', params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/Classmanagement');
           that.$store.commit('saveIsLoginTeacher');
-          that.$store.commit('savePhone', params.phone);
-          that.$store.commit('saveAvatar')
-          that.$store.commit('saveMajor')
+          that.$store.commit('saveAvatar');
+          that.$store.commit('saveMajor');
         }
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     StudentRegister() {
       this.$router.push("/register");
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

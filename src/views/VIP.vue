@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import Sidebar from '../components/Sidebar'
-import VIP from '../components/VIP'
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Sidebar from '../components/Sidebar';
+import VIP from '../components/VIP';
 
 export default {
   name: "Main",
@@ -21,7 +21,7 @@ export default {
     Sidebar,
     VIP,
   },
-}
+};
 </script>
 
 <style>

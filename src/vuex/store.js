@@ -1,14 +1,13 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import VueCookies from 'vue-cookies'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import VueCookies from 'vue-cookies';
 
-Vue.use(Vuex)
-Vue.use(VueCookies)
+Vue.use(Vuex);
+Vue.use(VueCookies);
 
 export default new Vuex.Store({
     state: {
         isLogin: JSON.parse(sessionStorage.getItem('isLogin')) || false,
-        Phone: JSON.parse(sessionStorage.getItem('Phone')) || false,
         JWT: JSON.parse(VueCookies.get('JWT')) || false,
         StudentPreferences: JSON.parse(sessionStorage.getItem('StudentPreferences')) || false,
         Prefer: JSON.parse(sessionStorage.getItem('Prefer')) || false,
@@ -36,10 +35,6 @@ export default new Vuex.Store({
             state.isLoginTeacher = !state.isLoginTeacher;
             sessionStorage.setItem('isLoginTeacher', JSON.stringify(state.isLoginTeacher));
         },
-        savePhone(state, Phone) {
-            state.Phone = Phone;
-            sessionStorage.setItem('Phone', JSON.stringify(state.Phone));
-        },
         saveJWT(state, JWT) {
             state.JWT = JWT;
             VueCookies.set('JWT', JSON.stringify(state.JWT), "7D");
@@ -59,7 +54,7 @@ export default new Vuex.Store({
         saveMajor(state) {
             state.userData.major = {
                 majorContent: '',
-            }
+            };
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
         saveData(state, userData) {

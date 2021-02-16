@@ -35,7 +35,7 @@
 <script>
 export default {
   name: "Nav1",
-}
+};
 </script>
 
 <style scoped>

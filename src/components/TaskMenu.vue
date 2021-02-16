@@ -46,14 +46,14 @@ export default {
   data() {
     return {
       chapterId: [this.$route.query.chapterId],
-    }
+    };
   },
   methods: {
     GoBackCourse() {
-      this.$router.push('/course')
+      this.$router.push('/course');
     },
     Task() {
-      this.$router.push('/task')
+      this.$router.push('/task');
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -62,7 +62,7 @@ export default {
       console.log(key, keyPath);
     },
   },
-}
+};
 </script>
 
 <style scoped>

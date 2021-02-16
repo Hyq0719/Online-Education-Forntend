@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import Login from '../components/Login'
-import Header from '../components/Header'
-import Sidebar from '../components/Sidebar'
-import Footer from '../components/Footer'
+import Login from '../components/Login';
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
+import Footer from '../components/Footer';
 
 export default {
   components: {
@@ -20,7 +20,7 @@ export default {
     Sidebar,
     Footer,
   },
-}
+};
 </script>
 
 <style>

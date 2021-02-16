@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import classview1 from './childcpn/classview'
+import classview1 from './childcpn/classview';
 
 export default {
   name: 'nav2',
@@ -129,9 +129,9 @@ export default {
         '5天学会C++',
         '8天学会php',
         '一个月搞定C++对象']
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style scoped>

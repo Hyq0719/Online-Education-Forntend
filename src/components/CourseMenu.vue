@@ -52,18 +52,18 @@ export default {
       sort: 1,
       radio: '最新课程',
       radioVip: '1',
-    }
+    };
   },
   methods: {
     CourseChoose(sort, needVip) {
       let that = this;
       let a = new URLSearchParams;
       let preferId = this.$route.query.preferId;
-      a.append("page", 1)
-      a.append("preferId", preferId)
-      a.append("sort", sort)
+      a.append("page", 1);
+      a.append("preferId", preferId);
+      a.append("sort", sort);
       if (needVip != 2) {
-        a.append("needVip", needVip)
+        a.append("needVip", needVip);
         axios.post("http://" + this.Api + "/api/Course/getCourseByNeedVipAndPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
           console.log(response);
           that.$store.commit('saveCourseData', response.data.data);
@@ -71,7 +71,7 @@ export default {
           that.sort = sort;
         }, function (err) {
           console.log(err);
-        })
+        });
       } else {
         axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
           console.log(response);
@@ -80,11 +80,11 @@ export default {
           that.sort = sort;
         }, function (err) {
           console.log(err);
-        })
+        });
       }
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

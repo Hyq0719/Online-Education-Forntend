@@ -43,9 +43,9 @@
 </template>
 
 <script>
-import Flvjs from '../components/Flvjs'
+import Flvjs from '../components/Flvjs';
 import axios from "axios";
-import VBarrage from '@/components/VBarrage/index.vue'
+import VBarrage from '@/components/VBarrage/index.vue';
 
 export default {
   name: "Live",
@@ -59,8 +59,8 @@ export default {
       arr: [],                   //弹幕内容
       isPause: false,
       isJs: false,
-      direction: 'default'
-    }
+      direction: 'default',
+    };
   },
   mounted() {
     this.initTestData();   //初始化弹幕数据
@@ -76,19 +76,19 @@ export default {
     initTestData() {
       let arr = [
         '这个课有点意思',
-      ]
+      ];
       for (let i = 0; i < 6; i++) {
         for (let index = 0; index < 10; index++) {
           if (index % 2 == 0) {
             this.arr.push({
               direction: 'top',
-              content: arr[parseInt(Math.random() * arr.length)]
-            })
+              content: arr[parseInt(Math.random() * arr.length)],
+            });
           } else {
             this.arr.push({
               direction: 'default',
-              content: arr[parseInt(Math.random() * arr.length)]
-            })
+              content: arr[parseInt(Math.random() * arr.length)],
+            });
           }
         }
       }
@@ -121,7 +121,7 @@ export default {
             color: 'red',
             fontSize: '25px'
           },
-          isJs: this.isJs
+          isJs: this.isJs,
         });
       } else {
         this.arr.push({
@@ -131,7 +131,7 @@ export default {
           style: {
             color: 'red'
           },
-          isJs: this.isJs
+          isJs: this.isJs,
         });
       }
 
@@ -192,7 +192,7 @@ export default {
     Flvjs,
     VBarrage,
   },
-}
+};
 </script>
 
 <style scoped>

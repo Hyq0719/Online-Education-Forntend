@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   name: "Register",
@@ -80,31 +80,30 @@ export default {
         console.log(response);
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     StudentRegister() {
       let params = {
         code: this.ruleForm.code,
         password: this.ruleForm.checkPass,
         phone: this.ruleForm.phone,
-      }
+      };
       let that = this;
       axios.post('http://' + this.Api + '/api/Student/addStudent', params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/main');
           that.$store.commit('saveIsLogin');
-          that.$store.commit('savePhone', params.phone);
-          that.$store.commit('saveAvatar')
-          that.$store.commit('saveMajor')
+          that.$store.commit('saveAvatar');
+          that.$store.commit('saveMajor');
         }
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     TeacherRegister() {
       this.$router.push("/register/teacher");
-    }
+    },
   },
 };
 </script>

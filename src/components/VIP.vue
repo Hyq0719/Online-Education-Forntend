@@ -52,9 +52,9 @@ export default {
   data() {
     return {
       input: '10'
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>
