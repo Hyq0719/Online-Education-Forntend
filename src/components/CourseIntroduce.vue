@@ -111,14 +111,14 @@
           <h3>授课老师</h3>
         </div>
         <el-divider></el-divider>
-        <div class="Teacher">
-          <img :src="this.$store.state.chapterData[0].courseChapterJson.course.teacher.teacherPicUrl" alt="图片缺失">
+        <div class="Teacher" v-if="this.$store.state.courseData.teacher">
+          <img :src="this.$store.state.courseData.teacher.teacherPicUrl" alt="图片缺失">
           <div class="Teacher-Introduce">
             <div class="TeacherName">
-              {{ this.$store.state.chapterData[0].courseChapterJson.course.teacher.name }}
+              {{ this.$store.state.courseData.teacher.name }}
             </div>
             <div class="TeacherSchool">
-              {{ this.$store.state.chapterData[0].courseChapterJson.course.teacher.school }}
+              {{ this.$store.state.courseData.teacher.school }}
             </div>
           </div>
         </div>
@@ -136,7 +136,7 @@
             <div class="grid-content">
               <img :src="item.src" alt="图片缺失">
               <h4>{{ item.name }}</h4>
-              <h6>{{ item.teacherId }}</h6>
+              <h6>{{ item.teacher.name }}</h6>
             </div>
           </router-link>
         </el-col>
@@ -306,12 +306,12 @@ export default {
           that.comment = that.$store.state.commentData;
           let i = 0;
           let clist = new Array();
-          console.log("查看全部评论：",that.comment);
+          console.log("查看全部评论：", that.comment);
           let c = that.comment;
           for (i = 0; i < c.length; i++) {
             clist[i] = c[i].commentId;
           }
-          console.log("查看评论的ID:",clist);
+          console.log("查看评论的ID:", clist);
           let pa = new URLSearchParams();
           let params = clist;
           // pa.append('commentIds', JSON.stringify(clist));
@@ -326,7 +326,7 @@ export default {
             console.log("查看点赞成功", response);
             if (response.data.code === 1000) {
               for (let j = 0; j < c.length; j++) {
-                for (let k=0;k<response.data.data.length;k++ ){
+                for (let k = 0; k < response.data.data.length; k++) {
                   if (c[j].commentId === response.data.data[k].commentId) {
                     document.getElementsByClassName('commentStar')[j].classList.add("pink");
                   }

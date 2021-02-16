@@ -13,6 +13,7 @@ export default new Vuex.Store({
         Prefer: JSON.parse(sessionStorage.getItem('Prefer')) || false,
         AllMajor: JSON.parse(sessionStorage.getItem('AllMajor')) || false,
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
+        menuCourseData: JSON.parse(sessionStorage.getItem('menuCourseData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
         commentData: JSON.parse(sessionStorage.getItem('commentData')) || [],
@@ -68,6 +69,10 @@ export default new Vuex.Store({
         saveAllMajor(state, AllMajor) {
             state.AllMajor = AllMajor;
             sessionStorage.setItem('AllMajor', JSON.stringify(state.AllMajor));
+        },
+        saveMenuCourseData(state, menuCourseData) {
+            state.menuCourseData = menuCourseData;
+            sessionStorage.setItem('menuCourseData', JSON.stringify(state.menuCourseData));
         },
         saveCourseData(state, courseData) {
             state.courseData = courseData;

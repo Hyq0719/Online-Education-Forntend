@@ -4,14 +4,25 @@
         :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
-        @select="handleSelect"
+        @select="handleSelectSearch"
     >
       <div class="Header-Img">
         <img src="../assets/logo.png" alt="加载失败"/>
       </div>
       <slot id="search">
         <div class="Header-search">
-          <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
+          <el-autocomplete
+              class="inline-input"
+              v-model="input"
+              :fetch-suggestions="querySearch"
+              placeholder="请输入搜索的课程"
+              :trigger-on-focus="false"
+              @select="handleSelect">
+            <template slot-scope="{ item }">
+              <div class="name" v-html="item.name"></div>
+              <span class="intro">{{ item.intro }}</span>
+            </template>
+          </el-autocomplete>
         </div>
         <div class="Header-logo">
           <router-link to="/searchpage">
@@ -25,9 +36,10 @@
           <img v-if="isLoginTeacher" :src="this.teacherPicUrl" alt="头像加载失败"/>
         </template>
         <el-menu-item index="1-1" @click="Information">个人信息</el-menu-item>
-        <el-menu-item index="1-2">我的消息</el-menu-item>
-        <el-menu-item index="1-3" v-if="isLoginTeacher" @click="class_management">管理课程</el-menu-item>
-        <el-menu-item index="1-4">设置</el-menu-item>
+        <el-menu-item index="1-2" @click="History">历史记录</el-menu-item>
+        <el-menu-item index="1-3">我的消息</el-menu-item>
+        <el-menu-item index="1-4" v-if="isLoginTeacher" @click="class_management">管理课程</el-menu-item>
+        <el-menu-item index="1-5">设置</el-menu-item>
         <el-menu-item index="1-6" @click="Logout">注销</el-menu-item>
       </el-submenu>
       <el-menu-item index="1" v-if="isLogin">
@@ -43,7 +55,8 @@
             trigger="hover">
           <h3>大学课程</h3>
           <div>
-            <el-button @click="CourseMenuPrefer(index)" v-for="(item,index) in college" v-bind:key="item.id" class="CourseMenu">{{
+            <el-button @click="CourseMenuPrefer(index)" v-for="(item,index) in college" v-bind:key="item.id"
+                       class="CourseMenu">{{
                 item.preferContent
               }}
             </el-button>
@@ -97,32 +110,60 @@ export default {
     };
   },
   methods: {
-    class_management() {
-      this.$router.push('/Classmanagement/blank');
-    },
-    CourseMenu() {
-      this.$router.push('/coursemenu');
-    },
-    CourseMenuPrefer(index) {
-      this.$router.push({path: '/coursemenu', query: {preferId: index+1}});
-      let that = this;
+    querySearch(queryString, cb) {
+      let courseData = [];
       let a = new URLSearchParams;
       a.append("page", 1);
-      a.append("preferId", index+1);
-      a.append("sort", 1);
-      axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response);
-        that.$store.commit('saveCourseData', response.data.data);
+      a.append("query", queryString);
+      console.log("获取搜索", queryString);
+      axios.post("http://" + this.Api + "/api/Course/getCoursesWithRegex?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log("获取搜索课程", response);
+        for (let i of response.data.data.list) {
+          i.value = i.name;  //将想要展示的数据作为value
+          i.value = i.value.replace(/<\/?.+?>/g, "");
+          i.value = i.value.replace(/&nbsp;/g, "");
+        }
+        courseData = response.data.data.list;
+        cb(courseData);
       }, function (err) {
         console.log(err);
       });
     },
+    handleSelectSearch(item) {
+      console.log(item);
+    }
+    ,
+    class_management() {
+      this.$router.push('/Classmanagement/blank');
+    }
+    ,
+    CourseMenu() {
+      this.$router.push('/coursemenu');
+    }
+    ,
+    CourseMenuPrefer(index) {
+      this.$router.push({path: '/coursemenu', query: {preferId: index + 1}});
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("page", 1);
+      a.append("preferId", index + 1);
+      a.append("sort", 1);
+      axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log("获取课程菜单", response);
+        that.$store.commit('saveMenuCourseData', response.data.data);
+      }, function (err) {
+        console.log(err);
+      });
+    }
+    ,
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
-    },
+    }
+    ,
     Login() {
       this.$router.push('/login');
-    },
+    }
+    ,
     Logout() {
       this.$router.push('/login');
       if (this.isLogin) {
@@ -135,12 +176,19 @@ export default {
         sessionStorage.removeItem("IsLoginTeacher");
       }
       VueCookies.remove('JWT');
-    },
+    }
+    ,
     Information() {
-      this.$router.push('/Information');
-    },
+      this.$router.push('/information');
+    }
+    ,
+    History() {
+      this.$router.push('/history');
+    }
+    ,
   },
-};
+}
+;
 </script>
 
 <style scoped>
@@ -159,6 +207,12 @@ export default {
   float: left;
   width: 300px;
   margin: 10px 0 10px 50px;
+}
+
+.intro {
+  font-size: 12px;
+  color: #b4b4b4;
+  float: right;
 }
 
 .Header-logo img {

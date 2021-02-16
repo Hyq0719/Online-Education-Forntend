@@ -16,6 +16,7 @@ import Searchpage from "@/views/Searchpage";
 import classManagement from "@/views/Classmanagement";
 import Information from '../views/Information';
 import InformationChange from '../views/InformationChange';
+import History from '../views/History';
 import VIP from '../views/VIP';
 import Feedback from "@/views/Feedback";
 import classManagementClass from "@/components/classmanagement/class";
@@ -161,6 +162,11 @@ export default new Router({
             path: '/Information/change',
             name: 'InformationChange',
             component: InformationChange,
+        },
+        {
+            path: '/history',
+            name: 'History',
+            component: History,
         },
         {
             path: '/VIP',

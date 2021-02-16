@@ -32,17 +32,18 @@ export default {
   },
   created() {
     this.Chapter();
+    this.Course();
     this.RelatedCourse();
   },
   methods: {
     //获取章节及视频任务信息
     Chapter() {
-      console.log(this.courseId);
+      // console.log(this.courseId);
       let that = this;
       let a = new URLSearchParams();
       a.append('courseId', this.courseId);
       axios.post("http://" + this.Api + "/api/Course/getCourseDisplay", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         that.data = [];
         let data = response.data.data;
         for (let courseChapter in data) {
@@ -57,7 +58,20 @@ export default {
           that.data.push(courseInformation);
         }
         that.$store.commit('saveChapterData', that.data);
-        console.log(that.data);
+        console.log("获取章节信息", that.data);
+      }, function (err) {
+        console.log(err);
+      });
+    },
+    Course() {
+      // console.log(this.courseId);
+      let that = this;
+      let a = new URLSearchParams();
+      a.append('courseId', this.courseId);
+      axios.post("http://" + this.Api + "/api/Course/getCourseById?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        // console.log(response.data.data);
+        that.$store.commit('saveCourseData', response.data.data);
+        console.log("获取课程信息", response.data.data);
       }, function (err) {
         console.log(err);
       });
@@ -68,7 +82,7 @@ export default {
       let a = new URLSearchParams;
       a.append("courseId", this.courseId);
       axios.post("http://" + this.Api + "/api/Course/getRelatedCourses?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response);
+        console.log("获取相关课程", response);
         that.$store.commit('saveRelatedCourses', response.data.data);
       }, function (err) {
         console.log(err);

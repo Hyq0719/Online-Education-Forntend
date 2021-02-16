@@ -19,12 +19,12 @@
       <el-radio v-model="radioVip" @click.native="CourseChoose(sort,1)" label="3">付费课程</el-radio>
     </div>
     <el-row :gutter="25">
-      <el-col :span="6" v-for="(item,index) in this.$store.state.courseData.list" v-bind:key="index">
+      <el-col :span="6" v-for="(item,index) in this.$store.state.menuCourseData.list" v-bind:key="index">
         <router-link :to="{path:'/course',query:{courseId:item.courseId}}">
           <div class="grid-content">
             <img :src="item.src" alt="图片缺失">
             <h4>{{ item.name }}</h4>
-            <h6>{{ item.teacherId }}</h6>
+            <h6>{{ item.teacher.name }}</h6>
           </div>
         </router-link>
       </el-col>
@@ -33,7 +33,7 @@
       <el-pagination
           background
           layout="prev, pager, next"
-          :total="this.$store.state.courseData.total_element">
+          :total="this.$store.state.menuCourseData.total_element">
       </el-pagination>
     </div>
   </div>
@@ -65,8 +65,8 @@ export default {
       if (needVip != 2) {
         a.append("needVip", needVip);
         axios.post("http://" + this.Api + "/api/Course/getCourseByNeedVipAndPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-          console.log(response);
-          that.$store.commit('saveCourseData', response.data.data);
+          console.log("获取课程菜单",response);
+          that.$store.commit('saveMenuCourseData', response.data.data);
           that.needVip = needVip;
           that.sort = sort;
         }, function (err) {
@@ -74,8 +74,8 @@ export default {
         });
       } else {
         axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-          console.log(response);
-          that.$store.commit('saveCourseData', response.data.data);
+          console.log("获取课程菜单",response);
+          that.$store.commit('saveMenuCourseData', response.data.data);
           that.needVip = needVip;
           that.sort = sort;
         }, function (err) {
