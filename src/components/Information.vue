@@ -130,14 +130,14 @@ export default {
       isLogin: this.$store.state.isLogin,
       isLoginTeacher: this.$store.state.isLoginTeacher,
       IsEditPrefer: false,
-    }
+    };
   },
   created() {
     this.StudentPreferences();
   },
   methods: {
     Change() {
-      this.$router.push('/Information/Change')
+      this.$router.push('/Information/Change');
     },
     EditPrefer() {
       this.IsEditPrefer = !this.IsEditPrefer;
@@ -147,8 +147,8 @@ export default {
       let that = this;
       let JWT = this.$store.state.JWT;
       let a = new URLSearchParams;
-      a.append("prefers", this.selectedPrefer)
-      a.append("user_id", this.$store.state.userData.userId)
+      a.append("prefers", this.selectedPrefer);
+      a.append("user_id", this.$store.state.userData.userId);
       axios.post("http://" + this.Api + "/api/Student/collectPreferences?" + a, null, {
         headers: {
           'Content-Type': 'application/json',
@@ -170,16 +170,16 @@ export default {
           }
         }
         console.log(that.StudentPrefer);
-        that.$store.commit('saveStudentPreferences', that.StudentPrefer)
+        that.$store.commit('saveStudentPreferences', that.StudentPrefer);
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     StudentPreferences() {
       let a = new URLSearchParams;
       let JWT = this.$store.state.JWT;
       let that = this;
-      a.append("user_id", this.$store.state.userData.userId)
+      a.append("user_id", this.$store.state.userData.userId);
       axios.post("http://" + this.Api + "/api/Student/findAllPreferences?" + a, null, {
         headers: {
           'Content-Type': 'application/json',
@@ -188,16 +188,16 @@ export default {
       }).then(function (response) {
         console.log(response);
         for (let i = 0; i < response.data.data.length; i++) {
-          that.selectedPrefer.push(response.data.data[i].prefer.preferId)
+          that.selectedPrefer.push(response.data.data[i].prefer.preferId);
         }
         console.log(that.selectedPrefer);
-        that.$store.commit('saveStudentPreferences', response.data.data)
+        that.$store.commit('saveStudentPreferences', response.data.data);
       }, function (err) {
         console.log(err);
-      })
+      });
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

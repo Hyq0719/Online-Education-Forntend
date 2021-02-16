@@ -172,7 +172,7 @@ export default {
         accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
         bucket: 'shu-online-edu',
       },
-    }
+    };
   },
   methods: {
     changeMajor(value) {
@@ -198,7 +198,7 @@ export default {
         picUrl: this.information.studentPicUrl,
         school: this.information.school,
         sex: this.information.sex,
-      }
+      };
       let a = new URLSearchParams();
       let JWT = this.$store.state.JWT;
       a.append('user_id', this.information.userId);
@@ -220,10 +220,10 @@ export default {
           that.$store.commit('saveData', res.data.data);
         }, function (err) {
           console.log(err);
-        })
+        });
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     ChangeInformationTeacher() {
       let that = this;
@@ -233,7 +233,7 @@ export default {
         school: this.informationTeacher.school,
         sex: this.informationTeacher.sex,
         picUrl: this.informationTeacher.teacherPicUrl,
-      }
+      };
       let a = new URLSearchParams();
       let JWT = this.$store.state.JWT;
       a.append('user_id', this.informationTeacher.userId);
@@ -258,12 +258,12 @@ export default {
         })
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     async uploadHttp({file}) {
       console.log(file);
       let that = this;
-      let f = await this.$Api.compressImg(file)
+      let f = await this.$Api.compressImg(file);
       console.log(f);
       let fileName = `${this.$store.state.userData.userId}_Header/${Date.parse(new Date())}`;  //定义唯一的文件名
       if (this.isLogin) {
@@ -284,8 +284,8 @@ export default {
         console.log(`阿里云OSS上传图片失败回调`, err);
       });
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

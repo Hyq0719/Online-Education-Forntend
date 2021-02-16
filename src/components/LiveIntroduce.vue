@@ -83,8 +83,8 @@ export default {
   },
   components: {
     classevaluate,
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

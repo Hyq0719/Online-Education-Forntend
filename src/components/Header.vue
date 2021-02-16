@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     class_management() {
-      this.$router.push('/Classmanagement/blank')
+      this.$router.push('/Classmanagement/blank');
     },
     CourseMenu() {
       this.$router.push('/coursemenu');
@@ -107,37 +107,40 @@ export default {
       this.$router.push({path: '/coursemenu', query: {preferId: index+1}});
       let that = this;
       let a = new URLSearchParams;
-      a.append("page", 1)
-      a.append("preferId", index+1)
-      a.append("sort", 1)
+      a.append("page", 1);
+      a.append("preferId", index+1);
+      a.append("sort", 1);
       axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log(response);
         that.$store.commit('saveCourseData', response.data.data);
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
     Login() {
-      this.$router.push('/login')
+      this.$router.push('/login');
     },
     Logout() {
       this.$router.push('/login');
       if (this.isLogin) {
         this.$store.commit('saveIsLogin');
+        sessionStorage.removeItem("IsLogin");
+        sessionStorage.removeItem("StudentPreferences");
+        sessionStorage.removeItem("userData");
       } else {
         this.$store.commit('saveIsLoginTeacher');
+        sessionStorage.removeItem("IsLoginTeacher");
       }
-      sessionStorage.clear();
       VueCookies.remove('JWT');
     },
     Information() {
       this.$router.push('/Information');
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

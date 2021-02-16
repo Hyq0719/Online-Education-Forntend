@@ -183,7 +183,7 @@ export default {
         }).then(function (response) {
           // console.log(response);
           if (response.data.code === 1000) {
-            console.log("取消点赞成功")
+            console.log("取消点赞成功");
           }
         }, function (err) {
           console.log(err);
@@ -200,7 +200,7 @@ export default {
         }).then(function (response) {
           // console.log(response);
           if (response.data.code === 1000) {
-            console.log("点赞成功")
+            console.log("点赞成功");
           }
         }, function (err) {
           console.log(err);
@@ -208,30 +208,25 @@ export default {
       }
     },
     editComment() {
-      this.textarea = this.currentUserComment.content
+      this.textarea = this.currentUserComment.content;
       this.evaluateBox2 = true;
       this.currentComment = false;
-    }
-    ,
+    },
     exitEditComment() {
-      this.textarea = ''
+      this.textarea = '';
       this.evaluateBox2 = false;
       this.currentComment = true;
-    }
-    ,
+    },
     Chapter() {
       this.$router.go(0);
-    }
-    ,
+    },
     handleClick(tab, event) {
       console.log(tab, event);
-    }
-    ,
+    },
     fchange(num, index) {               //接受子组件传递来的评价
       this.value = num;
       console.log(this.value, index);
-    }
-    ,
+    },
     commentCourse() {
       let that = this;
       if (that.value[0] == null & that.textarea == '') {
@@ -239,7 +234,7 @@ export default {
           title: '警告',
           message: '请输入评价或打分',
           type: 'warning',
-        })
+        });
       } else {
         that.$confirm('确定要提交评论吗？')
             .then(_ => {
@@ -288,11 +283,11 @@ export default {
                 }
               }, function (err) {
                 console.log(err);
-              })
-            })
+              });
+            });
       }
-    }
-    ,   //发送评论
+    },
+    //发送评论
     async displayComment() {
       let that = this;
       let JWT = that.$store.state.JWT;
@@ -310,7 +305,6 @@ export default {
           that.$store.commit("saveCommentData", response.data.data.list);
           // console.log(that.$store.state.commentData);
           that.comment = that.$store.state.commentData;
-
           let i = 0;
           let clist = new Array();
           console.log(that.comment);
@@ -338,17 +332,14 @@ export default {
                 }
               }
             }
-
           }, function (err) {
             console.log(err);
           });
-
-
         }
       }, function (err) {
         console.log(err);
       });
-    }
+    },
   },
   components: {
     classevaluate,
@@ -378,8 +369,8 @@ export default {
     }, function (err) {
       console.log(err);
     });
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

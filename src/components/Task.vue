@@ -5,7 +5,7 @@
 <script>
 export default {
   name: "Task"
-}
+};
 </script>
 
 <style scoped>

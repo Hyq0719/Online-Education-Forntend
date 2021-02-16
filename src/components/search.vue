@@ -61,12 +61,10 @@ export default {
     },
     reflash() {
     },
-  }
-  ,
+  },
   components: {
     classview
-  }
-  ,
+  },
   data() {
     return {
       input: '',
@@ -88,9 +86,9 @@ export default {
       pagenumber: [1, 2, 3, 4, 5, 6, 7],
       totalpage: 50,
       showflag: 0,
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped>

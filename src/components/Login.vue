@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-import {MessageBox} from 'element-ui'
+import axios from 'axios';
+import {MessageBox} from 'element-ui';
 
 export default {
   name: "Login",
@@ -40,39 +40,39 @@ export default {
       let params = {
         password: this.form.password,
         phone: this.form.name,
-      }
+      };
       let that = this;
       axios.post("http://" + this.Api + "/api/Student/loginByPassword", params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
           that.$router.push('/main');
           that.$store.commit('saveIsLogin');
-          that.$store.commit('saveData', response.data.data)
-          that.$store.commit('saveJWT', response.headers.authorization)
+          that.$store.commit('saveData', response.data.data);
+          that.$store.commit('saveJWT', response.headers.authorization);
           if (!response.data.data.studentPicUrl) {
-            that.$store.commit('saveAvatar')
+            that.$store.commit('saveAvatar');
           }
           if (!response.data.data.major) {
-            that.$store.commit('saveMajor')
+            that.$store.commit('saveMajor');
           }
         } else if (response.data.code === 2002) {
-          MessageBox.alert('用户不存在')
+          MessageBox.alert('用户不存在');
         } else if (response.data.code === 2003) {
-          MessageBox.alert('密码错误')
+          MessageBox.alert('密码错误');
         }
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     Register() {
-      this.$router.push('/Register')
+      this.$router.push('/Register');
     },
     Student() {
-      this.$router.push('/Login')
+      this.$router.push('/Login');
     },
     Teacher() {
-      this.$router.push('/Login/Teacher')
-    }
+      this.$router.push('/Login/Teacher');
+    },
   },
 };
 </script>

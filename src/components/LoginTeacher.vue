@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-import {MessageBox} from 'element-ui'
+import axios from 'axios';
+import {MessageBox} from 'element-ui';
 
 export default {
   name: "LoginTeacher",
@@ -41,7 +41,7 @@ export default {
       let params = {
         password: this.form.password,
         phone: this.form.name,
-      }
+      };
       let that = this;
       axios.post('http://' + that.Api + "/api/Teacher/loginByPassword", params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
@@ -51,12 +51,12 @@ export default {
           that.$store.commit('saveData', response.data.data);
           that.$store.commit('saveJWT', response.headers.authorization);
           if (!response.data.data.teacherPicUrl) {
-            that.$store.commit('saveAvatarTeacher')
+            that.$store.commit('saveAvatarTeacher');
           }
           if (!response.data.data.major) {
-            that.$store.commit('saveMajor')
+            that.$store.commit('saveMajor');
           }
-          let c = that.$store.state.userData.userId
+          let c = that.$store.state.userData.userId;
           b.append("teacherId", c);
           b.append("sort", 1);
           b.append("page", 1);
@@ -67,27 +67,27 @@ export default {
           ).then(function (res) {
             console.log(res);
             if (response.data.code === 1000) {
-              that.$store.commit('saveTeacherClassData', res.data.data)
+              that.$store.commit('saveTeacherClassData', res.data.data);
             }
-          })
+          });
         } else if (response.data.code === 2002) {
-          MessageBox.alert('用户不存在')
+          MessageBox.alert('用户不存在');
         } else if (response.data.code === 2003) {
-          MessageBox.alert('密码错误')
+          MessageBox.alert('密码错误');
         }
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     Register() {
-      this.$router.push('/Register')
+      this.$router.push('/Register');
     },
     Student() {
-      this.$router.push('/Login')
+      this.$router.push('/Login');
     },
     Teacher() {
-      this.$router.push('/Login/Teacher')
-    }
+      this.$router.push('/Login/Teacher');
+    },
   },
 };
 </script>

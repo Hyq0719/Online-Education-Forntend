@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import Header from '../components/Header'
-import Live from '../components/Live'
+import Header from '../components/Header';
+import Live from '../components/Live';
 import LiveIntroduce from "../components/LiveIntroduce";
-import Footer from '../components/Footer'
-import Sidebar from '../components/Sidebar'
+import Footer from '../components/Footer';
+import Sidebar from '../components/Sidebar';
 
 export default {
   components: {
@@ -23,7 +23,7 @@ export default {
     Footer,
     Sidebar,
   },
-}
+};
 </script>
 
 <style scoped>

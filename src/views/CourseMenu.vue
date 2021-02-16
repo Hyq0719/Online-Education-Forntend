@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import Sidebar from '../components/Sidebar'
-import CourseMenu from '../components/CourseMenu'
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Sidebar from '../components/Sidebar';
+import CourseMenu from '../components/CourseMenu';
 
 export default {
   components: {
@@ -20,7 +20,7 @@ export default {
     Sidebar,
     CourseMenu,
   },
-}
+};
 </script>
 
 <style scoped>

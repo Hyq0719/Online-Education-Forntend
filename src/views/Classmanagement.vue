@@ -13,7 +13,7 @@
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import classmanagement from "@/components/classmanagement/classmanagement";
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
 
 export default {
   name: "Classmanagement",
@@ -23,7 +23,7 @@ export default {
     classmanagement,
     Footer,
   },
-}
+};
 </script>
 
 <style scoped>

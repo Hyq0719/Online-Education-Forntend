@@ -23,7 +23,7 @@ export default {
     search,
     Footer,
   }
-}
+};
 </script>
 
 <style scoped>

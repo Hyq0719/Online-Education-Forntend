@@ -22,7 +22,7 @@ export default {
       document.documentElement.scrollTop = document.body.scrollTop = 0;
     }
   }
-}
+};
 </script>
 
 <style scoped>

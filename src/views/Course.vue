@@ -12,7 +12,7 @@
 import Header from "../components/Header";
 import Course from "../components/Course";
 import Sidebar from "../components/Sidebar";
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
 import CourseIntroduce from "../components/CourseIntroduce";
 import axios from "axios";
 
@@ -28,7 +28,7 @@ export default {
     return {
       courseId: this.$route.query.courseId,
       data: [],
-    }
+    };
   },
   created() {
     this.Chapter();
@@ -53,29 +53,29 @@ export default {
             courseChapterJson,
             VideoList,
             TaskList,
-          }
-          that.data.push(courseInformation)
+          };
+          that.data.push(courseInformation);
         }
-        that.$store.commit('saveChapterData', that.data)
-        console.log(that.data)
+        that.$store.commit('saveChapterData', that.data);
+        console.log(that.data);
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     //获取相关课程信息
     RelatedCourse() {
       let that = this;
       let a = new URLSearchParams;
-      a.append("courseId", this.courseId)
+      a.append("courseId", this.courseId);
       axios.post("http://" + this.Api + "/api/Course/getRelatedCourses?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log(response);
         that.$store.commit('saveRelatedCourses', response.data.data);
       }, function (err) {
         console.log(err);
-      })
+      });
     },
   },
-}
+};
 </script>
 
 <style scoped>
