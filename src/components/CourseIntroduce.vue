@@ -167,7 +167,6 @@ export default {
   },
   methods: {
     async commentStar(item, index) {
-      console.log(item);
       let that = this;
       let JWT = that.$store.state.JWT;
       document.getElementsByClassName('commentStar')[index].classList.toggle("pink");
@@ -176,7 +175,7 @@ export default {
         a.append('commentId', item.commentId);
         a.append('user_id', that.$store.state.userData.userId);
         item.likes = item.likes - 1;
-        await axios.post("http://" + that.Api + "/api/Course/getCourseComments", a, {
+        await axios.post("http://" + that.Api + "/api/Student/dislikeComment", a, {
           headers: {
             'Authorization': JWT,
           }
@@ -234,7 +233,7 @@ export default {
     ,
     commentCourse() {
       let that = this;
-      if (that.value[0] == null & that.textarea == '') {
+      if (that.value[0] === null & that.textarea === '') {
         that.$notify.info({
           title: '警告',
           message: '请输入评价或打分',
@@ -313,12 +312,12 @@ export default {
 
           let i = 0;
           let clist = new Array();
-          console.log(that.comment);
+          console.log("查看全部评论：",that.comment);
           let c = that.comment;
           for (i = 0; i < c.length; i++) {
             clist[i] = c[i].commentId;
           }
-          console.log(clist);
+          console.log("查看评论的ID:",clist);
           let pa = new URLSearchParams();
           let params = clist;
           // pa.append('commentIds', JSON.stringify(clist));
@@ -332,9 +331,11 @@ export default {
           }).then(function (response) {
             console.log("查看点赞成功", response);
             if (response.data.code === 1000) {
-              for (let j = 0; j < response.data.data.length; j++) {
-                if (response.data.data[j] !== "") {
-                  document.getElementsByClassName('commentStar')[j].classList.add("pink");
+              for (let j = 0; j < c.length; j++) {
+                for (let k=0;k<response.data.data.length;k++ ){
+                  if (c[j].commentId === response.data.data[k].commentId) {
+                    document.getElementsByClassName('commentStar')[j].classList.add("pink");
+                  }
                 }
               }
             }
