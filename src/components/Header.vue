@@ -18,16 +18,12 @@
             :trigger-on-focus="false"
             @select="handleSelectSearch"
             @keyup.enter.native="Search">
+          <i slot="suffix" class="el-input__icon el-icon-search"></i>
           <template slot-scope="{ item }">
             <div class="name" v-html="item.name"></div>
             <span class="intro">{{ item.intro }}</span>
           </template>
         </el-autocomplete>
-      </div>
-      <div class="Header-logo">
-        <router-link to="/searchpage">
-          <img src="../assets/Header-search-logo.jpg" alt="加载失败"/>
-        </router-link>
       </div>
       <el-submenu index="2" v-if="isLogin||isLoginTeacher" class="avatar">
         <template slot="title">
@@ -199,17 +195,6 @@ export default {
   font-size: 12px;
   color: #b4b4b4;
   float: right;
-}
-
-.Header-logo img {
-  text-align: left;
-  float: left;
-}
-
-.Header-logo img {
-  height: 40px;
-  width: 40px;
-  margin: 10px 0;
 }
 
 .avatar img {
