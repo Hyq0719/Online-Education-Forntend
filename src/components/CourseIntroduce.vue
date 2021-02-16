@@ -134,7 +134,7 @@
       </div>
       <el-row :gutter="25">
         <el-col :span="6" v-for="(item,index) in this.$store.state.RelatedCourses" v-bind:key="index">
-          <router-link :to="{path:'/course',query:{courseId:item.courseId}}" @click.native="Chapter()">
+          <router-link :to="{path:'/course',query:{courseId:item.courseId}}" @click.native="RelatedCourse()">
             <div class="grid-content">
               <img :src="item.src" alt="图片缺失">
               <h4>{{ item.name }}</h4>
@@ -223,7 +223,7 @@ export default {
       this.evaluateBox2 = false;
       this.currentComment = true;
     },
-    Chapter() {
+    RelatedCourse() {
       this.$router.go(0);
     },
     handleClick(tab, event) {

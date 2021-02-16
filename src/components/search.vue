@@ -1,215 +1,72 @@
 <template>
-  <div class="search-box">
-    <div class="search-wrap">
-      <img src="../assets/logo.png" alt="搜索logo">
-      <input class="search-word" type="text" v-model="input" @keyup.enter="Send"/>
-      <div>
-        <button class="search-bottom" @click="reflash">搜索</button>
-      </div>
+  <div class="search">
+    <div class="search-course" v-for="(item,index) in this.$store.state.SearchedCourseData" v-bind:key="index">
+      <router-link :to="{path:'/course',query:{courseId:item.courseId}}">
+        <div class="search-content">
+          <div class="search-img">
+            <img src="../assets/course1.webp" alt="图片丢失">
+          </div>
+          <div class="search-text">
+            <h3 v-html="item.name"></h3>
+            <h4>{{ item.intro }}</h4>
+            <h5>{{ item.teacher.name }}</h5>
+          </div>
+        </div>
+      </router-link>
     </div>
-    <div>
-      <hr>
-    </div>
-    <div class="container">
-      <div v-for="(item,index) in star" v-bind:key="index">
-        <router-link to="/course">
-          <classview class="classview" :img=classpicture[index] :star="item" :classname=classname[index]></classview>
-        </router-link>
-      </div>
-    </div>
-    <div class="find-wrap">
-      <button class="find-bottom" v-show="showflag" @click="sub()">上一页</button>
-      <button class="find-bottom" @click="sub()">{{ pagenumber[0] }}</button>
-      <button class="find-bottom" @click="sub()">{{ pagenumber[1] }}</button>
-      <button class="find-bottom" @click="sub()">{{ pagenumber[2] }}</button>
-      <button class="find-bottom" @click="add()">{{ pagenumber[3] }}</button>
-      <button class="find-bottom" @click="add()">{{ pagenumber[4] }}</button>
-      <button class="find-bottom" @click="add()">{{ pagenumber[5] }}</button>
-      <button class="find-bottom" @click="add()">{{ pagenumber[6] }}</button>
-      <span class="text">***</span>
-      <button class="find-bottom">{{ totalpage }}</button>
-      <button class="find-bottom" @click="add()">下一页</button>
+    <div class="block">
+      <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="this.$store.state.SearchedCourseData.length">
+      </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import classview from "@/components/childcpn/classview";
 
 export default {
   name: "search",
-  methods: {
-    send() {
-    },
-    add() {
-      var x;
-      if (this.pagenumber[6] < this.totalpage) {
-        for (x = 0; x < 7; x++) this.pagenumber[x]++;
-      }
-      this.showflag = 1;
-      this.pagenumber.push(1);
-      this.pagenumber.pop();
-    },
-    sub() {
-      var x;
-      if (this.pagenumber[0] > 1) {
-        for (x = 0; x < 7; x++) this.pagenumber[x]--;
-      }
-      if (this.pagenumber[0] === 1) this.showflag = 0;
-      this.pagenumber.push(1);
-      this.pagenumber.pop();
-    },
-    reflash() {
-    },
-  },
-  components: {
-    classview
-  },
-  data() {
-    return {
-      input: '',
-      classpicture: [require('@/assets/vue.jpg'),
-        require('@/assets/vue.jpg'),
-        require('@/assets/vue.jpg'),
-        require('@/assets/vue.jpg'),
-        require('@/assets/class1.jpg'),
-        require('@/assets/class1.jpg'),
-        require('@/assets/class1.jpg')],
-      star: [3, 4, 3.4, 3.5, 2.0, 4, 1, 2.3, 3.4, 3],
-      classname: ['一晚上搞定Vue',
-        '两晚上搞定Vue',
-        '三晚上搞定Vue',
-        '7天学会Vue',
-        '5天学会Vue',
-        '8天学会Vue',
-        '一个月搞定Vue组件'],
-      pagenumber: [1, 2, 3, 4, 5, 6, 7],
-      totalpage: 50,
-      showflag: 0,
-    };
-  }
 };
 </script>
 
 <style scoped>
-.container {
+.search {
+  margin: 50px auto;
   width: 1100px;
-  margin: 10px auto;
-  padding: 32px 0;
-  clear: both;
 }
 
-.classview {
-  position: relative;
-  width: 22%;
-  height: 240px;
-  margin: 15px;
-  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
-  border-radius: 8px;
-  float: left;
+.search-course {
+  text-align: left;
+  margin: 20px auto;
+  border-radius: 10px;
+  border: #E4E7ED 1px solid;
+  box-shadow: 0 0 3px rgba(95, 101, 105, 0.15);
 }
 
-button:hover {
-  background-color: #99ccff;
+.search-course:hover {
+  background-color: #d3dce6;
   text-decoration: none;
   text-decoration-color: #99a9bf;
   text-decoration-width: auto;
 }
 
-hr {
-  background-color: #cccccc;
-  margin-top: 30px;
-  height: 2px;
-  border: none;
+.search-content {
+  display: flex;
+  text-align: left;
 }
 
-.search-box {
-  margin: 0;
-  padding: 0;
-  padding-top: 40px;
-  overflow: hidden;
-  clear: both;
+.search-img {
+  margin: 20px;
 }
 
-.search-word {
-  height: 18px;
-  box-shadow: none;
-  padding: 11px 15px;
-  background: transparent;
-  width: 296px;
-  border: 2px solid #ccd0d7;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #222;
-  float: left;
-  margin-right: 10px;
+.search-text {
+  text-align: left;
 }
 
-.search-bottom {
-  cursor: pointer;
-  float: left;
-  color: #fff;
-  background: #00a1d6;
-  font-size: 16px;
-  letter-spacing: 2px;
-  line-height: 42px;
-  text-align: center;
-  width: 90px;
-  border-radius: 4px;
-  border: none;
-}
-
-.find-bottom {
-  cursor: pointer;
-  padding: 10px 14px;
-  float: left;
+a {
+  text-decoration: none;
   color: #1c1f21;
-  background: #ffffff;
-  font-size: 16px;
-  /*letter-spacing: 2px;*/
-  /*line-height: 42px;*/
-  text-align: center;
-  width: auto;
-  border-radius: 4px;
-  margin-left: 10px;
-  border: 1px solid #1c1f21;
-}
-
-.text {
-  /*cursor: pointer;*/
-  padding: 10px 14px;
-  float: left;
-  color: #1c1f21;
-  background: #ffffff;
-  font-size: 16px;
-  /*letter-spacing: 2px;*/
-  /*line-height: 42px;*/
-  text-align: center;
-  width: auto;
-  border-radius: 4px;
-  margin-left: 10px;
-}
-
-.search-wrap {
-  height: 44px;
-  margin: 0 auto;
-  position: relative;
-  width: 587px;
-}
-
-
-.find-wrap {
-  height: 44px;
-  margin: 0 auto;
-  padding: 20px;
-  position: relative;
-  width: 700px;
-  clear: both;
-}
-
-img {
-  height: 60px;
-  float: left;
-  margin-right: 40px;
 }
 </style>
