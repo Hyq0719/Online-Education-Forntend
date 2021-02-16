@@ -10,9 +10,9 @@ import Vuex from 'vuex'
 import store from './vuex/store';
 import Api from './Api';
 import './VuePrototype';
-import Fragment from 'vue-fragment'
+import Fragment from 'vue-fragment';
 
-Vue.use(Fragment.Plugin)
+Vue.use(Fragment.Plugin);
 
 Vue.prototype.Api = Api.BASE_URL;
 Vue.prototype.$Api = Api  //注册为全局变量
