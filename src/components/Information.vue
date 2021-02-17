@@ -14,9 +14,6 @@
           <el-form-item label="昵称：">
             <h4>{{ information.nickName }}</h4>
           </el-form-item>
-          <el-form-item label="手机号：">
-            <h4>{{ information.phoneId }}</h4>
-          </el-form-item>
           <el-form-item label="性别：">
             <h4>{{ information.sex }}</h4>
           </el-form-item>
@@ -70,8 +67,8 @@
           <el-form-item label="姓名：">
             <h4>{{ informationTeacher.name }}</h4>
           </el-form-item>
-          <el-form-item label="手机号：">
-            <h4>{{ informationTeacher.phoneId }}</h4>
+          <el-form-item label="简介：">
+            <h4>{{ informationTeacher.intro }}</h4>
           </el-form-item>
           <el-form-item label="性别：">
             <h4>{{ informationTeacher.sex }}</h4>
@@ -105,7 +102,6 @@ export default {
         majorId: this.$store.state.userData.majorId,
         nickName: this.$store.state.userData.nickName,
         password: this.$store.state.userData.password,
-        phoneId: this.$store.state.userData.phoneId,
         school: this.$store.state.userData.school,
         sex: this.$store.state.userData.sex,
         userId: this.$store.state.userData.userId,
@@ -114,12 +110,12 @@ export default {
         studentPicUrl: this.$store.state.userData.studentPicUrl,
       },
       informationTeacher: {
+        intro: this.$store.state.userData.intro,
         major: this.$store.state.userData.major,
         majorContent: this.$store.state.userData.major.majorContent,
         majorId: this.$store.state.userData.majorId,
         name: this.$store.state.userData.name,
         password: this.$store.state.userData.password,
-        phoneId: this.$store.state.userData.phoneId,
         school: this.$store.state.userData.school,
         sex: this.$store.state.userData.sex,
         userId: this.$store.state.userData.userId,
@@ -133,7 +129,9 @@ export default {
     };
   },
   created() {
-    this.StudentPreferences();
+    if (this.isLogin) {
+      this.StudentPreferences();
+    }
   },
   methods: {
     Change() {

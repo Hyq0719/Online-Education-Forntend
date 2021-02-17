@@ -84,6 +84,9 @@
           <el-form-item label="姓名：">
             <el-input v-model="informationTeacher.name"></el-input>
           </el-form-item>
+          <el-form-item label="简介：">
+            <el-input v-model="informationTeacher.intro"></el-input>
+          </el-form-item>
           <el-form-item label="性别：">
             <el-select v-model="information.sex" clearable placeholder="请选择你的性别" @change="changeSex">
               <el-option
@@ -128,7 +131,6 @@ export default {
         majorId: this.$store.state.userData.majorId,
         nickName: this.$store.state.userData.nickName,
         password: this.$store.state.userData.password,
-        phoneId: this.$store.state.userData.phoneId,
         school: this.$store.state.userData.school,
         sex: this.$store.state.userData.sex,
         userId: this.$store.state.userData.userId,
@@ -137,12 +139,12 @@ export default {
         studentPicUrl: this.$store.state.userData.studentPicUrl,
       },
       informationTeacher: {
+        intro: this.$store.state.userData.intro,
         major: this.$store.state.userData.major,
         majorContent: this.$store.state.userData.major.majorContent,
         majorId: this.$store.state.userData.majorId,
         name: this.$store.state.userData.name,
         password: this.$store.state.userData.password,
-        phoneId: this.$store.state.userData.phoneId,
         school: this.$store.state.userData.school,
         sex: this.$store.state.userData.sex,
         userId: this.$store.state.userData.userId,
@@ -228,6 +230,7 @@ export default {
     ChangeInformationTeacher() {
       let that = this;
       let params = {
+        intro: this.informationTeacher.intro,
         majorId: this.informationTeacher.majorId,
         name: this.informationTeacher.name,
         school: this.informationTeacher.school,
