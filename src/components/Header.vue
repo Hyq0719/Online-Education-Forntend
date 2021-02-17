@@ -4,32 +4,27 @@
         :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
-        @select="handleSelectSearch"
+        @select="handleSelect"
     >
       <div class="Header-Img">
         <img src="../assets/logo.png" alt="加载失败"/>
       </div>
-      <slot id="search">
-        <div class="Header-search">
-          <el-autocomplete
-              class="inline-input"
-              v-model="input"
-              :fetch-suggestions="querySearch"
-              placeholder="请输入搜索的课程"
-              :trigger-on-focus="false"
-              @select="handleSelect">
-            <template slot-scope="{ item }">
-              <div class="name" v-html="item.name"></div>
-              <span class="intro">{{ item.intro }}</span>
-            </template>
-          </el-autocomplete>
-        </div>
-        <div class="Header-logo">
-          <router-link to="/searchpage">
-            <img src="../assets/Header-search-logo.jpg" alt="加载失败"/>
-          </router-link>
-        </div>
-      </slot>
+      <div class="Header-search">
+        <el-autocomplete
+            class="inline-input"
+            v-model="input"
+            :fetch-suggestions="querySearch"
+            placeholder="请输入搜索的课程"
+            :trigger-on-focus="false"
+            @select="handleSelectSearch"
+            @keyup.enter.native="Search">
+          <i slot="suffix" class="el-input__icon el-icon-search"></i>
+          <template slot-scope="{ item }">
+            <div class="name" v-html="item.name"></div>
+            <span class="intro">{{ item.intro }}</span>
+          </template>
+        </el-autocomplete>
+      </div>
       <el-submenu index="2" v-if="isLogin||isLoginTeacher" class="avatar">
         <template slot="title">
           <img v-if="isLogin" :src="this.studentPicUrl" alt="头像加载失败"/>
@@ -62,21 +57,6 @@
             </el-button>
           </div>
           <el-divider></el-divider>
-          <h3>升学课程</h3>
-          <div>
-            <el-button @click="CourseMenu" v-for="item in graduate" v-bind:key="item.id" class="CourseMenu">{{
-                item
-              }}
-            </el-button>
-          </div>
-          <el-divider></el-divider>
-          <h3>终身学习课程</h3>
-          <div>
-            <el-button @click="CourseMenu" v-for="item in lifelong" v-bind:key="item.id" class="CourseMenu">{{
-                item
-              }}
-            </el-button>
-          </div>
           <el-button slot="reference" class="course" plain>课程</el-button>
         </el-popover>
       </el-menu-item>
@@ -105,13 +85,12 @@ export default {
       isLogin: this.$store.state.isLogin,
       isLoginTeacher: this.$store.state.isLoginTeacher,
       college: this.$store.state.Prefer,
-      graduate: ['考研21', '考研20', '期末不挂', '英语学习'],
-      lifelong: ['名师专栏'],
+      courseData: [],
     };
   },
   methods: {
     querySearch(queryString, cb) {
-      let courseData = [];
+      let that = this;
       let a = new URLSearchParams;
       a.append("page", 1);
       a.append("query", queryString);
@@ -123,24 +102,26 @@ export default {
           i.value = i.value.replace(/<\/?.+?>/g, "");
           i.value = i.value.replace(/&nbsp;/g, "");
         }
-        courseData = response.data.data.list;
-        cb(courseData);
+        that.courseData = response.data.data.list;
+        console.log("匹配课程信息", that.courseData);
+        cb(that.courseData);
       }, function (err) {
         console.log(err);
       });
     },
+    Search() {
+      // console.log("queryString", this.input);
+      this.$router.push({path: '/searchPage', query: {search: this.input}});
+      this.$store.commit('saveSearchedCourseData', this.courseData);
+    },
     handleSelectSearch(item) {
       console.log(item);
-    }
-    ,
+      this.$router.push({path: '/course', query: {courseId: item.courseId}});
+      this.$router.go(0);
+    },
     class_management() {
       this.$router.push('/Classmanagement/blank');
-    }
-    ,
-    CourseMenu() {
-      this.$router.push('/coursemenu');
-    }
-    ,
+    },
     CourseMenuPrefer(index) {
       this.$router.push({path: '/coursemenu', query: {preferId: index + 1}});
       let that = this;
@@ -154,16 +135,13 @@ export default {
       }, function (err) {
         console.log(err);
       });
-    }
-    ,
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
-    }
-    ,
+    },
     Login() {
       this.$router.push('/login');
-    }
-    ,
+    },
     Logout() {
       this.$router.push('/login');
       if (this.isLogin) {
@@ -176,22 +154,22 @@ export default {
         sessionStorage.removeItem("IsLoginTeacher");
       }
       VueCookies.remove('JWT');
-    }
-    ,
+    },
     Information() {
       this.$router.push('/information');
-    }
-    ,
+    },
     History() {
       this.$router.push('/history');
-    }
-    ,
+    },
   },
-}
-;
+};
 </script>
 
 <style scoped>
+/deep/ .el-menu-item * {
+  vertical-align: baseline;
+}
+
 .Header-Img {
   float: left;
   height: 60px;
@@ -209,21 +187,14 @@ export default {
   margin: 10px 0 10px 50px;
 }
 
+.el-autocomplete {
+  display: inline;
+}
+
 .intro {
   font-size: 12px;
   color: #b4b4b4;
   float: right;
-}
-
-.Header-logo img {
-  text-align: left;
-  float: left;
-}
-
-.Header-logo img {
-  height: 40px;
-  width: 40px;
-  margin: 10px 0;
 }
 
 .avatar img {

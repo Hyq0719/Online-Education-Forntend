@@ -1,9 +1,7 @@
 <template>
   <div>
     <Sidebar></Sidebar>
-    <Header slot="search">
-      <div></div>
-    </Header>
+    <Header></Header>
     <search></search>
     <Footer></Footer>
   </div>
@@ -16,7 +14,6 @@ import Footer from "@/components/Footer";
 import Sidebar from "@/components/Sidebar";
 
 export default {
-  name: "Searchpage",
   components: {
     Sidebar,
     Header,

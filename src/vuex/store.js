@@ -16,6 +16,7 @@ export default new Vuex.Store({
         menuCourseData: JSON.parse(sessionStorage.getItem('menuCourseData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
+        SearchedCourseData: JSON.parse(sessionStorage.getItem('SearchedCourseData')) || false,
         commentData: JSON.parse(sessionStorage.getItem('commentData')) || [],
         RelatedCourses: JSON.parse(sessionStorage.getItem('RelatedCourses')) || false,
         teacherData: {
@@ -29,63 +30,81 @@ export default new Vuex.Store({
         isLoginTeacher: JSON.parse(sessionStorage.getItem('isLoginTeacher')) || false,
     },
     mutations: {
+        //是否学生登录
         saveIsLogin(state) {
             state.isLogin = !state.isLogin;
             sessionStorage.setItem('isLogin', JSON.stringify(state.isLogin));
         },
+        //是否老师登录
         saveIsLoginTeacher(state) {
             state.isLoginTeacher = !state.isLoginTeacher;
             sessionStorage.setItem('isLoginTeacher', JSON.stringify(state.isLoginTeacher));
         },
+        //JWT信息
         saveJWT(state, JWT) {
             state.JWT = JWT;
             VueCookies.set('JWT', JSON.stringify(state.JWT), "7D");
         },
+        //学生偏好
         saveStudentPreferences(state, StudentPreferences) {
             state.StudentPreferences = StudentPreferences;
             sessionStorage.setItem('StudentPreferences', JSON.stringify(state.StudentPreferences));
         },
+        //学生头像
         saveAvatar(state) {
             state.userData.studentPicUrl = 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png';
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
+        //教师头像
         saveAvatarTeacher(state) {
             state.userData.teacherPicUrl = 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png';
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
+        //专业
         saveMajor(state) {
             state.userData.major = {
                 majorContent: '',
             };
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
+        //用户信息
         saveData(state, userData) {
             state.userData = userData;
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
+        //所有子专业
         savePrefer(state, Prefer) {
             state.Prefer = Prefer;
             sessionStorage.setItem('Prefer', JSON.stringify(state.Prefer));
         },
+        //所有专业+子专业
         saveAllMajor(state, AllMajor) {
             state.AllMajor = AllMajor;
             sessionStorage.setItem('AllMajor', JSON.stringify(state.AllMajor));
         },
+        //课程菜单页面的课程信息
         saveMenuCourseData(state, menuCourseData) {
             state.menuCourseData = menuCourseData;
             sessionStorage.setItem('menuCourseData', JSON.stringify(state.menuCourseData));
         },
+        //单个课程信息
         saveCourseData(state, courseData) {
             state.courseData = courseData;
             sessionStorage.setItem('courseData', JSON.stringify(state.courseData));
         },
+        //课程章节信息
         saveChapterData(state, chapterData) {
             state.chapterData = chapterData;
             sessionStorage.setItem('chapterData', JSON.stringify(state.chapterData));
         },
+        //相关课程信息
         saveRelatedCourses(state, RelatedCourses) {
             state.RelatedCourses = RelatedCourses;
             sessionStorage.setItem('RelatedCourses', JSON.stringify(state.RelatedCourses));
+        },
+        saveSearchedCourseData(state, SearchedCourseData) {
+            state.SearchedCourseData = SearchedCourseData;
+            sessionStorage.setItem('SearchedCourseData', JSON.stringify(state.SearchedCourseData));
         },
         saveTeacherClassData(state, teacherClassData) {
             state.teacherData.teacherClassData = teacherClassData;
