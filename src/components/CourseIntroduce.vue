@@ -301,11 +301,8 @@ export default {
       a.append('courseId', that.$route.query.courseId);
       a.append('page', 1);
       a.append('sort', 1);
-      await axios.post("http://" + that.Api + "/api/Course/getCourseComments", a, {
-        headers: {
-          'Authorization': JWT,
-        }
-      }).then(function (response) {
+      await axios.post("http://" + that.Api + "/api/Course/getCourseComments", a).then(function (response)
+      {
         if (response.data.code === 1000) {
           that.$store.commit("saveCommentData", response.data.data.list);
           that.comment = that.$store.state.commentData;
@@ -356,7 +353,6 @@ export default {
     let that = this;
     let JWT = that.$store.state.JWT;
     that.displayComment();
-    console.log("用户信息："+that.$store.state.userData);
     if (that.$store.state.isLogin !== false) {
       let b = new URLSearchParams();
       b.append('course_id', that.$route.query.courseId);

@@ -29,7 +29,7 @@
           <el-form-item label="上传课程视频" style="width: 300px">
             <el-col class="normal" :span="24">请上传一个视频</el-col>
             <div style="align-items: center">
-              <UploadFileTool :fileNum="fileNum"></UploadFileTool>
+
             </div>
           </el-form-item>
         </el-form>
@@ -54,10 +54,7 @@ export default {
       loading:false,
     };
   },
-  components: {
-    // UploadImgTool: () => import('@/components/classmanagement/UploadlmgTool'),
-    UploadFileTool: () => import('@/components/classmanagement/UploadFileTool'),
-  },
+
   methods: {
     open() {         //弹窗
       this.$alert('更新成功，待审核', '提示', {

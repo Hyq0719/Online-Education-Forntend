@@ -4,7 +4,7 @@
         <div style="width: 550px">
           <el-form label-width="160px">
             <el-form-item label="课程名称" style="width: 300px">
-              <el-input v-model="formbuild.name"
+              <el-input v-model="formBuild.name"
                         placeholder="请输入内容"
                         maxlength="10"
                         show-word-limit></el-input>
@@ -15,11 +15,11 @@
                   type="textarea"
                   :rows="4"
                   placeholder="请输入内容"
-                  v-model="formbuild.intro">
+                  v-model="formBuild.intro">
               </el-input>
             </el-form-item>
             <el-form-item label="选择课程类别">
-              <el-select v-model="selectvalue" placeholder="请选择" style="float: left;margin: 10px 24px">
+              <el-select v-model="formBuild.selectvalue" placeholder="请选择" style="float: left;margin: 10px 24px">
                 <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -31,7 +31,7 @@
             </el-form-item>
             <el-form-item label="是否为vip课程">
               <el-switch
-                  v-model="formbuild.Isvip"
+                  v-model="formBuild.IsVip"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="float: left;margin: 10px 24px">
@@ -40,7 +40,16 @@
             <el-form-item label="上传课程封面" style="width: 550px">
               <el-col class="normal" :span="24"> 课程封面只能上传一张图片，且上传图片的大小最大为2MB</el-col>
             </el-form-item>
-            <UploadImgTool :imgNum="imgNum"></UploadImgTool>
+            <el-upload
+                class="avatar-uploader"
+                action=""
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+                :http-request="uploadHttp">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
             <el-form-item style="position: relative;margin: 0;padding: 0">
               <el-button type="primary" class="headerbutton" @click="closed" :loading="loading" style="position: absolute;left: 60px">
                 {{ loading ? '提交中 ...' : '确认上传' }}
@@ -54,15 +63,19 @@
 
 <script>
 
+import ossClient from "@/aliyun.oss.client";
+
 export default {
   name: "buildClass",
   data() {
     return {
+      imageUrl: '',
       loading: false,
-      formbuild: {              //课程基本属性
+      formBuild: {              //课程基本属性
         name: '',
         intro: '',
-        Isvip: 0,
+        IsVip: 0,
+        selectValue: '',
       },
       imgNum: 1,              //图片属性
       imgSize: 2048000,
@@ -76,12 +89,8 @@ export default {
         value: '选项3',
         label: '金融'
       }],
-      selectvalue: ''
+      imgFile:{},
     };
-  },
-  components: {
-    UploadImgTool: () => import('@/components/classmanagement/UploadlmgTool'),
-    // UploadFileTool: () => import('@/components/classmanagement/UploadFileTool'),
   },
   methods: {
     open() {         //弹窗
@@ -121,17 +130,81 @@ export default {
           .catch(_ => {
           });
     },
-    closed(){
+    closed() {
       this.$alert('上传成功，待审核', '提示', {
         confirmButtonText: '确定',
       });
-      this.$emit('close',false);
-    }
+      this.$emit('close', false);
+    },
+    handleAvatarSuccess({file}) {
+      this.imageFile = {file};
+      console.log("上传成功",file);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+    async uploadHttp({file}) {
+      console.log(file);
+      let that = this;
+      let f = await this.$Api.compressImg(file);
+      console.log(f);
+      let fileName = `${this.$store.state.userData.userId}_Header/${Date.parse(new Date())}`;  //定义唯一的文件名
+      if (this.isLogin) {
+        fileName = `pic/Student/` + fileName;
+      } else {
+        fileName = `pic/Teacher/` + fileName;
+      }
+      ossClient(this.uploadConf).put(fileName, f, {
+        'ContentType': 'image/jpeg'
+      }).then(({res, url,
+                                                 name}) => {
+        if (res && res.status == 200) {
+          that.imageUrl = url;
+          that.information.studentPicUrl = url;
+          that.informationTeacher.teacherPicUrl = url;
+          console.log(`阿里云OSS上传图片成功回调`, res, url, name);
+        }
+      }).catch((err) => {
+        console.log(`阿里云OSS上传图片失败回调`, err);
+      });
+    },
   },
 }
 </script>
 
 <style scoped>
+.avatar-uploader-icon {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+
+.avatar-uploader-icon:hover {
+  border-color: #409EFF;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 
 .headerbutton {
   cursor: pointer;
