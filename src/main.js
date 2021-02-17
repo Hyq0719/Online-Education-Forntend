@@ -9,7 +9,6 @@ import router from './router'
 import Vuex from 'vuex'
 import store from './vuex/store';
 import Api from './Api';
-import './VuePrototype';
 import Fragment from 'vue-fragment';
 
 Vue.use(Fragment.Plugin);
