@@ -44,14 +44,35 @@
 
 <script>
 import classbread from "@/components/classmanagement/classbread";
+import axios from "axios";
 
 export default {
   name: 'Classmanagement',
   components: {
     classbread
   },
+  methods:{
+    async getCourse(){
+      let that=this;
+      let b = new URLSearchParams();
+      let c = that.$store.state.userData.userId;
+      b.append("teacherId", c);
+      b.append("sort", 1);
+      b.append("page", 1);
+      await axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId", b,
+          {headers:{
+              'Authorization': that.$store.state.JWT,
+            }}
+      ).then(function (res) {
+        console.log("老师的课程信息",res);
+        if (res.data.code === 1000) {
+          that.$store.commit('saveTeacherClassData', res.data.data);
+        }
+      });
+    }
+  },
   mounted:function () {
-
+    this.getCourse();
     let breadcrumb = [
       {
         link: '/Classmanagement/blank',

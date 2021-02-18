@@ -37,7 +37,6 @@ export default {
   },
   methods: {
     Login() {
-      let b = new URLSearchParams();
       let params = {
         password: this.form.password,
         phone: this.form.name,
@@ -56,20 +55,6 @@ export default {
           if (!response.data.data.major) {
             that.$store.commit('saveMajor');
           }
-          let c = that.$store.state.userData.userId;
-          b.append("teacherId", c);
-          b.append("sort", 1);
-          b.append("page", 1);
-          axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId", b,
-              {headers:{
-                  'Authorization': that.$store.state.JWT,
-                }}
-          ).then(function (res) {
-            console.log(res);
-            if (res.data.code === 1000) {
-              that.$store.commit('saveTeacherClassData', res.data.data);
-            }
-          });
         }
       }, function (err) {
         console.log(err);
