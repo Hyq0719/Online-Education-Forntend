@@ -33,11 +33,11 @@
     </el-main>
 
     <el-dialog title="创建直播" :visible.sync="dialogBuild">
-      <build-live @close="closeDialog"></build-live>
+      <build-live @close="closeDialogBuild"></build-live>
     </el-dialog>
 
     <el-dialog title="修改直播信息" :visible.sync="dialogEdit">
-      <build-live @close="closeDialog"></build-live>
+      <build-live @close="closeDialogEdit"></build-live>
     </el-dialog>
 
   </div>
@@ -59,8 +59,11 @@ export default {
     buildLive: () => import("@/components/classmanagement/tools/buildLive"),
   },
   methods: {
-    closeDialog(){
-      this.dialogVisible=false;
+    closeDialogBuild(){
+      this.dialogBuild=false;
+    },
+    closeDialogEdit(){
+      this.dialogEdit=false;
     },
     displayLive() {
       let that = this;

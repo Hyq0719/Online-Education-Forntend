@@ -18,20 +18,16 @@
                   v-model="formBuild.intro">
               </el-input>
             </el-form-item>
-            <el-form-item label="选择课程类别">
-              <el-select v-model="formBuild.selectvalue" placeholder="请选择" style="float: left;margin: 10px 24px">
-                <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                >
-                </el-option>
-              </el-select>
+            <el-form-item label="选择课程类型">
+                <el-cascader
+                    v-model="formBuild.perferId"
+                    :options="Option"
+                    :props="{ expandTrigger: 'hover' }"
+                    ></el-cascader>
             </el-form-item>
             <el-form-item label="是否为vip课程">
               <el-switch
-                  v-model="formBuild.IsVip"
+                  v-model="formBuild.needVip"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   style="float: left;margin: 10px 24px">
@@ -44,8 +40,6 @@
                 class="avatar-uploader"
                 action=""
                 :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload"
                 :http-request="uploadHttp">
               <img v-if="imageUrl" :src="imageUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -64,32 +58,32 @@
 <script>
 
 import ossClient from "@/aliyun.oss.client";
+import axios from "axios";
 
 export default {
   name: "buildClass",
   data() {
     return {
-      imageUrl: '',
       loading: false,
       formBuild: {              //课程基本属性
         name: '',
         intro: '',
-        IsVip: 0,
-        selectValue: '',
+        needVip: 0,
+        perferId: null,      //个位为majorId，百位为preferId
+        coursePicUrl:'',
       },
       imgNum: 1,              //图片属性
       imgSize: 2048000,
-      options: [{                        //课程类别
-        value: '选项1',
-        label: '计算机'
-      }, {
-        value: '选项2',
-        label: '数学'
-      }, {
-        value: '选项3',
-        label: '金融'
-      }],
+      Option: [],
       imgFile:{},
+      imageUrl: '',
+      images: [],
+      uploadConf: {
+        region: 'oss-cn-shanghai',
+        accessKeyId: 'LTAI4GGsTQ35tQcWWDVNKwqG',
+        accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
+        bucket: 'shu-online-edu',
+      },
     };
   },
   methods: {
@@ -131,53 +125,84 @@ export default {
           });
     },
     closed() {
-      this.$alert('上传成功，待审核', '提示', {
-        confirmButtonText: '确定',
+      let that=this;
+      console.log(this.formBuild.perferId);
+      let r=Math.floor(this.formBuild.perferId[1]/100);
+      console.log(r);
+      let params ={
+        coursePicUrl: this.formBuild.coursePicUrl,
+        intro: this.formBuild.intro,
+        name: this.formBuild.name,
+        needVip: this.formBuild.needVip,
+        preferId: r,
+        teacherId: this.$store.state.userData.userId,
+      };
+      console.log(params);
+      let JWT = this.$store.state.JWT;
+      axios.post("http://" + this.Api + "/api/Course/addCourse", params, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log(response);
+        that.$alert('上传成功，待审核', '提示', {
+          confirmButtonText: '确定',
+        });
+        that.$emit('close', false);
+      }, function (err) {
+        console.log(err);
       });
-      this.$emit('close', false);
-    },
-    handleAvatarSuccess({file}) {
-      this.imageFile = {file};
-      console.log("上传成功",file);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
-    },
+    },   //
     async uploadHttp({file}) {
+      // const file=this.imgFile;
       console.log(file);
       let that = this;
       let f = await this.$Api.compressImg(file);
       console.log(f);
       let fileName = `${this.$store.state.userData.userId}_Header/${Date.parse(new Date())}`;  //定义唯一的文件名
-      if (this.isLogin) {
-        fileName = `pic/Student/` + fileName;
-      } else {
-        fileName = `pic/Teacher/` + fileName;
-      }
+        fileName = `pic/Course/` + fileName;
       ossClient(this.uploadConf).put(fileName, f, {
         'ContentType': 'image/jpeg'
-      }).then(({res, url,
-                                                 name}) => {
-        if (res && res.status == 200) {
+      }).then(({res, url, name}) => {
+        if (res && res.status === 200) {
           that.imageUrl = url;
-          that.information.studentPicUrl = url;
-          that.informationTeacher.teacherPicUrl = url;
+          that.formBuild.coursePicUrl = url;
+          console.log(url);
           console.log(`阿里云OSS上传图片成功回调`, res, url, name);
         }
       }).catch((err) => {
         console.log(`阿里云OSS上传图片失败回调`, err);
       });
-    },
+    },  //上传至阿里云
   },
+  mounted() {
+    console.log("子专业",this.$store.state.Prefer);
+    const r= this.$store.state.Prefer;
+    let n = r.map(item =>({label:item.major.majorContent,value:item.major.majorId,children:[]}));
+    let k=0;
+    n = n.reduce((obj, item) => {
+      let find = obj.find(i => i.id === item.id)
+      let _d = {
+        ...item,
+      }
+      find ? (k++ ): obj.push(_d)
+      return obj
+    }, []);    //去除重复的
+    r.map(item =>{
+      for(let j=0;j< n.length;j++)
+    {
+      if (n[j].value === item.majorId)
+      {
+       n[j].children.push({label:item.preferContent , value:item.preferId*100+item.majorId});
+
+      }
+    }
+    });
+    this.Option=n;
+    console.log("major选项",n);
+  }
 }
 </script>
 

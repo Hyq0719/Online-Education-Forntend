@@ -79,9 +79,9 @@ export default {
       ];
       for (let i = 0; i < 6; i++) {
         for (let index = 0; index < 10; index++) {
-          if (index % 2 == 0) {
+          if (index % 2 === 0) {
             this.arr.push({
-              direction: 'top',
+              direction: 'default',
               content: arr[parseInt(Math.random() * arr.length)],
             });
           } else {
@@ -95,7 +95,7 @@ export default {
     },
     // 发送弹幕
     isMyself(what) {
-      return what == this.$store.state.userData.nickName ? "myself" : "others";
+      return what === this.$store.state.userData.nickName ? "myself" : "others";
     },
     mySend() {
       // console.log('mySend!');
@@ -112,7 +112,7 @@ export default {
       this.chatRoomWebsocket.send(toSend); //将消息发送到服务端
 
 
-      if (this.arr.length > 1 && this.input != '' && this.input != null) {   //发送弹幕
+      if (this.arr.length > 1 && this.input !== '' && this.input != null) {   //发送弹幕
         this.arr.unshift({
           content: this.input,
           direction: this.direction,

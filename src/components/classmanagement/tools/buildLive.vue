@@ -4,7 +4,7 @@
       <div style="width: 550px">
         <el-form label-width="160px">
           <el-form-item label="直播名称" style="width: 300px">
-            <el-input v-model="formbuild.name"
+            <el-input v-model="formBuild.name"
                       placeholder="请输入直播名称"
                       maxlength="10"
                       show-word-limit></el-input>
@@ -15,24 +15,24 @@
                 type="textarea"
                 :rows="3"
                 placeholder="请输入内容"
-                v-model="formbuild.intro">
+                v-model="formBuild.intro">
             </el-input>
           </el-form-item>
+          <el-form-item label="选择直播日期">
+            {{formBuild.liveDate}}
+            <el-date-picker style="float: left;margin: 10px 24px"
+                v-model="formBuild.liveDate"
+                align="right"
+                type="date"
+                placeholder="选择日期"
+                :picker-options="pickerOptions"
+                            value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-form-item>
           <el-form-item label="选择直播时间">
-            <el-select v-model="selectvalue1" placeholder="请选择" style="float: left;margin: 10px 24px">
+            <el-select v-model="selectvalue1" placeholder="请选择时间" style="float: left;margin: 10px 24px">
               <el-option
                   v-for="item in options1"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="选择直播线路">
-            <el-select v-model="selectvalue2" placeholder="请选择" style="float: left;margin: 10px 24px">
-              <el-option
-                  v-for="item in options2"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -73,38 +73,47 @@ export default {
   name: "buildClass",
   data() {
     return {
+      pickerOptions: {                   //可选直播的时间
+        disabledDate(time) {
+          let n=time.getTime() < Date.now()-3600 * 1000 * 24;
+          let m=time.getTime() > Date.now()+3600 * 1000 * 24*7;
+          let c= n | m;
+          return c ;
+        }},
+      imageFile:{},
       imageUrl: '',
       loading: false,
-      formbuild: {              //课程基本属性
+      formBuild: {              //课程基本属性
         name: '',
         intro: '',
         Isvip: 0,
+        liveDate:'',
       },
       imgNum: 1,              //图片属性
       imgSize: 2048000,
       options1: [{                        //课程类别
         value: '选项1',
-        label: '2/17 6:00'
+        label: ' 8:00'
       }, {
         value: '选项2',
-        label: '2/17 10:00'
+        label: '10:00'
       }, {
         value: '选项3',
-        label: '2/17 14:00'
+        label: '14:00'
       },{
         value: '选项4',
-        label: '2/17 16:00'
+        label: '16:00'
       },{
         value: '选项5',
-        label: '2/17 18:00'
+        label: '18:00'
       }],
-      options2: [{                        //课程类别
-        value: '选项1',
-        label: '线路一'
-      }, {
-        value: '选项2',
-        label: '线路二'
-      }],
+      // options2: [{                        //课程类别
+      //   value: '选项1',
+      //   label: '线路一'
+      // }, {
+      //   value: '选项2',
+      //   label: '线路二'
+      // }],
       selectvalue1: '',
       selectvalue2: '',
     };
@@ -127,7 +136,6 @@ export default {
       return isJPG && isLt2M;
     },
     async uploadHttp({file}) {
-      console.log(file);
       let that = this;
       let f = await this.$Api.compressImg(file);
       console.log(f);
@@ -189,6 +197,19 @@ export default {
           });
     },
     closed(){
+      let that = this;
+      // that.uploadHttp(that.imageFile);
+      // let str =that.formBuild.liveData.toDateString();
+      console.log("选定时间",that.formBuild);
+      let params={
+          addressId: 0,
+          liveArrange: 0,
+          liveDate: that.formBuild.liveData,
+          liveIntro: that.formBuild.intro,
+          liveName: that.formBuild.name,
+          // livePicUrl: string,
+          teacherId: 0
+      };
       this.$alert('上传成功，待审核', '提示', {
         confirmButtonText: '确定',
       });
