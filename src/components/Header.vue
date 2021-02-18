@@ -31,7 +31,7 @@
           <img v-if="isLoginTeacher" :src="this.teacherPicUrl" alt="头像加载失败"/>
         </template>
         <el-menu-item index="1-1" @click="Information">个人信息</el-menu-item>
-        <el-menu-item index="1-2" @click="History">历史记录</el-menu-item>
+        <el-menu-item index="1-2" v-if="isLogin" @click="History">历史记录</el-menu-item>
         <el-menu-item index="1-3">我的消息</el-menu-item>
         <el-menu-item index="1-4" v-if="isLoginTeacher" @click="class_management">管理课程</el-menu-item>
         <el-menu-item index="1-5">设置</el-menu-item>
@@ -50,9 +50,10 @@
             trigger="hover">
           <h3>大学课程</h3>
           <div>
-            <el-button @click="CourseMenuPrefer(index)" v-for="(item,index) in college" v-bind:key="item.id"
+            <el-button @click="CourseMenuPrefer(item.majorId)" v-for="(item,index) in this.$store.state.MajorPrefer"
+                       v-bind:key="index"
                        class="CourseMenu">{{
-                item.preferContent
+                item.majorContent
               }}
             </el-button>
           </div>
@@ -84,7 +85,6 @@ export default {
       teacherPicUrl: this.$store.state.userData.teacherPicUrl,
       isLogin: this.$store.state.isLogin,
       isLoginTeacher: this.$store.state.isLoginTeacher,
-      college: this.$store.state.Prefer,
       courseData: [],
     };
   },
@@ -117,21 +117,37 @@ export default {
     handleSelectSearch(item) {
       console.log(item);
       this.$router.push({path: '/course', query: {courseId: item.courseId}});
-      this.$router.go(0);
     },
     class_management() {
       this.$router.push('/Classmanagement/blank');
     },
-    CourseMenuPrefer(index) {
-      this.$router.push({path: '/coursemenu', query: {preferId: index + 1}});
+    CourseMenuPrefer(majorId) {
+      this.$router.push({path: '/coursemenu', query: {majorId: majorId, prederId: 0}});
       let that = this;
       let a = new URLSearchParams;
       a.append("page", 1);
-      a.append("preferId", index + 1);
+      a.append("majorId", majorId);
       a.append("sort", 1);
-      axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log("获取课程菜单", response);
+      axios.post("http://" + this.Api + "/api/Course/getCourseByMajorId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log("获取此专业课程菜单", response);
         that.$store.commit('saveMenuCourseData', response.data.data);
+      }, function (err) {
+        console.log(err);
+      });
+      let PreferData = {
+        preferContent: "全部课程",
+        preferId: 0,
+      };
+      let b = new URLSearchParams;
+      b.append("major_id", majorId);
+      axios.post("http://" + this.Api + "/api/Major/getPreferByMajor?" + b, null, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(function (response) {
+        response.data.data.unshift(PreferData)
+        console.log("获取此专业的子专业", response.data.data);
+        that.$store.commit('savePrefer', response.data.data);
       }, function (err) {
         console.log(err);
       });
@@ -148,10 +164,12 @@ export default {
         this.$store.commit('saveIsLogin');
         sessionStorage.removeItem("IsLogin");
         sessionStorage.removeItem("StudentPreferences");
+        sessionStorage.removeItem("StudentHistory");
         sessionStorage.removeItem("userData");
       } else {
         this.$store.commit('saveIsLoginTeacher');
         sessionStorage.removeItem("IsLoginTeacher");
+        sessionStorage.removeItem("userData");
       }
       VueCookies.remove('JWT');
     },

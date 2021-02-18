@@ -1,32 +1,32 @@
 <template>
   <div class="Course">
     <div class="Course-Title">
-      <h3>
-        {{ course[this.$route.query.preferId - 1].preferContent }}
-      </h3>
+      <el-radio-group fill="#67C23A" v-model="prefer">
+        <el-radio-button v-for="(item,index) in this.$store.state.Prefer" v-bind:key="index"
+                         :label="item.preferContent"
+                         @click.native="CourseChoose($event,item.preferId,1,2)"></el-radio-button>
+      </el-radio-group>
     </div>
     <div class="new-best-hot">
       <el-radio-group v-model="radio">
-        <el-radio-button @click.native="CourseChoose(1,needVip)" label="最新课程"></el-radio-button>
-        <el-radio-button @click.native="CourseChoose(2,needVip)" label="最好课程"></el-radio-button>
-        <el-radio-button @click.native="CourseChoose(3,needVip)" label="最热课程"></el-radio-button>
+        <el-radio-button @click.native="CourseChoose($event,preferId,1,needVip)" label="最新课程"></el-radio-button>
+        <el-radio-button @click.native="CourseChoose($event,preferId,2,needVip)" label="最好课程"></el-radio-button>
+        <el-radio-button @click.native="CourseChoose($event,preferId,3,needVip)" label="最热课程"></el-radio-button>
       </el-radio-group>
     </div>
     <el-divider></el-divider>
     <div class="free-vip">
-      <el-radio v-model="radioVip" @click.native="CourseChoose(sort,2)" label="1">全部课程</el-radio>
-      <el-radio v-model="radioVip" @click.native="CourseChoose(sort,0)" label="2">免费课程</el-radio>
-      <el-radio v-model="radioVip" @click.native="CourseChoose(sort,1)" label="3">付费课程</el-radio>
+      <el-radio v-model="radioVip" @click.native="CourseChoose($event,preferId,sort,2)" label="1">全部课程</el-radio>
+      <el-radio v-model="radioVip" @click.native="CourseChoose($event,preferId,sort,0)" label="2">免费课程</el-radio>
+      <el-radio v-model="radioVip" @click.native="CourseChoose($event,preferId,sort,1)" label="3">付费课程</el-radio>
     </div>
     <el-row :gutter="25">
       <el-col :span="6" v-for="(item,index) in this.$store.state.menuCourseData.list" v-bind:key="index">
-        <router-link :to="{path:'/course',query:{courseId:item.courseId}}">
-          <div class="grid-content">
-            <img :src="item.src" alt="图片缺失">
-            <h4>{{ item.name }}</h4>
-            <h6>{{ item.teacher.name }}</h6>
-          </div>
-        </router-link>
+        <div class="grid-content" @click="CourseHistory(item.courseId)">
+          <img :src="item.src" alt="图片缺失">
+          <h4>{{ item.name }}</h4>
+          <h6>{{ item.teacher.name }}</h6>
+        </div>
       </el-col>
     </el-row>
     <div class="block">
@@ -46,41 +46,76 @@ export default {
   name: "CourseMenu",
   data() {
     return {
-      course: this.$store.state.Prefer,
-      preferId: this.$route.query.preferId,
+      majorId: this.$route.query.majorId,
+      preferId: 0,
       needVip: 2,
       sort: 1,
+      prefer: '全部课程',
       radio: '最新课程',
       radioVip: '1',
     };
   },
   methods: {
-    CourseChoose(sort, needVip) {
+    CourseHistory(courseId) {
+      this.$router.push({path: '/course', query: {courseId: courseId}});
+    },
+    CourseChoose(e, preferId, sort, needVip) {
+      if (e.target.tagName === 'INPUT') return // 因为原生click事件会执行两次，第一次在label标签上，第二次在input标签上，故此处理
       let that = this;
-      let a = new URLSearchParams;
-      let preferId = this.$route.query.preferId;
-      a.append("page", 1);
-      a.append("preferId", preferId);
-      a.append("sort", sort);
-      if (needVip != 2) {
-        a.append("needVip", needVip);
-        axios.post("http://" + this.Api + "/api/Course/getCourseByNeedVipAndPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-          console.log("获取课程菜单",response);
-          that.$store.commit('saveMenuCourseData', response.data.data);
-          that.needVip = needVip;
-          that.sort = sort;
-        }, function (err) {
-          console.log(err);
-        });
+      if (preferId != 0) {
+        let a = new URLSearchParams;
+        a.append("page", 1);
+        a.append("preferId", preferId);
+        a.append("sort", sort);
+        if (needVip != 2) {
+          a.append("needVip", needVip);
+          axios.post("http://" + this.Api + "/api/Course/getCourseByNeedVipAndPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+            console.log("获取课程菜单", response);
+            that.$store.commit('saveMenuCourseData', response.data.data);
+            that.preferId = preferId;
+            that.needVip = needVip;
+            that.sort = sort;
+          }, function (err) {
+            console.log(err);
+          });
+        } else {
+          axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+            console.log("获取课程菜单", response);
+            that.$store.commit('saveMenuCourseData', response.data.data);
+            that.preferId = preferId;
+            that.needVip = needVip;
+            that.sort = sort;
+          }, function (err) {
+            console.log(err);
+          });
+        }
       } else {
-        axios.post("http://" + this.Api + "/api/Course/getCourseByPreferId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-          console.log("获取课程菜单",response);
-          that.$store.commit('saveMenuCourseData', response.data.data);
-          that.needVip = needVip;
-          that.sort = sort;
-        }, function (err) {
-          console.log(err);
-        });
+        let a = new URLSearchParams;
+        a.append("page", 1);
+        a.append("majorId", this.$route.query.majorId);
+        a.append("sort", sort);
+        if (needVip != 2) {
+          a.append("needVip", needVip);
+          axios.post("http://" + this.Api + "/api/Course/getCourseByMajorIdAndNeedVip?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+            console.log("获取课程菜单", response);
+            that.$store.commit('saveMenuCourseData', response.data.data);
+            that.preferId = preferId;
+            that.needVip = needVip;
+            that.sort = sort;
+          }, function (err) {
+            console.log(err);
+          });
+        } else {
+          axios.post("http://" + this.Api + "/api/Course/getCourseByMajorId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+            console.log("获取课程菜单", response);
+            that.$store.commit('saveMenuCourseData', response.data.data);
+            that.preferId = preferId;
+            that.needVip = needVip;
+            that.sort = sort;
+          }, function (err) {
+            console.log(err);
+          });
+        }
       }
     },
   },
@@ -94,7 +129,7 @@ export default {
 }
 
 .Course-Title {
-  margin: 50px 20px 30px 20px;
+  margin: 50px 20px 30px 0;
   text-align: left;
 }
 
@@ -118,6 +153,7 @@ export default {
 }
 
 .grid-content {
+  cursor: pointer;
   text-align: left;
   border-radius: 10px;
   border: #E4E7ED 1px solid;

@@ -5,7 +5,7 @@
     </div>
     <el-menu
         default-active="1"
-        :default-openeds="chapterId"
+        :default-openeds="[($route.query.chapterId - 1).toString()]"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
@@ -44,13 +44,11 @@
 export default {
   name: "TaskMenu",
   data() {
-    return {
-      chapterId: [this.$route.query.chapterId],
-    };
+    return {};
   },
   methods: {
     GoBackCourse() {
-      this.$router.push('/course');
+      this.$router.push({path: '/course', query: {courseId: this.$route.query.courseId}});
     },
     Task() {
       this.$router.push('/task');

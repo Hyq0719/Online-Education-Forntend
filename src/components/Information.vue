@@ -37,7 +37,7 @@
               <el-select v-model="selectedPrefer" placeholder="请选择你的兴趣偏好" multiple>
                 <el-option-group
                     v-for="group in options"
-                    :key="group.majorContent"
+                    :key="group.majorId"
                     :label="group.majorContent">
                   <el-option
                       v-for="item in group.prefer"
@@ -92,9 +92,8 @@ export default {
   name: "Information",
   data() {
     return {
-      options: this.$store.state.AllMajor,
+      options: this.$store.state.MajorPrefer,
       selectedPrefer: [],
-      StudentPrefer: this.$store.state.StudentPreferences,
       information: {
         grade: this.$store.state.userData.grade,
         major: this.$store.state.userData.major,
@@ -153,22 +152,25 @@ export default {
           'Authorization': JWT,
         }
       }).then(function (response) {
-        console.log(response);
-        console.log(that.selectedPrefer);
-        that.StudentPrefer = [];
-        let Prefer = that.$store.state.Prefer;
-        for (let i = 0; i < that.selectedPrefer.length; i++) {
-          for (let j = 0; j < Prefer.length; j++) {
-            if (Prefer[j].preferId == that.selectedPrefer[i]) {
-              let prefer = {
-                prefer: Prefer[j],
-              };
-              that.StudentPrefer.push(prefer);
-            }
+        console.log("修改偏好成功", response);
+        that.selectedPrefer = [];
+        let b = new URLSearchParams;
+        b.append("user_id", that.$store.state.userData.userId);
+        axios.post("http://" + that.Api + "/api/Student/findAllPreferences?" + b, null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': JWT,
           }
-        }
-        console.log(that.StudentPrefer);
-        that.$store.commit('saveStudentPreferences', that.StudentPrefer);
+        }).then(function (response) {
+          console.log("获取学生偏好", response);
+          for (let i = 0; i < response.data.data.length; i++) {
+            that.selectedPrefer.push(response.data.data[i].prefer.preferId);
+          }
+          console.log("学生偏好Id", that.selectedPrefer);
+          that.$store.commit('saveStudentPreferences', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
       }, function (err) {
         console.log(err);
       });
@@ -184,11 +186,11 @@ export default {
           'Authorization': JWT,
         }
       }).then(function (response) {
-        console.log(response);
+        console.log("获取学生偏好", response);
         for (let i = 0; i < response.data.data.length; i++) {
           that.selectedPrefer.push(response.data.data[i].prefer.preferId);
         }
-        console.log(that.selectedPrefer);
+        console.log("学生偏好Id", that.selectedPrefer);
         that.$store.commit('saveStudentPreferences', response.data.data);
       }, function (err) {
         console.log(err);
