@@ -131,7 +131,7 @@ export default {
 
   },
   components: {
-    buildClass: () => import('@/components/classmanagement/buildClassPage'),
+    buildClass: () => import('@/components/classmanagement/tools/buildClassPage'),
     updateClass: () => import('@/components/classmanagement/editVideo')
   },
   methods: {

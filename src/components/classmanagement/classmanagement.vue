@@ -26,7 +26,7 @@
         </classbread>
       </el-header>
       <el-main>
-      <router-view></router-view>
+        <router-view></router-view>
       </el-main>
     </el-container>
 
@@ -51,42 +51,50 @@ export default {
   components: {
     classbread
   },
-  methods:{
-    async getCourse(){
-      let that=this;
+  methods: {
+    async getCourse() {
+      let that = this;
       let b = new URLSearchParams();
       let c = that.$store.state.userData.userId;
       b.append("teacherId", c);
       b.append("sort", 1);
       b.append("page", 1);
       await axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId", b,
-          {headers:{
+          {
+            headers: {
               'Authorization': that.$store.state.JWT,
-            }}
+            }
+          }
       ).then(function (res) {
-        console.log("老师的课程信息",res);
+        console.log("老师的课程信息", res);
         if (res.data.code === 1000) {
           that.$store.commit('saveTeacherClassData', res.data.data);
-        }
-      });
-    }
-  },
-  mounted:function () {
-    this.getCourse();
-    let breadcrumb = [
-      {
-        link: '/Classmanagement/blank',
-        title: '课程管理'
+        } },function (err) {
+        console.log(err);
       }
-    ]
-    this.$store.commit("savebreadcrumb", breadcrumb)
+    );
   },
-  computed: {
-    breadcrumb: function () {
-      return this.$store.state.breadcrumb
-    },
+}
+,
+mounted:function () {
+  this.getCourse();
+  let breadcrumb = [
+    {
+      link: '/Classmanagement/blank',
+      title: '课程管理'
+    }
+  ]
+  this.$store.commit("savebreadcrumb", breadcrumb)
+}
+,
+computed: {
+  breadcrumb: function () {
+    return this.$store.state.breadcrumb
   }
-};
+,
+}
+}
+;
 </script>
 
 <style scoped>

@@ -62,6 +62,15 @@ import axios from "axios";
 
 export default {
   name: "buildClass",
+  props:{
+    courseId:{
+      type:Number,
+    },
+    isEdit:{
+      type:Boolean,
+      default:false,
+    }
+  },
   data() {
     return {
       loading: false,
@@ -178,7 +187,28 @@ export default {
     },  //上传至阿里云
   },
   mounted() {
-    console.log("子专业",this.$store.state.Prefer);
+    let that = this;
+    if (that.isEdit) {
+      axios.post('http://' + that.Api + "/api/Course/getCourseById?courseId=" + that.courseId,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+            if (res.data.code === 1000) {
+              console.log("课程信息", res);
+              that.intro = res.data.data.intro;
+              that.needVip = res.data.data.needVip;
+              that.perferId =[res.data.data.prefer.majorId,res.data.data.prefer.preferId*100+res.data.data.prefer.majorId];
+              that.coursePicUrl = res.data.data.coursePic;
+              that.imageUrl = res.data.data.coursePic;
+            }
+          }, function (err) {
+            console.log(err);
+          }
+      );
+    }
     const r= this.$store.state.Prefer;
     let n = r.map(item =>({label:item.major.majorContent,value:item.major.majorId,children:[]}));
     let k=0;

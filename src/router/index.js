@@ -24,7 +24,7 @@ import updateClass from "@/components/classmanagement/editVideo";
 import Upload from "@/components/classmanagement/Upload";
 import classBread from "@/components/classmanagement/classbread";
 import chapterManagement from "@/components/classmanagement/editchapter";
-import buildClass from "@/components/classmanagement/buildClassPage";
+import buildClass from "@/components/classmanagement/tools/buildClassPage";
 import commentClass from "@/components/classmanagement/commentClass";
 import liveManagement from "@/components/classmanagement/liveManagement";
 import blank from "@/components/classmanagement/blank";

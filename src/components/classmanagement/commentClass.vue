@@ -314,19 +314,21 @@ export default {
       }).then(function (response) {
         console.log("nlp结果：",response.data.data);
         if (response.data.code === 1000) {
-          that.$store.commit("saveAnalysisComment", response.data.data);
-          that.analysisComment = that.$store.state.teacherData.analysisComment;
-          that.option2.dataset.source = that.analysisComment.word_cut;
-          const n = that.analysisComment.mark_distribution;
-          that.option4.dataset.source = Object.entries(n);
-          that.badComment =that.analysisComment.worst_comment;
-          console.log("评价性质",that.option4.dataset.source)
-          const r=that.analysisComment.word_cut;
-          that.words = r.map(item =>({name:item[0],value:item[1]}));
-          console.log("热词:",that.analysisComment.word_cut);
-          console.log("转换后：",r.map(item =>({name:item[0],value:item[1]})));
-          that.chartBarView = true;
-          that.optionc = that.optionc + 1;
+          if (response.data.data !== null) {
+            that.$store.commit("saveAnalysisComment", response.data.data);
+            that.analysisComment = that.$store.state.teacherData.analysisComment;
+            that.option2.dataset.source = that.analysisComment.word_cut;
+            const n = that.analysisComment.mark_distribution;
+            that.option4.dataset.source = Object.entries(n);
+            that.badComment = that.analysisComment.worst_comment;
+            console.log("评价性质", that.option4.dataset.source)
+            const r = that.analysisComment.word_cut;
+            that.words = r.map(item => ({name: item[0], value: item[1]}));
+            console.log("热词:", that.analysisComment.word_cut);
+            console.log("转换后：", r.map(item => ({name: item[0], value: item[1]})));
+            that.chartBarView = true;
+            that.optionc = that.optionc + 1;
+          }
           // that.option2.dataset.source.push(1);
           // that.option2.dataset.source.pop();
         }

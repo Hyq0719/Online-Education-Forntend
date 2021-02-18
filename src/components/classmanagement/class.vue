@@ -1,164 +1,156 @@
 <template>
   <div>
 
-      <el-main v-show="classview" style="overflow:hidden;position: relative;height: 580px">
-        <el-table :data="classData.list">
-          <el-table-column prop="name" label="课程名称">
-          </el-table-column>
-          <el-table-column label="是否为vip课程">
-            <template slot-scope="props">
-              {{ props.row.needVip ? "需要" : "不需要" }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="uploadTime" label="更新时间">
-          </el-table-column>
-          <el-table-column label="类型">
-            <template slot-scope="props">
-              {{ props.row.prefer.major.majorContent }}-{{ props.row.prefer.preferContent }}
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" width="400px">
-            <template slot-scope="scope">
-              <el-button-group>
-                <el-button type="primary" icon="el-icon-edit" @click="openChapter(scope.row.courseId)">管理章节</el-button>
-                <el-button type="primary"
-                           @click="dialog = true">修改课程
-                </el-button>
-                <el-button type="primary" icon="el-icon-delete"
-                           @click.native.prevent="deleteRow()">删除课程
-                </el-button>
-              </el-button-group>
-            </template>
-          </el-table-column>
-        </el-table>
-
-        <div >
-          <el-button circle @click="dialogVisible = true" style="position: absolute;bottom: 80px;left: 20px">
-            <i class="el-icon-circle-plus-outline"></i>
-          </el-button>
-          <el-pagination  style="position: absolute;bottom: 0;left: 300px"
-              background
-              layout="prev, pager, next"
-              :total="1">
-          </el-pagination>
-        </div>
-      </el-main>
-
-      <el-dialog title="创建课程" :visible.sync="dialogVisible">
-        <build-class-page @close="closeDialog"></build-class-page>
-      </el-dialog>
-
-      <el-main v-show="chapterview">
-        <el-row class="box-wrapper" style="height: auto">
-          <el-row class="subtitle">
-            <h5 style="margin: 10px 24px;float: left">创建章节</h5>
-          </el-row>
-          <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
-            <el-form-item label="章节名称" style="width: 300px;margin-bottom: 0">
-              <el-input v-model="chapterIntro"
-                        placeholder="请输入内容"
-                        maxlength="10"
-                        show-word-limit></el-input>
-            </el-form-item>
-            <el-form-item style="width: 300px;margin-bottom: 0">
-              <el-button type="primary" @click="sendChapter()" style="float: right">创建<i
-                  class="el-icon-upload el-icon--right"></i></el-button>
-            </el-form-item>
-          </el-form>
-          <el-row>
-
-          </el-row>
-        </el-row>
-        <el-table :data="chapterData">
-          <el-table-column label="章节号">
-            <template slot-scope="scope">
-              {{ scope.row.courseChapterPK.chapterId }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="chapterIntro" label="章节名称">
-          </el-table-column>
-          <el-table-column label="操作" width="400px">
-            <template slot-scope="scope">
-              <el-button-group>
-                <el-button type="primary" icon="el-icon-edit"
-                           @click="openVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
-                  管理视频
-                </el-button>
-                <el-button type="primary"
-                           @click="dialog1 = true">修改章节
-                </el-button>
-                <el-button type="primary" icon="el-icon-delete"
-                           @click.native.prevent="deleteRow()">删除章节
-                </el-button>
-              </el-button-group>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-main>
-
-      <el-main v-show="videoview">
-        <el-row class="box-wrapper" style="height: auto">
-          <el-row class="subtitle">
-            <h5 style="margin: 10px 24px;float: left">上传视频</h5>
-          </el-row>
-          <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
-            <el-form-item label="视频号" label-position="left" style="width: 300px;margin-bottom: 0">
-              <el-input
-                  placeholder="请输入内容"
-                  maxlength="2"
-                  show-word-limit></el-input>
-            </el-form-item>
-            <el-form-item label="视频名称" style="width: 300px;margin-bottom: 0">
-              <el-input
-                  placeholder="请输入内容"
-                  maxlength="10"
-                  show-word-limit></el-input>
-            </el-form-item>
-            <el-form-item style="width: 300px;margin-bottom: 0">
-              <el-button type="primary" @click="sendVideo" style="float: right">上传<i
-                  class="el-icon-upload el-icon--right"></i></el-button>
-            </el-form-item>
-          </el-form>
-          <el-row>
-
-          </el-row>
-        </el-row>
-
-        <el-table :data="videoData">
-          <el-table-column label="视频号">
-            <template slot-scope="scope">
-              {{ scope.row.courseChapterVideoPK.videoId }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="videoName" label="视频名称">
-          </el-table-column>
-          <el-table-column label="操作" width="400px">
-            <!--          <template slot-scope="scope">-->
+    <el-main v-show="classview" style="overflow:hidden;position: relative;height: 580px">
+      <el-table :data="classData.list">
+        <el-table-column prop="name" label="课程名称">
+        </el-table-column>
+        <el-table-column label="是否为vip课程">
+          <template slot-scope="props">
+            {{ props.row.needVip ? "需要" : "不需要" }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="uploadTime" label="更新时间">
+        </el-table-column>
+        <el-table-column label="类型">
+          <template slot-scope="props">
+            {{ props.row.prefer.major.majorContent }}-{{ props.row.prefer.preferContent }}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="400px">
+          <template slot-scope="scope">
             <el-button-group>
-              <el-button type="primary" icon="el-icon-edit" @click="dialog2 = true">修改视频</el-button>
+              <el-button type="primary" icon="el-icon-edit" @click="openChapter(scope.row.courseId)">管理章节</el-button>
+              <el-button type="primary"
+                         @click="courseId=scope.row.courseId;dialogClassEdit = true">修改课程
+              </el-button>
               <el-button type="primary" icon="el-icon-delete"
-                         @click.native.prevent="deleteRow()">删除课程
+                         @click.native.prevent="deleteClass(scope.row.courseId)">删除课程
               </el-button>
             </el-button-group>
-            <!--          </template>-->
-          </el-table-column>
-        </el-table>
-      </el-main>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <div>
+        <el-button circle @click="dialogClassBuild = true" style="position: absolute;bottom: 80px;left: 20px">
+          <i class="el-icon-circle-plus-outline"></i>
+        </el-button>
+        <el-pagination style="position: absolute;bottom: 0;left: 300px"
+                       background
+                       layout="prev, pager, next"
+                       :total="1">
+        </el-pagination>
+      </div>
+    </el-main>
+
+    <el-dialog title="创建课程" v-if="dialogClassBuild" :visible.sync="dialogClassBuild">
+      <build-class-page @close="closeDialog"></build-class-page>
+    </el-dialog>
+
+    <el-dialog title="修改课程" v-if="dialogClassEdit" :visible.sync="dialogClassEdit">
+      <build-class-page @close="closeDialog" :isEdit="true" :courseId="courseId"></build-class-page>
+
+    </el-dialog>
 
 
-    <el-drawer
-        title="新建课程"
-        :with-header="false"
-        :before-close="handleClose"
-        :visible.sync="dialog"
-        direction="rtl"
-        ref="drawer"
-        size="850px"
+    <el-main v-show="chapterview">
+      <el-row class="box-wrapper" style="height: auto">
+        <el-row class="subtitle">
+          <h5 style="margin: 10px 24px;float: left">创建章节</h5>
+        </el-row>
+        <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
+          <el-form-item label="章节名称" style="width: 300px;margin-bottom: 0">
+            <el-input v-model="chapterIntro"
+                      placeholder="请输入内容"
+                      maxlength="10"
+                      show-word-limit></el-input>
+          </el-form-item>
+          <el-form-item style="width: 300px;margin-bottom: 0">
+            <el-button type="primary" @click="sendChapter()" style="float: right">创建<i
+                class="el-icon-upload el-icon--right"></i></el-button>
+          </el-form-item>
+        </el-form>
+        <el-row>
 
-    >
-      <build-class @close="drawerClose"></build-class>
+        </el-row>
+      </el-row>
+      <el-table :data="chapterData">
+        <el-table-column label="章节号">
+          <template slot-scope="scope">
+            {{ scope.row.courseChapterPK.chapterId }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="chapterIntro" label="章节名称">
+        </el-table-column>
+        <el-table-column label="操作" width="400px">
+          <template slot-scope="scope">
+            <el-button-group>
+              <el-button type="primary" icon="el-icon-edit"
+                         @click="openVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
+                管理视频
+              </el-button>
+              <el-button type="primary"
+                         @click="dialog1 = true">修改章节
+              </el-button>
+              <el-button type="primary" icon="el-icon-delete"
+                         @click.native.prevent="deleteChapter(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">删除章节
+              </el-button>
+            </el-button-group>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-main>
 
-    </el-drawer>
+    <el-main v-show="videoview">
+      <el-row class="box-wrapper" style="height: auto">
+        <el-row class="subtitle">
+          <h5 style="margin: 10px 24px;float: left">上传视频</h5>
+        </el-row>
+        <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
+          <el-form-item label="视频号" label-position="left" style="width: 300px;margin-bottom: 0">
+            <el-input
+                placeholder="请输入内容"
+                maxlength="2"
+                show-word-limit></el-input>
+          </el-form-item>
+          <el-form-item label="视频名称" style="width: 300px;margin-bottom: 0">
+            <el-input
+                placeholder="请输入内容"
+                maxlength="10"
+                show-word-limit></el-input>
+          </el-form-item>
+          <el-form-item style="width: 300px;margin-bottom: 0">
+            <el-button type="primary" @click="sendVideo" style="float: right">上传<i
+                class="el-icon-upload el-icon--right"></i></el-button>
+          </el-form-item>
+        </el-form>
+        <el-row>
+
+        </el-row>
+      </el-row>
+
+      <el-table :data="videoData">
+        <el-table-column label="视频号">
+          <template slot-scope="scope">
+            {{ scope.row.courseChapterVideoPK.videoId }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="videoName" label="视频名称">
+        </el-table-column>
+        <el-table-column label="操作" width="400px">
+          <!--          <template slot-scope="scope">-->
+          <el-button-group>
+            <el-button type="primary" icon="el-icon-edit" @click="dialog2 = true">修改视频</el-button>
+            <el-button type="primary" icon="el-icon-delete"
+                       @click.native.prevent="deleteRow()">删除课程
+            </el-button>
+          </el-button-group>
+          <!--          </template>-->
+        </el-table-column>
+      </el-table>
+    </el-main>
+
 
     <el-drawer
         title="修改章节"
@@ -197,31 +189,76 @@ export default {
   props: ['id'],
   data() {
     return {
-      dialog: false,
+      dialogClassEdit: false,
       dialog1: false,
       dialog2: false,
       classview: true,
       chapterview: false,
       videoview: false,
-      dialogVisible: false,
+      dialogClassBuild: false,
       classData: this.$store.state.teacherData.teacherClassData,
       chapterData: this.$store.state.teacherData.teacherChapterData,
       videoData: this.$store.state.teacherData.teacherVideoData,
       chapterIntro: "",
+      courseId: null,  //临时传参用
     }
   },
   components: {
-    buildClass: () => import('@/components/classmanagement/buildClass'),
     editupdate: () => import('@/components/classmanagement/editchapter'),
     editVideo: () => import('@/components/classmanagement/editVideo'),
-    buildClassPage: () => import('@/components/classmanagement/buildClassPage')
+    buildClassPage: () => import('@/components/classmanagement/tools/buildClassPage')
   },
   methods: {
-    closeDialog(){
-      this.dialogVisible=false;
+    closeDialog() {
+      this.dialogClassBuild = false;
+      this.dialogClassEdit = false;
     },
     deleteRow() {
       // 待加入后台删除
+    },
+    async deleteClass(a) {
+      let that = this;
+      let JWT = that.$store.state.JWT;
+      await axios.post("http://" + that.Api + "/api/Course/getCourseById?courseId=" + a, {
+        headers: {
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log("删除课程", response);
+      }, function (err) {
+        console.log(err);
+      });
+    },  //删除课程
+    async deleteChapter(course,chapter) {
+      let that = this;
+      let JWT = that.$store.state.JWT;
+      await axios.post("http://" + that.Api + "/api/Course/deleteCourseChapter?chapterId=" + chapter+"&courseId="+course, {
+        headers: {
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log("删除章节", response);
+      }, function (err) {
+        console.log(err);
+      });
+    },  //删除课程
+    handleClose(done) {
+      if (this.loading) {
+        return;
+      }
+      this.$confirm('确定要提交表单吗？')
+          .then(_ => {
+            this.loading = true;
+            this.timer = setTimeout(() => {
+              done();
+              // 动画关闭需要一定的时间
+              setTimeout(() => {
+                this.loading = false;
+              }, 400);
+            }, 2000);
+          })
+          .catch(_ => {
+          });
     },
 
     async openChapter(id) {
@@ -290,17 +327,7 @@ export default {
       this.$store.commit("savebreadcrumb", breadcrumb)
     },
 
-    handleClose(done) {
-      this.$confirm('还有未保存的工作哦确定关闭吗？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {
-          });
-    },
-
     drawerClose(data) {
-      this.dialog = data;
       this.dialog1 = data;
       this.dialog2 = data;
     },
@@ -335,15 +362,14 @@ export default {
         that.$store.commit("saveTeacherChapterData", res.data.data)
       })
       that.chapterData = that.$store.state.teacherData.teacherChapterData;
-    },
+    },  //创建章节
   },
   mounted: function () {
 
     // console.log(this.classData);
     let that = this;
     let a = that.$route.params.id;
-    console.log(a);
-    if (a === 1) {
+    if (a == 1) {
       that.classview = true;
       that.chapterview = false;
       that.videoview = false;
@@ -358,7 +384,7 @@ export default {
         }
       ]
       this.$store.commit("savebreadcrumb", breadcrumb);
-    } else if (a === 2) {
+    } else if (a == 2) {
       that.classview = false;
       that.chapterview = true;
       that.videoview = false;
@@ -377,7 +403,7 @@ export default {
         }
       ]
       this.$store.commit("savebreadcrumb", breadcrumb)
-    } else if (a === 3) {
+    } else if (a == 3) {
       that.classview = false;
       that.chapterview = false;
       that.videoview = true;
