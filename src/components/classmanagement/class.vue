@@ -162,7 +162,7 @@
         size="600px"
 
     >
-      <editupdate @close="drawerClose"></editupdate>
+      <editChapter @close="drawerClose"></editChapter>
     </el-drawer>
 
     <el-drawer
@@ -204,7 +204,7 @@ export default {
     }
   },
   components: {
-    editupdate: () => import('@/components/classmanagement/editchapter'),
+    editChapter: () => import('@/components/classmanagement/editchapter'),
     editVideo: () => import('@/components/classmanagement/editVideo'),
     buildClassPage: () => import('@/components/classmanagement/tools/buildClassPage')
   },

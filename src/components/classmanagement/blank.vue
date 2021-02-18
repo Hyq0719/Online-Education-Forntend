@@ -6,7 +6,16 @@
 
 <script>
 export default {
-name: "blank"
+name: "blank",
+mounted() {
+  let breadcrumb = [
+  {
+    link: '/Classmanagement/blank',
+    title: '课程管理'
+  }
+]
+  this.$store.commit("savebreadcrumb", breadcrumb);
+}
 }
 </script>
 

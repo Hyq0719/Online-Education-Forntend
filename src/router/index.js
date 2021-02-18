@@ -20,11 +20,7 @@ import History from '../views/History';
 import VIP from '../views/VIP';
 import Feedback from "@/views/Feedback";
 import classManagementClass from "@/components/classmanagement/class";
-import updateClass from "@/components/classmanagement/editVideo";
-import Upload from "@/components/classmanagement/Upload";
 import classBread from "@/components/classmanagement/classbread";
-import chapterManagement from "@/components/classmanagement/editchapter";
-import buildClass from "@/components/classmanagement/tools/buildClassPage";
 import commentClass from "@/components/classmanagement/commentClass";
 import liveManagement from "@/components/classmanagement/liveManagement";
 import blank from "@/components/classmanagement/blank";
@@ -105,29 +101,9 @@ export default new Router({
             component: classManagement,
             children: [
                 {
-                    path: 'buildClass',
-                    name: 'buildClass',
-                    component: buildClass,
-                },
-                {
-                    path: 'updateClass',
-                    name: 'updateClass',
-                    component: updateClass,
-                },
-                {
-                    path: 'Upload',
-                    name: 'Upload',
-                    component: Upload,
-                },
-                {
                     path: 'classBread',
                     name: 'classBread',
                     component: classBread,
-                },
-                {
-                    path: 'chapter',
-                    name: 'chapterManagement',
-                    component: chapterManagement,
                 },
                 {
                     path: 'class/:id',

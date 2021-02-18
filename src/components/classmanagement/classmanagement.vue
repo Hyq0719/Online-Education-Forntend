@@ -78,13 +78,6 @@ export default {
 ,
 mounted:function () {
   this.getCourse();
-  let breadcrumb = [
-    {
-      link: '/Classmanagement/blank',
-      title: '课程管理'
-    }
-  ]
-  this.$store.commit("savebreadcrumb", breadcrumb)
 }
 ,
 computed: {
