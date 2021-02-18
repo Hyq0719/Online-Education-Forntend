@@ -9,16 +9,21 @@ export default new Vuex.Store({
     state: {
         isLogin: JSON.parse(sessionStorage.getItem('isLogin')) || false,
         JWT: JSON.parse(VueCookies.get('JWT')) || false,
-        StudentPreferences: JSON.parse(sessionStorage.getItem('StudentPreferences')) || false,
-        Prefer: JSON.parse(sessionStorage.getItem('Prefer')) || false,
-        AllMajor: JSON.parse(sessionStorage.getItem('AllMajor')) || false,
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
+        StudentHistory: JSON.parse(sessionStorage.getItem('StudentHistory')) || false,
+        StudentPreferences: JSON.parse(sessionStorage.getItem('StudentPreferences')) || false,
+
+        Prefer: JSON.parse(sessionStorage.getItem('Prefer')) || false,
+        MajorPrefer: JSON.parse(sessionStorage.getItem('MajorPrefer')) || false,
+        AllMajor: JSON.parse(sessionStorage.getItem('AllMajor')) || false,
+
         menuCourseData: JSON.parse(sessionStorage.getItem('menuCourseData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
+        Video: JSON.parse(sessionStorage.getItem('Video')) || false,
         SearchedCourseData: JSON.parse(sessionStorage.getItem('SearchedCourseData')) || false,
-        commentData: JSON.parse(sessionStorage.getItem('commentData')) || [],
         RelatedCourses: JSON.parse(sessionStorage.getItem('RelatedCourses')) || false,
+        commentData: JSON.parse(sessionStorage.getItem('commentData')) || [],
         teacherData: {
             teacherClassData: JSON.parse(sessionStorage.getItem('teacherClassData')) || [],
             teacherChapterData: JSON.parse(sessionStorage.getItem('teacherChapterData')) || [],
@@ -45,6 +50,11 @@ export default new Vuex.Store({
             state.JWT = JWT;
             VueCookies.set('JWT', JSON.stringify(state.JWT), "7D");
         },
+        //学生历史记录
+        saveStudentHistory(state, StudentHistory) {
+            state.StudentHistory = StudentHistory;
+            sessionStorage.setItem('StudentHistory', JSON.stringify(state.StudentHistory));
+        },
         //学生偏好
         saveStudentPreferences(state, StudentPreferences) {
             state.StudentPreferences = StudentPreferences;
@@ -60,7 +70,7 @@ export default new Vuex.Store({
             state.userData.teacherPicUrl = 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png';
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
-        //专业
+        //教师学生专业
         saveMajor(state) {
             state.userData.major = {
                 majorContent: '',
@@ -72,15 +82,20 @@ export default new Vuex.Store({
             state.userData = userData;
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
-        //所有子专业
-        savePrefer(state, Prefer) {
-            state.Prefer = Prefer;
-            sessionStorage.setItem('Prefer', JSON.stringify(state.Prefer));
-        },
-        //所有专业+子专业
+        //所有专业
         saveAllMajor(state, AllMajor) {
             state.AllMajor = AllMajor;
             sessionStorage.setItem('AllMajor', JSON.stringify(state.AllMajor));
+        },
+        //所有专业+子专业
+        saveMajorPrefer(state, MajorPrefer) {
+            state.MajorPrefer = MajorPrefer;
+            sessionStorage.setItem('MajorPrefer', JSON.stringify(state.MajorPrefer));
+        },
+        //某专业的子专业
+        savePrefer(state, Prefer) {
+            state.Prefer = Prefer;
+            sessionStorage.setItem('Prefer', JSON.stringify(state.Prefer));
         },
         //课程菜单页面的课程信息
         saveMenuCourseData(state, menuCourseData) {
@@ -91,6 +106,11 @@ export default new Vuex.Store({
         saveCourseData(state, courseData) {
             state.courseData = courseData;
             sessionStorage.setItem('courseData', JSON.stringify(state.courseData));
+        },
+        //视频信息
+        saveVideo(state, Video) {
+            state.Video = Video;
+            sessionStorage.setItem('Video', JSON.stringify(state.Video));
         },
         //课程章节信息
         saveChapterData(state, chapterData) {

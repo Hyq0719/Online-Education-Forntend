@@ -58,7 +58,14 @@ export default {
 }
 
 .search-img {
+  height: 130px;
+  width: 230px;
   margin: 20px;
+}
+
+.search-img img {
+  width: 100%;
+  height: 100%;
 }
 
 .search-text {

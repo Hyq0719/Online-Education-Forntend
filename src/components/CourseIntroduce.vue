@@ -93,7 +93,7 @@
                            score-template="{value}">
                   </el-rate>
                   <div style="float: right;margin-top: 20px">
-                    <el-button  circle class="commentStar"
+                    <el-button circle class="commentStar"
                                @click="commentStar(item,index)">
                       <img src="@/assets/damuzhi.png" width="20px" height="20px">
                     </el-button>
@@ -134,7 +134,7 @@
       </div>
       <el-row :gutter="25">
         <el-col :span="6" v-for="(item,index) in this.$store.state.RelatedCourses" v-bind:key="index">
-          <router-link :to="{path:'/course',query:{courseId:item.courseId}}" @click.native="RelatedCourse()">
+          <router-link :to="{path:'/course',query:{courseId:item.courseId}}">
             <div class="grid-content">
               <img :src="item.src" alt="图片缺失">
               <h4>{{ item.name }}</h4>
@@ -167,48 +167,54 @@ export default {
       currentUserComment: {},
     };
   },
+  watch: {
+    '$route'(to, from) {
+      this.GetComment();
+      this.displayComment();
+    }
+  },
   methods: {
     async commentStar(item, index) {
       let that = this;
-      if (that.$store.state.isLogin !== false){
-      let JWT = that.$store.state.JWT;
-      document.getElementsByClassName('commentStar')[index].classList.toggle("pink");
-      if (document.getElementsByClassName('commentStar')[index].classList[4] !== "pink") {          //取消点赞
-        let a = new URLSearchParams();
-        a.append('commentId', item.commentId);
-        a.append('user_id', that.$store.state.userData.userId);
-        item.likes = item.likes - 1;
-        await axios.post("http://" + that.Api + "/api/Student/dislikeComment", a, {
-          headers: {
-            'Authorization': JWT,
-          }
-        }).then(function (response) {
-          // console.log(response);
-          if (response.data.code === 1000) {
-            console.log("取消点赞成功");
-          }
-        }, function (err) {
-          console.log(err);
-        });
-      } else {  //点赞
-        let a = new URLSearchParams();
-        a.append('commentId', item.commentId);
-        a.append('user_id', that.$store.state.userData.userId);
-        item.likes++;
-        await axios.post("http://" + that.Api + "/api/Student/likeComment", a, {
-          headers: {
-            'Authorization': JWT,
-          }
-        }).then(function (response) {
-          // console.log(response);
-          if (response.data.code === 1000) {
-            console.log("点赞成功");
-          }
-        }, function (err) {
-          console.log(err);
-        });}
-      }
-      else {
+      if (that.$store.state.isLogin !== false) {
+        let JWT = that.$store.state.JWT;
+        document.getElementsByClassName('commentStar')[index].classList.toggle("pink");
+        if (document.getElementsByClassName('commentStar')[index].classList[4] !== "pink") {          //取消点赞
+          let a = new URLSearchParams();
+          a.append('commentId', item.commentId);
+          a.append('user_id', that.$store.state.userData.userId);
+          item.likes = item.likes - 1;
+          await axios.post("http://" + that.Api + "/api/Student/dislikeComment", a, {
+            headers: {
+              'Authorization': JWT,
+            }
+          }).then(function (response) {
+            // console.log(response);
+            if (response.data.code === 1000) {
+              console.log("取消点赞成功");
+            }
+          }, function (err) {
+            console.log(err);
+          });
+        } else {  //点赞
+          let a = new URLSearchParams();
+          a.append('commentId', item.commentId);
+          a.append('user_id', that.$store.state.userData.userId);
+          item.likes++;
+          await axios.post("http://" + that.Api + "/api/Student/likeComment", a, {
+            headers: {
+              'Authorization': JWT,
+            }
+          }).then(function (response) {
+            // console.log(response);
+            if (response.data.code === 1000) {
+              console.log("点赞成功");
+            }
+          }, function (err) {
+            console.log(err);
+          });
+        }
+      } else {
         that.$message.error('请登陆后评论');
         that.$router.push('/login');
       }
@@ -222,9 +228,6 @@ export default {
       this.textarea = '';
       this.evaluateBox2 = false;
       this.currentComment = true;
-    },
-    RelatedCourse() {
-      this.$router.go(0);
     },
     handleClick(tab, event) {
       console.log(tab, event);
@@ -301,86 +304,87 @@ export default {
       a.append('courseId', that.$route.query.courseId);
       a.append('page', 1);
       a.append('sort', 1);
-      await axios.post("http://" + that.Api + "/api/Course/getCourseComments", a).then(function (response)
-      {
+      await axios.post("http://" + that.Api + "/api/Course/getCourseComments", a).then(function (response) {
         if (response.data.code === 1000) {
           that.$store.commit("saveCommentData", response.data.data.list);
           that.comment = that.$store.state.commentData;
 
           if (that.$store.state.isLogin !== false) {
-          let clist = new Array();
-          console.log("查看全部评论：", that.comment);
-          let c = that.comment;
-          for (let i = 0; i < c.length; i++) {
-            clist[i] = c[i].commentId;
-          }
-          console.log("查看评论的ID:", clist);
-          let pa = new URLSearchParams();
-          let params = clist;
-          // pa.append('commentIds', JSON.stringify(clist));
-          let id = that.$store.state.userData.userId;
-          pa.append('user_id', that.$store.state.userData.userId);
-          axios.post("http://" + that.Api + "/api/Student/getStudentIsLikedComments?user_id=" + id, params, {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': JWT,
+            let clist = new Array();
+            console.log("查看全部评论：", that.comment);
+            let c = that.comment;
+            for (let i = 0; i < c.length; i++) {
+              clist[i] = c[i].commentId;
             }
-          }).then(function (response) {
-            console.log("查看点赞成功", response);
-            if (response.data.code === 1000) {
-              for (let j = 0; j < c.length; j++) {
-                for (let k = 0; k < response.data.data.length; k++) {
-                  if (c[j].commentId === response.data.data[k].commentId) {
-                    document.getElementsByClassName('commentStar')[j].classList.add("pink");
+            console.log("查看评论的ID:", clist);
+            let pa = new URLSearchParams();
+            let params = clist;
+            // pa.append('commentIds', JSON.stringify(clist));
+            let id = that.$store.state.userData.userId;
+            pa.append('user_id', that.$store.state.userData.userId);
+            axios.post("http://" + that.Api + "/api/Student/getStudentIsLikedComments?user_id=" + id, params, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': JWT,
+              }
+            }).then(function (response) {
+              console.log("查看点赞成功", response);
+              if (response.data.code === 1000) {
+                for (let j = 0; j < c.length; j++) {
+                  for (let k = 0; k < response.data.data.length; k++) {
+                    if (c[j].commentId === response.data.data[k].commentId) {
+                      document.getElementsByClassName('commentStar')[j].classList.add("pink");
+                    }
                   }
                 }
               }
-            }
-          }, function (err) {
-            console.log(err);
-          });}
+            }, function (err) {
+              console.log(err);
+            });
+          }
 
         }
       }, function (err) {
         console.log(err);
       });
     },
+    GetComment(){
+      let that = this;
+      let JWT = that.$store.state.JWT;
+      if (that.$store.state.isLogin !== false) {
+        let b = new URLSearchParams();
+        b.append('course_id', that.$route.query.courseId);
+        b.append('user_id', that.$store.state.userData.userId);
+        axios.post("http://" + that.Api + "/api/Student/getCourseCommentByStudentAndCourse", b, {
+          headers: {
+            'Authorization': JWT,
+          }
+        }).then(function (response) {
+          console.log("获取评论成功");
+          if (response.data.code === 1000) {
+            if (response.data.data == null) ;
+            else {
+              that.currentUserComment = response.data.data;
+              that.evaluateBox = false;
+              that.currentComment = true;
+            }
+            that.comment = that.$store.state.commentData;
+          }
+        }, function (err) {
+          console.log(err);
+        });
+      } else {
+        that.evaluateBox = false;
+        console.log("关闭评论")
+      }
+    }
   },
   components: {
     classevaluate,
   },
-  mounted: function () {
-    let that = this;
-    let JWT = that.$store.state.JWT;
-    that.displayComment();
-    if (that.$store.state.isLogin !== false) {
-      let b = new URLSearchParams();
-      b.append('course_id', that.$route.query.courseId);
-      b.append('user_id', that.$store.state.userData.userId);
-      axios.post("http://" + that.Api + "/api/Student/getCourseCommentByStudentAndCourse", b, {
-        headers: {
-          'Authorization': JWT,
-        }
-      }).then(function (response) {
-        console.log("获取评论成功");
-        if (response.data.code === 1000) {
-          if (response.data.data == null) ;
-          else {
-            that.currentUserComment = response.data.data;
-            that.evaluateBox = false;
-            that.currentComment = true;
-          }
-          that.comment = that.$store.state.commentData;
-        }
-      }, function (err) {
-        console.log(err);
-      });
-    }
-    else
-    {
-      that.evaluateBox= false;
-      console.log("关闭评论")
-    }
+  created(){
+    this.GetComment();
+    this.displayComment();
   },
 };
 </script>

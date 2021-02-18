@@ -1,7 +1,7 @@
 <template>
   <div>
     <Sidebar></Sidebar>
-    <Header></Header>
+    <Header :key="$store.state.isLogin||$store.state.isLoginTeacher"></Header>
     <Nav1></Nav1>
     <nav2></nav2>
     <Article></Article>
@@ -16,6 +16,7 @@ import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import Nav2 from '../components/Nav2';
 import Article from '../components/Article';
+import axios from "axios";
 
 export default {
   name: "Main",
@@ -26,6 +27,62 @@ export default {
     Sidebar,
     Nav2,
     Article,
+  },
+  created() {
+    this.main();
+  },
+  methods: {
+    main() {
+      let that = this;
+      //获取专业+偏好
+      axios.get("http://" + this.Api + "/api/Major/findAllMajor", {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(async function (response) {
+        console.log("获取所有专业", response);
+        that.$store.commit('saveAllMajor', response.data.data);
+        let MajorPrefer = response.data.data;
+        for (let i in MajorPrefer) {
+          // console.log(MajorData[i]);
+          let a = new URLSearchParams;
+          a.append("major_id", MajorPrefer[i].majorId);
+          await axios.post("http://" + that.Api + "/api/Major/getPreferByMajor?" + a, null, {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }).then(function (response) {
+            MajorPrefer[i].prefer = response.data.data;
+          }, function (err) {
+            console.log(err);
+          });
+        }
+        console.log("获取专业＋子专业", MajorPrefer);
+        that.$store.commit('saveMajorPrefer', MajorPrefer);
+      }, function (err) {
+        console.log(err);
+      });
+      //JWT登录
+      if (!this.$store.state.isLogin && !this.$store.state.isLoginTeacher && this.$store.state.JWT) {
+        let that = this;
+        axios.post("http://" + this.Api + "/api/Login/loginByJwt", null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': this.$store.state.JWT,
+          }
+        }).then(function (response) {
+          console.log("登录成功");
+          if (response.data.data.teacherPicUrl != null) {
+            that.$store.commit('saveIsLoginTeacher');
+          } else {
+            that.$store.commit('saveIsLogin');
+          }
+          that.$store.commit('saveData', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      }
+    },
   },
 };
 </script>

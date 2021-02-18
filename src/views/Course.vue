@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :key="key">
     <Sidebar></Sidebar>
     <Header></Header>
     <Course></Course>
@@ -26,16 +26,62 @@ export default {
   },
   data() {
     return {
+      key: '',
       courseId: this.$route.query.courseId,
       data: [],
     };
+  },
+  watch: {
+    '$route'(to, from) {
+      this.courseId = this.$route.query.courseId;
+      this.Chapter();
+      this.Course();
+      this.RelatedCourse();
+      this.CourseHistory();
+    }
   },
   created() {
     this.Chapter();
     this.Course();
     this.RelatedCourse();
+    this.CourseHistory();
   },
   methods: {
+    //获取该学生的历史观看信息
+    CourseHistory() {
+      let that = this;
+      if (this.$store.state.isLogin) {
+        let a = new URLSearchParams;
+        a.append("courseId", this.courseId);
+        a.append("user_id", this.$store.state.userData.userId);
+        axios.post("http://" + this.Api + "/api/Student/getWatchRecordByStudentAndCourse?" + a, null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': this.$store.state.JWT,
+          }
+        }).then(function (response) {
+          if (response != null) {
+            console.log("获取学生对该课程的历史记录", response);
+            that.chapterId = response.data.data.courseChapterVideo.courseChapterVideoPK.chapterId;
+            that.$store.commit('saveVideo', {
+              chapterId: response.data.data.courseChapterVideo.courseChapterVideoPK.chapterId,
+              videoUrl: response.data.data.courseChapterVideo.videoUrl,
+              videoId: response.data.data.courseChapterVideo.courseChapterVideoPK.videoId
+            });
+            that.$notify.info({
+              title: '消息',
+              message: '已为你定位到上次播放'
+            });
+          } else {
+            that.$store.commit('saveVideo', null);
+          }
+        }, function (err) {
+          console.log(err);
+        })
+      } else {
+        that.$store.commit('saveVideo', null);
+      }
+    },
     //获取章节及视频任务信息
     Chapter() {
       // console.log(this.courseId);
@@ -59,6 +105,13 @@ export default {
         }
         that.$store.commit('saveChapterData', that.data);
         console.log("获取章节信息", that.data);
+        if (that.$store.state.Video == null) {
+          that.$store.commit('saveVideo', {
+            chapterId: that.data[0].VideoList[0].courseChapterVideoPK.chapterId,
+            videoUrl: that.data[0].VideoList[0].videoUrl,
+            videoId: that.data[0].VideoList[0].courseChapterVideoPK.videoId
+          });
+        }
       }, function (err) {
         console.log(err);
       });
