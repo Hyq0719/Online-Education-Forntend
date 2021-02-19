@@ -15,7 +15,6 @@ export default new Vuex.Store({
 
         Prefer: JSON.parse(sessionStorage.getItem('Prefer')) || false,
         MajorPrefer: JSON.parse(sessionStorage.getItem('MajorPrefer')) || false,
-        AllMajor: JSON.parse(sessionStorage.getItem('AllMajor')) || false,
 
         menuCourseData: JSON.parse(sessionStorage.getItem('menuCourseData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
@@ -81,11 +80,6 @@ export default new Vuex.Store({
         saveData(state, userData) {
             state.userData = userData;
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
-        },
-        //所有专业
-        saveAllMajor(state, AllMajor) {
-            state.AllMajor = AllMajor;
-            sessionStorage.setItem('AllMajor', JSON.stringify(state.AllMajor));
         },
         //所有专业+子专业
         saveMajorPrefer(state, MajorPrefer) {
