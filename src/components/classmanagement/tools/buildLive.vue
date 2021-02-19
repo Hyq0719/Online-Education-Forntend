@@ -19,11 +19,9 @@
             </el-input>
           </el-form-item>
           <el-form-item label="选择直播日期">
-            {{formBuild.liveDate}}
             <el-date-picker style="float: left;margin: 10px 24px"
                 v-model="formBuild.liveDate"
                 align="right"
-                type="date"
                 placeholder="选择日期"
                 :picker-options="pickerOptions"
                             value-format="yyyy-MM-dd">
@@ -33,6 +31,17 @@
             <el-select v-model="formBuild.arrange" placeholder="请选择时间" style="float: left;margin: 10px 24px">
               <el-option
                   v-for="item in options1"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="选择直播线路">
+            <el-select v-model="formBuild.addressId" placeholder="请选择时间" style="float: left;margin: 10px 24px">
+              <el-option
+                  v-for="item in options2"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -70,9 +79,15 @@ import axios from "axios";
 export default {
 
   name: "buildClass",
-  props:[
-
-  ],
+  props:{
+    liveId:{
+      type:Number,
+    },
+    isEdit:{
+      type:Boolean,
+      default:false,
+    }
+  },
   data() {
     return {
       pickerOptions: {                   //可选直播的时间
@@ -81,16 +96,17 @@ export default {
           let m=time.getTime() > Date.now()+3600 * 1000 * 24*7;
           let c= n | m;
           return c ;
-        }},
+        },
+      },
       imageUrl: '',
       loading: false,
       formBuild: {              //课程基本属性
         addressId: null,
         name: '',
         intro: '',
-        Isvip: false,
         liveDate:'',
         arrange:null,
+        livePicUrl:'',
       },
       options1: [{                        //课程类别
         value: 1,
@@ -108,6 +124,13 @@ export default {
         value: 5,
         label: '18:00'
       }],
+      options2:[{
+        value: 1,
+        label: '线路一'
+      },{
+        value: 1,
+        label: '线路二'
+      }],
     };
   },
   methods: {
@@ -123,7 +146,7 @@ export default {
                  name}) => {
         if (res && res.status == 200) {
           that.imageUrl = url;
-          that.formBuild.coursePicUrl = url;
+          that.formBuild.livePicUrl = url;
           console.log(`阿里云OSS上传图片成功回调`, res, url, name);
         }
       }).catch((err) => {
@@ -132,13 +155,14 @@ export default {
     },
     closed(){
       let that = this;
-      // that.uploadHttp(that.imageFile);
-      // let str =that.formBuild.liveData.toDateString();
-      console.log("选定时间",that.formBuild);
+      console.log(that.formBuild);
+      let r=that.formBuild.liveDate;
+      console.log("选定时间",r  instanceof Date);
+
       let params={
           addressId: that.formBuild.addressId,
           liveArrange: that.formBuild.arrange,
-          liveDate: that.formBuild.liveData,
+          liveDate: that.formBuild.liveDate,
           liveIntro: that.formBuild.intro,
           liveName: that.formBuild.name,
           livePicUrl: that.formBuild.coursePicUrl,
@@ -160,9 +184,35 @@ export default {
       }, function (err) {
         console.log(err);
       });
-      this.$emit('close',false);
+      this.$emit('close', false);
     }
   },
+  mounted() {
+    let that = this;
+    if (that.isEdit) {
+      axios.post('http://' + that.Api + "/api/Course/getLiveById?liveId=" + that.liveId,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+            if (res.data.code === 1000) {
+              console.log("直播信息", res);
+              that.formBuild.name = res.data.data.name;
+              that.formBuild.intro = res.data.data.intro;
+              that.formBuild.liveDate = res.data.data.liveDate;
+              that.formBuild.addressId =res.data.data;
+              that.formBuild.arrange = res.data.data;
+              that.formBuild.livePicUrl= res.data.data;
+              that.imageUrl = res.data.data;
+            }
+          }, function (err) {
+            console.log(err);
+          }
+      );
+    }
+  }
 }
 </script>
 

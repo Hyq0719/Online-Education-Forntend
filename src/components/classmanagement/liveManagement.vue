@@ -8,14 +8,16 @@
         <el-table-column prop="liveArrange" label="线路">
         </el-table-column>
         <el-table-column label="操作" width="400px">
+          <template slot-scope="scope">
           <el-button-group>
             <el-button type="primary" icon="el-icon-edit"
-                       @click="dialogEdit = true">修改直播信息
+                       @click="liveId=scope.row.liveId;dialogEdit = true">修改直播信息
             </el-button>
             <el-button type="primary" icon="el-icon-delete"
-                       @click.native.prevent="deleteRow()">删除课程
+                       @click.native.prevent="deleteRow()">删除直播
             </el-button>
           </el-button-group>
+          </template>
         </el-table-column>
       </el-table>
 
@@ -37,7 +39,7 @@
     </el-dialog>
 
     <el-dialog title="修改直播信息" :visible.sync="dialogEdit">
-      <build-live @close="closeDialogEdit"></build-live>
+      <build-live @close="closeDialogEdit" :isEdit="true" :lived="liveId" ></build-live>
     </el-dialog>
 
   </div>
@@ -52,6 +54,7 @@ export default {
     return {
       dialogEdit: false,
       dialogBuild: false,
+      liveId:null,
       liveData: this.$store.state.teacherData.liveData,
     }
   },

@@ -55,7 +55,7 @@ export default {
       }, function (err) {
         console.log(err);
       });
-    },
+    }, //加载专业类型
 };
 </script>
 

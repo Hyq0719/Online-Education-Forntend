@@ -56,12 +56,6 @@ export default {
   },
 
   methods: {
-    open() {         //弹窗
-      this.$alert('更新成功，待审核', '提示', {
-        confirmButtonText: '确定',
-      });
-      this.$emit('close',false);
-    },
     closed(){
       this.$alert('上传成功，待审核', '提示', {
         confirmButtonText: '确定',
