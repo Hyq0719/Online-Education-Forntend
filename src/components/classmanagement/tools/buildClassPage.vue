@@ -198,10 +198,11 @@ export default {
       ).then(function (res) {
             if (res.data.code === 1000) {
               console.log("课程信息", res);
-              that.intro = res.data.data.intro;
-              that.needVip = res.data.data.needVip;
-              that.perferId =[res.data.data.prefer.majorId,res.data.data.prefer.preferId*100+res.data.data.prefer.majorId];
-              that.coursePicUrl = res.data.data.coursePic;
+              that.formBuild.name = res.data.data.name;
+              that.formBuild.intro = res.data.data.intro;
+              that.formBuild.needVip = res.data.data.needVip;
+              that.formBuild.perferId =[res.data.data.prefer.majorId,res.data.data.prefer.preferId*100+res.data.data.prefer.majorId];
+              that.formBuild.coursePicUrl = res.data.data.coursePic;
               that.imageUrl = res.data.data.coursePic;
             }
           }, function (err) {
@@ -209,7 +210,8 @@ export default {
           }
       );
     }
-    const r= this.$store.state.Prefer;
+    const r= that.$store.state.Prefer;
+    console.log(that.$store.state.Prefer);
     let n = r.map(item =>({label:item.major.majorContent,value:item.major.majorId,children:[]}));
     let k=0;
     n = n.reduce((obj, item) => {

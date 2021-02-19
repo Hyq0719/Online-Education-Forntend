@@ -14,17 +14,12 @@
     <el-main>
       <div style="width: 500px">
         <el-form label-width="160px">
-          <el-form-item label="章节号" style="width: 300px">
-            <el-input
-                      placeholder="请输入内容"
-                      maxlength="10"
-                      show-word-limit></el-input>
-          </el-form-item>
           <el-form-item label="章节名称" >
             <el-input
                 show-word-limit
                 maxlength="20"
                 placeholder="请输入内容"
+                v-model="intro"
                 >
             </el-input>
           </el-form-item>
@@ -37,44 +32,58 @@
 
 <script>
 
+import axios from "axios";
+
 export default {
-  name: "chapter",
+  name: "editChapter",
+  props:{
+    courseId:{
+      type:Number,
+    },
+    chapterId:{
+      type:Number,
+    },
+  },
   data() {
     return {
       loading:false,
+      intro:'',
       }
   },
   methods: {
-    open() {         //弹窗
-      this.$alert('上传成功，课程号为XXXXX，待审核', '提示', {
-        confirmButtonText: '确定',
-        // callback: action => {
-        //   this.$message({
-        //     type: 'info',
-        //     message: `action: ${action}`
-        //   });
-        // }
-      });
-    },
-    handleClose(done) {
-      if (this.loading) {
-        return;
-      }
-      this.$confirm('确定要提交表单吗？')
-          .then(_ => {
-            this.loading = true;
-            this.timer = setTimeout(() => {
-              done();
-              // 动画关闭需要一定的时间
-              setTimeout(() => {
-                this.loading = false;
-              }, 400);
-            }, 2000);
-          })
-          .catch(_ => {
-          });
+    async sendChapter() {
+      let that = this;
+      let a = new URLSearchParams();
+      let course ;
+      let chapter ;
+      let intro;
+        course = that.courseId;
+        chapter = that.chapterId;
+        intro = that.intro;
+      a.append('courseId', course);
+      a.append('chapterId', chapter);
+      a.append('intro', intro);
+      await axios.post("http://" + that.Api + "/api/Course/addCourseChapter", a, {
+        headers: {
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': that.$store.state.JWT,
+        }
+      }).then(function (res) {
+        console.log("章节修改成功",res);
+      })
+      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + course, {
+        headers: {
+          // 'Content-Type': 'application/json',
+          'Authorization': that.$store.state.JWT,
+        }
+      }).then(function (res) {
+        // console.log(res);
+        that.$store.commit("saveTeacherChapterData", res.data.data)
+      })
+      that.chapterData = that.$store.state.teacherData.teacherChapterData;
     },
     closed(){
+      this.sendChapter()
       this.$alert('上传成功，待审核', '提示', {
         confirmButtonText: '确定',
       });
@@ -89,7 +98,7 @@ export default {
 .headerbutton {
   cursor: pointer;
   float: right;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 

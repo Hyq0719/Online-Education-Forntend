@@ -91,7 +91,7 @@
                 管理视频
               </el-button>
               <el-button type="primary"
-                         @click="dialog1 = true">修改章节
+                         @click="dialog1 = true;courseId = scope.row.courseChapterPK.courseId;chapterId=scope.row.courseChapterPK.chapterId ">修改章节
               </el-button>
               <el-button type="primary" icon="el-icon-delete"
                          @click.native.prevent="deleteChapter(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">删除章节
@@ -139,14 +139,14 @@
         <el-table-column prop="videoName" label="视频名称">
         </el-table-column>
         <el-table-column label="操作" width="400px">
-          <!--          <template slot-scope="scope">-->
+                    <template slot-scope="scope">
           <el-button-group>
             <el-button type="primary" icon="el-icon-edit" @click="dialog2 = true">修改视频</el-button>
             <el-button type="primary" icon="el-icon-delete"
-                       @click.native.prevent="deleteRow()">删除课程
+                       @click.native.prevent="deleteVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">删除课程
             </el-button>
           </el-button-group>
-          <!--          </template>-->
+                    </template>
         </el-table-column>
       </el-table>
     </el-main>
@@ -156,19 +156,21 @@
         title="修改章节"
         :with-header="false"
         :before-close="handleClose"
+        v-if="dialog1"
         :visible.sync="dialog1"
         direction="rtl"
         ref="drawer"
         size="600px"
 
     >
-      <editChapter @close="drawerClose"></editChapter>
+      <editChapter @close="drawerClose" :courseId="courseId" :chapterId="chapterId" ></editChapter>
     </el-drawer>
 
     <el-drawer
         title="修改视频"
         :with-header="false"
         :before-close="handleClose"
+        v-if="dialog2"
         :visible.sync="dialog2"
         direction="rtl"
         ref="drawer"
@@ -201,6 +203,7 @@ export default {
       videoData: this.$store.state.teacherData.teacherVideoData,
       chapterIntro: "",
       courseId: null,  //临时传参用
+      chapterId:null,
     }
   },
   components: {
@@ -212,9 +215,6 @@ export default {
     closeDialog() {
       this.dialogClassBuild = false;
       this.dialogClassEdit = false;
-    },
-    deleteRow() {
-      // 待加入后台删除
     },
     async deleteClass(a) {
       let that = this;
@@ -242,6 +242,19 @@ export default {
         console.log(err);
       });
     },  //删除课程
+    async deleteVideo(a) {
+      let that = this;
+      let JWT = that.$store.state.JWT;
+      await axios.post("http://" + that.Api + "/api/Course/getCourseById?courseId=" + a, {
+        headers: {
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log("删除课程", response);
+      }, function (err) {
+        console.log(err);
+      });
+    },
     handleClose(done) {
       if (this.loading) {
         return;
@@ -269,8 +282,8 @@ export default {
           'Authorization': that.$store.state.JWT,
         }
       }).then(function (res) {
-        // console.log(res);
-        that.$store.commit("saveTeacherChapterData", res.data.data)
+        console.log("章节信息",res);
+        that.$store.commit("saveTeacherChapterData", res.data.data);
       })
       that.chapterData = that.$store.state.teacherData.teacherChapterData;
 
@@ -290,7 +303,7 @@ export default {
         }
       ]
       this.$store.commit("savebreadcrumb", breadcrumb)
-    },
+    },   //打开章节时调用
 
     async openVideo(course, chapter) {
       let that = this;
@@ -325,7 +338,7 @@ export default {
         },
       ]
       this.$store.commit("savebreadcrumb", breadcrumb)
-    },
+    },   //打开视频时调用
 
     drawerClose(data) {
       this.dialog1 = data;
@@ -338,15 +351,28 @@ export default {
     async sendChapter() {
       let that = this;
       let a = new URLSearchParams();
-      let course = this.chapterData[0].courseChapterPK.courseId;
-      let chapter = this.chapterData.length + 1;
-      let intro = this.chapterIntro;
+      let course ;
+      let chapter ;
+      let intro;
+      console.log(that.chapterData);
+      if (that.chapterData.length === 0)
+      {
+         course = that.courseId;
+         chapter = 1;
+         intro = that.chapterIntro;
+      }
+      else
+      {
+        course = that.chapterData[0].courseChapterPK.courseId;
+        chapter = that.chapterData.length + 1;
+        intro = that.chapterIntro;
+      }
       a.append('courseId', course);
       a.append('chapterId', chapter);
       a.append('intro', intro);
       await axios.post("http://" + that.Api + "/api/Course/addCourseChapter", a, {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
           'Authorization': that.$store.state.JWT,
         }
       }).then(function (res) {
@@ -354,7 +380,7 @@ export default {
       })
       await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + course, {
         headers: {
-          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
           'Authorization': that.$store.state.JWT,
         }
       }).then(function (res) {
