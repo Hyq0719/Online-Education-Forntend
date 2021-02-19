@@ -30,7 +30,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item label="选择直播时间">
-            <el-select v-model="selectvalue1" placeholder="请选择时间" style="float: left;margin: 10px 24px">
+            <el-select v-model="formBuild.arrange" placeholder="请选择时间" style="float: left;margin: 10px 24px">
               <el-option
                   v-for="item in options1"
                   :key="item.value"
@@ -47,8 +47,6 @@
               class="avatar-uploader"
               action=""
               :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
               :http-request="uploadHttp">
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -67,10 +65,14 @@
 <script>
 
 import ossClient from "@/aliyun.oss.client";
+import axios from "axios";
 
 export default {
 
   name: "buildClass",
+  props:[
+
+  ],
   data() {
     return {
       pickerOptions: {                   //可选直播的时间
@@ -80,121 +82,53 @@ export default {
           let c= n | m;
           return c ;
         }},
-      imageFile:{},
       imageUrl: '',
       loading: false,
       formBuild: {              //课程基本属性
+        addressId: null,
         name: '',
         intro: '',
-        Isvip: 0,
+        Isvip: false,
         liveDate:'',
+        arrange:null,
       },
-      imgNum: 1,              //图片属性
-      imgSize: 2048000,
       options1: [{                        //课程类别
-        value: '选项1',
+        value: 1,
         label: ' 8:00'
       }, {
-        value: '选项2',
+        value: 2,
         label: '10:00'
       }, {
-        value: '选项3',
+        value: 3,
         label: '14:00'
       },{
-        value: '选项4',
+        value: 4,
         label: '16:00'
       },{
-        value: '选项5',
+        value: 5,
         label: '18:00'
       }],
-      // options2: [{                        //课程类别
-      //   value: '选项1',
-      //   label: '线路一'
-      // }, {
-      //   value: '选项2',
-      //   label: '线路二'
-      // }],
-      selectvalue1: '',
-      selectvalue2: '',
     };
   },
   methods: {
-    handleAvatarSuccess({file}) {
-      this.imageFile = {file};
-      console.log("上传成功",file);
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
-    },
     async uploadHttp({file}) {
       let that = this;
       let f = await this.$Api.compressImg(file);
       console.log(f);
       let fileName = `${this.$store.state.userData.userId}_Header/${Date.parse(new Date())}`;  //定义唯一的文件名
-      if (this.isLogin) {
-        fileName = `pic/Student/` + fileName;
-      } else {
-        fileName = `pic/Teacher/` + fileName;
-      }
+        fileName = `pic/Live/` + fileName;
       ossClient(this.uploadConf).put(fileName, f, {
         'ContentType': 'image/jpeg'
       }).then(({res, url,
                  name}) => {
         if (res && res.status == 200) {
           that.imageUrl = url;
-          that.information.studentPicUrl = url;
-          that.informationTeacher.teacherPicUrl = url;
+          that.formBuild.coursePicUrl = url;
           console.log(`阿里云OSS上传图片成功回调`, res, url, name);
         }
       }).catch((err) => {
         console.log(`阿里云OSS上传图片失败回调`, err);
       });
-    },
-    open() {         //弹窗
-      this.$alert('上传成功，课程号为XXXXX，待审核', '提示', {
-        confirmButtonText: '确定',
-        // callback: action => {
-        //   this.$message({
-        //     type: 'info',
-        //     message: `action: ${action}`
-        //   });
-        // }
-      });
-    },
-    handleClose1(done) {
-      this.$confirm('还有未保存的工作哦确定关闭吗？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {
-          });
-    },
-    handleClose(done) {
-      if (this.loading) {
-        return;
-      }
-      this.$confirm('确定要提交表单吗？')
-          .then(_ => {
-            this.loading = true;
-            this.timer = setTimeout(() => {
-              done();
-              // 动画关闭需要一定的时间
-              setTimeout(() => {
-                this.loading = false;
-              }, 400);
-            }, 2000);
-          })
-          .catch(_ => {
-          });
     },
     closed(){
       let that = this;
@@ -202,16 +136,29 @@ export default {
       // let str =that.formBuild.liveData.toDateString();
       console.log("选定时间",that.formBuild);
       let params={
-          addressId: 0,
-          liveArrange: 0,
+          addressId: that.formBuild.addressId,
+          liveArrange: that.formBuild.arrange,
           liveDate: that.formBuild.liveData,
           liveIntro: that.formBuild.intro,
           liveName: that.formBuild.name,
-          // livePicUrl: string,
-          teacherId: 0
+          livePicUrl: that.formBuild.coursePicUrl,
+          teacherId: that.$store.state.userData.userId,
       };
-      this.$alert('上传成功，待审核', '提示', {
-        confirmButtonText: '确定',
+      console.log(params);
+      let JWT = that.$store.state.JWT;
+      axios.post("http://" + that.Api + "/api/Course/addCourse", params, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log(response);
+        that.$alert('上传成功，待审核', '提示', {
+          confirmButtonText: '确定',
+        });
+        that.$emit('close', false);
+      }, function (err) {
+        console.log(err);
       });
       this.$emit('close',false);
     }

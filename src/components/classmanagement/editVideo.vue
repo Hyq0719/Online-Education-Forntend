@@ -59,12 +59,6 @@ export default {
     open() {         //弹窗
       this.$alert('更新成功，待审核', '提示', {
         confirmButtonText: '确定',
-        // callback: action => {
-        //   this.$message({
-        //     type: 'info',
-        //     message: `action: ${action}`
-        //   });
-        // }
       });
       this.$emit('close',false);
     },
@@ -74,14 +68,7 @@ export default {
       });
       this.$emit('close',false);
     },
-    handleClose(done) {
-      this.$confirm('还有未保存的工作哦确定关闭吗？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {
-          });
-    },
+
   }
 }
 </script>
@@ -105,6 +92,6 @@ export default {
 .headerbutton {
   cursor: pointer;
   float: right;
-  margin-top: 0px;
+  margin-top: 0;
 }
 </style>

@@ -96,43 +96,6 @@ export default {
     };
   },
   methods: {
-    open() {         //弹窗
-      this.$alert('上传成功，课程号为XXXXX，待审核', '提示', {
-        confirmButtonText: '确定',
-        // callback: action => {
-        //   this.$message({
-        //     type: 'info',
-        //     message: `action: ${action}`
-        //   });
-        // }
-      });
-    },
-    handleClose1(done) {
-      this.$confirm('还有未保存的工作哦确定关闭吗？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {
-          });
-    },
-    handleClose(done) {
-      if (this.loading) {
-        return;
-      }
-      this.$confirm('确定要提交表单吗？')
-          .then(_ => {
-            this.loading = true;
-            this.timer = setTimeout(() => {
-              done();
-              // 动画关闭需要一定的时间
-              setTimeout(() => {
-                this.loading = false;
-              }, 400);
-            }, 2000);
-          })
-          .catch(_ => {
-          });
-    },
     closed() {
       let that=this;
       console.log(this.formBuild.perferId);
@@ -210,31 +173,18 @@ export default {
           }
       );
     }
-    const r= that.$store.state.Prefer;
-    console.log(that.$store.state.Prefer);
-    let n = r.map(item =>({label:item.major.majorContent,value:item.major.majorId,children:[]}));
-    let k=0;
-    n = n.reduce((obj, item) => {
-      let find = obj.find(i => i.id === item.id)
-      let _d = {
-        ...item,
-      }
-      find ? (k++ ): obj.push(_d)
-      return obj
-    }, []);    //去除重复的
-    r.map(item =>{
-      for(let j=0;j< n.length;j++)
-    {
-      if (n[j].value === item.majorId)
-      {
-       n[j].children.push({label:item.preferContent , value:item.preferId*100+item.majorId});
-
-      }
+    const r= that.$store.state.MajorPrefer;
+    console.log(that.$store.state.MajorPrefer);
+    let n = r.map(item =>({label:item.majorContent,value:item.majorId,children:[]}));
+    let j=0;
+    for (let k=0;k<r.length;k++) {
+      r[k].prefer.map(item => {
+            n[j].children.push({label: item.preferContent, value: item.preferId * 100 + item.majorId});
+      });
+      j++;
     }
-    });
     this.Option=n;
-    console.log("major选项",n);
-  }
+  },
 }
 </script>
 
