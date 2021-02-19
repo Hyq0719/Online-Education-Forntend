@@ -2,7 +2,7 @@
   <div>
 
     <el-main v-show="classview" style="overflow:hidden;position: relative;height: 580px">
-      <el-table :data="classData.list">
+      <el-table :data="classData.list"  :row-class-name="tableRowClassName">>
         <el-table-column prop="name" label="课程名称">
         </el-table-column>
         <el-table-column label="是否为vip课程">
@@ -212,6 +212,14 @@ export default {
     buildClassPage: () => import('@/components/classmanagement/tools/buildClassPage')
   },
   methods: {
+    tableRowClassName({row}) {
+      if (row.status === 1) {
+        return 'success-row';
+      } else if (row.status === 0) {
+        return 'warning-row';
+      }
+      return '';
+    },
     closeDialog() {
       this.dialogClassBuild = false;
       this.dialogClassEdit = false;
