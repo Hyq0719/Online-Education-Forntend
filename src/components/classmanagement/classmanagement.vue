@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height: 700px; border: 1px solid #eee">
+  <el-container style="height: 800px; border: 1px solid #eee">
     <el-aside width="200px" style="background-color: rgb(238,241,246)">
       <el-menu :default-openeds="['1', '3']">
         <el-submenu index="1">
@@ -44,48 +44,19 @@
 
 <script>
 import classbread from "@/components/classmanagement/classbread";
-import axios from "axios";
+
 
 export default {
   name: 'Classmanagement',
   components: {
     classbread
   },
-  methods: {
-    async getCourse() {
-      let that = this;
-      let b = new URLSearchParams();
-      let c = that.$store.state.userData.userId;
-      b.append("teacherId", c);
-      b.append("sort", 1);
-      b.append("page", 1);
-      await axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId", b,
-          {
-            headers: {
-              'Authorization': that.$store.state.JWT,
-            }
-          }
-      ).then(function (res) {
-        console.log("老师的课程信息", res);
-        if (res.data.code === 1000) {
-          that.$store.commit('saveTeacherClassData', res.data.data);
-        } },function (err) {
-        console.log(err);
-      }
-    );
-  },
-}
-,
-mounted:function () {
-  this.getCourse();
-}
-,
-computed: {
-  breadcrumb: function () {
-    return this.$store.state.breadcrumb
+  computed: {
+    breadcrumb: function () {
+      return this.$store.state.breadcrumb
+    }
+    ,
   }
-,
-}
 }
 ;
 </script>

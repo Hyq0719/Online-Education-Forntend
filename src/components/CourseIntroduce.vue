@@ -31,7 +31,7 @@
               </ul>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="课程评价" name="second">
+          <el-tab-pane label="课程评价" name="second" style="position: relative">
 
             <el-card :body-style="{ padding: '20px'}" v-show="evaluateBox"
                      style="position: relative;margin: 20px;overflow: hidden;min-height: 100px">
@@ -105,6 +105,15 @@
                 <div style="float:left;text-align:left;font-size: 16px"> {{ item.content }}</div>
               </div>
             </el-card>
+            <div>
+              <el-pagination style="bottom: 10px;left: 400px"
+                             background
+                             layout="prev, pager, next"
+                             :total="1">
+<!--                             @current-change="handleCurrentChange"-->
+
+              </el-pagination>
+            </div>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -165,6 +174,7 @@ export default {
       evaluateBox2: false,
       currentComment: false,
       currentUserComment: {},
+      page:this.$store.state.commentData.total_element,
     };
   },
   watch: {

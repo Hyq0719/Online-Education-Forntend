@@ -385,6 +385,7 @@ export default {
     },
   },
   mounted() {
+    this.getCourse(1);
     let that = this;
     let a = that.$route.params.id;
     console.log(a);

@@ -430,7 +430,7 @@ export default {
 
   },
   mounted: function () {
-    console.log(this.page);
+    this.getCourse(1);
     // console.log(this.classData);
     let that = this;
     let a = that.$route.params.id;
