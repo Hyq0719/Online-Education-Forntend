@@ -22,6 +22,9 @@ export default new Vuex.Store({
         Video: JSON.parse(sessionStorage.getItem('Video')) || false,
         SearchedCourseData: JSON.parse(sessionStorage.getItem('SearchedCourseData')) || false,
         RelatedCourses: JSON.parse(sessionStorage.getItem('RelatedCourses')) || false,
+
+        MenuLiveData: JSON.parse(sessionStorage.getItem('MenuLiveData')) || false,
+
         commentData: JSON.parse(sessionStorage.getItem('commentData')) || [],
         teacherData: {
             teacherClassData: JSON.parse(sessionStorage.getItem('teacherClassData')) || [],
@@ -82,7 +85,7 @@ export default new Vuex.Store({
             sessionStorage.setItem('userData', JSON.stringify(state.userData));
         },
         //所有专业+子专业
-        saveMajorPrefer(state, MajorPrefer) {
+        saveMajorAndPrefer(state, MajorPrefer) {
             state.MajorPrefer = MajorPrefer;
             sessionStorage.setItem('MajorPrefer', JSON.stringify(state.MajorPrefer));
         },
@@ -115,6 +118,11 @@ export default new Vuex.Store({
         saveRelatedCourses(state, RelatedCourses) {
             state.RelatedCourses = RelatedCourses;
             sessionStorage.setItem('RelatedCourses', JSON.stringify(state.RelatedCourses));
+        },
+        //直播菜单页面的课程信息
+        saveMenuLiveData(state, MenuLiveData) {
+            state.MenuLiveData = MenuLiveData;
+            sessionStorage.setItem('MenuLiveData', JSON.stringify(state.MenuLiveData));
         },
         saveSearchedCourseData(state, SearchedCourseData) {
             state.SearchedCourseData = SearchedCourseData;

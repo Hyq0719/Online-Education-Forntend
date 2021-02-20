@@ -6,7 +6,14 @@
         <h3>{{ information.nickName }}</h3>
       </el-aside>
       <el-main class="Information">
-        <h2>个人信息</h2>
+        <div class="information-title">
+          <h2>个人信息</h2>
+          <img src="../assets/Vip-light.jpg" alt="图片缺失"
+               v-if="Date.parse(new Date()) <= Date.parse(information.vipDate)">
+          <p v-if="Date.parse(new Date()) <= Date.parse(information.vipDate)">持续至：{{ information.vipDate }}</p>
+          <img src="../assets/Vip-dark.jpg" alt="图片缺失" v-if="Date.parse(new Date()) > Date.parse(information.vipDate)">
+          <p v-if="Date.parse(new Date()) > Date.parse(information.vipDate)">已过期</p>
+        </div>
         <el-button @click="Change">编辑</el-button>
         <div class="clear"></div>
         <el-divider></el-divider>
@@ -104,7 +111,7 @@ export default {
         school: this.$store.state.userData.school,
         sex: this.$store.state.userData.sex,
         userId: this.$store.state.userData.userId,
-        vip: this.$store.state.userData.vip,
+        vipDate: this.$store.state.userData.vipDate,
         wechatId: this.$store.state.userData.wechatId,
         studentPicUrl: this.$store.state.userData.studentPicUrl,
       },
@@ -233,22 +240,31 @@ export default {
   line-height: 30px;
 }
 
-body > .el-container {
-  margin-bottom: 40px;
-}
-
-.Information h4 {
-  margin: 0;
-  font-weight: 400;
-}
-
-.Information h2 {
+.information-title {
   float: left;
+  display: flex;
+  text-align: left;
+}
+
+.information-title img {
+  margin: 20px;
+  height: 30px;
+  width: 30px;
+}
+
+.information-title p {
+  font-size: 13px;
+  margin: 20px auto;
 }
 
 .Information button {
   float: right;
   margin: 20px;
+}
+
+.Information h4 {
+  margin: 0;
+  font-weight: 400;
 }
 
 .clear {

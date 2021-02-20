@@ -9,22 +9,24 @@
       <div class="Header-Img">
         <img src="../assets/logo.png" alt="加载失败"/>
       </div>
-      <div class="Header-search">
-        <el-autocomplete
-            class="inline-input"
-            v-model="input"
-            :fetch-suggestions="querySearch"
-            placeholder="请输入搜索的课程"
-            :trigger-on-focus="false"
-            @select="handleSelectSearch"
-            @keyup.enter.native="Search">
-          <i slot="suffix" class="el-input__icon el-icon-search"></i>
-          <template slot-scope="{ item }">
-            <div class="name" v-html="item.name"></div>
-            <span class="intro">{{ item.intro }}</span>
-          </template>
-        </el-autocomplete>
-      </div>
+      <slot>
+        <div class="Header-search">
+          <el-autocomplete
+              class="inline-input"
+              v-model="input"
+              :fetch-suggestions="querySearch"
+              placeholder="请输入搜索的课程"
+              :trigger-on-focus="false"
+              @select="handleSelectSearch"
+              @keyup.enter.native="Search">
+            <i slot="suffix" class="el-input__icon el-icon-search"></i>
+            <template slot-scope="{ item }">
+              <div class="name" v-html="item.name"></div>
+              <span class="intro">{{ item.intro }}</span>
+            </template>
+          </el-autocomplete>
+        </div>
+      </slot>
       <el-submenu index="2" v-if="isLogin||isLoginTeacher" class="avatar">
         <template slot="title">
           <img v-if="isLogin" :src="this.studentPicUrl" alt="头像加载失败"/>
@@ -62,7 +64,7 @@
         </el-popover>
       </el-menu-item>
       <el-menu-item index="4" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
-        <router-link to="/liveMenu">直播</router-link>
+        <router-link to="/liveMenu" @click.native="LiveMenu">直播</router-link>
       </el-menu-item>
       <el-menu-item index="5" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <router-link to="/main">首页</router-link>
@@ -152,6 +154,17 @@ export default {
         console.log(err);
       });
     },
+    LiveMenu() {
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("page", 1);
+      axios.get("http://" + this.Api + "/api/Live/findAllValidLive?" + a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log("获取直播菜单", response);
+        that.$store.commit('saveMenuLiveData', response.data.data);
+      }, function (err) {
+        console.log(err);
+      });
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -162,13 +175,11 @@ export default {
       this.$router.push('/login');
       if (this.isLogin) {
         this.$store.commit('saveIsLogin');
-        sessionStorage.removeItem("IsLogin");
         sessionStorage.removeItem("StudentPreferences");
         sessionStorage.removeItem("StudentHistory");
         sessionStorage.removeItem("userData");
       } else {
         this.$store.commit('saveIsLoginTeacher');
-        sessionStorage.removeItem("IsLoginTeacher");
         sessionStorage.removeItem("userData");
       }
       VueCookies.remove('JWT');

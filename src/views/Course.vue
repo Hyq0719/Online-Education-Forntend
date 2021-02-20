@@ -1,5 +1,5 @@
 <template>
-  <div :key="key">
+  <div>
     <Sidebar></Sidebar>
     <Header></Header>
     <Course></Course>
@@ -26,7 +26,6 @@ export default {
   },
   data() {
     return {
-      key: '',
       courseId: this.$route.query.courseId,
       data: [],
     };
@@ -37,14 +36,12 @@ export default {
       this.Chapter();
       this.Course();
       this.RelatedCourse();
-      this.CourseHistory();
     }
   },
   created() {
     this.Chapter();
     this.Course();
     this.RelatedCourse();
-    this.CourseHistory();
   },
   methods: {
     //获取该学生的历史观看信息
@@ -62,7 +59,6 @@ export default {
         }).then(function (response) {
           if (response != null) {
             console.log("获取学生对该课程的历史记录", response);
-            that.chapterId = response.data.data.courseChapterVideo.courseChapterVideoPK.chapterId;
             that.$store.commit('saveVideo', {
               chapterId: response.data.data.courseChapterVideo.courseChapterVideoPK.chapterId,
               videoUrl: response.data.data.courseChapterVideo.videoUrl,
@@ -73,13 +69,23 @@ export default {
               message: '已为你定位到上次播放'
             });
           } else {
-            that.$store.commit('saveVideo', null);
+            console.log("自动播放第一个视频");
+            that.$store.commit('saveVideo', {
+              chapterId: that.data[0].VideoList[0].courseChapterVideoPK.chapterId,
+              videoUrl: that.data[0].VideoList[0].videoUrl,
+              videoId: that.data[0].VideoList[0].courseChapterVideoPK.videoId
+            });
           }
         }, function (err) {
           console.log(err);
         })
       } else {
-        that.$store.commit('saveVideo', null);
+        console.log("自动播放第一个视频");
+        that.$store.commit('saveVideo', {
+          chapterId: that.data[0].VideoList[0].courseChapterVideoPK.chapterId,
+          videoUrl: that.data[0].VideoList[0].videoUrl,
+          videoId: that.data[0].VideoList[0].courseChapterVideoPK.videoId
+        });
       }
     },
     //获取章节及视频任务信息
@@ -105,16 +111,11 @@ export default {
         }
         that.$store.commit('saveChapterData', that.data);
         console.log("获取章节信息", that.data);
-        if (that.$store.state.Video == null) {
-          that.$store.commit('saveVideo', {
-            chapterId: that.data[0].VideoList[0].courseChapterVideoPK.chapterId,
-            videoUrl: that.data[0].VideoList[0].videoUrl,
-            videoId: that.data[0].VideoList[0].courseChapterVideoPK.videoId
-          });
-        }
       }, function (err) {
         console.log(err);
-      });
+      }).then(function () {
+        that.CourseHistory();
+      })
     },
     Course() {
       // console.log(this.courseId);

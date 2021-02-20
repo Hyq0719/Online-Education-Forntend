@@ -57,8 +57,8 @@ export default {
     Video(e, videoId, videoUrl, chapterId, courseId) {
       if (e.target.tagName === 'INPUT') return // 因为原生click事件会执行两次，第一次在label标签上，第二次在input标签上，故此处理
       console.log(videoId, videoUrl, chapterId);
+      this.$store.commit('saveVideo', {videoUrl: videoUrl, videoId: videoId, chapterId: chapterId});
       if (this.$store.state.isLogin) {
-        this.$store.commit('saveVideo', {videoUrl: videoUrl, videoId: videoId, chapterId: chapterId});
         let params = {
           chapterId: chapterId,
           courseId: courseId,

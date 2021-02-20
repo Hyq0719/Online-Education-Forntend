@@ -6,6 +6,11 @@
       </h3>
     </div>
     <el-divider></el-divider>
+    <div class="FutureAndNow">
+      <el-radio v-model="radioFutureAndNow" @click.native="LiveChoose($event,0)" label="1">全部直播</el-radio>
+      <el-radio v-model="radioFutureAndNow" @click.native="LiveChoose($event,1)" label="2">即将直播</el-radio>
+      <el-radio v-model="radioFutureAndNow" @click.native="LiveChoose($event,2)" label="3">正在直播</el-radio>
+    </div>
     <el-row :gutter="25">
       <el-col :span="6" v-for="item in course" v-bind:key="item.id">
         <router-link to="/live">
@@ -29,6 +34,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "LiveMenu",
   data() {
@@ -179,7 +186,38 @@ export default {
           src: require('../assets/course12.webp'),
         },
       ],
+      radioFutureAndNow: '1',
     };
+  },
+  methods: {
+    LiveChoose(e, sort) {
+      if (e.target.tagName === 'INPUT') return // 因为原生click事件会执行两次，第一次在label标签上，第二次在input标签上，故此处理
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("page", 1);
+      if (sort == 0) {
+        axios.get("http://" + this.Api + "/api/Live/findAllValidLive?" + a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+          console.log("获取全部直播", response);
+          that.$store.commit('saveMenuLiveData', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      } else if (sort == 1) {
+        axios.get("http://" + this.Api + "/api/Live/findAllValidLiveFuture?" + a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+          console.log("获取即将直播", response);
+          that.$store.commit('saveMenuLiveData', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      } else {
+        axios.get("http://" + this.Api + "/api/Live/findAllValidLiveNow?" + a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+          console.log("获取正在直播", response);
+          that.$store.commit('saveMenuLiveData', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      }
+    },
   },
 };
 </script>
@@ -192,14 +230,19 @@ export default {
   text-decoration-width: auto;
 }
 
+.Live {
+  margin: auto;
+  width: 1100px;
+}
+
 .Live-title {
   margin: 50px 20px;
   text-align: left;
 }
 
-.Live {
-  margin: auto;
-  width: 1100px;
+.FutureAndNow {
+  text-align: left;
+  margin: 20px;
 }
 
 .grid-content {
