@@ -57,7 +57,7 @@
               action=""
               :show-file-list="false"
               :http-request="uploadHttp">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" >
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
           <el-form-item style="position: relative;margin: 0;padding: 0">
@@ -128,7 +128,7 @@ export default {
         value: 1,
         label: '线路一'
       },{
-        value: 1,
+        value: 2,
         label: '线路二'
       }],
     };

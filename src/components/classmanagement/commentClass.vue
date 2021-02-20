@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="classView">
+    <div v-show="classView" style="position: relative;height: 600px">
       <el-main>
         <el-table :data="classData.list" @row-click="findComment">
           <el-table-column prop="name" label="课程名称">
@@ -19,6 +19,15 @@
           </el-table-column>
         </el-table>
       </el-main>
+
+      <div>
+        <el-pagination style="position: absolute;bottom: 10px;left: 400px"
+                       background
+                       layout="prev, pager, next"
+                       @current-change="handleCurrentChange"
+                       :total="page">
+        </el-pagination>
+      </div>
     </div>
 
     <div v-show="analyzeView">
@@ -143,6 +152,7 @@ export default {
       commentView: true,
       chartView: false,
       chartBarView: false,
+      page:this.$store.state.teacherData.teacherClassData.total_element,
       optionc: 1,
       option1: {
         title: {
@@ -166,11 +176,6 @@ export default {
           top: '30%',
           containLabel: true
         },
-        // toolbox: {
-        //     feature: {
-        //         saveAsImage: {}
-        //     }
-        // },
         xAxis: {
           type: 'category',
           boundaryGap: false,
@@ -274,6 +279,33 @@ export default {
   },
 
   methods: {
+    handleCurrentChange(val){
+      console.log(`当前页: ${val}`);
+      this.getCourse(val);
+    },
+    async getCourse(val) {
+      let that = this;
+      let b = new URLSearchParams();
+      let c = that.$store.state.userData.userId;
+      b.append("teacherId", c);
+      b.append("sort", 1);
+      b.append("page", val);
+      await axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId", b,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+            console.log("老师的课程信息", res);
+            if (res.data.code === 1000) {
+              that.$store.commit('saveTeacherClassData', res.data.data);
+              that.classData=that.$store.state.teacherData.teacherClassData;
+            } },function (err) {
+            console.log(err);
+          }
+      );
+    },
     wordClickHandler(name, value, vm) {
       console.log('wordClickHandler', name, value, vm);
     },

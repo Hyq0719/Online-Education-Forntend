@@ -1,8 +1,8 @@
 <template>
   <div>
 
-    <el-main v-show="classview" style="overflow:hidden;position: relative;height: 580px">
-      <el-table :data="classData.list"  :row-class-name="tableRowClassName">>
+    <el-main v-show="classview"  style="overflow:hidden;position: relative;height: 780px">
+      <el-table :data="classData.list" :row-class-name="tableRowClassName">>
         <el-table-column prop="name" label="课程名称">
         </el-table-column>
         <el-table-column label="是否为vip课程">
@@ -33,13 +33,14 @@
       </el-table>
 
       <div>
-        <el-button circle @click="dialogClassBuild = true" style="position: absolute;bottom: 80px;left: 20px">
+        <el-button circle @click="dialogClassBuild = true" style="position: fixed;bottom: 180px;left: 240px">
           <i class="el-icon-circle-plus-outline"></i>
         </el-button>
         <el-pagination style="position: absolute;bottom: 0;left: 300px"
                        background
                        layout="prev, pager, next"
-                       :total="1">
+                       @current-change="handleCurrentChange"
+                       :total="page">
         </el-pagination>
       </div>
     </el-main>
@@ -201,6 +202,7 @@ export default {
       classData: this.$store.state.teacherData.teacherClassData,
       chapterData: this.$store.state.teacherData.teacherChapterData,
       videoData: this.$store.state.teacherData.teacherVideoData,
+      page:this.$store.state.teacherData.teacherClassData.total_element,
       chapterIntro: "",
       courseId: null,  //临时传参用
       chapterId:null,
@@ -212,6 +214,10 @@ export default {
     buildClassPage: () => import('@/components/classmanagement/tools/buildClassPage')
   },
   methods: {
+    handleCurrentChange(val){
+      console.log(`当前页: ${val}`);
+       this.getCourse(val);
+      },
     tableRowClassName({row}) {
       if (row.status === 1) {
         return 'success-row';
@@ -249,7 +255,7 @@ export default {
       }, function (err) {
         console.log(err);
       });
-    },  //删除课程
+    },  //删除章节
     async deleteVideo(a) {
       let that = this;
       let JWT = that.$store.state.JWT;
@@ -262,7 +268,7 @@ export default {
       }, function (err) {
         console.log(err);
       });
-    },
+    },  //删除视频
     handleClose(done) {
       if (this.loading) {
         return;
@@ -397,9 +403,34 @@ export default {
       })
       that.chapterData = that.$store.state.teacherData.teacherChapterData;
     },  //创建章节
+
+    async getCourse(val) {
+      let that = this;
+      let b = new URLSearchParams();
+      let c = that.$store.state.userData.userId;
+      b.append("teacherId", c);
+      b.append("sort", 1);
+      b.append("page", val);
+      await axios.post('http://' + that.Api + "/api/Course/getCourseByTeacherId", b,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+            console.log("老师的课程信息", res);
+            if (res.data.code === 1000) {
+              that.$store.commit('saveTeacherClassData', res.data.data);
+              that.classData=that.$store.state.teacherData.teacherClassData;
+            } },function (err) {
+            console.log(err);
+          }
+      );
+    },
+
   },
   mounted: function () {
-
+    console.log(this.page);
     // console.log(this.classData);
     let that = this;
     let a = that.$route.params.id;
