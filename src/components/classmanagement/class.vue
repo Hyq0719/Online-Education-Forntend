@@ -233,7 +233,10 @@ export default {
     async deleteClass(a) {
       let that = this;
       let JWT = that.$store.state.JWT;
-      await axios.post("http://" + that.Api + "/api/Course/getCourseById?courseId=" + a, {
+      let b = new URLSearchParams();
+      b.append('courseId', a);
+
+      await axios.post("http://"+ that.Api +"/api/Course/deleteCourseChapter?chapterId=14&courseId=1"  , {
         headers: {
           'Authorization': JWT,
         }
@@ -246,7 +249,10 @@ export default {
     async deleteChapter(course,chapter) {
       let that = this;
       let JWT = that.$store.state.JWT;
-      await axios.post("http://" + that.Api + "/api/Course/deleteCourseChapter?chapterId=" + chapter+"&courseId="+course, {
+      let a = new URLSearchParams();
+      a.append('courseId', course);
+      a.append('chapterId', chapter);
+      await axios.post("http://" + that.Api + "/api/Course/deleteCourseChapter" ,a, {
         headers: {
           'Authorization': JWT,
         }
@@ -255,6 +261,17 @@ export default {
       }, function (err) {
         console.log(err);
       });
+
+      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + course, {
+        headers: {
+          // 'Content-Type': 'application/json',
+          'Authorization': that.$store.state.JWT,
+        }
+      }).then(function (res) {
+        // console.log(res);
+        that.$store.commit("saveTeacherChapterData", res.data.data)
+      })
+      that.chapterData = that.$store.state.teacherData.teacherChapterData;
     },  //删除章节
     async deleteVideo(a) {
       let that = this;
@@ -290,6 +307,7 @@ export default {
 
     async openChapter(id) {
       let that = this;
+      that.courseId=id;
       await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id, {
         headers: {
           'Content-Type': 'application/json',
@@ -378,7 +396,7 @@ export default {
       else
       {
         course = that.chapterData[0].courseChapterPK.courseId;
-        chapter = that.chapterData.length + 1;
+        chapter = that.chapterData[that.chapterData.length - 1].courseChapterPK.chapterId+1;
         intro = that.chapterIntro;
       }
       a.append('courseId', course);

@@ -51,7 +51,7 @@ export default {
           });
         }
         console.log("获取专业＋子专业", MajorPrefer);
-        that.$store.commit('saveMajorPrefer', MajorPrefer);
+        that.$store.commit('saveMajorAndPrefer', MajorPrefer);
       }, function (err) {
         console.log(err);
       });
