@@ -12,7 +12,7 @@
         <span class="money-number">45</span>
         <span class="money-unit">/月</span>
       </p>
-      <el-button type="danger">立即开通</el-button>
+      <el-button type="danger" @click="Vip(1)">立即开通</el-button>
     </div>
     <div class="VIP-content VIP-content-halfYear">
       <h1>半年会员</h1>
@@ -22,7 +22,7 @@
         <span class="money-number">100</span>
         <span class="money-unit">/半年</span>
       </p>
-      <el-button type="danger">立即开通</el-button>
+      <el-button type="danger" @click="Vip(2)">立即开通</el-button>
     </div>
     <div class="VIP-content VIP-content-year">
       <h1>年会员</h1>
@@ -32,7 +32,7 @@
         <span class="money-number">150</span>
         <span class="money-unit">/年</span>
       </p>
-      <el-button type="danger">立即开通</el-button>
+      <el-button type="danger" @click="Vip(3)">立即开通</el-button>
     </div>
     <div class="VIP-content VIP-content-reward">
       <h1>打赏</h1>
@@ -47,13 +47,48 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "VIP",
   data() {
     return {
       input: '10'
     };
-  }
+  },
+  methods: {
+    Vip(type) {
+      let that = this;
+      let a = new URLSearchParams();
+      a.append('type', type);
+      a.append('user_id', this.$store.state.userData.userId);
+      axios.post("http://" + this.Api + "/api/Student/studentVip?" + a, null, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': this.$store.state.JWT,
+        }
+      }).then(function (response) {
+        console.log("成功开通Vip", response);
+        that.$message({
+          message: '成功开通Vip！时间持续至：' + response.data.data,
+          type: 'success'
+        });
+        axios.post("http://" + that.Api + "/api/Student/getStudentById?" + a, null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': that.$store.state.JWT,
+          }
+        }).then(function (res) {
+          console.log("成功获取学生信息", res);
+          that.$store.commit('saveData', res.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      }, function (err) {
+        console.log(err);
+      });
+    },
+  },
 };
 </script>
 
