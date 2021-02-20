@@ -40,7 +40,6 @@ export default {
           'Content-Type': 'application/json',
         }
       }).then(async function (response) {
-        console.log("获取所有专业", response);
         let MajorPrefer = response.data.data;
         for (let i in MajorPrefer) {
           // console.log(MajorData[i]);

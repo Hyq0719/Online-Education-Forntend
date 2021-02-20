@@ -40,10 +40,10 @@
           <el-form-item label="专业：">
             <el-select v-model="information.majorContent" clearable placeholder="请选择你的专业" @change="changeMajor">
               <el-option
-                  v-for="item in majors"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  v-for="item in this.$store.state.MajorPrefer"
+                  :key="item.majorId"
+                  :label="item.majorContent"
+                  :value="item.majorId">
               </el-option>
             </el-select>
           </el-form-item>
@@ -154,20 +154,10 @@ export default {
       },
       isLogin: this.$store.state.isLogin,
       isLoginTeacher: this.$store.state.isLoginTeacher,
-      majors: [
-        {
-          value: '1',
-          label: '计算机',
-        },
-        {
-          value: '2',
-          label: '数学',
-        },],
       sex: ['男', '女', '保密'],
       sexTeacher: ['男', '女'],
-      grade: [1, 2, 3, 4],
+      grade: ['大一','大二','大三','大四'],
       imageUrl: '',
-      images: [],
       uploadConf: {
         region: 'oss-cn-shanghai',
         accessKeyId: 'LTAI4GGsTQ35tQcWWDVNKwqG',

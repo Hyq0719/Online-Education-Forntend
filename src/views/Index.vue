@@ -14,7 +14,7 @@ export default {
   methods: {
     index() {
       //JWT登录
-      if (!this.$store.state.isLogin && !this.$store.state.isLoginTeacher && this.$store.state.JWT) {
+      if (this.$store.state.JWT) {
         let that = this;
         axios.post("http://" + this.Api + "/api/Login/loginByJwt", null, {
           headers: {
@@ -47,6 +47,8 @@ export default {
         }, function (err) {
           console.log(err);
         });
+      } else {
+        this.$router.push('/main');
       }
     },
   },
