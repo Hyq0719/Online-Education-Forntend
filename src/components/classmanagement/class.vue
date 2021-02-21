@@ -19,15 +19,15 @@
         </el-table-column>
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
-            <el-button-group>
+
               <el-button type="primary" icon="el-icon-edit" @click="openChapter(scope.row.courseId)">管理章节</el-button>
-              <el-button type="primary"
+              <el-button type="warning"
                          @click="courseId=scope.row.courseId;dialogClassEdit = true">修改课程
               </el-button>
-              <el-button type="primary" icon="el-icon-delete"
+              <el-button type="danger" icon="el-icon-delete"
                          @click.native.prevent="deleteClass(scope.row.courseId)">删除课程
               </el-button>
-            </el-button-group>
+
           </template>
         </el-table-column>
       </el-table>

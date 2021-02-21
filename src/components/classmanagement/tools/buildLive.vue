@@ -20,10 +20,10 @@
           </el-form-item>
           <el-form-item label="选择直播日期">
             <el-date-picker style="float: left;margin: 10px 24px"
-                v-model="formBuild.liveDate"
-                align="right"
-                placeholder="选择日期"
-                :picker-options="pickerOptions"
+                            v-model="formBuild.liveDate"
+                            align="right"
+                            placeholder="选择日期"
+                            :picker-options="pickerOptions"
                             value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-form-item>
@@ -57,11 +57,12 @@
               action=""
               :show-file-list="false"
               :http-request="uploadHttp">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
           <el-form-item style="position: relative;margin: 0;padding: 0">
-            <el-button type="primary" class="headerbutton" @click="closed" :loading="loading" style="position: absolute;left: 60px">
+            <el-button type="primary" class="headerbutton" @click="closed" :loading="loading"
+                       style="position: absolute;left: 60px">
               {{ loading ? '提交中 ...' : '确认上传' }}
             </el-button>
           </el-form-item>
@@ -79,23 +80,24 @@ import axios from "axios";
 export default {
 
   name: "buildClass",
-  props:{
-    liveId:{
-      type:Number,
+  props: {
+    liveId: {
+      type: Number,
     },
-    isEdit:{
-      type:Boolean,
-      default:false,
-    }
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
+    liveInfo: {},
   },
   data() {
     return {
       pickerOptions: {                   //可选直播的时间
         disabledDate(time) {
-          let n=time.getTime() < Date.now()-3600 * 1000 * 24;
-          let m=time.getTime() > Date.now()+3600 * 1000 * 24*7;
-          let c= n | m;
-          return c ;
+          let n = time.getTime() < Date.now() - 3600 * 1000 * 24;
+          let m = time.getTime() > Date.now() + 3600 * 1000 * 24 * 7;
+          let c = n | m;
+          return c;
         },
       },
       imageUrl: '',
@@ -104,9 +106,9 @@ export default {
         addressId: null,
         name: '',
         intro: '',
-        liveDate:'',
-        arrange:null,
-        livePicUrl:'',
+        liveDate: '',
+        arrange: null,
+        livePicUrl: '',
       },
       options1: [{                        //课程类别
         value: 1,
@@ -117,20 +119,26 @@ export default {
       }, {
         value: 3,
         label: '14:00'
-      },{
+      }, {
         value: 4,
         label: '16:00'
-      },{
+      }, {
         value: 5,
         label: '18:00'
       }],
-      options2:[{
+      options2: [{
         value: 1,
         label: '线路一'
-      },{
+      }, {
         value: 2,
         label: '线路二'
       }],
+      uploadConf: {
+        region: 'oss-cn-shanghai',
+        accessKeyId: 'LTAI4GGsTQ35tQcWWDVNKwqG',
+        accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
+        bucket: 'shu-online-edu',
+      },
     };
   },
   methods: {
@@ -139,11 +147,13 @@ export default {
       let f = await this.$Api.compressImg(file);
       console.log(f);
       let fileName = `${this.$store.state.userData.userId}_Header/${Date.parse(new Date())}`;  //定义唯一的文件名
-        fileName = `pic/Live/` + fileName;
+      fileName = `pic/Live/` + fileName;
       ossClient(this.uploadConf).put(fileName, f, {
         'ContentType': 'image/jpeg'
-      }).then(({res, url,
-                 name}) => {
+      }).then(({
+                 res, url,
+                 name
+               }) => {
         if (res && res.status == 200) {
           that.imageUrl = url;
           that.formBuild.livePicUrl = url;
@@ -153,64 +163,66 @@ export default {
         console.log(`阿里云OSS上传图片失败回调`, err);
       });
     },
-    closed(){
+    closed() {
       let that = this;
-      console.log(that.formBuild);
-      let r=that.formBuild.liveDate;
-      console.log("选定时间",r  instanceof Date);
-
-      let params={
-          addressId: that.formBuild.addressId,
-          liveArrange: that.formBuild.arrange,
-          liveDate: that.formBuild.liveDate,
-          liveIntro: that.formBuild.intro,
-          liveName: that.formBuild.name,
-          livePicUrl: that.formBuild.coursePicUrl,
-          teacherId: that.$store.state.userData.userId,
-      };
+      let params = {
+        addressId: that.formBuild.addressId,
+        liveArrange: that.formBuild.arrange,
+        liveDate: that.formBuild.liveDate,
+        liveIntro: that.formBuild.intro,
+        liveName: that.formBuild.name,
+        livePicUrl: that.formBuild.livePicUrl,
+        teacherId: that.$store.state.userData.userId,
+            };
       console.log(params);
-      let JWT = that.$store.state.JWT;
-      axios.post("http://" + that.Api + "/api/Course/addCourse", params, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': JWT,
-        }
-      }).then(function (response) {
-        console.log(response);
-        that.$alert('上传成功，待审核', '提示', {
-          confirmButtonText: '确定',
+      if (that.isEdit === true)
+      {
+        let JWT = that.$store.state.JWT;
+        axios.post("http://" + that.Api + "/api/Live/modifyLive?liveId="+that.liveId, params, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': JWT,
+          }
+        }).then(function (response) {
+          console.log("上传成功", response);
+          that.$emit('close', false);
+          that.$alert('上传成功', '提示', {
+            confirmButtonText: '确定',
+          });
+        }, function (err) {
+          console.log(err);
         });
-        that.$emit('close', false);
-      }, function (err) {
-        console.log(err);
-      });
-      this.$emit('close', false);
+      }
+      else {
+        let JWT = that.$store.state.JWT;
+        axios.post("http://" + that.Api + "/api/Live/addLive", params, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': JWT,
+          }
+        }).then(function (response) {
+          console.log("上传成功", response);
+          that.$emit('close', false);
+          that.$alert('上传成功', '提示', {
+            confirmButtonText: '确定',
+          });
+          that.$emit('close', false);
+        }, function (err) {
+          console.log(err);
+        });
+      }
     }
   },
   mounted() {
     let that = this;
     if (that.isEdit) {
-      axios.post('http://' + that.Api + "/api/Course/getLiveById?liveId=" + that.liveId,
-          {
-            headers: {
-              'Authorization': that.$store.state.JWT,
-            }
-          }
-      ).then(function (res) {
-            if (res.data.code === 1000) {
-              console.log("直播信息", res);
-              that.formBuild.name = res.data.data.name;
-              that.formBuild.intro = res.data.data.intro;
-              that.formBuild.liveDate = res.data.data.liveDate;
-              that.formBuild.addressId =res.data.data;
-              that.formBuild.arrange = res.data.data;
-              that.formBuild.livePicUrl= res.data.data;
-              that.imageUrl = res.data.data;
-            }
-          }, function (err) {
-            console.log(err);
-          }
-      );
+      that.formBuild.name = that.liveInfo.liveName;
+      that.formBuild.intro = that.liveInfo.intro;
+      that.formBuild.liveDate = that.liveInfo.liveDate;
+      that.formBuild.addressId = that.liveInfo.addressId;
+      that.formBuild.arrange = that.liveInfo.liveArrange;
+      that.formBuild.livePicUrl = that.liveInfo.livePicUrl;
+      that.imageUrl = that.liveInfo.livePicUrl;
     }
   }
 }

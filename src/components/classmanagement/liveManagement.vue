@@ -11,7 +11,7 @@
           <template slot-scope="scope">
           <el-button-group>
             <el-button type="primary" icon="el-icon-edit"
-                       @click="liveId=scope.row.liveId;dialogEdit = true">修改直播信息
+                       @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[liveId-1]">修改直播信息
             </el-button>
             <el-button type="primary" icon="el-icon-delete"
                        @click.native.prevent="deleteRow()">删除直播
@@ -34,12 +34,12 @@
 
     </el-main>
 
-    <el-dialog title="创建直播" :visible.sync="dialogBuild">
+    <el-dialog title="创建直播" v-if="dialogBuild" :visible.sync="dialogBuild">
       <build-live @close="closeDialogBuild"></build-live>
     </el-dialog>
 
-    <el-dialog title="修改直播信息" :visible.sync="dialogEdit">
-      <build-live @close="closeDialogEdit" :isEdit="true" :lived="liveId" ></build-live>
+    <el-dialog title="修改直播信息" v-if="dialogEdit" :visible.sync="dialogEdit">
+      <build-live @close="closeDialogEdit" :isEdit="true" :liveId="liveId" :liveInfo="liveInfo" ></build-live>
     </el-dialog>
 
   </div>
@@ -56,6 +56,7 @@ export default {
       dialogBuild: false,
       liveId:null,
       liveData: this.$store.state.teacherData.liveData,
+      liveInfo:{},
     }
   },
   components:{
@@ -69,7 +70,7 @@ export default {
       this.dialogEdit=false;
     },
     displayLive() {
-      let that = this;
+      let that=this;
       let c = that.$store.state.userData.userId;
       let b = new URLSearchParams();
       b.append("teacherId", c);
