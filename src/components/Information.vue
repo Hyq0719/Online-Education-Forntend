@@ -9,10 +9,11 @@
         <div class="information-title">
           <h2>个人信息</h2>
           <img src="../assets/Vip-light.jpg" alt="图片缺失"
-               v-if="Date.parse(new Date()) <= Date.parse(information.vipDate)">
+               v-if="Date.parse(new Date()) <= Date.parse(information.vipDate)"
+               @click="Vip">
           <p v-if="Date.parse(new Date()) <= Date.parse(information.vipDate)">持续至：{{ information.vipDate }}</p>
-          <img src="../assets/Vip-dark.jpg" alt="图片缺失" v-if="Date.parse(new Date()) > Date.parse(information.vipDate)">
-          <p v-if="Date.parse(new Date()) > Date.parse(information.vipDate)">已过期</p>
+          <img src="../assets/Vip-dark.jpg" alt="图片缺失" v-if="Date.parse(new Date()) > Date.parse(information.vipDate)"
+               @click="Vip">
         </div>
         <el-button @click="Change">编辑</el-button>
         <div class="clear"></div>
@@ -66,7 +67,9 @@
         <h3>{{ informationTeacher.name }}</h3>
       </el-aside>
       <el-main class="Information">
-        <h2>个人信息</h2>
+        <div class="information-title">
+          <h2>个人信息</h2>
+        </div>
         <el-button @click="Change">编辑</el-button>
         <div class="clear"></div>
         <el-divider></el-divider>
@@ -140,6 +143,9 @@ export default {
     }
   },
   methods: {
+    Vip() {
+      this.$router.push('/Vip');
+    },
     Change() {
       this.$router.push('/Information/Change');
     },
@@ -247,6 +253,7 @@ export default {
 }
 
 .information-title img {
+  cursor: pointer;
   margin: 20px;
   height: 30px;
   width: 30px;

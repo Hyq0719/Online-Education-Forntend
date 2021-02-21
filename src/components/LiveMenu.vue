@@ -1,11 +1,10 @@
 <template>
   <div class="Live">
     <div class="Live-title">
-      <h3>
+      <h2>
         全部直播
-      </h3>
+      </h2>
     </div>
-    <el-divider></el-divider>
     <div class="FutureAndNow">
       <el-radio v-model="radioFutureAndNow" @click.native="LiveChoose($event,0)" label="1">全部直播</el-radio>
       <el-radio v-model="radioFutureAndNow" @click.native="LiveChoose($event,1)" label="2">即将直播</el-radio>

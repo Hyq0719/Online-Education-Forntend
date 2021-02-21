@@ -1,7 +1,6 @@
 <template>
   <div class="NAV2">
     <h2>最近直播</h2>
-    <el-divider></el-divider>
     <el-row :gutter="25" class="course">
       <el-col :span="6" v-for="item in live" v-bind:key="item.id">
         <router-link to="/live">
@@ -20,7 +19,6 @@
       </el-col>
     </el-row>
     <h2>好课推荐</h2>
-    <el-divider></el-divider>
     <div v-for="(item,index) in star" v-bind:key="index">
       <router-link to="/course">
         <classview1 class="classview" :img=classpicture[index] :star="item" :classname=classname[index]></classview1>
@@ -28,7 +26,6 @@
     </div>
     <div class="clear"></div>
     <h2>精彩评价</h2>
-    <el-divider></el-divider>
     <el-row :gutter="20" class="comment">
       <el-col :span="6" v-for="item in comment" v-bind:key="item.id">
         <router-link to="/live">
@@ -144,7 +141,7 @@ export default {
 
 .NAV2 h2 {
   text-align: left;
-  margin: 60px 20px 20px 20px;
+  margin: 60px 20px 40px 20px;
   letter-spacing: 2px;
 }
 
