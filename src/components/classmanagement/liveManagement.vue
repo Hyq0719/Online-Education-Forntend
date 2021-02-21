@@ -95,7 +95,6 @@ export default {
             }
           }
       ).then(function (res) {
-        console.log(res);
         if (res.data.code === 1000) {
           console.log("直播信息:", res.data.data)
           that.$store.state.teacherData.liveData = res.data.data;

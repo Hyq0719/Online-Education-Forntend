@@ -23,6 +23,7 @@
                             v-model="formBuild.liveDate"
                             align="right"
                             placeholder="选择日期"
+                            @change="checkArrange"
                             :picker-options="pickerOptions"
                             value-format="yyyy-MM-dd">
             </el-date-picker>
@@ -142,6 +143,22 @@ export default {
     };
   },
   methods: {
+    async checkArrange(val){
+      let that=this;
+      console.log("选择日期",val);
+      let JWT = that.$store.state.JWT;
+      let b = new URLSearchParams();
+      b.append("liveDate", val);
+      await axios.post("http://" + that.Api + "/api/Live/findArrangeIsValidInDay", b, {
+        headers: {
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log("查看当天直播安排成功", response);
+      }, function (err) {
+        console.log(err);
+      });
+    },
     async uploadHttp({file}) {
       let that = this;
       let f = await this.$Api.compressImg(file);
