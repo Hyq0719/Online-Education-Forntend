@@ -3,20 +3,23 @@
     <el-main style="overflow:hidden;position: relative;min-height: 480px">
       <el-table :data="liveData">
         <el-table-column prop="liveName" label="直播名称"></el-table-column>
-        <el-table-column prop="liveDate" label="直播时间">
+        <el-table-column label="直播时间">
+          <template slot-scope="scope">
+            {{ scope.row.liveDate }}-{{ options1[scope.row.liveArrange] }}
+          </template>
         </el-table-column>
-        <el-table-column prop="addressId"  label="线路">
+        <el-table-column prop="addressId" label="线路">
         </el-table-column>
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
-          <el-button-group>
-            <el-button type="primary" icon="el-icon-edit"
-                       @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[liveId-1]">修改直播信息
-            </el-button>
-            <el-button type="primary" icon="el-icon-delete"
-                       @click.native.prevent="deleteLive(scope.row.liveId)">删除直播
-            </el-button>
-          </el-button-group>
+            <el-button-group>
+              <el-button type="primary" icon="el-icon-edit"
+                         @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[liveId-1]">修改直播信息
+              </el-button>
+              <el-button type="primary" icon="el-icon-delete"
+                         @click.native.prevent="deleteLive(scope.row.liveId)">删除直播
+              </el-button>
+            </el-button-group>
           </template>
         </el-table-column>
       </el-table>
@@ -34,7 +37,7 @@
     </el-dialog>
 
     <el-dialog title="修改直播信息" v-if="dialogEdit" :visible.sync="dialogEdit">
-      <build-live @close="closeDialogEdit" :isEdit="true" :liveId="liveId" :liveInfo="liveInfo" ></build-live>
+      <build-live @close="closeDialogEdit" :isEdit="true" :liveId="liveId" :liveInfo="liveInfo"></build-live>
     </el-dialog>
 
   </div>
@@ -49,21 +52,22 @@ export default {
     return {
       dialogEdit: false,
       dialogBuild: false,
-      liveId:null,
+      liveId: null,
       liveData: this.$store.state.teacherData.liveData,
-      liveInfo:{},
+      liveInfo: {},
+      options1: [' 8:00', '10:00', '14:00', '16:00', '18:00'],
     }
   },
-  components:{
+  components: {
     buildLive: () => import("@/components/classmanagement/tools/buildLive"),
   },
   methods: {
-    async deleteLive (liveId) {
+    async deleteLive(liveId) {
       let that = this;
       let JWT = that.$store.state.JWT;
       let a = new URLSearchParams();
       a.append('liveId', liveId);
-      await axios.post("http://" + that.Api + "/api/Live/deleteLive" ,a, {
+      await axios.post("http://" + that.Api + "/api/Live/deleteLive", a, {
         headers: {
           'Authorization': JWT,
         }
@@ -75,16 +79,16 @@ export default {
       });
 
     },  //删除直播
-    closeDialogBuild(){
-      this.dialogBuild=false;
+    closeDialogBuild() {
+      this.dialogBuild = false;
       this.displayLive();
     },
-    closeDialogEdit(){
-      this.dialogEdit=false;
+    closeDialogEdit() {
+      this.dialogEdit = false;
       this.displayLive();
     },
     displayLive() {
-      let that=this;
+      let that = this;
       let c = that.$store.state.userData.userId;
       let b = new URLSearchParams();
       b.append("teacherId", c);
@@ -100,8 +104,7 @@ export default {
           that.$store.state.teacherData.liveData = res.data.data;
           that.liveData = that.$store.state.teacherData.liveData;
         }
-        if (res.data.code === 3005)
-        {
+        if (res.data.code === 3005) {
           this.$message.error('此时间段已被预约满,请换个时间段');
         }
       }), function (err) {

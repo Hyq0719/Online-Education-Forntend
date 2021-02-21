@@ -111,7 +111,7 @@ export default {
         arrange: null,
         livePicUrl: '',
       },
-      options1: [{                        //课程类别
+      options1: [{
         value: 1,
         label: ' 8:00'
       }, {
@@ -143,9 +143,9 @@ export default {
     };
   },
   methods: {
-    async checkArrange(val){
-      let that=this;
-      console.log("选择日期",val);
+    async checkArrange(val) {
+      let that = this;
+      console.log("选择日期", val);
       let JWT = that.$store.state.JWT;
       let b = new URLSearchParams();
       b.append("liveDate", val);
@@ -155,6 +155,11 @@ export default {
         }
       }).then(function (response) {
         console.log("查看当天直播安排成功", response);
+        response.data.data.map((item) => {
+          if (item.count > 1) {
+            that.options1[item.arrange].disable = true;
+          }
+        })
       }, function (err) {
         console.log(err);
       });
@@ -180,7 +185,7 @@ export default {
         console.log(`阿里云OSS上传图片失败回调`, err);
       });
     },
-   async closed() {
+    async closed() {
       let that = this;
       let params = {
         addressId: that.formBuild.addressId,
@@ -190,12 +195,11 @@ export default {
         liveName: that.formBuild.name,
         livePicUrl: that.formBuild.livePicUrl,
         teacherId: that.$store.state.userData.userId,
-            };
+      };
       console.log(params);
-      if (that.isEdit === true)
-      {
+      if (that.isEdit === true) {
         let JWT = that.$store.state.JWT;
-        await axios.post("http://" + that.Api + "/api/Live/modifyLive?liveId="+that.liveId, params, {
+        await axios.post("http://" + that.Api + "/api/Live/modifyLive?liveId=" + that.liveId, params, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': JWT,
@@ -209,8 +213,7 @@ export default {
         }, function (err) {
           console.log(err);
         });
-      }
-      else {
+      } else {
         let JWT = that.$store.state.JWT;
         await axios.post("http://" + that.Api + "/api/Live/addLive", params, {
           headers: {
