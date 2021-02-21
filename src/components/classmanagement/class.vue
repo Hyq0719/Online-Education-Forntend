@@ -2,7 +2,7 @@
   <div>
 
     <el-main v-show="classview"  style="overflow:hidden;position: relative;height: 780px">
-      <el-table :data="classData.list" :row-class-name="tableRowClassName">>
+      <el-table :data="classData.list" :row-class-name="tableRowClassName">
         <el-table-column prop="name" label="课程名称">
         </el-table-column>
         <el-table-column label="是否为vip课程">

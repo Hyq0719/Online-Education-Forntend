@@ -35,6 +35,8 @@ export default new Vuex.Store({
         },   //教师管理后台用的
         breadcrumb: [],
         isLoginTeacher: JSON.parse(sessionStorage.getItem('isLoginTeacher')) || false,
+        isLoginAdmin: JSON.parse(sessionStorage.getItem('isLoginAdmin')) || false,
+
     },
     mutations: {
         //是否学生登录
@@ -46,6 +48,10 @@ export default new Vuex.Store({
         saveIsLoginTeacher(state) {
             state.isLoginTeacher = !state.isLoginTeacher;
             sessionStorage.setItem('isLoginTeacher', JSON.stringify(state.isLoginTeacher));
+        },
+        saveIsLoginAdmin(state) {
+            state.isLoginAdmin = !state.isLoginAdmin;
+            sessionStorage.setItem('isLoginAdmin', JSON.stringify(state.isLoginAdmin));
         },
         //JWT信息
         saveJWT(state, JWT) {

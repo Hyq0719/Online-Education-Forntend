@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="classView" style="position: relative;height: 600px">
+    <div v-show="classView" style="position: relative;height: 620px">
       <el-main>
         <el-table :data="classData.list" @row-click="findComment">
           <el-table-column prop="name" label="课程名称">

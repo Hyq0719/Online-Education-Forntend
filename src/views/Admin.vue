@@ -1,10 +1,19 @@
 <template>
-  <div></div>
+  <div>
+
+  </div>
 </template>
 
 <script>
+import adminPage from "@/components/admin/adminPage";
+import Footer from '../components/Footer';
+
 export default {
-  name: "Admin"
+  name: "Admin",
+  components:{
+    adminPage,
+    Footer,
+  },
 }
 </script>
 

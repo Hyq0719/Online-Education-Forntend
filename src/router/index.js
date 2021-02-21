@@ -24,7 +24,12 @@ import classBread from "@/components/classmanagement/classbread";
 import commentClass from "@/components/classmanagement/commentClass";
 import liveManagement from "@/components/classmanagement/liveManagement";
 import blank from "@/components/classmanagement/blank";
-
+import commentAudit from "@/components/admin/commentAudit";
+import liveAudit from "@/components/admin/liveAudit";
+import classAudit from "@/components/admin/classAudit";
+import adminPage from "@/components/admin/adminPage";
+import adminLogin from "@/components/admin/adminLogin";
+import teacherAudit from "@/components/admin/teacherAudit";
 
 Vue.use(Router);
 
@@ -126,6 +131,44 @@ export default new Router({
                     path:'blank',
                     name:'blank',
                     component:blank,
+                },
+            ]
+        },
+        {
+            path:'/admin',
+            name:'admin',
+            redirect: {name : "adminLogin"},
+            replace: true,
+        },
+        {
+            path:'/adminLogin',
+            name: 'adminLogin',
+            component: adminLogin,
+        },
+        {
+            path:'/adminPage',
+            name:'adminPage',
+            component:adminPage,
+            children:[
+                {
+                    path: 'classAudit',
+                    name: 'classAudit',
+                    component: classAudit,
+                },
+                {
+                    path: 'commentAudit',
+                    name: 'commentAudit',
+                    component: commentAudit,
+                },
+                {
+                  path: 'liveAudit',
+                  name: 'liveAudit',
+                    component: liveAudit,
+                },
+                {
+                    path: 'teacherAudit',
+                    name: 'teacherAudit',
+                    component: teacherAudit,
                 },
             ]
         },
