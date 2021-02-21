@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-main style="overflow:hidden;position: relative;height: 580px">
+    <el-main style="overflow:hidden;position: relative">
       <el-table :data="liveData">
         <el-table-column prop="liveName" label="直播名称"></el-table-column>
-        <el-table-column prop="startTime" label="直播时间">
+        <el-table-column prop="liveDate" label="直播时间">
         </el-table-column>
-        <el-table-column prop="liveArrange" label="线路">
+        <el-table-column prop="addressId"  label="线路">
         </el-table-column>
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
@@ -83,6 +83,10 @@ export default {
           console.log("直播信息:", res.data.data)
           that.$store.state.teacherData.liveData = res.data.data;
           that.liveData = that.$store.state.teacherData.liveData;
+        }
+        if (res.data.code === 3005)
+        {
+          this.$message.error('此时间段已被预约满,请换个时间段');
         }
       }), function (err) {
         console.log(err);

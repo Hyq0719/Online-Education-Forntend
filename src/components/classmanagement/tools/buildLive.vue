@@ -184,9 +184,9 @@ export default {
             'Authorization': JWT,
           }
         }).then(function (response) {
-          console.log("上传成功", response);
+          console.log("修改成功", response);
           that.$emit('close', false);
-          that.$alert('上传成功', '提示', {
+          that.$alert('修改成功', '提示', {
             confirmButtonText: '确定',
           });
         }, function (err) {
@@ -201,9 +201,9 @@ export default {
             'Authorization': JWT,
           }
         }).then(function (response) {
-          console.log("上传成功", response);
+          console.log("创建成功", response);
           that.$emit('close', false);
-          that.$alert('上传成功', '提示', {
+          that.$alert('创建成功', '提示', {
             confirmButtonText: '确定',
           });
           that.$emit('close', false);
