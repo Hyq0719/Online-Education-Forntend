@@ -206,6 +206,7 @@ export default {
       chapterIntro: "",
       courseId: null,  //临时传参用
       chapterId:null,
+      currentPage:null,
     }
   },
   components: {
@@ -217,6 +218,7 @@ export default {
     handleCurrentChange(val){
       console.log(`当前页: ${val}`);
        this.getCourse(val);
+       this.currentPage=val;
       },
     tableRowClassName({row}) {
       if (row.status === 1) {
@@ -227,8 +229,10 @@ export default {
       return '';
     },
     closeDialog() {
+      let that=this;
       this.dialogClassBuild = false;
       this.dialogClassEdit = false;
+      this.getCourse(that.currentPage);
     },
     async deleteClass(a) {
       let that = this;

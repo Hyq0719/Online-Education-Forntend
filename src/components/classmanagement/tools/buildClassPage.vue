@@ -111,21 +111,39 @@ export default {
       };
       console.log(params);
       let JWT = this.$store.state.JWT;
-      axios.post("http://" + this.Api + "/api/Course/addCourse", params, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': JWT,
-        }
-      }).then(function (response) {
-        console.log(response);
-        that.$alert('上传成功，待审核', '提示', {
-          confirmButtonText: '确定',
+      if (that.isEdit !== true)
+      {
+        axios.post("http://" + this.Api + "/api/Course/addCourse", params, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': JWT,
+          }
+        }).then(function (response) {
+          console.log("创建成功",response);
+          that.$alert('上传成功，待审核', '提示', {
+            confirmButtonText: '确定',
+          });
+          that.$emit('close', false);
+        }, function (err) {
+          console.log(err);
         });
-        that.$emit('close', false);
-      }, function (err) {
-        console.log(err);
-      });
-
+      }
+      else {
+        axios.post("http://" + this.Api + "/api/Course/completeCourseInfo?courseId="+that.courseId, params, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': JWT,
+          }
+        }).then(function (response) {
+          console.log("修改成功",response);
+          that.$alert('上传成功，待审核', '提示', {
+            confirmButtonText: '确定',
+          });
+          that.$emit('close', false);
+        }, function (err) {
+          console.log(err);
+        });
+      };
     },   //
     async uploadHttp({file}) {
       // const file=this.imgFile;

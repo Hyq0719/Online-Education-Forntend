@@ -22,14 +22,9 @@
       </el-table>
 
       <div>
-        <el-button circle @click="dialogBuild = true" style="position: absolute;bottom: 80px;left: 20px">
+        <el-button circle @click="dialogBuild = true" style="position: fixed;bottom: 160px;left: 240px">
           <i class="el-icon-circle-plus-outline"></i>
         </el-button>
-        <el-pagination style="position: absolute;bottom: 0;left: 300px"
-                       background
-                       layout="prev, pager, next"
-                       :total="1">
-        </el-pagination>
       </div>
 
     </el-main>
@@ -65,9 +60,11 @@ export default {
   methods: {
     closeDialogBuild(){
       this.dialogBuild=false;
+      this.displayLive();
     },
     closeDialogEdit(){
       this.dialogEdit=false;
+      this.displayLive();
     },
     displayLive() {
       let that=this;

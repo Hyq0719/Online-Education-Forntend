@@ -163,7 +163,7 @@ export default {
         console.log(`阿里云OSS上传图片失败回调`, err);
       });
     },
-    closed() {
+   async closed() {
       let that = this;
       let params = {
         addressId: that.formBuild.addressId,
@@ -178,7 +178,7 @@ export default {
       if (that.isEdit === true)
       {
         let JWT = that.$store.state.JWT;
-        axios.post("http://" + that.Api + "/api/Live/modifyLive?liveId="+that.liveId, params, {
+        await axios.post("http://" + that.Api + "/api/Live/modifyLive?liveId="+that.liveId, params, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': JWT,
@@ -195,7 +195,7 @@ export default {
       }
       else {
         let JWT = that.$store.state.JWT;
-        axios.post("http://" + that.Api + "/api/Live/addLive", params, {
+        await axios.post("http://" + that.Api + "/api/Live/addLive", params, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': JWT,
