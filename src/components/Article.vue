@@ -1,7 +1,6 @@
 <template>
   <div class="Article">
     <h2>作业墙</h2>
-    <el-divider></el-divider>
     <div v-for="(item,index) in picture" v-bind:key="item">
       <passage class='passage' :title=title[index] :img=picture[index] :content=content[index]></passage>
     </div>

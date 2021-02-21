@@ -121,7 +121,6 @@
         <div>
           <h3>授课老师</h3>
         </div>
-        <el-divider></el-divider>
         <div class="Teacher" v-if="this.$store.state.courseData.teacher">
           <img :src="this.$store.state.courseData.teacher.teacherPicUrl" alt="图片缺失">
           <div class="Teacher-Introduce">

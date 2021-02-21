@@ -14,7 +14,6 @@
         <el-radio-button @click.native="CourseChoose($event,preferId,3,needVip)" label="最热课程"></el-radio-button>
       </el-radio-group>
     </div>
-    <el-divider></el-divider>
     <div class="free-vip">
       <el-radio v-model="radioVip" @click.native="CourseChoose($event,preferId,sort,2)" label="1">全部课程</el-radio>
       <el-radio v-model="radioVip" @click.native="CourseChoose($event,preferId,sort,0)" label="2">免费课程</el-radio>
@@ -140,7 +139,7 @@ export default {
 
 .free-vip {
   text-align: left;
-  margin: 20px;
+  margin: 20px 10px;
 }
 
 .el-radio-button {
