@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-main style="overflow:hidden;position: relative">
+    <el-main style="overflow:hidden;position: relative;min-height: 480px">
       <el-table :data="liveData">
         <el-table-column prop="liveName" label="直播名称"></el-table-column>
         <el-table-column prop="liveDate" label="直播时间">
@@ -14,7 +14,7 @@
                        @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[liveId-1]">修改直播信息
             </el-button>
             <el-button type="primary" icon="el-icon-delete"
-                       @click.native.prevent="deleteRow()">删除直播
+                       @click.native.prevent="deleteLive(scope.row.liveId)">删除直播
             </el-button>
           </el-button-group>
           </template>
@@ -58,6 +58,23 @@ export default {
     buildLive: () => import("@/components/classmanagement/tools/buildLive"),
   },
   methods: {
+    async deleteLive (liveId) {
+      let that = this;
+      let JWT = that.$store.state.JWT;
+      let a = new URLSearchParams();
+      a.append('liveId', liveId);
+      await axios.post("http://" + that.Api + "/api/Live/deleteLive" ,a, {
+        headers: {
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log("删除直播", response);
+        that.displayLive();
+      }, function (err) {
+        console.log(err);
+      });
+
+    },  //删除直播
     closeDialogBuild(){
       this.dialogBuild=false;
       this.displayLive();
