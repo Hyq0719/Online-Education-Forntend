@@ -29,6 +29,7 @@
 
 <script>
 import axios from 'axios';
+import {MessageBox} from "element-ui";
 
 export default {
   name: "Register",
@@ -92,10 +93,25 @@ export default {
       axios.post('http://' + this.Api + '/api/Student/addStudent', params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
-          that.$router.push('/main');
-          that.$store.commit('saveIsLogin');
-          that.$store.commit('saveAvatar');
-          that.$store.commit('saveMajor');
+          let a = {
+            password: that.ruleForm.checkPass,
+            phone: that.ruleForm.phone,
+          };
+          axios.post("http://" + that.Api + "/api/Student/loginByPassword", a, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+            console.log(response);
+            that.$router.push('/main');
+            that.$store.commit('saveIsLogin');
+            that.$store.commit('saveData', response.data.data);
+            that.$store.commit('saveJWT', response.headers.authorization);
+            if (!response.data.data.studentPicUrl) {
+              that.$store.commit('saveAvatar');
+            }
+            if (!response.data.data.major) {
+              that.$store.commit('saveMajor');
+            }
+          }, function (err) {
+            console.log(err);
+          });
         }
       }, function (err) {
         console.log(err);

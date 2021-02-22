@@ -84,9 +84,6 @@
           <el-form-item label="姓名：">
             <el-input v-model="informationTeacher.name"></el-input>
           </el-form-item>
-          <el-form-item label="简介：">
-            <el-input v-model="informationTeacher.intro"></el-input>
-          </el-form-item>
           <el-form-item label="性别：">
             <el-select v-model="information.sex" clearable placeholder="请选择你的性别" @change="changeSex">
               <el-option
@@ -103,12 +100,16 @@
           <el-form-item label="专业：">
             <el-select v-model="informationTeacher.majorContent" clearable placeholder="请选择你的专业" @change="changeMajor">
               <el-option
-                  v-for="item in majors"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  v-for="item in this.$store.state.MajorPrefer"
+                  :key="item.majorId"
+                  :label="item.majorContent"
+                  :value="item.majorId">
               </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="简介：">
+            <el-input type="textarea" v-model="informationTeacher.intro"
+                      :autosize="{ minRows: 2, maxRows: 4}"></el-input>
           </el-form-item>
         </el-form>
       </el-main>
@@ -156,9 +157,10 @@ export default {
       isLoginTeacher: this.$store.state.isLoginTeacher,
       sex: ['男', '女', '保密'],
       sexTeacher: ['男', '女'],
-      grade: ['大一','大二','大三','大四'],
+      grade: ['大一', '大二', '大三', '大四'],
       imageUrl: '',
       uploadConf: {
+        endpoint: "https://oss-accelerate.aliyuncs.com",
         region: 'oss-cn-shanghai',
         accessKeyId: 'LTAI4GGsTQ35tQcWWDVNKwqG',
         accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
@@ -167,6 +169,30 @@ export default {
     };
   },
   methods: {
+    async uploadHttp({file}) {
+      console.log(file);
+      let that = this;
+      let f = await this.$Api.compressImg(file);
+      console.log(f);
+      let fileName = `${this.$store.state.userData.userId}_Header/${Date.parse(new Date())}`;  //定义唯一的文件名
+      if (this.isLogin) {
+        fileName = `pic/Student/` + fileName;
+      } else {
+        fileName = `pic/Teacher/` + fileName;
+      }
+      ossClient(this.uploadConf).put(fileName, f, {
+        'ContentType': 'image/jpeg'
+      }).then(({res, url, name}) => {
+        if (res && res.status == 200) {
+          that.imageUrl = url;
+          that.information.studentPicUrl = url;
+          that.informationTeacher.teacherPicUrl = url;
+          console.log(`阿里云OSS上传图片成功回调`, res, url, name);
+        }
+      }).catch((err) => {
+        console.log(`阿里云OSS上传图片失败回调`, err);
+      });
+    },
     changeMajor(value) {
       console.log(value);
       this.information.majorId = value;
@@ -253,30 +279,6 @@ export default {
         console.log(err);
       });
     },
-    async uploadHttp({file}) {
-      console.log(file);
-      let that = this;
-      let f = await this.$Api.compressImg(file);
-      console.log(f);
-      let fileName = `${this.$store.state.userData.userId}_Header/${Date.parse(new Date())}`;  //定义唯一的文件名
-      if (this.isLogin) {
-        fileName = `pic/Student/` + fileName;
-      } else {
-        fileName = `pic/Teacher/` + fileName;
-      }
-      ossClient(this.uploadConf).put(fileName, f, {
-        'ContentType': 'image/jpeg'
-      }).then(({res, url, name}) => {
-        if (res && res.status == 200) {
-          that.imageUrl = url;
-          that.information.studentPicUrl = url;
-          that.informationTeacher.teacherPicUrl = url;
-          console.log(`阿里云OSS上传图片成功回调`, res, url, name);
-        }
-      }).catch((err) => {
-        console.log(`阿里云OSS上传图片失败回调`, err);
-      });
-    },
   },
 };
 </script>
@@ -343,6 +345,10 @@ body > .el-container {
 }
 
 .el-input {
+  width: 50%;
+}
+
+.el-textarea {
   width: 50%;
 }
 

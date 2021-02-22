@@ -91,10 +91,25 @@ export default {
       axios.post('http://' + this.Api + '/api/Teacher/addTeacher', params, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
         console.log(response);
         if (response.data.code === 1000) {
-          that.$router.push('/Classmanagement');
-          that.$store.commit('saveIsLoginTeacher');
-          that.$store.commit('saveAvatar');
-          that.$store.commit('saveMajor');
+          let a = {
+            password: that.ruleForm.checkPass,
+            phone: that.ruleForm.phone,
+          };
+          axios.post('http://' + that.Api + "/api/Teacher/loginByPassword", a, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+            console.log(response);
+            that.$router.push('/Classmanagement/blank');
+            that.$store.commit('saveIsLoginTeacher');
+            that.$store.commit('saveData', response.data.data);
+            that.$store.commit('saveJWT', response.headers.authorization);
+            if (!response.data.data.teacherPicUrl) {
+              that.$store.commit('saveAvatarTeacher');
+            }
+            if (!response.data.data.major) {
+              that.$store.commit('saveMajor');
+            }
+          }, function (err) {
+            console.log(err);
+          });
         }
       }, function (err) {
         console.log(err);

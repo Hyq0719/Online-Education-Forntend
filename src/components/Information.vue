@@ -77,9 +77,6 @@
           <el-form-item label="姓名：">
             <h4>{{ informationTeacher.name }}</h4>
           </el-form-item>
-          <el-form-item label="简介：">
-            <h4>{{ informationTeacher.intro }}</h4>
-          </el-form-item>
           <el-form-item label="性别：">
             <h4>{{ informationTeacher.sex }}</h4>
           </el-form-item>
@@ -88,6 +85,9 @@
           </el-form-item>
           <el-form-item label="专业：">
             <h4>{{ informationTeacher.majorContent }}</h4>
+          </el-form-item>
+          <el-form-item label="简介：">
+            <h4>{{ informationTeacher.intro }}</h4>
           </el-form-item>
         </el-form>
       </el-main>
