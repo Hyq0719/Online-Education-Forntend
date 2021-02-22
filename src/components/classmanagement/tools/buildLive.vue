@@ -2,7 +2,7 @@
   <div>
     <el-main>
       <div style="width: 550px">
-        <el-form label-width="160px">
+        <el-form label-width="160px" :key="key">
           <el-form-item label="直播名称" style="width: 300px">
             <el-input v-model="formBuild.name"
                       placeholder="请输入直播名称"
@@ -35,6 +35,7 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
+                  :disabled="item.disabled"
               >
               </el-option>
             </el-select>
@@ -46,6 +47,7 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
+                  :disabled="item.disabled"
               >
               </el-option>
             </el-select>
@@ -113,26 +115,33 @@ export default {
       },
       options1: [{
         value: 1,
-        label: ' 8:00'
+        label: ' 8:00',
+        disabled:false
       }, {
         value: 2,
-        label: '10:00'
+        label: '10:00',
+        disabled:false
       }, {
         value: 3,
-        label: '14:00'
+        label: '14:00',
+        disabled:false
       }, {
         value: 4,
-        label: '16:00'
+        label: '16:00',
+        disabled:false
       }, {
         value: 5,
-        label: '18:00'
+        label: '18:00',
+        disabled:false
       }],
       options2: [{
         value: 1,
-        label: '线路一'
+        label: '线路一',
+        disabled:false
       }, {
         value: 2,
-        label: '线路二'
+        label: '线路二',
+        disabled:false
       }],
       uploadConf: {
         region: 'oss-cn-shanghai',
@@ -140,6 +149,7 @@ export default {
         accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
         bucket: 'shu-online-edu',
       },
+      key:1,
     };
   },
   methods: {
@@ -147,6 +157,13 @@ export default {
       let that = this;
       console.log("选择日期", val);
       let JWT = that.$store.state.JWT;
+      that.options2.map((val,index)=>{
+        console.log(index);
+        that.options2[index].disabled=false;
+      });
+      that.options1.map((val,index)=>{
+        that.options1[index].disabled=false;
+      });
       let b = new URLSearchParams();
       b.append("liveDate", val);
       await axios.post("http://" + that.Api + "/api/Live/findArrangeIsValidInDay", b, {
@@ -156,10 +173,16 @@ export default {
       }).then(function (response) {
         console.log("查看当天直播安排成功", response);
         response.data.data.map((item) => {
-          if (item.count > 1) {
-            that.options1[item.arrange].disable = true;
+          if (item.liveCount > 1) {
+            that.options2[item.liveAddressId-1].disabled = true;
+            if (that.options2[0].disabled && that.options2[1].disabled )
+            {
+              that.options1[item.liveArrange-1].disabled = true;
+            }
+            that.key++;
           }
-        })
+        });
+        console.log(that.options1)
       }, function (err) {
         console.log(err);
       });

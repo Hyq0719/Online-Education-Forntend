@@ -5,7 +5,7 @@
         <el-table-column prop="liveName" label="直播名称"></el-table-column>
         <el-table-column label="直播时间">
           <template slot-scope="scope">
-            {{ scope.row.liveDate }}-{{ options1[scope.row.liveArrange] }}
+            {{ scope.row.liveDate }}-{{ options1[scope.row.liveArrange-1] }}
           </template>
         </el-table-column>
         <el-table-column prop="addressId" label="线路">
@@ -14,7 +14,7 @@
           <template slot-scope="scope">
             <el-button-group>
               <el-button type="primary" icon="el-icon-edit"
-                         @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[liveId-1]">修改直播信息
+                         @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[scope.$index]">修改直播信息
               </el-button>
               <el-button type="primary" icon="el-icon-delete"
                          @click.native.prevent="deleteLive(scope.row.liveId)">删除直播

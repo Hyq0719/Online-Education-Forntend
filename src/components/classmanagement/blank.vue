@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="min-height: 480px">
   点击左边选择管理项目
 </div>
 </template>
