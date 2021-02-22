@@ -4,7 +4,7 @@
       <router-link :to="{path:'/course',query:{courseId:item.courseId}}">
         <div class="search-content">
           <div class="search-img">
-            <img src="../assets/course1.webp" alt="图片丢失">
+            <img :src="item.coursePic" alt="图片丢失">
           </div>
           <div class="search-text">
             <h3 v-html="item.name"></h3>

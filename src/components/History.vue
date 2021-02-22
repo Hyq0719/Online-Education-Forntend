@@ -14,7 +14,7 @@
       <div class="history-content">
         <div class="history-img"
              @click="videoHistory(item.courseChapterVideo.courseChapterVideoPK.videoId,item.courseChapterVideo.videoUrl,item.course.courseId,item.courseChapterVideo.courseChapterVideoPK.chapterId)">
-          <img src="../assets/course1.webp" alt="图片丢失">
+          <img :src="item.course.coursePic" alt="图片丢失">
         </div>
         <div class="history-text">
           <div class="history-text-title"
