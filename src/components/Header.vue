@@ -62,7 +62,7 @@
         </el-popover>
       </el-menu-item>
       <el-menu-item index="4" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
-        <router-link to="/liveMenu" @click.native="LiveMenu">直播</router-link>
+        <router-link to="/liveMenu">直播</router-link>
       </el-menu-item>
       <el-menu-item index="5" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <router-link to="/main">首页</router-link>
@@ -122,46 +122,7 @@ export default {
       this.$router.push('/Classmanagement/blank');
     },
     CourseMenuPrefer(majorId) {
-      this.$router.push({path: '/coursemenu', query: {majorId: majorId, prederId: 0}});
-      let that = this;
-      let a = new URLSearchParams;
-      a.append("page", 1);
-      a.append("majorId", majorId);
-      a.append("sort", 1);
-      axios.post("http://" + this.Api + "/api/Course/getCourseByMajorId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log("获取此专业课程菜单", response);
-        that.$store.commit('saveMenuCourseData', response.data.data);
-      }, function (err) {
-        console.log(err);
-      });
-      let PreferData = {
-        preferContent: "全部课程",
-        preferId: 0,
-      };
-      let b = new URLSearchParams;
-      b.append("major_id", majorId);
-      axios.post("http://" + this.Api + "/api/Major/getPreferByMajor?" + b, null, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }).then(function (response) {
-        response.data.data.unshift(PreferData)
-        console.log("获取此专业的子专业", response.data.data);
-        that.$store.commit('savePrefer', response.data.data);
-      }, function (err) {
-        console.log(err);
-      });
-    },
-    LiveMenu() {
-      let that = this;
-      let a = new URLSearchParams;
-      a.append("page", 1);
-      axios.get("http://" + this.Api + "/api/Live/findAllValidLive?" + a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log("获取直播菜单", response);
-        that.$store.commit('saveMenuLiveData', response.data.data);
-      }, function (err) {
-        console.log(err);
-      });
+      this.$router.push({path: '/coursemenu', query: {majorId: majorId}});
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

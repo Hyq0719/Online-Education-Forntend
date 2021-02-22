@@ -21,7 +21,7 @@
     </div>
     <div class="Course-content">
       <div class="Course-content-content" v-for="(item,index) in this.$store.state.menuCourseData.list"
-           v-bind:key="index" @click="CourseHistory(item.courseId)">
+           v-bind:key="index" @click="Course(item.courseId)">
         <div class="Course-content-content-img">
           <img :src="item.coursePic" alt="图片缺失">
         </div>
@@ -58,7 +58,45 @@ export default {
       currentPage: 1,
     };
   },
+  watch: {
+    '$route'(to, from) {
+      this.initCourseMenu();
+    }
+  },
+  created() {
+    this.initCourseMenu();
+  },
   methods: {
+    initCourseMenu(){
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("page", 1);
+      a.append("majorId", this.$route.query.majorId);
+      a.append("sort", 1);
+      axios.post("http://" + this.Api + "/api/Course/getCourseByMajorId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log("获取此专业课程菜单", response);
+        that.$store.commit('saveMenuCourseData', response.data.data);
+      }, function (err) {
+        console.log(err);
+      });
+      let PreferData = {
+        preferContent: "全部课程",
+        preferId: 0,
+      };
+      let b = new URLSearchParams;
+      b.append("major_id", this.$route.query.majorId);
+      axios.post("http://" + this.Api + "/api/Major/getPreferByMajor?" + b, null, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(function (response) {
+        response.data.data.unshift(PreferData)
+        console.log("获取此专业的子专业", response.data.data);
+        that.$store.commit('savePrefer', response.data.data);
+      }, function (err) {
+        console.log(err);
+      });
+    },
     handleCurrentChange(currentPage) {
       console.log("当前页", currentPage);
       let that = this;
@@ -106,7 +144,7 @@ export default {
         }
       }
     },
-    CourseHistory(courseId) {
+    Course(courseId) {
       this.$router.push({path: '/course', query: {courseId: courseId}});
     },
     CourseChoose(e, preferId, sort, needVip) {
