@@ -244,11 +244,16 @@ export default {
             'Authorization': JWT,
           }
         }).then(function (response) {
+          if (response.data.code === 3005) {
+            this.$message.error('此时间段已被预约满,请换个时间段');
+          }
+          else if(response.data.code === 1000 )
+          {
           console.log("修改成功", response);
           that.$emit('close', false);
           that.$alert('修改成功', '提示', {
             confirmButtonText: '确定',
-          });
+          });}
         }, function (err) {
           console.log(err);
         });
@@ -260,11 +265,16 @@ export default {
             'Authorization': JWT,
           }
         }).then(function (response) {
-          console.log("创建成功", response);
+          if (response.data.code === 3005) {
+            this.$message.error('此时间段已被预约满,请换个时间段');
+          }
+          else if(response.data.code === 1000 )
+          {
+            console.log("创建成功", response);
           that.$emit('close', false);
           that.$alert('创建成功', '提示', {
             confirmButtonText: '确定',
-          });
+          }); }
           that.$emit('close', false);
         }, function (err) {
           console.log(err);

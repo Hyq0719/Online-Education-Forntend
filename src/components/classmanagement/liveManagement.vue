@@ -1,7 +1,64 @@
 <template>
   <div>
     <el-main style="overflow:hidden;position: relative;min-height: 480px">
-      <el-table :data="liveData">
+      <template>
+        <el-radio-group v-model="radio" style="float: left;margin: 5px 20px">
+          <el-radio :label="1" @change="displayLive">全部直播</el-radio>
+          <el-radio :label="2" @change="displayLiving">正在直播</el-radio>
+          <el-radio :label="3" @change="displayLiveFuture">即将直播</el-radio>
+        </el-radio-group>
+      </template>
+
+      <el-table :data="liveData" v-if="total" v-show="total">
+        <el-table-column prop="liveName" label="直播名称"></el-table-column>
+        <el-table-column label="直播时间">
+          <template slot-scope="scope">
+            {{ scope.row.liveDate }}-{{ options1[scope.row.liveArrange-1] }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="addressId" label="线路">
+        </el-table-column>
+        <el-table-column label="操作" width="400px">
+          <template slot-scope="scope">
+            <el-button-group>
+              <el-button type="primary" icon="el-icon-edit"
+                         @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[scope.$index]">修改直播信息
+              </el-button>
+              <el-button type="primary" icon="el-icon-delete"
+                         @click.native.prevent="deleteLive(scope.row.liveId)">删除直播
+              </el-button>
+            </el-button-group>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <el-table :data="liveData" v-if="ing" v-show="ing">
+        <el-table-column prop="liveName" label="直播名称"></el-table-column>
+        <el-table-column label="直播时间">
+          <template slot-scope="scope">
+            {{ scope.row.liveDate }}-{{ options1[scope.row.liveArrange-1] }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="addressId" label="线路">
+        </el-table-column>
+        <el-table-column label="操作" width="400px">
+          <template slot-scope="scope">
+              <el-button type="primary" icon="el-icon-edit"
+                         @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[scope.$index]">修改直播信息
+              </el-button>
+
+              <el-button type="warning"
+                         @click="this.$router.push('/live')">进入直播
+              </el-button>
+
+              <el-button type="danger" icon="el-icon-delete"
+                         @click.native.prevent="deleteLive(scope.row.liveId)">删除直播
+              </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <el-table :data="liveData" v-if="future" v-show="future">
         <el-table-column prop="liveName" label="直播名称"></el-table-column>
         <el-table-column label="直播时间">
           <template slot-scope="scope">
@@ -50,12 +107,16 @@ export default {
   name: "liveManagement",
   data() {
     return {
+      radio:1,
       dialogEdit: false,
       dialogBuild: false,
       liveId: null,
       liveData: this.$store.state.teacherData.liveData,
       liveInfo: {},
       options1: [' 8:00', '10:00', '14:00', '16:00', '18:00'],
+      ing:false,
+      future:false,
+      total:false,
     }
   },
   components: {
@@ -100,12 +161,60 @@ export default {
           }
       ).then(function (res) {
         if (res.data.code === 1000) {
-          console.log("直播信息:", res.data.data)
-          that.$store.state.teacherData.liveData = res.data.data;
+          console.log("全部直播信息:", res.data.data)
+          that.$store.commit("saveLiveData",res.data.data);
           that.liveData = that.$store.state.teacherData.liveData;
+          that.total=true;
+          that.ing=false;
+          that.future=false;
         }
-        if (res.data.code === 3005) {
-          this.$message.error('此时间段已被预约满,请换个时间段');
+      }), function (err) {
+        console.log(err);
+      };
+    },
+    displayLiveFuture() {
+      let that = this;
+      let c = that.$store.state.userData.userId;
+      let b = new URLSearchParams();
+      b.append("teacherId", c);
+      axios.post('http://' + that.Api + "/api/Live/findAllValidLiveFutureByTeacher", b,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+        if (res.data.code === 1000) {
+          console.log("即将直播信息:", res.data.data)
+          that.$store.commit("saveLiveData",res.data.data);
+          that.liveData = that.$store.state.teacherData.liveData;
+          that.total=false;
+          that.ing=false;
+          that.future=true;
+        }
+      }), function (err) {
+        console.log(err);
+      };
+    },
+    displayLiving() {
+      let that = this;
+      let c = that.$store.state.userData.userId;
+      let b = new URLSearchParams();
+      b.append("teacherId", c);
+      axios.post('http://' + that.Api + "/api/Live/findAllValidLiveNowByTeacher", b,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+        if (res.data.code === 1000) {
+          console.log("正在直播信息:", res.data.data)
+          that.$store.commit("saveLiveData",res.data.data);
+          that.liveData = that.$store.state.teacherData.liveData;
+          that.total=false;
+          that.ing=true;
+          that.future=false;
         }
       }), function (err) {
         console.log(err);
