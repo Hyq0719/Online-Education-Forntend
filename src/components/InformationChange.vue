@@ -218,19 +218,18 @@ export default {
         sex: this.information.sex,
       };
       let a = new URLSearchParams();
-      let JWT = this.$store.state.JWT;
       a.append('user_id', this.information.userId);
       axios.post("http://" + this.Api + "/api/Student/completeStudentById?" + a, params, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': JWT,
+          'Authorization': this.$store.state.JWT,
         }
       }).then(function (response) {
         console.log(response);
         axios.post("http://" + that.Api + "/api/Student/getStudentById?" + a, null, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': JWT,
+            'Authorization': this.$store.state.JWT,
           }
         }).then(function (res) {
           console.log(res);
@@ -254,19 +253,18 @@ export default {
         picUrl: this.informationTeacher.teacherPicUrl,
       };
       let a = new URLSearchParams();
-      let JWT = this.$store.state.JWT;
       a.append('user_id', this.informationTeacher.userId);
       axios.post("http://" + this.Api + "/api/Teacher/completeTeacherById?" + a, params, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': JWT,
+          'Authorization': this.$store.state.JWT,
         }
       }).then(function (response) {
         console.log(response);
         axios.post("http://" + that.Api + "/api/Teacher/getTeacherById?" + a, null, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': JWT,
+            'Authorization': this.$store.state.JWT,
           }
         }).then(function (res) {
           console.log(res);

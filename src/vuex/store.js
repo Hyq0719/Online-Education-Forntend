@@ -22,6 +22,10 @@ export default new Vuex.Store({
         Video: JSON.parse(sessionStorage.getItem('Video')) || false,
         SearchedCourseData: JSON.parse(sessionStorage.getItem('SearchedCourseData')) || false,
         RelatedCourses: JSON.parse(sessionStorage.getItem('RelatedCourses')) || false,
+        TaskInfo: JSON.parse(sessionStorage.getItem('TaskInfo')) || false,
+        TaskFile: JSON.parse(sessionStorage.getItem('TaskFile')) || false,
+        HomeworkInfo: JSON.parse(sessionStorage.getItem('HomeworkInfo')) || false,
+        HomeworkFile: JSON.parse(sessionStorage.getItem('HomeworkFile')) || false,
 
         MenuLiveData: JSON.parse(sessionStorage.getItem('MenuLiveData')) || false,
 
@@ -124,6 +128,26 @@ export default new Vuex.Store({
         saveRelatedCourses(state, RelatedCourses) {
             state.RelatedCourses = RelatedCourses;
             sessionStorage.setItem('RelatedCourses', JSON.stringify(state.RelatedCourses));
+        },
+        //任务信息
+        saveTaskInfo(state, TaskInfo) {
+            state.TaskInfo = TaskInfo;
+            sessionStorage.setItem('TaskInfo', JSON.stringify(state.TaskInfo));
+        },
+        //任务文件
+        saveTaskFile(state, TaskFile) {
+            state.TaskFile = TaskFile;
+            sessionStorage.setItem('TaskFile', JSON.stringify(state.TaskFile));
+        },
+        //作业信息
+        saveHomeworkInfo(state, HomeworkInfo) {
+            state.HomeworkInfo = HomeworkInfo;
+            sessionStorage.setItem('HomeworkInfo', JSON.stringify(state.HomeworkInfo));
+        },
+        //作业文件信息
+        saveHomeworkFile(state, HomeworkFile) {
+            state.HomeworkFile = HomeworkFile;
+            sessionStorage.setItem('HomeworkFile', JSON.stringify(state.HomeworkFile));
         },
         //直播菜单页面的课程信息
         saveMenuLiveData(state, MenuLiveData) {

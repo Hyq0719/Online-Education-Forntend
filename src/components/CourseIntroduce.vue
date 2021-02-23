@@ -140,17 +140,16 @@
           相关课程
         </h3>
       </div>
-      <el-row :gutter="25">
-        <el-col :span="6" v-for="(item,index) in this.$store.state.RelatedCourses" v-bind:key="index">
-          <router-link :to="{path:'/course',query:{courseId:item.courseId}}">
-            <div class="grid-content">
-              <img :src="item.src" alt="图片缺失">
-              <h4>{{ item.name }}</h4>
-              <h6>{{ item.teacher.name }}</h6>
-            </div>
-          </router-link>
-        </el-col>
-      </el-row>
+      <div class="Course-content">
+        <div class="Course-content-content" v-for="(item,index) in this.$store.state.RelatedCourses"
+             v-bind:key="index" @click="Course(item.courseId)">
+          <div class="Course-content-content-img">
+            <img :src="item.coursePic" alt="图片缺失">
+          </div>
+          <h4>{{ item.name }}</h4>
+          <h6>{{ item.teacher.name }}</h6>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -476,29 +475,41 @@ export default {
   text-align: left;
 }
 
-.grid-content {
+.Course-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Course-content-content {
+  height: 200px;
+  width: 18%;
+  cursor: pointer;
   text-align: left;
   border-radius: 10px;
   border: #E4E7ED 1px solid;
-  height: 240px;
-  margin-bottom: 30px;
+  margin: 10px;
   box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
 }
 
-.grid-content img {
+.Course-content-content-img {
+  text-align: center;
+  margin: 3px;
+}
+
+.Course-content-content img {
   border-radius: 10px;
   width: 100%;
 }
 
-.grid-content h4 {
+.Course-content-content h4 {
   margin: 10px;
 }
 
-.grid-content h6 {
+.Course-content-content h6 {
   margin: 10px 10px 20px 10px;
 }
 
-.grid-content:hover {
+.Course-content-content:hover {
   background-color: #d3dce6;
   text-decoration: none;
   text-decoration-color: #99a9bf;
