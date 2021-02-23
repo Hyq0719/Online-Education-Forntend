@@ -88,6 +88,7 @@ export default {
       imageUrl: '',
       images: [],
       uploadConf: {
+        endpoint: "https://oss-accelerate.aliyuncs.com",
         region: 'oss-cn-shanghai',
         accessKeyId: 'LTAI4GGsTQ35tQcWWDVNKwqG',
         accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
