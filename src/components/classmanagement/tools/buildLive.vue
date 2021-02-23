@@ -29,7 +29,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item label="选择直播时间">
-            <el-select v-model="formBuild.arrange" placeholder="请选择时间" style="float: left;margin: 10px 24px">
+            <el-select v-model="formBuild.arrange"  @change="checkAddress" placeholder="请选择时间" style="float: left;margin: 10px 24px">
               <el-option
                   v-for="item in options1"
                   :key="item.value"
@@ -103,6 +103,7 @@ export default {
           return c;
         },
       },
+      dayLive: [],
       imageUrl: '',
       loading: false,
       formBuild: {              //课程基本属性
@@ -116,32 +117,32 @@ export default {
       options1: [{
         value: 1,
         label: ' 8:00',
-        disabled:false
+        disabled: false
       }, {
         value: 2,
         label: '10:00',
-        disabled:false
+        disabled: false
       }, {
         value: 3,
         label: '14:00',
-        disabled:false
+        disabled: false
       }, {
         value: 4,
         label: '16:00',
-        disabled:false
+        disabled: false
       }, {
         value: 5,
         label: '18:00',
-        disabled:false
+        disabled: false
       }],
       options2: [{
         value: 1,
         label: '线路一',
-        disabled:false
+        disabled: false
       }, {
         value: 2,
         label: '线路二',
-        disabled:false
+        disabled: false
       }],
       uploadConf: {
         endpoint: "https://oss-accelerate.aliyuncs.com",
@@ -150,7 +151,7 @@ export default {
         accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
         bucket: 'shu-online-edu',
       },
-      key:1,
+      key: 1,
     };
   },
   methods: {
@@ -158,12 +159,8 @@ export default {
       let that = this;
       console.log("选择日期", val);
       let JWT = that.$store.state.JWT;
-      that.options2.map((val,index)=>{
-        console.log(index);
-        that.options2[index].disabled=false;
-      });
-      that.options1.map((val,index)=>{
-        that.options1[index].disabled=false;
+      that.options1.map((val, index) => {
+        that.options1[index].disabled = false;
       });
       let b = new URLSearchParams();
       b.append("liveDate", val);
@@ -173,20 +170,41 @@ export default {
         }
       }).then(function (response) {
         console.log("查看当天直播安排成功", response);
+        let n = [{arrange: 0, address: 0}, {arrange: 0, address: 0}, {arrange: 0, address: 0}, {
+          arrange: 0,
+          address: 0
+        }, {arrange: 0, address: 0}];
+        console.log(n);
         response.data.data.map((item) => {
-          if (item.liveCount > 1) {
-            that.options2[item.liveAddressId-1].disabled = true;
-            if (that.options2[0].disabled && that.options2[1].disabled )
-            {
-              that.options1[item.liveArrange-1].disabled = true;
-            }
-            that.key++;
+          if (item.liveCount >= 1) {
+            n[item.liveArrange - 1].address = item.liveAddressId;
+            n[item.liveArrange - 1].arrange++;
           }
         });
+        that.dayLive = n;
+        n.map((item, index) => {
+          if (item.arrange > 1) {
+            that.options1[index].disabled = true;
+          }
+        });
+        that.key++;
         console.log(that.options1)
       }, function (err) {
         console.log(err);
       });
+    },
+    checkAddress(val) {
+      console.log("111");
+      let that = this;
+      that.options2.map((val, index) => {
+        console.log(index);
+        that.options2[index].disabled = false;
+      });
+      if (that.dayLive[val - 1].address !== 0) {
+        that.options2[that.dayLive[val - 1].address-1].disabled = true;
+      }
+      console.log(that.options2);
+      that.key++;
     },
     async uploadHttp({file}) {
       let that = this;
@@ -196,10 +214,7 @@ export default {
       fileName = `pic/Live/` + fileName;
       ossClient(this.uploadConf).put(fileName, f, {
         'ContentType': 'image/jpeg'
-      }).then(({
-                 res, url,
-                 name
-               }) => {
+      }).then(({res, url, name}) => {
         if (res && res.status == 200) {
           that.imageUrl = url;
           that.formBuild.livePicUrl = url;
