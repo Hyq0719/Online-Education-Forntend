@@ -2,9 +2,9 @@
   <div class="login">
     <h2>老师注册</h2>
     <el-form ref="ruleForm" :model="ruleForm" status-icon :rules="rules" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="手机号：">
-        <el-input class="phone" v-model="ruleForm.phone" placeholder="请输入手机号"></el-input>
-        <el-button class="code" type="primary" @click="Code">发送验证码</el-button>
+      <el-form-item label="手机号：" prop="phone">
+        <el-input class="phone" v-model="ruleForm.phone" placeholder="请输入手机号" ref="phone"></el-input>
+        <el-button class="code" :disabled="disabled" type="primary" @click="Code">{{ btnTxt }}</el-button>
       </el-form-item>
       <el-form-item label="验证码：">
         <el-input v-model="ruleForm.code" placeholder="请输入验证码"></el-input>
@@ -67,19 +67,44 @@ export default {
         checkPass: [
           {validator: validatePass2, trigger: 'blur'}
         ],
+        phone: [
+          {required: true, message: '手机号不能为空', trigger: 'blur'},
+        ],
       },
-      radio: true,
+      disabled: false,
+      time: 60,
+      btnTxt: "发送验证码",
     };
   },
   methods: {
+    //发送手机验证码倒计时
+    timer() {
+      if (this.time > 0) {
+        this.disabled = true;
+        this.time--;
+        this.btnTxt = this.time + "s后重试";
+        setTimeout(this.timer, 1000);
+      } else {
+        this.time = 0;
+        this.btnTxt = "发送验证码";
+        this.disabled = false;
+      }
+    },
     Code() {
-      let a = new URLSearchParams();
-      a.append('phone_id', this.ruleForm.phone);
-      axios.post('http://' + this.Api + '/api/Teacher/checkByPhoneId', a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log(response);
-      }, function (err) {
-        console.log(err);
-      });
+      if (this.ruleForm.phone) {
+        let that = this;
+        let a = new URLSearchParams();
+        a.append('phone_id', this.ruleForm.phone);
+        axios.post('http://' + this.Api + '/api/Teacher/checkByPhoneId', a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+          console.log(response);
+          that.time = 60;
+          that.timer();
+        }, function (err) {
+          console.log(err);
+        });
+      } else {
+        this.$refs.phone.focus();
+      }
     },
     TeacherRegister() {
       let params = {

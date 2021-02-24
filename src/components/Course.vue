@@ -51,8 +51,14 @@ export default {
   },
   methods: {
     TaskMenu(courseId, chapterId) {
-      console.log(courseId, chapterId);
-      this.$router.push({path: '/taskmenu', query: {courseId: courseId, chapterId: chapterId}});
+      if (this.$store.state.isLogin) {
+        console.log(courseId, chapterId);
+        this.$router.push({path: '/taskmenu', query: {courseId: courseId, chapterId: chapterId}});
+      }
+      else{
+        this.$router.push('/login');
+        this.$message.error('请登录后查看课程任务');
+      }
     },
     Video(e, videoId, videoUrl, chapterId, courseId) {
       if (e.target.tagName === 'INPUT') return // 因为原生click事件会执行两次，第一次在label标签上，第二次在input标签上，故此处理

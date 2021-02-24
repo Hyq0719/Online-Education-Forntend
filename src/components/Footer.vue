@@ -23,7 +23,6 @@ export default {
 <style scoped>
 .myFooter {
   border-top: 1px solid #DCDFE6;
-  height: 60px;
 }
 
 .myFooter img {

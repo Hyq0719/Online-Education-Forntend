@@ -37,6 +37,7 @@
             class="upload-demo"
             drag
             action=""
+            :on-success="onsuccess"
             :before-remove="beforeRemove"
             :http-request="uploadHttp"
             multiple>
@@ -46,9 +47,12 @@
       </div>
     </div>
     <div class="submit">
-      <el-button v-if="this.$store.state.HomeworkInfo.status==0" type="primary" @click="submit">提交作业</el-button>
+      <el-button v-if="this.$store.state.HomeworkInfo.status!=3" @click="submit($store.state.HomeworkInfo.status)">
+        暂时保存
+      </el-button>
+      <el-button v-if="this.$store.state.HomeworkInfo.status==0" type="primary" @click="submit(2)">提交作业</el-button>
       <el-button v-if="this.$store.state.HomeworkInfo.status==1||this.$store.state.HomeworkInfo.status==2"
-                 type="primary" @click="submit">修改作业
+                 type="primary" @click="submit(2)">修改作业
       </el-button>
     </div>
 
@@ -60,7 +64,8 @@
       <div class="taskFile" v-for="(item,index) in this.$store.state.TaskFile" v-bind:key="index">
         <el-link type="primary" @click="downFile(item.fileUrl)">{{ item.fileName }}</el-link>
       </div>
-      <span slot="footer" class="dialog-footer"><el-button type="primary" @click="dialogVisible = false">关 闭</el-button></span>
+      <span slot="footer" class="dialog-footer"><el-button type="primary"
+                                                           @click="dialogVisibleTask = false">关 闭</el-button></span>
     </el-dialog>
     <el-dialog
         title="已上传的作业文件"
@@ -69,8 +74,12 @@
         center>
       <div class="taskFile" v-for="(item,index) in this.$store.state.HomeworkFile" v-bind:key="index">
         <el-link type="primary" @click="downFile(item.fileUrl)">{{ item.fileName }}</el-link>
+        <el-button icon="el-icon-delete" type="text" @click="deleteHomeworkFile(item.homeworkFileId,item.homeworkId)">
+          删除
+        </el-button>
       </div>
-      <span slot="footer" class="dialog-footer"><el-button type="primary" @click="dialogVisible = false">关 闭</el-button></span>
+      <span slot="footer" class="dialog-footer"><el-button type="primary"
+                                                           @click="dialogVisibleHomework = false">关 闭</el-button></span>
     </el-dialog>
   </div>
 </template>
@@ -87,7 +96,7 @@ export default {
       dialogVisibleHomework: false,
       textarea: this.$store.state.HomeworkInfo.content,
       uploadConf: {
-        endpoint: "https://oss-accelerate.aliyuncs.com",
+        // endpoint: "https://oss-accelerate.aliyuncs.com",
         region: 'oss-cn-shanghai',
         accessKeyId: 'LTAI4GGsTQ35tQcWWDVNKwqG',
         accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
@@ -106,6 +115,38 @@ export default {
     this.homeworkInfo();
   },
   methods: {
+    deleteHomeworkFile(homeworkFileId, homeworkId) {
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("homeworkFileId", homeworkFileId);
+      axios.post("http://" + this.Api + "/api/Homework/deleteHomeworkFile?" + a, null, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': this.$store.state.JWT,
+        }
+      }).then(function (response) {
+        console.log("删除作业文件", response);
+        let b = new URLSearchParams;
+        b.append("homeworkId", homeworkId);
+        axios.post("http://" + that.Api + "/api/Homework/getFilesByHomework?" + b, null, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': that.$store.state.JWT,
+          }
+        }).then(function (response) {
+          console.log("获取学生作业文件信息", response);
+          that.$store.commit('saveHomeworkFile', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      }, function (err) {
+        console.log(err);
+      });
+    },
+    onsuccess(file, fileList) {
+      console.log(file);
+      console.log(fileList);
+    },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
@@ -114,7 +155,7 @@ export default {
       console.log(file);
       let homeworkId = this.$store.state.HomeworkInfo.homeworkId;
       let homeworkFileName = file.name;
-      let fileName = `file/Homework/${this.$store.state.userData.userId}/${Date.parse(new Date())}`;  //定义唯一的文件名
+      let fileName = `file/Homework/${this.$store.state.userData.userId}/${Date.parse(new Date())}.docx`;  //定义唯一的文件名
       ossClient(this.uploadConf).put(fileName, file).then(({res, url, name}) => {
         if (res && res.status == 200) {
           console.log(`阿里云OSS上传文件成功回调`, res, url, name);
@@ -129,10 +170,10 @@ export default {
         console.log(`阿里云OSS上传文件失败回调`, err);
       });
     },
-    submit() {
+    submit(status) {
       let params = {
         content: this.textarea,
-        status: 2,
+        status: status,
         studentId: this.$store.state.userData.userId,
         taskId: this.$route.query.taskId,
       };
@@ -284,6 +325,8 @@ export default {
 }
 
 .taskFile {
+  justify-content: space-between;
+  display: flex;
   margin: 20px;
 }
 </style>

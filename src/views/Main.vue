@@ -6,14 +6,12 @@
     <nav2></nav2>
     <Article></Article>
     <ObsIntro></ObsIntro>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Header from '../components/Header';
 import Nav1 from '../components/Nav1';
-import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import Nav2 from '../components/Nav2';
 import Article from '../components/Article';
@@ -25,7 +23,6 @@ export default {
   components: {
     Header,
     Nav1,
-    Footer,
     Sidebar,
     Nav2,
     Article,

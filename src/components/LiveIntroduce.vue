@@ -17,19 +17,6 @@
                 该课程不仅为后续专业课的学习打基础，对发展学生科学思维、培养学生分析问题、解决问题也具有十分重要的作用，同时也为学生今后从事自动化专业相关领域的实际工作打下必要的理论基础。
               </p>
             </div>
-            <div class="content">
-              <div class="content-Title">
-                <img src="../assets/logo.png" alt="图片缺失">
-                <h3>授课目标</h3>
-              </div>
-              <ul>
-                <li>增强学生对恶意代码攻击机理的理解</li>
-                <li>促进学生掌握恶意代码检测机理</li>
-                <li>提升学生恶意代码分析能力</li>
-                <li>帮助学生进一步构建网络攻防博弈思维</li>
-                <li>提升学生在恶意代码领域的创新思维与综合实践能力</li>
-              </ul>
-            </div>
           </el-tab-pane>
           <el-tab-pane label="直播评价" name="second">
             <div class="block">
