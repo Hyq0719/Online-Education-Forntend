@@ -28,7 +28,7 @@
                             value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="选择直播时间">
+          <el-form-item label="选择直播时间" v-show="timeView">
             <el-select v-model="formBuild.arrange"  @change="checkAddress" placeholder="请选择时间" style="float: left;margin: 10px 24px">
               <el-option
                   v-for="item in options1"
@@ -40,7 +40,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="选择直播线路">
+          <el-form-item label="选择直播线路" v-show="arrangeView">
             <el-select v-model="formBuild.addressId" placeholder="请选择时间" style="float: left;margin: 10px 24px">
               <el-option
                   v-for="item in options2"
@@ -95,6 +95,8 @@ export default {
   },
   data() {
     return {
+      timeView:false,
+      arrangeView:false,
       pickerOptions: {                   //可选直播的时间
         disabledDate(time) {
           let n = time.getTime() < Date.now() - 3600 * 1000 * 24;
@@ -188,7 +190,8 @@ export default {
           }
         });
         that.key++;
-        console.log(that.options1)
+        that.timeView=true;
+        console.log(that.options1);
       }, function (err) {
         console.log(err);
       });
@@ -203,6 +206,7 @@ export default {
       if (that.dayLive[val - 1].address !== 0) {
         that.options2[that.dayLive[val - 1].address-1].disabled = true;
       }
+      that.arrangeView=true;
       console.log(that.options2);
       that.key++;
     },
@@ -250,6 +254,8 @@ export default {
           else if(response.data.code === 1000 )
           {
           console.log("修改成功", response);
+          that.arrangeView=false;
+          that.timeView=false;
           that.$emit('close', false);
           that.$alert('修改成功', '提示', {
             confirmButtonText: '确定',
