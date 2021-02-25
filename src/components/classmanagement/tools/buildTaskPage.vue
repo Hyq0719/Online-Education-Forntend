@@ -1,6 +1,6 @@
 <template>
   <div>
-      <el-main>
+      <el-main style="min-height: 400px">
         <div style="width: 550px">
           <el-form label-width="160px">
             <el-form-item label="任务名称" style="width: 300px">
@@ -21,7 +21,7 @@
             <el-form-item label="任务时间设置" style="width: 550px">
               <el-date-picker
                   v-model="formBuild.value1"
-                  value-format="yyyy-MM-dd-HH-mm-ss"
+                  value-format="yyyy-MM-dd HH:mm:ss"
                   type="datetimerange"
                   range-separator="至"
                   start-placeholder="开始日期"
@@ -101,7 +101,8 @@ export default {
         });
       }
       else {
-        axios.post("http://" + this.Api + "/api/Course/completeCourseInfo?taskId="+that.task, params, {
+        console.log(that.taskId);
+        axios.post("http://" + this.Api + "/api/Task/modifyTaskById?taskId="+that.taskId, params, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': JWT,
@@ -130,8 +131,8 @@ export default {
       ).then(function (res) {
             if (res.data.code === 1000) {
               console.log("任务信息", res);
-              that.formBuild.name = res.data.data.name;
-              that.formBuild.content = res.data.data.intro;
+              that.formBuild.name = res.data.data.taskName;
+              that.formBuild.content = res.data.data.content;
               that.formBuild.value1=[res.data.data.startTime,res.data.data.endTime];
             }
           }, function (err) {

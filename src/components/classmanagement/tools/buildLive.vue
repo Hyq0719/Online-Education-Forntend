@@ -214,7 +214,7 @@ export default {
       let that = this;
       let f = await this.$Api.compressImg(file);
       console.log(f);
-      let fileName = `${this.$store.state.userData.userId}_Header/${Date.parse(new Date())}`;  //定义唯一的文件名
+      let fileName = `${this.$store.state.userData.userId}_Header/${file.name}`;  //定义唯一的文件名
       fileName = `pic/Live/` + fileName;
       ossClient(this.uploadConf).put(fileName, f, {
         'ContentType': 'image/jpeg'

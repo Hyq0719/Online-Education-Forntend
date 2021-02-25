@@ -91,7 +91,7 @@
                 管理视频
               </el-button>
               <el-button type="primary" icon="el-icon-edit"
-                         @click="openTask(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId);this.courseId=scope.row.courseChapterPK.courseId;this.chapterId=scope.row.courseChapterPK.chapterId">
+                         @click="openTask(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId);courseId=scope.row.courseChapterPK.courseId;chapterId=scope.row.courseChapterPK.chapterId">
                 管理任务
               </el-button>
               <el-button type="primary"
@@ -166,8 +166,8 @@
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
             <el-button-group>
-              <el-button type="primary" @click="this.taskId=scope.row.taskId;dialogTaskEdit = true" icon="el-icon-edit" >修改任务</el-button>
-              <el-button type="primary" @click="openHomework(scope.row.taskId);this.taskId=scope.row.taskId" >查看作业</el-button>
+              <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskEdit = true" icon="el-icon-edit" >修改任务</el-button>
+              <el-button type="primary" @click="openHomework(scope.row.taskId);taskId=scope.row.taskId" >查看作业</el-button>
               <el-button type="primary" icon="el-icon-delete">删除任务</el-button>
             </el-button-group>
           </template>
@@ -179,40 +179,23 @@
       </el-button>
     </el-main>
 
-    <el-dialog title="创建任务" v-if="dialogTaskBuild" :visible.sync="dialogClassBuild">
-      <build-task-page @close="closeDialog" :courseId="courseId" :chapterId="chapterId"></build-task-page>
+    <el-dialog title="创建任务" v-if="dialogTaskBuild" :visible.sync="dialogTaskBuild" >
+      <build-task-page @close="closeDialogTask" :courseId="courseId" :chapterId="chapterId"></build-task-page>
     </el-dialog>
 
-    <el-dialog title="修改任务" v-if="dialogTaskEdit" :visible.sync="dialogClassEdit">
-      <build-task-page @close="closeDialog" :isEdit="true" :taskId="taskId"></build-task-page>
-
+    <el-dialog title="修改任务" v-if="dialogTaskEdit" :visible.sync="dialogTaskEdit">
+      <build-task-page @close="closeDialogTask" :isEdit="true" :taskId="taskId" ></build-task-page>
     </el-dialog>
 
     <el-main v-show="homeworkView" style="min-height: 480px">
-      <el-row class="box-wrapper" style="height: auto">
-        <el-row class="subtitle">
-          <h5 style="margin: 10px 24px;float: left">作业管理</h5>
-        </el-row>
-        <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
-
-          <el-form-item style="width: 300px;margin-bottom: 0">
-            <el-button type="primary" @click="sendVideo" style="float: right">上传<i
-                class="el-icon-upload el-icon--right"></i></el-button>
-          </el-form-item>
-          <el-form-item style="width: 300px;margin-bottom: 0">
-            <el-button type="primary" @click="sendVideo" style="float: right">批改<i
-                class="el-icon-upload el-icon--right"></i></el-button>
-          </el-form-item>
-        </el-form>
-      </el-row>
 
       <template>
         <el-radio-group v-model="radio" style="float: left;margin: 5px 20px">
-          <el-radio :label="1" @change="openHomework(this.taskId)" >全部作业</el-radio>
-          <el-radio :label="2" @change="displayHomeworkData(this.taskId,0)">未上传</el-radio>
-          <el-radio :label="3" @change="displayHomeworkData(this.taskId,1)">已驳回</el-radio>
-          <el-radio :label="4" @change="displayHomeworkData(this.taskId,2)">已上传</el-radio>
-          <el-radio :label="5" @change="displayHomeworkData(this.taskId,3)">已批改</el-radio>
+          <el-radio :label="1" @change="openHomework(taskId)" >全部作业</el-radio>
+          <el-radio :label="2" @change="displayHomeworkData(taskId,0)">未上传</el-radio>
+          <el-radio :label="3" @change="displayHomeworkData(taskId,1)">已驳回</el-radio>
+          <el-radio :label="4" @change="displayHomeworkData(taskId,2)">已上传</el-radio>
+          <el-radio :label="5" @change="displayHomeworkData(taskId,3)">已批改</el-radio>
         </el-radio-group>
       </template>
 
@@ -224,14 +207,17 @@
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
             <el-button-group>
-              <el-button type="primary" icon="el-icon-edit" >批改作业</el-button>
-              <el-button type="primary" @click="openHomework()" >查看作业</el-button>
-              <el-button type="primary" icon="el-icon-delete">删除作业</el-button>
+              <el-button type="primary" @click="dialogHw=true;hwInfo=scope.row" icon="el-icon-edit" >批改作业</el-button>
+              <el-button type="primary" icon="el-icon-delete">驳回作业</el-button>
             </el-button-group>
           </template>
         </el-table-column>
       </el-table>
     </el-main>
+
+    <el-dialog title="批改作业" v-if="dialogHw" :visible.sync="dialogHw">
+      <correct-hw @close="closeDialogHw" :info="hwInfo" ></correct-hw>
+    </el-dialog>
 
     <el-drawer
         title="修改章节"
@@ -273,6 +259,8 @@ export default {
   props: ['id'],
   data() {
     return {
+      hwInfo:{},
+      dialogHw:false,
       dialogTaskBuild:false,
       dialogTaskEdit:false,
       taskId:null,
@@ -302,7 +290,8 @@ export default {
     editChapter: () => import('@/components/classmanagement/editchapter'),
     editVideo: () => import('@/components/classmanagement/editVideo'),
     buildClassPage: () => import('@/components/classmanagement/tools/buildClassPage'),
-    buildTaskPage: ()=> import('@/components/classmanagement/tools/buildTaskPage')
+    buildTaskPage: ()=> import('@/components/classmanagement/tools/buildTaskPage'),
+    correctHw: ()=>import('@/components/classmanagement/tools/correctHw')
   },
   methods: {
     handleCurrentChange(val){
@@ -323,6 +312,15 @@ export default {
       this.dialogClassBuild = false;
       this.dialogClassEdit = false;
       this.getCourse(that.currentPage);
+    },
+    closeDialogTask() {
+      let that=this;
+      this.dialogTaskBuild = false;
+      this.dialogTaskEdit = false;
+      this.openTask(that.courseId,that.chapterId);
+    },
+    closeDialogHw() {
+      this.dialogHw = false;
     },
     async deleteClass(a) {
       let that = this;
@@ -380,6 +378,8 @@ export default {
         console.log(err);
       });
     },  //删除视频
+       //删除任务
+       //删除作业
     handleClose(done) {
       if (this.loading) {
         return;
@@ -466,6 +466,51 @@ export default {
       this.$store.commit("savebreadcrumb", breadcrumb)
     },   //打开视频时调用
 
+    async openTask(course,chapter) {
+      let that = this;
+      let b = new URLSearchParams();
+
+      b.append("courseId", course);
+      b.append("chapterId", chapter);
+
+      await axios.post('http://' + that.Api + "/api/Task/getTaskByCourseChapter", b,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+            console.log("课程的任务信息", res);
+            if (res.data.code === 1000) {
+              that.$store.commit('saveTaskData', res.data.data);
+              that.taskData=that.$store.state.teacherData.taskData;
+
+              that.$router.push({name: 'classManagementClass', params: {id: 4}});
+              let breadcrumb = [
+                {
+                  link: '/Classmanagement/blank',
+                  title: '课程管理'
+                },
+                {
+                  link: {name: 'classManagementClass', params: {id: 1}},
+                  title: '列表管理'
+                },
+                {
+                  link: {name: 'classManagementClass', params: {id: 2}},
+                  title: '章节管理'
+                },
+                {
+                  link: {name: 'classManagementClass', params: {id: 4}},
+                  title: '任务管理'
+                },
+              ]
+              that.$store.commit("savebreadcrumb", breadcrumb)
+            } },function (err) {
+            console.log(err);
+          }
+      );
+    },
+
     drawerClose(data) {
       this.dialog1 = data;
       this.dialog2 = data;
@@ -540,51 +585,6 @@ export default {
       );
     },
 
-    async openTask(course,chapter) {
-      let that = this;
-      let b = new URLSearchParams();
-
-      b.append("courseId", course);
-      b.append("chapterId", chapter);
-
-      await axios.post('http://' + that.Api + "/api/Task/getTaskByCourseChapter", b,
-          {
-            headers: {
-              'Authorization': that.$store.state.JWT,
-            }
-          }
-      ).then(function (res) {
-            console.log("课程的任务信息", res);
-            if (res.data.code === 1000) {
-              that.$store.commit('saveTaskData', res.data.data);
-              that.taskData=that.$store.state.teacherData.taskData;
-
-              that.$router.push({name: 'classManagementClass', params: {id: 4}});
-              let breadcrumb = [
-                {
-                  link: '/Classmanagement/blank',
-                  title: '课程管理'
-                },
-                {
-                  link: {name: 'classManagementClass', params: {id: 1}},
-                  title: '列表管理'
-                },
-                {
-                  link: {name: 'classManagementClass', params: {id: 2}},
-                  title: '章节管理'
-                },
-                {
-                  link: {name: 'classManagementClass', params: {id: 4}},
-                  title: '任务管理'
-                },
-              ]
-              that.$store.commit("savebreadcrumb", breadcrumb)
-            } },function (err) {
-            console.log(err);
-          }
-      );
-    },
-
     async openHomework(task) {
       let that = this;
       let b = new URLSearchParams();
@@ -614,8 +614,8 @@ export default {
 
     async displayHomeworkData(task,status) {
       let that = this;
+      console.log("任务号 状态",task,status);
       let b = new URLSearchParams();
-
       b.append("taskId", task);
       b.append("page", 1);
       b.append("status",status);
