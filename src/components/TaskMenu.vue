@@ -23,12 +23,17 @@
               <div class="grid-content">
                 <div class="content">
                   <h4>{{ value.taskName }}</h4>
-                  <h6>开始时间：2021-01-21 10:00</h6>
-                  <h6>截止时间：2021-02-24 12:00</h6>
-                  <h6>作业状态：待做</h6>
+                  <h6>开始时间：{{ value.startTime }}</h6>
+                  <h6>截止时间：{{ value.endTime }}</h6>
+                  <h6 v-if="Date.parse(new Date()) <= Date.parse(value.endTime)">作业状态：待做</h6>
+                  <h6 v-if="Date.parse(new Date()) > Date.parse(value.endTime)">作业状态：已过期</h6>
                 </div>
                 <div class="state">
-                  <el-button @click="Task">做作业</el-button>
+                  <el-button @click="Task(value.taskId)" v-if="Date.parse(new Date()) <= Date.parse(value.endTime)">
+                    做作业
+                  </el-button>
+                  <el-button @click="Task(value.taskId)" v-if="Date.parse(new Date()) > Date.parse(value.endTime)">查看
+                  </el-button>
                 </div>
               </div>
             </el-col>
@@ -50,8 +55,11 @@ export default {
     GoBackCourse() {
       this.$router.push({path: '/course', query: {courseId: this.$route.query.courseId}});
     },
-    Task() {
-      this.$router.push('/task');
+    Task(taskId) {
+      this.$router.push({
+        path: '/task',
+        query: {courseId: this.$route.query.courseId, chapterId: this.$route.query.chapterId, taskId: taskId}
+      });
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);

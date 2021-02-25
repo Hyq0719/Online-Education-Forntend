@@ -3,14 +3,12 @@
     <Sidebar></Sidebar>
     <Header></Header>
     <search></search>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
 import search from "@/components/search";
-import Footer from "@/components/Footer";
 import Sidebar from "@/components/Sidebar";
 
 export default {
@@ -18,7 +16,6 @@ export default {
     Sidebar,
     Header,
     search,
-    Footer,
   }
 };
 </script>

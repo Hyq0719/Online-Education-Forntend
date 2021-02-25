@@ -5,17 +5,17 @@
     <Nav1></Nav1>
     <nav2></nav2>
     <Article></Article>
-    <Footer></Footer>
+    <ObsIntro></ObsIntro>
   </div>
 </template>
 
 <script>
 import Header from '../components/Header';
 import Nav1 from '../components/Nav1';
-import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import Nav2 from '../components/Nav2';
 import Article from '../components/Article';
+import ObsIntro from "@/components/ObsIntro";
 import axios from "axios";
 
 export default {
@@ -23,10 +23,10 @@ export default {
   components: {
     Header,
     Nav1,
-    Footer,
     Sidebar,
     Nav2,
     Article,
+    ObsIntro,
   },
   created() {
     this.main();

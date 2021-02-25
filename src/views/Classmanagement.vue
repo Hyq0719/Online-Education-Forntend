@@ -5,7 +5,6 @@
       <div></div>
     </Header>
     <classmanagement></classmanagement>
-    <Footer></Footer>
   </div>
 </template>
 
@@ -13,7 +12,6 @@
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import classmanagement from "@/components/classmanagement/classmanagement";
-import Footer from '../components/Footer';
 import axios from "axios";
 
 export default {
@@ -22,7 +20,6 @@ export default {
     Header,
     Sidebar,
     classmanagement,
-    Footer,
   },
   mounted() {
 

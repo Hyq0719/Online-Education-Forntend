@@ -4,7 +4,6 @@
     <Header></Header>
     <Course></Course>
     <CourseIntroduce></CourseIntroduce>
-    <Footer></Footer>
   </div>
 </template>
 
@@ -12,7 +11,6 @@
 import Header from "../components/Header";
 import Course from "../components/Course";
 import Sidebar from "../components/Sidebar";
-import Footer from '../components/Footer';
 import CourseIntroduce from "../components/CourseIntroduce";
 import axios from "axios";
 
@@ -22,7 +20,6 @@ export default {
     Course,
     Sidebar,
     CourseIntroduce,
-    Footer,
   },
   data() {
     return {
@@ -57,7 +54,7 @@ export default {
             'Authorization': this.$store.state.JWT,
           }
         }).then(function (response) {
-          if (response != null) {
+          if (response.data.data != null) {
             console.log("获取学生对该课程的历史记录", response);
             that.$store.commit('saveVideo', {
               chapterId: response.data.data.courseChapterVideo.courseChapterVideoPK.chapterId,

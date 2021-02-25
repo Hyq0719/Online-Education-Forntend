@@ -1,12 +1,18 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view class="body" />
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Footer from "@/components/Footer";
+
 export default {
   name: 'App',
+  components: {
+    Footer,
+  },
 }
 </script>
 
@@ -18,5 +24,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+</style>
+<style scope>
+.body{
+  min-height: 580px;
 }
 </style>
