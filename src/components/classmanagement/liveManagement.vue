@@ -48,7 +48,7 @@
               </el-button>
 
               <el-button type="warning"
-                         @click="this.$router.push('/live')">进入直播
+                         @click="$router.push('/live')">进入直播
               </el-button>
 
               <el-button type="danger" icon="el-icon-delete"
