@@ -4,14 +4,22 @@
       <el-table :data="classData.list" >
         <el-table-column prop="name" label="课程名称">
         </el-table-column>
-        <el-table-column prop="school" label="学校">
-        </el-table-column>
-        <el-table-column  label="专业">
-          <template slot-scope="scope">
-            {{scope.row.major.majorContent}}
+        <el-table-column  label="是否需要VIP">
+          <template slot-scope="props">
+            {{ props.row.needVip ? "需要" : "不需要" }}
           </template>
         </el-table-column>
-        <el-table-column prop="sex" label="性别">
+        <el-table-column prop="uploadTime" label="更新时间" >
+        </el-table-column>
+        <el-table-column label="类型">
+          <template slot-scope="props">
+            {{ props.row.prefer.major.majorContent }}-{{ props.row.prefer.preferContent }}
+          </template>
+        </el-table-column>
+        <el-table-column  label="老师">
+          <template slot-scope="props">
+            {{ props.row.teacher.school }}-{{ props.row.teacher.name }}
+          </template>
         </el-table-column>
 
         <el-table-column  label="更多">
@@ -19,7 +27,7 @@
             <el-popover
                 placement="right"
                 trigger="hover">
-              <el-image :src="scope.row.teacherPicUrl">
+              <el-image :src="scope.row.coursePic">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline"></i>
                   图片加载失败
@@ -34,10 +42,10 @@
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
 
-            <el-button type="primary" icon="el-icon-check" @click="pass(scope.row.userId)">审核通过</el-button>
+            <el-button type="primary" icon="el-icon-check" @click="pass(scope.row.courseId)">审核通过</el-button>
 
             <el-button type="danger" icon="el-icon-close"
-                       @click.native.prevent="fail(scope.row.userId)">不通过
+                       @click.native.prevent="fail(scope.row.courseId)">不通过
             </el-button>
 
           </template>
@@ -93,7 +101,7 @@ name: "classAudit",
       let that=this;
       let JWT = that.$store.state.JWT;
       let a = new URLSearchParams();
-      a.append('user_id', val);
+      a.append('courseId', val);
       a.append('status', 1);
       await axios.post("http://" + that.Api + "/api/Course/updateCourseStatus" ,a, {
         headers: {
@@ -110,8 +118,8 @@ name: "classAudit",
       let that=this;
       let JWT = that.$store.state.JWT;
       let a = new URLSearchParams();
-      a.append('user_id', val);
-      a.append('status', 0);
+      a.append('courseId', val);
+      a.append('status', 2);
       await axios.post("http://" + that.Api + "/api/Course/updateCourseStatus" ,a, {
         headers: {
           'Authorization': JWT,
