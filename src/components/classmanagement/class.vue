@@ -54,7 +54,6 @@
 
     </el-dialog>
 
-
     <el-main v-show="chapterview">
       <el-row class="box-wrapper" style="height: auto">
         <el-row class="subtitle">
@@ -84,12 +83,16 @@
         </el-table-column>
         <el-table-column prop="chapterIntro" label="章节名称">
         </el-table-column>
-        <el-table-column label="操作" width="400px">
+        <el-table-column label="操作" width="500px">
           <template slot-scope="scope">
             <el-button-group>
               <el-button type="primary" icon="el-icon-edit"
                          @click="openVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
                 管理视频
+              </el-button>
+              <el-button type="primary" icon="el-icon-edit"
+                         @click="openTask(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
+                管理任务
               </el-button>
               <el-button type="primary"
                          @click="dialog1 = true;courseId = scope.row.courseChapterPK.courseId;chapterId=scope.row.courseChapterPK.chapterId ">修改章节
@@ -152,6 +155,86 @@
       </el-table>
     </el-main>
 
+    <el-main v-show="taskView">
+      <el-row class="box-wrapper" style="height: auto">
+        <el-row class="subtitle">
+          <h5 style="margin: 10px 24px;float: left">上传任务</h5>
+        </el-row>
+        <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
+
+          <el-form-item style="width: 300px;margin-bottom: 0">
+            <el-button type="primary" @click="sendVideo" style="float: right">上传<i
+                class="el-icon-upload el-icon--right"></i></el-button>
+          </el-form-item>
+        </el-form>
+        <el-row>
+
+        </el-row>
+      </el-row>
+
+      <el-table :data="taskData">
+        <el-table-column prop="taskName" label="任务名称">
+        </el-table-column>
+        <el-table-column prop="startTime" label="开始时间">
+        </el-table-column>
+        <el-table-column prop="endTime" label="结束时间">
+        </el-table-column>
+        <el-table-column label="操作" width="400px">
+          <template slot-scope="scope">
+            <el-button-group>
+              <el-button type="primary" icon="el-icon-edit" >修改任务</el-button>
+              <el-button type="primary" @click="openHomework(scope.row.taskId);this.taskId=scope.row.taskId" >查看作业</el-button>
+              <el-button type="primary" icon="el-icon-delete">删除课程</el-button>
+            </el-button-group>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-main>
+
+    <el-main v-show="homeworkView" style="min-height: 480px">
+      <el-row class="box-wrapper" style="height: auto">
+        <el-row class="subtitle">
+          <h5 style="margin: 10px 24px;float: left">作业管理</h5>
+        </el-row>
+        <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
+
+          <el-form-item style="width: 300px;margin-bottom: 0">
+            <el-button type="primary" @click="sendVideo" style="float: right">上传<i
+                class="el-icon-upload el-icon--right"></i></el-button>
+          </el-form-item>
+          <el-form-item style="width: 300px;margin-bottom: 0">
+            <el-button type="primary" @click="sendVideo" style="float: right">批改<i
+                class="el-icon-upload el-icon--right"></i></el-button>
+          </el-form-item>
+        </el-form>
+      </el-row>
+
+      <template>
+        <el-radio-group v-model="radio" style="float: left;margin: 5px 20px">
+          <el-radio :label="1" @change="openHomework(this.taskId)" >全部作业</el-radio>
+          <el-radio :label="2" @change="displayHomeworkData(this.taskId,0)">未上传</el-radio>
+          <el-radio :label="3" @change="displayHomeworkData(this.taskId,1)">已驳回</el-radio>
+          <el-radio :label="4" @change="displayHomeworkData(this.taskId,2)">已上传</el-radio>
+          <el-radio :label="5" @change="displayHomeworkData(this.taskId,3)">已批改</el-radio>
+        </el-radio-group>
+      </template>
+
+      <el-table :data="homeworkData.list">
+        <el-table-column prop="studentId" label="学生学号">
+        </el-table-column>
+        <el-table-column prop="commitTime" label="提交时间">
+        </el-table-column>
+        <el-table-column label="操作" width="400px">
+          <template slot-scope="scope">
+            <el-button-group>
+              <el-button type="primary" icon="el-icon-edit" >批改作业</el-button>
+              <el-button type="primary" @click="openHomework()" >查看作业</el-button>
+              <el-button type="primary" icon="el-icon-delete">删除作业</el-button>
+            </el-button-group>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-main>
 
     <el-drawer
         title="修改章节"
@@ -192,6 +275,10 @@ export default {
   props: ['id'],
   data() {
     return {
+      taskId:null,
+      radio:1,
+      homeworkView:false,
+      taskView:false,
       dialogClassEdit: false,
       dialog1: false,
       dialog2: false,
@@ -202,6 +289,8 @@ export default {
       classData: this.$store.state.teacherData.teacherClassData,
       chapterData: this.$store.state.teacherData.teacherChapterData,
       videoData: this.$store.state.teacherData.teacherVideoData,
+      taskData: this.$store.state.teacherData.taskData,
+      homeworkData: this.$store.state.teacherData.homeworkData,
       page:this.$store.state.teacherData.teacherClassData.total_element,
       chapterIntro: "",
       courseId: null,  //临时传参用
@@ -450,6 +539,103 @@ export default {
       );
     },
 
+    async openTask(course,chapter) {
+      let that = this;
+      let b = new URLSearchParams();
+
+      b.append("courseId", course);
+      b.append("chapterId", chapter);
+
+      await axios.post('http://' + that.Api + "/api/Task/getTaskByCourseChapter", b,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+            console.log("课程的任务信息", res);
+            if (res.data.code === 1000) {
+              that.$store.commit('saveTaskData', res.data.data);
+              that.taskData=that.$store.state.teacherData.taskData;
+
+              that.$router.push({name: 'classManagementClass', params: {id: 4}});
+              let breadcrumb = [
+                {
+                  link: '/Classmanagement/blank',
+                  title: '课程管理'
+                },
+                {
+                  link: {name: 'classManagementClass', params: {id: 1}},
+                  title: '列表管理'
+                },
+                {
+                  link: {name: 'classManagementClass', params: {id: 2}},
+                  title: '章节管理'
+                },
+                {
+                  link: {name: 'classManagementClass', params: {id: 4}},
+                  title: '任务管理'
+                },
+              ]
+              that.$store.commit("savebreadcrumb", breadcrumb)
+            } },function (err) {
+            console.log(err);
+          }
+      );
+    },
+
+    async openHomework(task) {
+      let that = this;
+      let b = new URLSearchParams();
+
+      b.append("taskId", task);
+      b.append("page", 1);
+
+      await axios.post('http://' + that.Api + "/api/Homework/getByTask",b,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+            console.log("任务的作业信息", res);
+            if (res.data.code === 1000) {
+              that.$store.commit('saveHomeworkData', res.data.data);
+              that.homeworkData=that.$store.state.teacherData.homeworkData;
+              console.log(that.$store.state.teacherData.homeworkData);
+              that.$router.push({name: 'classManagementClass', params: {id: 5}});
+
+            } },function (err) {
+            console.log(err);
+          }
+      );
+    },
+
+    async displayHomeworkData(task,status) {
+      let that = this;
+      let b = new URLSearchParams();
+
+      b.append("taskId", task);
+      b.append("page", 1);
+      b.append("status",status);
+      await axios.post('http://' + that.Api + "/api/Homework/getByTaskAndStatus",b,
+          {
+            headers: {
+              'Authorization': that.$store.state.JWT,
+            }
+          }
+      ).then(function (res) {
+            console.log("各种状态的作业信息", res);
+            if (res.data.code === 1000) {
+              that.$store.commit('saveHomeworkData', res.data.data);
+              that.homeworkData=that.$store.state.teacherData.homeworkData;
+              console.log(that.$store.state.teacherData.homeworkData);
+
+            } },function (err) {
+            console.log(err);
+          }
+      );
+    },
   },
   mounted: function () {
     this.getCourse(1);
@@ -460,6 +646,8 @@ export default {
       that.classview = true;
       that.chapterview = false;
       that.videoview = false;
+      that.taskView=false;
+      that.homeworkView=false;
       let breadcrumb = [
         {
           link: '/Classmanagement/blank',
@@ -475,6 +663,8 @@ export default {
       that.classview = false;
       that.chapterview = true;
       that.videoview = false;
+      that.taskView=false;
+      that.homeworkView=false;
       let breadcrumb = [
         {
           link: '/Classmanagement/blank',
@@ -494,6 +684,8 @@ export default {
       that.classview = false;
       that.chapterview = false;
       that.videoview = true;
+      that.taskView=false;
+      that.homeworkView=false;
       let breadcrumb = [
         {
           link: '/Classmanagement/blank',
@@ -513,17 +705,74 @@ export default {
         },
       ]
       this.$store.commit("savebreadcrumb", breadcrumb)
+    } else if (a == 4) {
+      that.classview = false;
+      that.chapterview = false;
+      that.videoview = false;
+      that.taskView=true;
+      that.homeworkView=false;
+      let breadcrumb = [
+        {
+          link: '/Classmanagement/blank',
+          title: '课程管理'
+        },
+        {
+          link: {name: 'classManagementClass', params: {id: 1}},
+          title: '列表管理'
+        },
+        {
+          link: {name: 'classManagementClass', params: {id: 2}},
+          title: '章节管理'
+        },
+        {
+          link: {name: 'classManagementClass', params: {id: 4}},
+          title: '任务管理'
+        },
+      ]
+      that.$store.commit("savebreadcrumb", breadcrumb)
+    } else if (a == 5) {
+      that.classview = false;
+      that.chapterview = false;
+      that.videoview = false;
+      that.taskView = false;
+      that.homeworkView=true;
+      let breadcrumb = [
+        {
+          link: '/Classmanagement/blank',
+          title: '课程管理'
+        },
+        {
+          link: {name: 'classManagementClass', params: {id: 1}},
+          title: '列表管理'
+        },
+        {
+          link: {name: 'classManagementClass', params: {id: 2}},
+          title: '章节管理'
+        },
+        {
+          link: {name: 'classManagementClass', params: {id: 4}},
+          title: '任务管理'
+        },
+        {
+          link: {name: 'classManagementClass', params: {id: 5}},
+          title: '作业管理'
+        },
+      ]
+      that.$store.commit("savebreadcrumb", breadcrumb)
     }
+
   },
   watch: {
     id(id) {
       let that = this;
       let a = id;
       console.log(a);
-      if (a === 1) {
+      if (a == 1) {
         that.classview = true;
         that.chapterview = false;
         that.videoview = false;
+        that.taskView=false;
+        that.homeworkView=false;
         let breadcrumb = [
           {
             link: '/Classmanagement/blank',
@@ -535,10 +784,12 @@ export default {
           }
         ]
         this.$store.commit("savebreadcrumb", breadcrumb);
-      } else if (a === 2) {
+      } else if (a == 2) {
         that.classview = false;
         that.chapterview = true;
         that.videoview = false;
+        that.taskView=false;
+        that.homeworkView=false;
         let breadcrumb = [
           {
             link: '/Classmanagement/blank',
@@ -554,10 +805,12 @@ export default {
           }
         ]
         this.$store.commit("savebreadcrumb", breadcrumb)
-      } else if (a === 3) {
+      } else if (a == 3) {
         that.classview = false;
         that.chapterview = false;
         that.videoview = true;
+        that.taskView=false;
+        that.homeworkView=false;
         let breadcrumb = [
           {
             link: '/Classmanagement/blank',
@@ -577,14 +830,68 @@ export default {
           },
         ]
         this.$store.commit("savebreadcrumb", breadcrumb)
+      } else if (a == 4) {
+        that.classview = false;
+        that.chapterview = false;
+        that.videoview = false;
+        that.taskView=true;
+        that.homeworkView=false;
+        let breadcrumb = [
+          {
+            link: '/Classmanagement/blank',
+            title: '课程管理'
+          },
+          {
+            link: {name: 'classManagementClass', params: {id: 1}},
+            title: '列表管理'
+          },
+          {
+            link: {name: 'classManagementClass', params: {id: 2}},
+            title: '章节管理'
+          },
+          {
+            link: {name: 'classManagementClass', params: {id: 4}},
+            title: '任务管理'
+          },
+        ]
+        that.$store.commit("savebreadcrumb", breadcrumb)
+      } else if (a == 5) {
+        that.classview = false;
+        that.chapterview = false;
+        that.videoview = false;
+        that.taskView = false;
+        that.homeworkView=true;
+        let breadcrumb = [
+          {
+            link: '/Classmanagement/blank',
+            title: '课程管理'
+          },
+          {
+            link: {name: 'classManagementClass', params: {id: 1}},
+            title: '列表管理'
+          },
+          {
+            link: {name: 'classManagementClass', params: {id: 2}},
+            title: '章节管理'
+          },
+          {
+            link: {name: 'classManagementClass', params: {id: 4}},
+            title: '任务管理'
+          },
+          {
+            link: {name: 'classManagementClass', params: {id: 5}},
+            title: '作业管理'
+          },
+        ]
+        that.$store.commit("savebreadcrumb", breadcrumb)
       }
+
     },
   },
 }
 </script>
 
 <style scoped>
-
 
 button:hover {
   background-color: #99ccff;
@@ -605,6 +912,5 @@ button:hover {
 .subtitle {
   background-color: #6fadff;
 }
-
 
 </style>
