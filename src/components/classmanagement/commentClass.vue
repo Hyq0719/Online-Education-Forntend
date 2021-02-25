@@ -39,9 +39,9 @@
       <div v-show="commentView">
         <div class="search-box">
           <div class="search-wrap">
-            <input class="search-word" type="text" placeholder="请输入要查找的关键字" v-model="input" @keyup.enter="findComment"/>
+            <input class="search-word" type="text" @input="querySearch" placeholder="请输入要查找的关键字" v-model="input" @keyup.enter="findComment"/>
             <div>
-              <button class="search-bottom" @click="findComment">搜索评论</button>
+              <button class="search-bottom" @click="querySearch">搜索评论</button>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@
             </div>
           </div>
           <div style="overflow: hidden;margin: 10px 10px">
-            <div style="float:left;text-align:left;font-size: 16px"> {{ item.content }}</div>
+            <div style="float:left;text-align:left;font-size: 16px" v-html="item.content">  </div>
           </div>
         </el-card>
       </div>
@@ -279,6 +279,24 @@ export default {
   },
 
   methods: {
+    querySearch() {
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("courseId", that.comment[0].courseId);
+      a.append("page", 1);
+      a.append("query", that.input);
+      console.log("获取搜索", that.input);
+      axios.post("http://" + this.Api + "/api/Course/getCourseCommentWithRegex?" + a,
+          {headers: {'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': that.$store.state.JWT,}}).then(function (response) {
+        console.log("获取搜索", response);
+
+        that.$store.commit("saveCommentData", response.data.data.list);
+        that.comment = that.$store.state.commentData;
+      }, function (err) {
+        console.log(err);
+      });
+    },
     handleCurrentChange(val){
       console.log(`当前页: ${val}`);
       this.getCourse(val);
