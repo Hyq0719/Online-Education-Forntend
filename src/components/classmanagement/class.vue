@@ -91,7 +91,7 @@
                 管理视频
               </el-button>
               <el-button type="primary" icon="el-icon-edit"
-                         @click="openTask(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
+                         @click="openTask(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId);this.courseId=scope.row.courseChapterPK.courseId;this.chapterId=scope.row.courseChapterPK.chapterId">
                 管理任务
               </el-button>
               <el-button type="primary"
@@ -156,22 +156,6 @@
     </el-main>
 
     <el-main v-show="taskView">
-      <el-row class="box-wrapper" style="height: auto">
-        <el-row class="subtitle">
-          <h5 style="margin: 10px 24px;float: left">上传任务</h5>
-        </el-row>
-        <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
-
-          <el-form-item style="width: 300px;margin-bottom: 0">
-            <el-button type="primary" @click="sendVideo" style="float: right">上传<i
-                class="el-icon-upload el-icon--right"></i></el-button>
-          </el-form-item>
-        </el-form>
-        <el-row>
-
-        </el-row>
-      </el-row>
-
       <el-table :data="taskData">
         <el-table-column prop="taskName" label="任务名称">
         </el-table-column>
@@ -182,14 +166,27 @@
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
             <el-button-group>
-              <el-button type="primary" icon="el-icon-edit" >修改任务</el-button>
+              <el-button type="primary" @click="this.taskId=scope.row.taskId;dialogTaskEdit = true" icon="el-icon-edit" >修改任务</el-button>
               <el-button type="primary" @click="openHomework(scope.row.taskId);this.taskId=scope.row.taskId" >查看作业</el-button>
-              <el-button type="primary" icon="el-icon-delete">删除课程</el-button>
+              <el-button type="primary" icon="el-icon-delete">删除任务</el-button>
             </el-button-group>
           </template>
         </el-table-column>
       </el-table>
+
+      <el-button circle @click="dialogTaskBuild = true" style="position: fixed;bottom: 180px;left: 240px">
+        <i class="el-icon-circle-plus-outline"></i>
+      </el-button>
     </el-main>
+
+    <el-dialog title="创建任务" v-if="dialogTaskBuild" :visible.sync="dialogClassBuild">
+      <build-task-page @close="closeDialog" :courseId="courseId" :chapterId="chapterId"></build-task-page>
+    </el-dialog>
+
+    <el-dialog title="修改任务" v-if="dialogTaskEdit" :visible.sync="dialogClassEdit">
+      <build-task-page @close="closeDialog" :isEdit="true" :taskId="taskId"></build-task-page>
+
+    </el-dialog>
 
     <el-main v-show="homeworkView" style="min-height: 480px">
       <el-row class="box-wrapper" style="height: auto">
@@ -269,12 +266,15 @@
 
 <script>
 import axios from "axios";
+import buildTaskPage from "@/components/classmanagement/tools/buildTaskPage";
 
 export default {
   name: "Classmanagement_class",
   props: ['id'],
   data() {
     return {
+      dialogTaskBuild:false,
+      dialogTaskEdit:false,
       taskId:null,
       radio:1,
       homeworkView:false,
@@ -301,7 +301,8 @@ export default {
   components: {
     editChapter: () => import('@/components/classmanagement/editchapter'),
     editVideo: () => import('@/components/classmanagement/editVideo'),
-    buildClassPage: () => import('@/components/classmanagement/tools/buildClassPage')
+    buildClassPage: () => import('@/components/classmanagement/tools/buildClassPage'),
+    buildTaskPage: ()=> import('@/components/classmanagement/tools/buildTaskPage')
   },
   methods: {
     handleCurrentChange(val){
