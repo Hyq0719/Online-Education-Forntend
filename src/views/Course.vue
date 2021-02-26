@@ -72,6 +72,22 @@ export default {
               videoUrl: that.data[0].VideoList[0].videoUrl,
               videoId: that.data[0].VideoList[0].courseChapterVideoPK.videoId
             });
+            let params = {
+              chapterId: that.data[0].VideoList[0].courseChapterVideoPK.chapterId,
+              courseId: that.courseId,
+              studentId: that.$store.state.userData.userId,
+              videoId: that.data[0].VideoList[0].courseChapterVideoPK.videoId,
+            };
+            axios.post("http://" + that.Api + "/api/Student/addWatchRecords", params, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': that.$store.state.JWT,
+              }
+            }).then(function (response) {
+              console.log("成功添加历史记录", response);
+            }, function (err) {
+              console.log(err);
+            });
           }
         }, function (err) {
           console.log(err);

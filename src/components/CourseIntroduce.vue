@@ -4,6 +4,10 @@
       <el-main>
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="课程介绍" name="first">
+            <div class="collect">
+              <el-button v-if="collected" type="primary" icon="el-icon-star-off" circle @click="deleteCollect"></el-button>
+              <el-button v-if="!collected" icon="el-icon-star-off" circle @click="Collect"></el-button>
+            </div>
             <div class="content">
               <div class="content-Title">
                 <img src="../assets/logo.png" alt="图片缺失">
@@ -97,7 +101,7 @@
                              background
                              layout="prev, pager, next"
                              :total="1">
-<!--                             @current-change="handleCurrentChange"-->
+                <!--                             @current-change="handleCurrentChange"-->
 
               </el-pagination>
             </div>
@@ -159,7 +163,8 @@ export default {
       evaluateBox2: false,
       currentComment: false,
       currentUserComment: {},
-      page:this.$store.state.commentData.total_element,
+      page: this.$store.state.commentData.total_element,
+      collected: false,
     };
   },
   watch: {
@@ -168,7 +173,73 @@ export default {
       this.displayComment();
     }
   },
+  created() {
+    this.GetComment();
+    this.displayComment();
+    this.initCollect();
+  },
   methods: {
+    initCollect() {
+      if (this.$store.state.isLogin) {
+        let a = new URLSearchParams;
+        let that = this;
+        a.append("courseId", this.$route.query.courseId);
+        a.append("user_id", this.$store.state.userData.userId);
+        axios.post("http://" + this.Api + "/api/Student/getLikeByStudentAndCourse?" + a, null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': this.$store.state.JWT,
+          }
+        }).then(function (response) {
+          console.log("获取学生是否收藏了该课程", response);
+          if (response.data.data == null) {
+            that.collected = false;
+          } else {
+            that.collected = true;
+          }
+        }, function (err) {
+          console.log(err);
+        });
+      }
+    },
+    deleteCollect() {
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("courseId", this.$route.query.courseId);
+      a.append("user_id", this.$store.state.userData.userId);
+      axios.post("http://" + this.Api + "/api/Student/cancelLikeCourse?" + a, null, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': this.$store.state.JWT,
+        }
+      }).then(function (response) {
+        console.log("成功删除收藏记录", response);
+        that.collected = false;
+      }, function (err) {
+        console.log(err);
+      });
+    },
+    Collect() {
+      if (this.$store.state.isLogin) {
+        let a = new URLSearchParams;
+        let that = this;
+        a.append("courseId", this.$route.query.courseId);
+        a.append("user_id", this.$store.state.userData.userId);
+        axios.post("http://" + this.Api + "/api/Student/likeCourse?" + a, null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': this.$store.state.JWT,
+          }
+        }).then(function (response) {
+          console.log("收藏课程", response);
+          that.collected = true;
+        }, function (err) {
+          console.log(err);
+        });
+      } else {
+        this.$message.error('请登录后收藏课程');
+      }
+    },
     Course(courseId) {
       this.$router.push({path: '/course', query: {courseId: courseId}});
     },
@@ -214,7 +285,6 @@ export default {
         }
       } else {
         that.$message.error('请登陆后评论');
-        that.$router.push('/login');
       }
     },
     editComment() {
@@ -346,7 +416,7 @@ export default {
         console.log(err);
       });
     },
-    GetComment(){
+    GetComment() {
       let that = this;
       let JWT = that.$store.state.JWT;
       if (that.$store.state.isLogin !== false) {
@@ -380,10 +450,6 @@ export default {
   components: {
     classevaluate,
   },
-  created(){
-    this.GetComment();
-    this.displayComment();
-  },
 };
 </script>
 
@@ -401,6 +467,11 @@ export default {
   border: 1px #C0C4CC solid;
   color: #333;
   line-height: 30px;
+}
+
+.collect {
+  float: right;
+  margin: 5px;
 }
 
 .pink {
@@ -449,10 +520,6 @@ export default {
   height: 40px;
   width: 40px;
   margin: 30px 10px 10px 10px;
-}
-
-.content ul {
-  margin-top: 0;
 }
 
 .RelatedCourses {

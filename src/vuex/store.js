@@ -11,6 +11,7 @@ export default new Vuex.Store({
         JWT: JSON.parse(VueCookies.get('JWT')) || false,
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
         StudentHistory: JSON.parse(sessionStorage.getItem('StudentHistory')) || false,
+        StudentCollect: JSON.parse(sessionStorage.getItem('StudentCollect')) || false,
         StudentPreferences: JSON.parse(sessionStorage.getItem('StudentPreferences')) || false,
 
         Prefer: JSON.parse(sessionStorage.getItem('Prefer')) || false,
@@ -68,6 +69,11 @@ export default new Vuex.Store({
         saveStudentHistory(state, StudentHistory) {
             state.StudentHistory = StudentHistory;
             sessionStorage.setItem('StudentHistory', JSON.stringify(state.StudentHistory));
+        },
+        //学生课程收藏
+        saveStudentCollect(state, StudentCollect) {
+            state.StudentCollect = StudentCollect;
+            sessionStorage.setItem('StudentCollect', JSON.stringify(state.StudentCollect));
         },
         //学生偏好
         saveStudentPreferences(state, StudentPreferences) {

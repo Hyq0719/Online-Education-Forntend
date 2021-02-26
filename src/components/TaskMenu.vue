@@ -24,7 +24,6 @@
                 <div class="content">
                   <h4>{{ value.taskName }}</h4>
                   <h6>开始时间：{{ value.startTime }}</h6>
-                  <h6>截止时间：{{ value.endTime }}</h6>
                   <h6 v-if="Date.parse(new Date()) <= Date.parse(value.endTime)">作业状态：待做</h6>
                   <h6 v-if="Date.parse(new Date()) > Date.parse(value.endTime)">作业状态：已过期</h6>
                 </div>

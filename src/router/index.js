@@ -17,6 +17,7 @@ import classManagement from "@/views/Classmanagement";
 import Information from '../views/Information';
 import InformationChange from '../views/InformationChange';
 import History from '../views/History';
+import Collect from '../views/Collect';
 import VIP from '../views/VIP';
 import Feedback from "@/views/Feedback";
 import classManagementClass from "@/components/classmanagement/class";
@@ -186,6 +187,11 @@ export default new Router({
             path: '/history',
             name: 'History',
             component: History,
+        },
+        {
+            path: '/collect',
+            name: 'Collect',
+            component: Collect,
         },
         {
             path: '/VIP',

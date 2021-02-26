@@ -174,7 +174,7 @@ export default {
       let that = this;
       let f = await this.$Api.compressImg(file);
       console.log(f);
-      let fileName = `${this.$store.state.userData.userId}_Header/${Date.parse(new Date())}`;  //定义唯一的文件名
+      let fileName = `${this.$store.state.userData.userId}_Header/${file.name}`;  //定义唯一的文件名
       if (this.isLogin) {
         fileName = `pic/Student/` + fileName;
       } else {
@@ -229,7 +229,7 @@ export default {
         axios.post("http://" + that.Api + "/api/Student/getStudentById?" + a, null, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': this.$store.state.JWT,
+            'Authorization': that.$store.state.JWT,
           }
         }).then(function (res) {
           console.log(res);

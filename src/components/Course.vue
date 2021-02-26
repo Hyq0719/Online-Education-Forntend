@@ -56,7 +56,6 @@ export default {
         this.$router.push({path: '/taskmenu', query: {courseId: courseId, chapterId: chapterId}});
       }
       else{
-        this.$router.push('/login');
         this.$message.error('请登录后查看课程任务');
       }
     },
@@ -80,7 +79,7 @@ export default {
           console.log("成功添加历史记录", response);
         }, function (err) {
           console.log(err);
-        })
+        });
       }
     },
     handleOpen(key, keyPath) {

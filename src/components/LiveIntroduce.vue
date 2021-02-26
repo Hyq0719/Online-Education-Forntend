@@ -113,10 +113,6 @@ export default {
   margin: 30px 10px 10px 10px;
 }
 
-.content ul {
-  margin-top: 0;
-}
-
 .Teacher {
   text-align: left;
 }

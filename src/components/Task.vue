@@ -9,7 +9,7 @@
     </div>
     <el-divider></el-divider>
     <div class="task-details">
-      <p>开始时间：{{ this.$store.state.TaskInfo.startTime }} | 截止时间：{{ this.$store.state.TaskInfo.endTime }}</p>
+      <p>开始时间：{{ this.$store.state.TaskInfo.startTime }}</p>
     </div>
     <div class="task-homework">
       <div class="task-homework-content">
@@ -96,7 +96,7 @@ export default {
       dialogVisibleHomework: false,
       textarea: this.$store.state.HomeworkInfo.content,
       uploadConf: {
-        // endpoint: "https://oss-accelerate.aliyuncs.com",
+        endpoint: "https://oss-accelerate.aliyuncs.com",
         region: 'oss-cn-shanghai',
         accessKeyId: 'LTAI4GGsTQ35tQcWWDVNKwqG',
         accessKeySecret: 'reWjqrK73PE0ZvJQH0Hwjr9eyuWbuc',
@@ -148,6 +148,7 @@ export default {
       console.log(fileList);
     },
     beforeRemove(file, fileList) {
+      console.log(fileList);
       return this.$confirm(`确定移除 ${file.name}？`);
     },
     uploadHttp({file}) {
@@ -155,7 +156,7 @@ export default {
       console.log(file);
       let homeworkId = this.$store.state.HomeworkInfo.homeworkId;
       let homeworkFileName = file.name;
-      let fileName = `file/Homework/${this.$store.state.userData.userId}/${Date.parse(new Date())}.docx`;  //定义唯一的文件名
+      let fileName = `file/Homework/${this.$store.state.userData.userId}/${this.$store.state.HomeworkInfo.homeworkId}/${file.name}`;  //定义唯一的文件名
       ossClient(this.uploadConf).put(fileName, file).then(({res, url, name}) => {
         if (res && res.status == 200) {
           console.log(`阿里云OSS上传文件成功回调`, res, url, name);

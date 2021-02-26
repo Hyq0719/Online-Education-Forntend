@@ -1,28 +1,28 @@
 <template>
-  <div class="history">
-    <div class="history-course" v-for="(item,index) in this.$store.state.StudentHistory.list" v-bind:key="index">
-      <div class="history-time">
-        <p>观看时间：{{ item.watchTime }}</p>
-        <div class="history-icon">
-          <el-button icon="el-icon-delete" circle @click="DeleteHistory(item.id)"></el-button>
+  <div class="collect">
+    <div class="collect-course" v-for="(item,index) in this.$store.state.StudentCollect.list" v-bind:key="index">
+      <div class="collect-time">
+        <p>收藏时间：{{ item.time }}</p>
+        <div class="collect-icon">
+          <el-button type="primary" icon="el-icon-star-off" circle
+                     @click="DeleteCollect(item.course.courseId)"></el-button>
         </div>
-        <div class="history-teacher">
+        <div class="collect-teacher">
           <img :src="item.course.teacher.teacherPicUrl" alt="图片缺失">
           <p>{{ item.course.teacher.name }} | {{ item.course.teacher.intro }}</p>
         </div>
       </div>
-      <div class="history-content">
-        <div class="history-img"
-             @click="videoHistory(item.course.courseId)">
+      <div class="collect-content">
+        <div class="collect-img"
+             @click="Course(item.course.courseId)">
           <img :src="item.course.coursePic" alt="图片丢失">
         </div>
-        <div class="history-text">
-          <div class="history-text-title"
-               @click="videoHistory(item.course.courseId)">
+        <div class="collect-text">
+          <div class="collect-text-title"
+               @click="Course(item.course.courseId)">
             <h3>{{ item.course.name }}</h3>
           </div>
           <h4>{{ item.course.intro }}</h4>
-          <h5>看到：{{ item.courseChapterVideo.videoName }}</h5>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
           @current-change="handleCurrentChange"
           :current-page.sync="currentPage"
           layout="prev, pager, next"
-          :total="this.$store.state.StudentHistory.total_element">
+          :total="this.$store.state.StudentCollect.total_element">
       </el-pagination>
     </div>
   </div>
@@ -42,68 +42,69 @@
 import axios from "axios";
 
 export default {
-  name: "History",
+  name: "Collect",
   data() {
     return {
       currentPage: 1,
     };
   },
   created() {
-    this.history();
+    this.collect();
   },
   methods: {
     handleCurrentChange(currentPage) {
       console.log("当前页", currentPage);
-      let a = new URLSearchParams;
       let that = this;
+      let a = new URLSearchParams;
       a.append("page", currentPage);
       a.append("user_id", this.$store.state.userData.userId);
-      axios.post("http://" + this.Api + "/api/Student/findAllWatchRecords?" + a, null, {
+      axios.post("http://" + this.Api + "/api/Student/getStudentLikedCourseBy?" + a, null, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': this.$store.state.JWT,
         }
       }).then(function (response) {
+        console.log("当前学生收藏记录", response);
         that.currentPage = currentPage;
-        console.log("当前学生观看历史", response);
-        that.$store.commit('saveStudentHistory', response.data.data);
+        that.$store.commit('saveStudentCollect', response.data.data);
       }, function (err) {
         console.log(err);
       });
     },
-    videoHistory(courseId) {
+    Course(courseId) {
       this.$router.push({path: '/course', query: {courseId: courseId}});
     },
-    history() {
+    collect() {
       let a = new URLSearchParams;
       let that = this;
       a.append("page", 1);
       a.append("user_id", this.$store.state.userData.userId);
-      axios.post("http://" + this.Api + "/api/Student/findAllWatchRecords?" + a, null, {
+      axios.post("http://" + this.Api + "/api/Student/getStudentLikedCourseBy?" + a, null, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': this.$store.state.JWT,
         }
       }).then(function (response) {
-        console.log("当前学生观看历史", response);
-        that.$store.commit('saveStudentHistory', response.data.data);
+        console.log("当前学生收藏记录", response);
+        that.$store.commit('saveStudentCollect', response.data.data);
       }, function (err) {
         console.log(err);
       });
     },
-    DeleteHistory(watchRecordId) {
+    DeleteCollect(courseId) {
       let that = this;
       let a = new URLSearchParams;
-      a.append("watchRecordId", watchRecordId);
-      axios.post("http://" + this.Api + "/api/Student/deleteWatchRecords?" + a, null, {
+      a.append("courseId", courseId);
+      a.append("user_id", this.$store.state.userData.userId);
+      axios.post("http://" + this.Api + "/api/Student/cancelLikeCourse?" + a, null, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': this.$store.state.JWT,
         }
       }).then(function (response) {
-        console.log("成功删除观看历史", response);
-        that.history();
+        console.log("成功删除收藏记录", response);
         that.currentPage = 1;
+        that.collect();
       }, function (err) {
         console.log(err);
       });
@@ -113,12 +114,12 @@ export default {
 </script>
 
 <style scoped>
-.history {
+.collect {
   margin: 50px auto;
   width: 1100px;
 }
 
-.history-course {
+.collect-course {
   text-align: left;
   margin: 20px auto;
   border-radius: 10px;
@@ -126,63 +127,55 @@ export default {
   box-shadow: 0 0 3px rgba(95, 101, 105, 0.15);
 }
 
-.history-time {
+.collect-time {
   text-align: right;
   float: right;
   font-size: 13px;
   margin: 20px 20px 0 0;
 }
 
-.history-icon {
+.collect-icon {
   margin: 10px;
 }
 
-.history-teacher {
+.collect-teacher {
   display: flex;
 }
 
-.history-teacher img {
+.collect-teacher img {
   border-radius: 50px;
   margin: 5px;
   height: 30px;
   width: 30px;
 }
 
-.history-content {
+.collect-content {
   display: flex;
   text-align: left;
 }
 
-.history-img {
+.collect-img {
   cursor: pointer;
   height: 130px;
   width: 230px;
   margin: 20px;
 }
 
-.history-img img {
+.collect-img img {
   width: 100%;
   height: 100%;
 }
 
-.history-text {
+.collect-text {
   text-align: left;
 }
 
-.history-text-title {
+.collect-text-title {
   cursor: pointer;
-}
-
-.history-text h5 {
-  color: #909399;
 }
 
 a {
   text-decoration: none;
   color: #1c1f21;
-}
-
-.clear {
-  clear: both;
 }
 </style>
