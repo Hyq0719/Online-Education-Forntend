@@ -349,7 +349,7 @@ export default {
   .barrage-main {
     //border: 2px solid blue;
     width: 100%;
-    height: 80%;
+    height: 100%;
     position: relative;
     overflow: hidden;
     // background: #000;

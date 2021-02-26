@@ -1,8 +1,10 @@
 <template>
   <div>
     <video id="videoElement" controls autoplay muted></video>
-    <!--      <button @click="play">播放</button>-->
-    <!--      <button @click="reload">重新加载</button>-->
+    <div class="flvjs-button">
+      <el-button icon="el-icon-video-play" circle @click="play"></el-button>
+      <el-button icon="el-icon-refresh" circle @click="reload"></el-button>
+    </div>
   </div>
 </template>
 
@@ -36,6 +38,7 @@ export default {
       this.flvPlayer.play();
     },
     reload() {
+      this.flvPlayer.unload();
       this.flvPlayer.load();
       this.flvPlayer.play();
     },
@@ -46,6 +49,10 @@ export default {
 <style scoped>
 #videoElement {
   width: 100%;
-  height: 504px;
+  height: 500px;
+}
+.flvjs-button{
+  margin: 10px;
+  text-align: left;
 }
 </style>

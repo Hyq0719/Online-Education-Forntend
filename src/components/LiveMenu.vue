@@ -151,7 +151,7 @@ export default {
 }
 
 .Course-content-content {
-  height: 200px;
+  height: 220px;
   width: 18%;
   cursor: pointer;
   text-align: left;

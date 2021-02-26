@@ -5,7 +5,7 @@
         <Flvjs></Flvjs>
         <v-barrage :arr="arr"
                    :isPause="isPause"
-                   :percent="100"
+                   :percent="75"
         >
         </v-barrage>
       </el-main>
@@ -219,7 +219,6 @@ export default {
 .el-container {
   width: 1100px;
   margin: 20px auto;
-  height: 506px;
   border: #C0C4CC 1px solid;
   border-radius: 10px;
   overflow: hidden;

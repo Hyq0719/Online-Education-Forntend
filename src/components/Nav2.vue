@@ -1,6 +1,6 @@
 <template>
   <div class="NAV2">
-    <h2>最近直播</h2>
+    <h2>全部直播</h2>
     <el-row :gutter="25" class="course">
       <el-col :span="6" v-for="item in live" v-bind:key="item.id">
         <router-link to="/live">
@@ -113,19 +113,12 @@ export default {
       classpicture: [require('@/assets/course1.webp'),
         require('@/assets/course2.webp'),
         require('@/assets/course3.webp'),
-        require('@/assets/course4.webp'),
-        require('@/assets/course5.webp'),
-        require('@/assets/course6.webp'),
-        require('@/assets/course7.webp'),
-        require('@/assets/course8.webp'),],
-      star: [3, 4, 3.4, 3.5, 2.0, 4, 1, 2.3],
+        require('@/assets/course4.webp'),],
+      star: [3, 4, 3.4, 3.5],
       classname: ['一晚上搞定CSS',
         '一晚上搞定Vue',
         '一晚上搞定HTML',
-        '7天学会java',
-        '5天学会C++',
-        '8天学会php',
-        '一个月搞定C++对象']
+        '7天学会java',]
     };
   },
 };

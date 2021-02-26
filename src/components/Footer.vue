@@ -7,9 +7,19 @@
       <p>Looc网隶属于上海大学某小组</p>
     </div>
     <div class="follow">
-      <p>关注我们：</p>
-      <img src="../assets/follwUsWechat.png">
-    </div>
+      <el-popover
+          placement="top-start"
+          width="150"
+          trigger="hover">
+        <div class="popover-content">
+          <img src="../assets/wechat.png">
+        </div>
+        <div slot="reference">
+          <p>关注我们：</p>
+          <img src="../assets/follwUsWechat.png">
+        </div>
+      </el-popover>
+  </div>
     <div class="clear"></div>
   </div>
 </template>
@@ -17,6 +27,9 @@
 <script>
 export default {
   name: "Footer",
+  data() {
+    return {}
+  },
 };
 </script>
 
@@ -58,6 +71,11 @@ export default {
   width: 25px;
   margin: 10px;
   float: left;
+}
+
+.popover-content img {
+  height: 150px;
+  width: 150px;
 }
 
 .clear {

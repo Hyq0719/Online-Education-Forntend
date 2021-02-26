@@ -5,7 +5,6 @@
     <Nav1></Nav1>
     <nav2></nav2>
     <Article></Article>
-    <ObsIntro></ObsIntro>
   </div>
 </template>
 
@@ -15,7 +14,6 @@ import Nav1 from '../components/Nav1';
 import Sidebar from '../components/Sidebar';
 import Nav2 from '../components/Nav2';
 import Article from '../components/Article';
-import ObsIntro from "@/components/ObsIntro";
 import axios from "axios";
 
 export default {
@@ -26,7 +24,6 @@ export default {
     Sidebar,
     Nav2,
     Article,
-    ObsIntro,
   },
   created() {
     this.main();
