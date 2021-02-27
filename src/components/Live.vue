@@ -107,6 +107,7 @@ export default {
         nickName: this.$store.state.userData.nickName,
         msg: this.input,
         timer: '',
+        isVip: VIP,
       };
       // console.log(preMsg);
       let toSend = JSON.stringify(preMsg);

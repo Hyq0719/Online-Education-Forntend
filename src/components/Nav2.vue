@@ -2,7 +2,7 @@
   <div class="NAV2">
     <h2>全部直播</h2>
     <div class="Course-content" v-if="this.$store.state.MainMenuLiveData">
-      <div class="Course-content-content" v-for="(item,index) in this.$store.state.MainMenuLiveData.list.slice(0, 5)"
+      <div class="Course-content-content" v-for="(item,index) in this.$store.state.MainMenuLiveData.list.slice(0, 4)"
            v-bind:key="index" @click="Live(item.liveId)">
         <Menu :name="item.liveName" :teacherName="item.intro" :liveDate="item.liveDate"
               :coursePic="item.livePicUrl"></Menu>
@@ -10,7 +10,7 @@
     </div>
     <h2>好课推荐</h2>
     <div class="Course-content" v-if="this.$store.state.MainMenuCourseData">
-      <div class="Course-content-content" v-for="(item,index) in this.$store.state.MainMenuCourseData.slice(0, 5)"
+      <div class="Course-content-content" v-for="(item,index) in this.$store.state.MainMenuCourseData.slice(0, 4)"
            v-bind:key="index" @click="Course(item.courseId)">
         <Menu :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1" :VIP="item.needVip"></Menu>
       </div>
@@ -127,8 +127,8 @@ export default {
 }
 
 .Course-content-content {
-  height: 220px;
-  width: 18%;
+  height: 260px;
+  width: 23%;
   cursor: pointer;
   text-align: left;
   border-radius: 10px;
