@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="Course-content-content-img">
-      <img :src="coursePic" alt="图片缺失">
+      <img v-if="coursePic" :src="coursePic" alt="图片缺失">
     </div>
     <!--    课程-->
     <h4 v-if="name">{{ name }}</h4>
@@ -17,12 +17,14 @@
 export default {
   name: "Menu",
   props: {
+    //课程
     name: null,
     teacherName: null,
     coursePic: null,
-    liveDate: null,
     isFree: null,
     VIP: null,
+    //直播
+    liveDate: null,
   },
 }
 </script>

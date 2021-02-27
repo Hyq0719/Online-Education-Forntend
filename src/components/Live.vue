@@ -16,7 +16,7 @@
             <div class="infinite-list-wrapper">
               <ul
                   class="list">
-                <li v-for="item in list" :key='item' :class="isMyself(item[0])">{{ item[0] }}：{{ item[1] }}</li>
+                <li v-for="item in list" :key='item.id' :class="isMyself(item[0])">{{ item[0] }}：{{ item[1] }}</li>
               </ul>
             </div>
             <el-footer>
@@ -31,7 +31,7 @@
           <el-tab-pane label="在线用户" name="second">
             <div class="infinite-list-wrapper">
               <ul class="list">
-                <li v-for="value in userList" :key="value" class="users">{{ value }}</li>
+                <li v-for="value in userList" :key="value.id" class="users">{{ value }}</li>
               </ul>
             </div>
           </el-tab-pane>
@@ -81,7 +81,7 @@ export default {
         for (let index = 0; index < 10; index++) {
           if (index % 2 === 0) {
             this.arr.push({
-              direction: 'default',
+              direction: 'top',
               content: arr[parseInt(Math.random() * arr.length)],
             });
           } else {
@@ -99,6 +99,8 @@ export default {
     },
     mySend() {
       // console.log('mySend!');
+      let VIP = Date.parse(new Date()) <= Date.parse(this.$store.state.userData.vipDate);
+      console.log('VIP', VIP);
       let preMsg = {
         userId: this.$store.state.userData.userId,
         type: '0',
@@ -113,26 +115,49 @@ export default {
 
 
       if (this.arr.length > 1 && this.input !== '' && this.input != null) {   //发送弹幕
-        this.arr.unshift({
-          content: this.input,
-          direction: this.direction,
-          isSelf: true,
-          style: {
-            color: 'red',
-            fontSize: '25px'
-          },
-          isJs: this.isJs,
-        });
+        if (VIP) {
+          this.arr.unshift({
+            content: this.input,
+            direction: 'top',
+            isSelf: true,
+            style: {
+              color: '#F56C6C',
+            },
+            isJs: this.isJs,
+          });
+        } else {
+          this.arr.unshift({
+            content: this.input,
+            direction: this.direction,
+            isSelf: true,
+            style: {
+              color: 'white',
+            },
+            isJs: this.isJs,
+          });
+        }
       } else {
-        this.arr.push({
-          content: this.input,
-          direction: this.direction,
-          isSelf: true,
-          style: {
-            color: 'red'
-          },
-          isJs: this.isJs,
-        });
+        if (VIP) {
+          this.arr.push({
+            content: this.input,
+            direction: 'top',
+            isSelf: true,
+            style: {
+              color: '#F56C6C'
+            },
+            isJs: this.isJs,
+          });
+        } else {
+          this.arr.push({
+            content: this.input,
+            direction: this.direction,
+            isSelf: true,
+            style: {
+              color: 'white'
+            },
+            isJs: this.isJs,
+          });
+        }
       }
 
       this.input = '';
@@ -196,6 +221,11 @@ export default {
 </script>
 
 <style scoped>
+.barrage-control {
+  text-align: center;
+  margin: 80px 0px;
+}
+
 .el-tab-pane {
   text-align: center;
 }
