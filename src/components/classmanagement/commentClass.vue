@@ -99,13 +99,14 @@
         </el-row>
         <el-row>
           <el-col :span="12" style="overflow: hidden;float: left">
+            <el-row>
             <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px">最坏的几条评论</span>
-            <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in badComment" :key="index"
-                     style="position: relative;margin: 5px;overflow: hidden;min-height: 80px">
+            </el-row>
+            <el-row>
+              <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in badComment" :key="index"
+                     style="display:block;margin: 5px;overflow: hidden;min-height: 80px">
               <div style="overflow: hidden">
                 <div style="text-align:left;font-size: 12px;margin: 0 10px">
-                  <div style="display: inline;margin-right: 20px"> {{ item.time }}</div>
-                  <div style="display: inline;margin-right: 20px"> 点赞数：{{ item.likes }}</div>
                   <el-rate style="display: inline"
                            v-model="item.commentMark"
                            disabled
@@ -116,9 +117,10 @@
                 </div>
               </div>
               <div style="overflow: hidden;margin: 10px 10px">
-                <div style="float:left;text-align:left;font-size: 16px"> {{ item.content }}</div>
+                <div style="float:left;text-align:left;font-size: 16px"> {{ item[0] }}</div>
               </div>
             </el-card>
+            </el-row>
           </el-col>
         </el-row>
       </div>
@@ -140,6 +142,7 @@ export default {
   data() {
     return {
       myColors: ['#1f77b4', '#629fc9', '#94bedb', '#c9e0ef'],
+      courseId:null,
       words: [],
       key: 1,
       analyzeView: false,
@@ -282,7 +285,8 @@ export default {
     querySearch() {
       let that = this;
       let a = new URLSearchParams;
-      a.append("courseId", that.comment[0].courseId);
+      console.log(that.comment);
+      a.append("courseId", that.courseId);
       a.append("page", 1);
       a.append("query", that.input);
       console.log("获取搜索", that.input);
@@ -332,6 +336,7 @@ export default {
       let JWT = that.$store.state.JWT;
       let a = new URLSearchParams();
       console.log(row, column, event);
+      that.courseId=row.courseId;
       a.append('courseId', row.courseId);
       a.append('page', 1);
       a.append('sort', 1);
