@@ -13,12 +13,7 @@
     <div class="Course-content">
       <div class="Course-content-content" v-for="(item,index) in this.$store.state.MenuLiveData.list"
            v-bind:key="index" @click="Live(item.liveId)">
-        <div class="Course-content-content-img">
-          <img :src="item.livePicUrl" alt="图片缺失">
-        </div>
-        <h4>{{ item.liveName }}</h4>
-        <h6>{{ item.intro }}</h6>
-        <h6>直播时间：{{ item.liveDate }}</h6>
+        <Menu :name="item.liveName" :teacherName="item.intro" :liveDate="item.liveDate" :coursePic="item.livePicUrl"></Menu>
       </div>
     </div>
     <div class="block">
@@ -35,9 +30,13 @@
 
 <script>
 import axios from "axios";
+import Menu from "@/components/childcpn/Menu";
 
 export default {
   name: "LiveMenu",
+  components: {
+    Menu,
+  },
   data() {
     return {
       radioFutureAndNow: '1',
@@ -159,24 +158,6 @@ export default {
   border: #E4E7ED 1px solid;
   margin: 10px;
   box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
-}
-
-.Course-content-content-img {
-  text-align: center;
-  margin: 3px;
-}
-
-.Course-content-content img {
-  border-radius: 10px;
-  width: 100%;
-}
-
-.Course-content-content h4 {
-  margin: 10px;
-}
-
-.Course-content-content h6 {
-  margin: 10px 10px 20px 10px;
 }
 
 .Course-content-content:hover {

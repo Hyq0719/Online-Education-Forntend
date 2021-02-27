@@ -28,6 +28,6 @@ export default {
 </style>
 <style scope>
 .body{
-  min-height: 580px;
+  min-height: 565px;
 }
 </style>

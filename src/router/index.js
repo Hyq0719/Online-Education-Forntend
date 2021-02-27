@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Login from '../views/Login';
-import LoginTeacher from '../views/LoginTeacher';
 import Main from '../views/Main';
 import Index from '../views/Index';
+import Login from '../views/Login';
+import LoginTeacher from '../views/LoginTeacher';
 import Register from '../views/Register';
 import RegisterTeacher from '../views/RegisterTeacher';
 import Live from '../views/Live';
@@ -14,12 +14,14 @@ import Task from '../views/Task';
 import TaskMenu from '../views/TaskMenu';
 import Searchpage from "@/views/Searchpage";
 import classManagement from "@/views/Classmanagement";
+import TeacherInfo from '../views/TeacherInfo';
 import Information from '../views/Information';
 import InformationChange from '../views/InformationChange';
 import History from '../views/History';
 import Collect from '../views/Collect';
 import VIP from '../views/VIP';
 import Feedback from "@/views/Feedback";
+
 import classManagementClass from "@/components/classmanagement/class";
 import classBread from "@/components/classmanagement/classbread";
 import commentClass from "@/components/classmanagement/commentClass";
@@ -37,16 +39,6 @@ Vue.use(Router);
 export default new Router({
     routes: [
         {
-            path: '/login',
-            name: 'Login',
-            component: Login,
-        },
-        {
-            path: '/login/teacher',
-            name: 'LoginTeacher',
-            component: LoginTeacher,
-        },
-        {
             path: '/',
             name: 'Index',
             component: Index,
@@ -55,6 +47,16 @@ export default new Router({
             path: '/main',
             name: 'Main',
             component: Main,
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login,
+        },
+        {
+            path: '/login/teacher',
+            name: 'LoginTeacher',
+            component: LoginTeacher,
         },
         {
             path: '/register',
@@ -172,6 +174,11 @@ export default new Router({
                     component: teacherAudit,
                 },
             ]
+        },
+        {
+            path: '/TeacherInfo',
+            name: 'TeacherInfo',
+            component: TeacherInfo,
         },
         {
             path: '/Information',

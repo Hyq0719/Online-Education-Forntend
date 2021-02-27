@@ -58,7 +58,7 @@ export default {
       let a = new URLSearchParams;
       a.append("page", currentPage);
       a.append("user_id", this.$store.state.userData.userId);
-      axios.post("http://" + this.Api + "/api/Student/getStudentLikedCourseBy?" + a, null, {
+      axios.post("http://" + this.Api + "/api/Student/getStudentLikedCourse?" + a, null, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': this.$store.state.JWT,
@@ -79,7 +79,7 @@ export default {
       let that = this;
       a.append("page", 1);
       a.append("user_id", this.$store.state.userData.userId);
-      axios.post("http://" + this.Api + "/api/Student/getStudentLikedCourseBy?" + a, null, {
+      axios.post("http://" + this.Api + "/api/Student/getStudentLikedCourse?" + a, null, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': this.$store.state.JWT,
