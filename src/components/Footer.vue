@@ -1,6 +1,5 @@
 <template>
   <div class="myFooter">
-    <img src="../assets/logo.png">
     <div class="text">
       <p>下载客户端 | 联系我们 | 新闻资讯 | 支持我们 | 加入我们</p>
       <p>Copyright © 2020-2021 沪ICP备2021003682号-1</p>
@@ -38,18 +37,11 @@ export default {
   border-top: 1px solid #DCDFE6;
 }
 
-.myFooter img {
-  float: left;
-  height: 100px;
-  width: 100px;
-  margin: 10px 10px 10px 150px;
-}
-
 .text {
   float: left;
   color: grey;
   font-size: 13px;
-  margin: 10px;
+  margin: 10px 10px 10px 150px;
   text-align: left;
 }
 

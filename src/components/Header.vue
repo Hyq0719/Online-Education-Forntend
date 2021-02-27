@@ -6,9 +6,6 @@
         mode="horizontal"
         @select="handleSelect"
     >
-      <div class="Header-Img">
-        <img src="../assets/logo.png" alt="加载失败"/>
-      </div>
       <slot>
         <div class="Header-search">
           <el-autocomplete
@@ -162,21 +159,10 @@ export default {
   vertical-align: baseline;
 }
 
-.Header-Img {
-  float: left;
-  height: 60px;
-  width: 60px;
-}
-
-.Header-Img img {
-  height: 60px;
-  width: 60px;
-}
-
 .Header-search {
   float: left;
   width: 300px;
-  margin: 10px 0 10px 50px;
+  margin: 10px 0 10px 100px;
 }
 
 .el-autocomplete {
