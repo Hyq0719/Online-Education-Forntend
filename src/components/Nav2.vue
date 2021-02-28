@@ -12,7 +12,8 @@
     <div class="Course-content" v-if="this.$store.state.MainMenuCourseData">
       <div class="Course-content-content" v-for="(item,index) in this.$store.state.MainMenuCourseData.slice(0, 4)"
            v-bind:key="index" @click="Course(item.courseId)">
-        <Menu :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1" :VIP="item.needVip"></Menu>
+        <Menu :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1"
+              :VIP="item.needVip"></Menu>
       </div>
     </div>
     <h2>精彩评价</h2>
@@ -79,14 +80,30 @@ export default {
   methods: {
     initCourse() {
       let that = this;
-      axios.get("http://" + this.Api + "/api/Course/getClass", {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        console.log("获取首页课程菜单", response);
-        that.$store.commit('saveMainMenuCourseData', response.data);
-      }, function (err) {
-        console.log(err);
-      });
+      if (this.$store.state.isLogin) {
+        let a = new URLSearchParams;
+        a.append("user_id", this.$store.state.userData.userId);
+        axios.post("http://" + this.Api + "/api/Student/getStudentItemCF?" + a, null, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': this.$store.state.JWT,
+          }
+        }).then(function (response) {
+          console.log("获取首页学生协同过滤课程菜单", response);
+          that.$store.commit('saveMainMenuCourseData', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      } else {
+        axios.post("http://" + this.Api + "/api/Course/getAllCoursesOrderByWatches", null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+          console.log("获取首页默认课程菜单", response);
+          that.$store.commit('saveMainMenuCourseData', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      }
     },
-    initLive(){
+    initLive() {
       let that = this;
       let a = new URLSearchParams;
       a.append("page", 1);
