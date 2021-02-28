@@ -69,7 +69,10 @@
       <div v-show="chartView" :key="key" style="overflow: hidden;padding: 20px">
         <el-row>
           <el-col :span="24" style="font-size: 16px;text-align:left ">
-            平均评分： {{ analysisComment.avg_mark }}
+            平均评分： {{ analysisComment.avg_comment_mark }}
+          </el-col>
+          <el-col :span="24" style="font-size: 16px;text-align:left ">
+            情感评分： {{ analysisComment.avg_mark }}
           </el-col>
         </el-row>
         <el-row>
@@ -117,6 +120,14 @@
               </el-card>
             </el-row>
           </el-col>
+
+        </el-row>
+        <el-row>
+          <el-col :span="12" style="overflow: hidden">
+            <ECharts id="BarChart3" :data="option5" height="300px" width="400px"></ECharts>
+          </el-col>
+
+
         </el-row>
       </div>
 
@@ -243,7 +254,33 @@ export default {
       },
       option4: {
         title: {
-          text: '评论性质柱状图',
+          text: '情感分析',
+          textStyle: {
+            fontSize: 14
+          }
+        },
+        dataset: {
+          source: []
+        },
+        tooltip: {
+          //鼠标悬浮弹框组件
+          trigger: 'axis'
+        },
+        legend: {},
+        grid: {},
+        xAxis: {
+          type: 'category',
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {type: 'bar'}
+        ]
+      },
+      option5: {
+        title: {
+          text: '打分分布',
           textStyle: {
             fontSize: 14
           }
@@ -369,7 +406,18 @@ export default {
             that.analysisComment = that.$store.state.teacherData.analysisComment;
             that.option2.dataset.source = that.analysisComment.word_cut;
             const n = that.analysisComment.mark_distribution;
-            that.option4.dataset.source = Object.entries(n);
+            console.log("n",Object.entries(n))
+            that.option4.dataset.source = Object.entries(n).map(item=>{
+              if (item[0] == 'neg')  return ["差评",item[1]];
+              else if (item[0] == 'pos')  return ["好评",item[1]];
+              else if (item[0] == 'neu')  return ["中评",item[1]];
+            });
+            console.log(that.option5.dataset.source)
+            that.option5.dataset.source=Object.entries(that.analysisComment.comment_mark_distribution).map((item,index)=>{
+              return [index+"星",item[1]]
+            })
+            console.log(that.option4.dataset.source)
+            console.log(that.option5.dataset.source)
             that.badComment = that.analysisComment.worst_comment;
             console.log("评价性质", that.option4.dataset.source)
             const r = that.analysisComment.word_cut;
