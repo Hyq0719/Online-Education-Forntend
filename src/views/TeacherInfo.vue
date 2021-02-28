@@ -2,20 +2,19 @@
   <div>
     <Sidebar></Sidebar>
     <Header></Header>
-    <VIP></VIP>
+    <TeacherInfo></TeacherInfo>
   </div>
 </template>
 
 <script>
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
-import VIP from '../components/VIP';
-
+import TeacherInfo from '../components/TeacherInfo';
 export default {
   components: {
     Header,
     Sidebar,
-    VIP,
+    TeacherInfo,
   },
 };
 </script>

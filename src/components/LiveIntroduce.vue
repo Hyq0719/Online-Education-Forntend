@@ -6,7 +6,7 @@
           <el-tab-pane label="直播介绍" name="first">
             <div class="content">
               <div class="content-Title">
-                <img src="../assets/logo.png" alt="图片缺失">
+                <i class="el-icon-menu"></i>
                 <h3>课程概述</h3>
               </div>
               <p>
@@ -103,13 +103,11 @@ export default {
   display: flex;
 }
 
-.content h3 {
-  margin: 30px 10px 10px 10px;
+.content-Title i{
+  margin: 35px 0 10px 10px;
 }
 
-.content img {
-  height: 40px;
-  width: 40px;
+.content-Title h3 {
   margin: 30px 10px 10px 10px;
 }
 

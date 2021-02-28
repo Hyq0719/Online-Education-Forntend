@@ -16,17 +16,21 @@ export default new Vuex.Store({
 
         Prefer: JSON.parse(sessionStorage.getItem('Prefer')) || false,
         MajorPrefer: JSON.parse(sessionStorage.getItem('MajorPrefer')) || false,
+        MainMenuCourseData: JSON.parse(sessionStorage.getItem('MainMenuCourseData')) || false,
+        MainMenuLiveData: JSON.parse(sessionStorage.getItem('MainMenuLiveData')) || false,
 
-        menuCourseData: JSON.parse(sessionStorage.getItem('menuCourseData')) || false,
+        MenuCourseData: JSON.parse(sessionStorage.getItem('MenuCourseData')) || false,
         courseData: JSON.parse(sessionStorage.getItem('courseData')) || false,
         chapterData: JSON.parse(sessionStorage.getItem('chapterData')) || false,
         Video: JSON.parse(sessionStorage.getItem('Video')) || false,
-        SearchedCourseData: JSON.parse(sessionStorage.getItem('SearchedCourseData')) || false,
         RelatedCourses: JSON.parse(sessionStorage.getItem('RelatedCourses')) || false,
         TaskInfo: JSON.parse(sessionStorage.getItem('TaskInfo')) || false,
         TaskFile: JSON.parse(sessionStorage.getItem('TaskFile')) || false,
         HomeworkInfo: JSON.parse(sessionStorage.getItem('HomeworkInfo')) || false,
         HomeworkFile: JSON.parse(sessionStorage.getItem('HomeworkFile')) || false,
+        TeacherMenuCourseData: JSON.parse(sessionStorage.getItem('TeacherMenuCourseData')) || false,
+
+        SearchedCourseData: JSON.parse(sessionStorage.getItem('SearchedCourseData')) || false,
 
         MenuLiveData: JSON.parse(sessionStorage.getItem('MenuLiveData')) || false,
 
@@ -37,8 +41,8 @@ export default new Vuex.Store({
             teacherVideoData: JSON.parse(sessionStorage.getItem('teacherVideoData')) || [],
             analysisComment: JSON.parse(sessionStorage.getItem('analysisComment')) || {},
             liveData: JSON.parse(sessionStorage.getItem('liveData')) || [],
-            taskData:JSON.parse(sessionStorage.getItem('taskData')) || [],
-            homeworkData:JSON.parse(sessionStorage.getItem('homeworkData')) || [],
+            taskData: JSON.parse(sessionStorage.getItem('taskData')) || [],
+            homeworkData: JSON.parse(sessionStorage.getItem('homeworkData')) || [],
         },   //教师管理后台用的
         breadcrumb: [],
         isLoginTeacher: JSON.parse(sessionStorage.getItem('isLoginTeacher')) || false,
@@ -112,10 +116,22 @@ export default new Vuex.Store({
             state.Prefer = Prefer;
             sessionStorage.setItem('Prefer', JSON.stringify(state.Prefer));
         },
+        //首页课程信息
+        saveMainMenuCourseData(state, MainMenuCourseData) {
+            state.MainMenuCourseData = MainMenuCourseData;
+            sessionStorage.setItem('MainMenuCourseData', JSON.stringify(state.MainMenuCourseData));
+        },
+        //首页直播信息
+        saveMainMenuLiveData(state, MainMenuLiveData) {
+            state.MainMenuLiveData = MainMenuLiveData;
+            sessionStorage.setItem('MainMenuLiveData', JSON.stringify(state.MainMenuLiveData));
+        },
+
+
         //课程菜单页面的课程信息
-        saveMenuCourseData(state, menuCourseData) {
-            state.menuCourseData = menuCourseData;
-            sessionStorage.setItem('menuCourseData', JSON.stringify(state.menuCourseData));
+        saveMenuCourseData(state, MenuCourseData) {
+            state.MenuCourseData = MenuCourseData;
+            sessionStorage.setItem('MenuCourseData', JSON.stringify(state.MenuCourseData));
         },
         //单个课程信息
         saveCourseData(state, courseData) {
@@ -156,6 +172,11 @@ export default new Vuex.Store({
         saveHomeworkFile(state, HomeworkFile) {
             state.HomeworkFile = HomeworkFile;
             sessionStorage.setItem('HomeworkFile', JSON.stringify(state.HomeworkFile));
+        },
+        //老师的课程信息
+        saveTeacherMenuCourseData(state, TeacherMenuCourseData) {
+            state.TeacherMenuCourseData = TeacherMenuCourseData;
+            sessionStorage.setItem('TeacherMenuCourseData', JSON.stringify(state.TeacherMenuCourseData));
         },
         //直播菜单页面的课程信息
         saveMenuLiveData(state, MenuLiveData) {

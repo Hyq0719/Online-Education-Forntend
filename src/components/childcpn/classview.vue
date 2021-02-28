@@ -13,7 +13,7 @@
     </p>
     <p class="price">￥{{ price }}</p>
   </div>
-</template>template
+</template>
 
 <style scoped>
 div:hover {

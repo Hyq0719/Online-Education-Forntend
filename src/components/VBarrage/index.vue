@@ -330,13 +330,13 @@ export default {
     color: rgb(255, 255, 255);
     font-family: SimHei, "Microsoft JhengHei", Arial, Helvetica, sans-serif;
     font-weight: bold;
-    line-height: 1.125;
+    line-height: 1.5;
     opacity: 1;
     text-shadow: rgb(0, 0, 0) 1px 0 1px, rgb(0, 0, 0) 0 1px 1px,
     rgb(0, 0, 0) 0 -1px 1px, rgb(0, 0, 0) -1px 0 1px;
 
     &:hover {
-      color: red;
+      color: white;
       animation-play-state: paused !important;
       z-index: 150;
     }
@@ -349,7 +349,7 @@ export default {
   .barrage-main {
     //border: 2px solid blue;
     width: 100%;
-    height: 80%;
+    height: 100%;
     position: relative;
     overflow: hidden;
     // background: #000;
@@ -365,7 +365,7 @@ export default {
 }
 
 .self-dm {
-  border: 2px solid #87ceeb;
+  border: 1px solid #F2F6FC;
   box-sizing: border-box;
 }
 

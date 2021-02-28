@@ -37,7 +37,7 @@
             class="upload-demo"
             drag
             action=""
-            :on-success="onsuccess"
+            :on-remove="onRemove"
             :before-remove="beforeRemove"
             :http-request="uploadHttp"
             multiple>
@@ -143,13 +143,16 @@ export default {
         console.log(err);
       });
     },
-    onsuccess(file, fileList) {
-      console.log(file);
-      console.log(fileList);
+    onRemove(file, fileList){
+      for(let i in this.homeworkFileDtos){
+        if(this.homeworkFileDtos[i].homeworkFileName==file.name){
+          console.log("被删除的文件名",this.homeworkFileDtos[i].homeworkFileName);
+          this.homeworkFileDtos.splice(i,1);
+        }
+      }
     },
     beforeRemove(file, fileList) {
-      console.log(fileList);
-      return this.$confirm(`确定移除 ${file.name}？`);
+      return this.$confirm(`确定移除 ${file.name}？`)
     },
     uploadHttp({file}) {
       let that = this;

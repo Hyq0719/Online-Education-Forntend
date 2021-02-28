@@ -10,7 +10,7 @@
             </div>
             <div class="content">
               <div class="content-Title">
-                <img src="../assets/logo.png" alt="图片缺失">
+                <i class="el-icon-menu"></i>
                 <h3>课程概述</h3>
               </div>
               <p>
@@ -113,9 +113,9 @@
           <h3>授课老师</h3>
         </div>
         <div class="Teacher" v-if="this.$store.state.courseData.teacher">
-          <img :src="this.$store.state.courseData.teacher.teacherPicUrl" alt="图片缺失">
+          <img :src="this.$store.state.courseData.teacher.teacherPicUrl" alt="图片缺失" @click="Teacher($store.state.courseData.courseId)">
           <div class="Teacher-Introduce">
-            <div class="TeacherName">
+            <div class="TeacherName" @click="Teacher($store.state.courseData.courseId)">
               {{ this.$store.state.courseData.teacher.name }}
             </div>
             <div class="TeacherSchool">
@@ -134,11 +134,7 @@
       <div class="Course-content">
         <div class="Course-content-content" v-for="(item,index) in this.$store.state.RelatedCourses"
              v-bind:key="index" @click="Course(item.courseId)">
-          <div class="Course-content-content-img">
-            <img :src="item.coursePic" alt="图片缺失">
-          </div>
-          <h4>{{ item.name }}</h4>
-          <h6>{{ item.teacher.name }}</h6>
+          <Menu :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1" :VIP="item.needVip"></Menu>
         </div>
       </div>
     </div>
@@ -148,9 +144,14 @@
 <script>
 import classevaluate from "./childcpn/classevaluate";
 import axios from "axios";
+import Menu from "@/components/childcpn/Menu";
 
 export default {
   name: "CourseIntroduce",
+  components: {
+    Menu,
+    classevaluate,
+  },
   data() {
     return {
       activeName: 'first',
@@ -179,6 +180,9 @@ export default {
     this.initCollect();
   },
   methods: {
+    Teacher(courseId){
+      this.$router.push({path: '/TeacherInfo', query: {courseId: courseId}});
+    },
     initCollect() {
       if (this.$store.state.isLogin) {
         let a = new URLSearchParams;
@@ -447,9 +451,6 @@ export default {
       }
     }
   },
-  components: {
-    classevaluate,
-  },
 };
 </script>
 
@@ -489,12 +490,14 @@ export default {
 }
 
 .Teacher img {
+  cursor: pointer;
   height: 100px;
   width: 100px;
   margin: 10px 10px;
 }
 
 .TeacherName {
+  cursor: pointer;
   font-size: 20px;
   margin: 10px;
 }
@@ -512,13 +515,11 @@ export default {
   display: flex;
 }
 
-.content h3 {
-  margin: 30px 10px 10px 10px;
+.content-Title i{
+  margin: 35px 0 10px 10px;
 }
 
-.content img {
-  height: 40px;
-  width: 40px;
+.content-Title h3 {
   margin: 30px 10px 10px 10px;
 }
 
@@ -538,7 +539,7 @@ export default {
 }
 
 .Course-content-content {
-  height: 200px;
+  height: 220px;
   width: 18%;
   cursor: pointer;
   text-align: left;
@@ -546,24 +547,6 @@ export default {
   border: #E4E7ED 1px solid;
   margin: 10px;
   box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
-}
-
-.Course-content-content-img {
-  text-align: center;
-  margin: 3px;
-}
-
-.Course-content-content img {
-  border-radius: 10px;
-  width: 100%;
-}
-
-.Course-content-content h4 {
-  margin: 10px;
-}
-
-.Course-content-content h6 {
-  margin: 10px 10px 20px 10px;
 }
 
 .Course-content-content:hover {

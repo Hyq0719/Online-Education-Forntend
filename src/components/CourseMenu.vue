@@ -20,13 +20,9 @@
       <el-radio v-model="radioVip" @click.native="CourseChoose($event,preferId,sort,1)" label="3">付费课程</el-radio>
     </div>
     <div class="Course-content">
-      <div class="Course-content-content" v-for="(item,index) in this.$store.state.menuCourseData.list"
+      <div class="Course-content-content" v-for="(item,index) in this.$store.state.MenuCourseData.list"
            v-bind:key="index" @click="Course(item.courseId)">
-        <div class="Course-content-content-img">
-          <img :src="item.coursePic" alt="图片缺失">
-        </div>
-        <h4>{{ item.name }}</h4>
-        <h6>{{ item.teacher.name }}</h6>
+        <Menu :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1" :VIP="item.needVip"></Menu>
       </div>
     </div>
     <div class="block">
@@ -35,7 +31,7 @@
           @current-change="handleCurrentChange"
           :current-page.sync="currentPage"
           layout="prev, pager, next"
-          :total="this.$store.state.menuCourseData.total_element">
+          :total="this.$store.state.MenuCourseData.total_element">
       </el-pagination>
     </div>
   </div>
@@ -43,9 +39,13 @@
 
 <script>
 import axios from "axios";
+import Menu from "@/components/childcpn/Menu";
 
 export default {
   name: "CourseMenu",
+  components: {
+    Menu,
+  },
   data() {
     return {
       majorId: this.$route.query.majorId,
@@ -67,7 +67,7 @@ export default {
     this.initCourseMenu();
   },
   methods: {
-    initCourseMenu(){
+    initCourseMenu() {
       let that = this;
       let a = new URLSearchParams;
       a.append("page", 1);
@@ -144,9 +144,6 @@ export default {
         }
       }
     },
-    Course(courseId) {
-      this.$router.push({path: '/course', query: {courseId: courseId}});
-    },
     CourseChoose(e, preferId, sort, needVip) {
       if (e.target.tagName === 'INPUT') return // 因为原生click事件会执行两次，第一次在label标签上，第二次在input标签上，故此处理
       let that = this;
@@ -198,6 +195,9 @@ export default {
       this.sort = sort;
       this.currentPage = 1;
     },
+    Course(courseId) {
+      this.$router.push({path: '/course', query: {courseId: courseId}});
+    },
   },
 };
 </script>
@@ -238,7 +238,7 @@ export default {
 }
 
 .Course-content-content {
-  height: 200px;
+  height: 220px;
   width: 18%;
   cursor: pointer;
   text-align: left;
@@ -248,34 +248,11 @@ export default {
   box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
 }
 
-.Course-content-content-img {
-  text-align: center;
-  margin: 3px;
-}
-
-.Course-content-content img {
-  border-radius: 10px;
-  width: 100%;
-}
-
-.Course-content-content h4 {
-  margin: 10px;
-}
-
-.Course-content-content h6 {
-  margin: 10px 10px 20px 10px;
-}
-
 .Course-content-content:hover {
   background-color: #d3dce6;
   text-decoration: none;
   text-decoration-color: #99a9bf;
   text-decoration-width: auto;
-}
-
-a {
-  text-decoration: none;
-  color: #1c1f21;
 }
 
 .block {

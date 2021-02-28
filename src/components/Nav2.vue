@@ -1,34 +1,25 @@
 <template>
   <div class="NAV2">
-    <h2>最近直播</h2>
-    <el-row :gutter="25" class="course">
-      <el-col :span="6" v-for="item in live" v-bind:key="item.id">
-        <router-link to="/live">
-          <div class="live-grid-content">
-            <h6>{{ item.time }}</h6>
-            <div class="live-content">
-              <img :src="item.src" alt="图片缺失">
-              <div class="live-content-text">
-                <h4>{{ item.name }}</h4>
-                <h5>{{ item.school }}</h5>
-                <h6>{{ item.teacher }}</h6>
-              </div>
-            </div>
-          </div>
-        </router-link>
-      </el-col>
-    </el-row>
-    <h2>好课推荐</h2>
-    <div v-for="(item,index) in star" v-bind:key="index">
-      <router-link to="/course">
-        <classview1 class="classview" :img=classpicture[index] :star="item" :classname=classname[index]></classview1>
-      </router-link>
+    <h2>全部直播</h2>
+    <div class="Course-content" v-if="this.$store.state.MainMenuLiveData">
+      <div class="Course-content-content" v-for="(item,index) in this.$store.state.MainMenuLiveData.list.slice(0, 4)"
+           v-bind:key="index" @click="Live(item.liveId)">
+        <Menu :name="item.liveName" :teacherName="item.intro" :liveDate="item.liveDate"
+              :coursePic="item.livePicUrl"></Menu>
+      </div>
     </div>
-    <div class="clear"></div>
+    <h2>好课推荐</h2>
+    <div class="Course-content" v-if="this.$store.state.MainMenuCourseData">
+      <div class="Course-content-content" v-for="(item,index) in this.$store.state.MainMenuCourseData.slice(0, 4)"
+           v-bind:key="index" @click="Course(item.courseId)">
+        <Menu :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1"
+              :VIP="item.needVip"></Menu>
+      </div>
+    </div>
     <h2>精彩评价</h2>
     <el-row :gutter="20" class="comment">
       <el-col :span="6" v-for="item in comment" v-bind:key="item.id">
-        <router-link to="/live">
+        <router-link to="/course">
           <div class="grid-content">
             <img :src="item.src" alt="图片缺失">
             <h4>{{ item.nickname }}</h4>
@@ -43,45 +34,17 @@
 </template>
 
 <script>
-import classview1 from './childcpn/classview';
+
+import Menu from "@/components/childcpn/Menu";
+import axios from "axios";
 
 export default {
   name: 'nav2',
   components: {
-    classview1,
+    Menu,
   },
   data() {
     return {
-      live: [
-        {
-          time: "02月16日 19:00开始",
-          name: "高等数学1",
-          school: "浙江大学",
-          teacher: "老师1",
-          src: require('../assets/teacherhead1.jpg'),
-        },
-        {
-          time: "02月16日 19:00开始",
-          name: "高等数学2",
-          school: "上海大学",
-          teacher: "老师2",
-          src: require('../assets/teacherhead5.jpg'),
-        },
-        {
-          time: "02月16日 19:00开始",
-          name: "高等数学3",
-          school: "同济大学",
-          teacher: "老师3",
-          src: require('../assets/teacherhead3.png'),
-        },
-        {
-          time: "02月16日 19:00开始",
-          name: "高等数学1",
-          school: "浙江大学",
-          teacher: "老师1",
-          src: require('../assets/teacherhead4.jpg'),
-        },
-      ],
       comment: [
         {
           nickname: "张三",
@@ -108,25 +71,55 @@ export default {
           src: require('../assets/studentheader4.jpg'),
         },
       ],
-      adpicture: [require('@/assets/ad1.jpg'),
-        require('@/assets/ad2.jpg')],
-      classpicture: [require('@/assets/course1.webp'),
-        require('@/assets/course2.webp'),
-        require('@/assets/course3.webp'),
-        require('@/assets/course4.webp'),
-        require('@/assets/course5.webp'),
-        require('@/assets/course6.webp'),
-        require('@/assets/course7.webp'),
-        require('@/assets/course8.webp'),],
-      star: [3, 4, 3.4, 3.5, 2.0, 4, 1, 2.3],
-      classname: ['一晚上搞定CSS',
-        '一晚上搞定Vue',
-        '一晚上搞定HTML',
-        '7天学会java',
-        '5天学会C++',
-        '8天学会php',
-        '一个月搞定C++对象']
     };
+  },
+  created() {
+    this.initCourse();
+    this.initLive();
+  },
+  methods: {
+    initCourse() {
+      let that = this;
+      if (this.$store.state.isLogin) {
+        let a = new URLSearchParams;
+        a.append("user_id", this.$store.state.userData.userId);
+        axios.post("http://" + this.Api + "/api/Student/getStudentItemCF?" + a, null, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': this.$store.state.JWT,
+          }
+        }).then(function (response) {
+          console.log("获取首页学生协同过滤课程菜单", response);
+          that.$store.commit('saveMainMenuCourseData', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      } else {
+        axios.post("http://" + this.Api + "/api/Course/getAllCoursesOrderByWatches", null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+          console.log("获取首页默认课程菜单", response);
+          that.$store.commit('saveMainMenuCourseData', response.data.data);
+        }, function (err) {
+          console.log(err);
+        });
+      }
+    },
+    initLive() {
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("page", 1);
+      axios.get("http://" + this.Api + "/api/Live/findAllValidLive?" + a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log("获取首页直播菜单", response);
+        that.$store.commit('saveMainMenuLiveData', response.data.data);
+      }, function (err) {
+        console.log(err);
+      });
+    },
+    Live(liveId) {
+      this.$router.push({path: '/live', query: {courseId: liveId}});
+    },
+    Course(courseId) {
+      this.$router.push({path: '/course', query: {courseId: courseId}});
+    },
   },
 };
 </script>
@@ -145,61 +138,27 @@ export default {
   letter-spacing: 2px;
 }
 
-.live-grid-content {
+.Course-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Course-content-content {
+  height: 260px;
+  width: 23%;
+  cursor: pointer;
   text-align: left;
   border-radius: 10px;
   border: #E4E7ED 1px solid;
-  margin-bottom: 30px;
+  margin: 10px;
   box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
 }
 
-.live-grid-content:hover {
+.Course-content-content:hover {
   background-color: #d3dce6;
   text-decoration: none;
   text-decoration-color: #99a9bf;
   text-decoration-width: auto;
-}
-
-.live-content {
-  display: flex;
-}
-
-.live-content-text {
-
-}
-
-.course img {
-  margin: 10px;
-  border-radius: 100px;
-  height: 70px;
-  width: 70px;
-}
-
-.course h4 {
-  margin: 15px 10px;
-}
-
-.course h5 {
-  margin: 15px 10px;
-}
-
-.course h6 {
-  margin: 15px 10px 20px 10px;
-}
-
-a {
-  text-decoration: none;
-  color: #1c1f21;
-}
-
-.classview {
-  position: relative;
-  width: 22%;
-  height: 200px;
-  margin: 15px;
-  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
-  border-radius: 8px;
-  float: left;
 }
 
 .grid-content {
@@ -241,6 +200,11 @@ a {
   color: #67C23A;
   position: absolute;
   bottom: 5px;
+}
+
+a {
+  text-decoration: none;
+  color: #1c1f21;
 }
 
 .clear {
