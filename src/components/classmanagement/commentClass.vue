@@ -77,12 +77,7 @@
             <ECharts id="PolylineChart" :data="option1" height="300px" width="400px"></ECharts>
           </el-col>
           <el-col :span="12" style="overflow: hidden" >
-            <ECharts id="BarChart1" :data="option2" height="300px" width="400px"></ECharts>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12" style="overflow: hidden" >
-            <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px"> 热词词云</span>
+            <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px"> 评论词云</span>
             <wordcloud
                 style="height:300px;width:400px"
                 :data="words"
@@ -93,33 +88,33 @@
                 :wordClick="wordClickHandler">
             </wordcloud>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12" style="overflow: hidden">
             <ECharts id="BarChart2" :data="option4" height="300px" width="400px"></ECharts>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12" style="overflow: hidden;float: left">
             <el-row>
-            <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px">最坏的几条评论</span>
+              <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px">最坏的几条评论</span>
             </el-row>
             <el-row>
               <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in badComment" :key="index"
-                     style="display:block;margin: 5px;overflow: hidden;min-height: 80px">
-              <div style="overflow: hidden">
-                <div style="text-align:left;font-size: 12px;margin: 0 10px">
-                  <el-rate style="display: inline"
-                           v-model="item.commentMark"
-                           disabled
-                           show-score
-                           text-color="#ff9900"
-                           score-template="{value}">
-                  </el-rate>
+                       style="display:block;margin: 5px;overflow: hidden;min-height: 80px">
+                <div style="overflow: hidden">
+                  <div style="text-align:left;font-size: 12px;margin: 0 10px">
+                    <el-rate style="display: inline"
+                             v-model="item.commentMark"
+                             disabled
+                             show-score
+                             text-color="#ff9900"
+                             score-template="{value}">
+                    </el-rate>
+                  </div>
                 </div>
-              </div>
-              <div style="overflow: hidden;margin: 10px 10px">
-                <div style="float:left;text-align:left;font-size: 16px"> {{ item[0] }}</div>
-              </div>
-            </el-card>
+                <div style="overflow: hidden;margin: 10px 10px">
+                  <div style="float:left;text-align:left;font-size: 16px"> {{ item[0] }}</div>
+                </div>
+              </el-card>
             </el-row>
           </el-col>
         </el-row>
