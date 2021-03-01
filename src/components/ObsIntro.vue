@@ -47,7 +47,20 @@
 
 <script>
 export default {
-  name: "ObsIntro"
+  name: "ObsIntro",
+  mounted() {
+    let breadcrumb = [
+      {
+        link: '/Classmanagement/blank',
+        title: '帮助'
+      },
+      {
+        link: {name: 'liveManagement'},
+        title: 'obs介绍'
+      },
+    ]
+    this.$store.commit("savebreadcrumb", breadcrumb)
+  }
 }
 </script>
 
