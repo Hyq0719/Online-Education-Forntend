@@ -33,6 +33,7 @@ import classAudit from "@/components/admin/classAudit";
 import adminPage from "@/components/admin/adminPage";
 import adminLogin from "@/components/admin/adminLogin";
 import teacherAudit from "@/components/admin/teacherAudit";
+import ObsIntro from "@/components/ObsIntro";
 
 Vue.use(Router);
 
@@ -108,6 +109,11 @@ export default new Router({
             name: 'classManagement',
             component: classManagement,
             children: [
+                {
+                    path: 'obsIntro',
+                    name: 'obsIntro',
+                    component: ObsIntro,
+                },
                 {
                     path: 'classBread',
                     name: 'classBread',

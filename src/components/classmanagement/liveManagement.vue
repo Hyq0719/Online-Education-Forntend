@@ -20,14 +20,12 @@
         </el-table-column>
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
-            <el-button-group>
               <el-button type="primary" icon="el-icon-edit"
                          @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[scope.$index]">修改直播信息
               </el-button>
               <el-button type="primary" icon="el-icon-delete"
                          @click.native.prevent="deleteLive(scope.row.liveId)">删除直播
               </el-button>
-            </el-button-group>
           </template>
         </el-table-column>
       </el-table>

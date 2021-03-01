@@ -3,7 +3,7 @@
     <el-aside width="200px" style="background-color: rgb(238,241,246)">
       <el-menu :default-openeds="['1', '3']">
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>课程管理</template>
+          <template slot="title"><i class="el-icon-edit"></i>课程管理</template>
           <el-menu-item-group>
             <el-menu-item index="1-1">
               <router-link :to="{name:'classManagementClass',params:{id:1}}">课程列表</router-link>
@@ -13,6 +13,15 @@
             </el-menu-item>
             <el-menu-item index="1-3">
               <router-link :to="{name:'liveManagement'}">直播管理</router-link>
+            </el-menu-item>
+
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="2">
+          <template slot="title"><i class="el-icon-guide"></i>帮助</template>
+          <el-menu-item-group>
+            <el-menu-item index="2-1">
+              <router-link :to="{name:'obsIntro'}">obs介绍</router-link>
             </el-menu-item>
 
           </el-menu-item-group>
