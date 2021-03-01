@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <el-main v-show="classview"  style="overflow:hidden;position: relative;height: 780px">
+    <el-main v-show="classview" style="overflow:hidden;position: relative;min-height: 780px">
       <el-table :data="classData.list" :row-class-name="tableRowClassName">
         <el-table-column prop="name" label="课程名称">
         </el-table-column>
@@ -20,13 +20,13 @@
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
 
-              <el-button type="primary" icon="el-icon-edit" @click="openChapter(scope.row.courseId)">管理章节</el-button>
-              <el-button type="warning"
-                         @click="courseId=scope.row.courseId;dialogClassEdit = true">修改课程
-              </el-button>
-              <el-button type="danger" icon="el-icon-delete"
-                         @click.native.prevent="deleteClass(scope.row.courseId)">删除课程
-              </el-button>
+            <el-button type="primary" icon="el-icon-edit" @click="openChapter(scope.row.courseId)">管理章节</el-button>
+            <el-button type="warning"
+                       @click="courseId=scope.row.courseId;dialogClassEdit = true">修改课程
+            </el-button>
+            <el-button type="danger" icon="el-icon-delete"
+                       @click.native.prevent="deleteClass(scope.row.courseId)">删除课程
+            </el-button>
 
           </template>
         </el-table-column>
@@ -95,10 +95,12 @@
                 管理任务
               </el-button>
               <el-button type="primary"
-                         @click="dialog1 = true;courseId = scope.row.courseChapterPK.courseId;chapterId=scope.row.courseChapterPK.chapterId ">修改章节
+                         @click="dialog1 = true;courseId = scope.row.courseChapterPK.courseId;chapterId=scope.row.courseChapterPK.chapterId ">
+                修改章节
               </el-button>
               <el-button type="primary" icon="el-icon-delete"
-                         @click.native.prevent="deleteChapter(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">删除章节
+                         @click.native.prevent="deleteChapter(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
+                删除章节
               </el-button>
             </el-button-group>
           </template>
@@ -119,19 +121,19 @@
                 maxlength="10"
                 show-word-limit></el-input>
           </el-form-item>
-          <el-form-item label="视频文件" style="width: 300px;margin-bottom: 0" >
-          <el-upload
-              class="upload-demo"
-              action=""
-              :http-request="uploadHttpVideo"
-              multiple
-              :limit="1"
-              :file-list="fileListVideo">
-            <el-button size="small" type="primary" v-loading="loading">点击上传视频</el-button>
-          </el-upload>
+          <el-form-item label="视频文件" style="width: 300px;margin-bottom: 0">
+            <el-upload
+                class="upload-demo"
+                action=""
+                :http-request="uploadHttpVideo"
+                multiple
+                :limit="1"
+                :file-list="fileListVideo">
+              <el-button size="small" type="primary" v-loading="loading">点击上传视频</el-button>
+            </el-upload>
           </el-form-item>
           <el-form-item style="width: 300px;margin-bottom: 0">
-            <el-button type="primary" @click="sendVideo" style="float: right"  v-loading="loading">上传<i
+            <el-button type="primary" @click="sendVideo" style="float: right" v-loading="loading">上传<i
                 class="el-icon-upload el-icon--right"></i></el-button>
           </el-form-item>
         </el-form>
@@ -149,14 +151,15 @@
         <el-table-column prop="videoName" label="视频名称">
         </el-table-column>
         <el-table-column label="操作" width="400px">
-                    <template slot-scope="scope">
-          <el-button-group>
-            <el-button type="primary" icon="el-icon-edit" @click="dialog2 = true">修改视频</el-button>
-            <el-button type="primary" icon="el-icon-delete"
-                       @click.native.prevent="deleteVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">删除课程
-            </el-button>
-          </el-button-group>
-                    </template>
+          <template slot-scope="scope">
+            <el-button-group>
+              <el-button type="primary" icon="el-icon-edit" @click="dialog2 = true">修改视频</el-button>
+              <el-button type="primary" icon="el-icon-delete"
+                         @click.native.prevent="deleteVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
+                删除课程
+              </el-button>
+            </el-button-group>
+          </template>
         </el-table-column>
       </el-table>
     </el-main>
@@ -172,9 +175,11 @@
         <el-table-column label="操作" width="500px">
           <template slot-scope="scope">
             <el-button-group>
-              <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskEdit = true" icon="el-icon-edit" >修改任务</el-button>
-              <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskAdd = true"  >上传任务文件</el-button>
-              <el-button type="primary" @click="openHomework(scope.row.taskId);taskId=scope.row.taskId" >查看作业</el-button>
+              <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskEdit = true" icon="el-icon-edit">
+                修改任务
+              </el-button>
+              <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskAdd = true">上传任务文件</el-button>
+              <el-button type="primary" @click="openHomework(scope.row.taskId);taskId=scope.row.taskId">查看作业</el-button>
               <el-button type="primary" icon="el-icon-delete">删除任务</el-button>
             </el-button-group>
           </template>
@@ -186,7 +191,7 @@
       </el-button>
     </el-main>
 
-    <el-dialog title="上传任务文件" v-if="dialogTaskAdd" :visible.sync="dialogTaskAdd" >
+    <el-dialog title="上传任务文件" v-if="dialogTaskAdd" :visible.sync="dialogTaskAdd">
       <el-upload
           style="margin: 20px 0"
           class="upload-demo"
@@ -197,21 +202,21 @@
         <el-button size="small" type="primary" v-loading="loading">点击上传</el-button>
       </el-upload>
       <el-button @click="sendTaskFile" v-loading="loading">确认上传</el-button>
-     </el-dialog>
+    </el-dialog>
 
-    <el-dialog title="创建任务" v-if="dialogTaskBuild" :visible.sync="dialogTaskBuild" >
+    <el-dialog title="创建任务" v-if="dialogTaskBuild" :visible.sync="dialogTaskBuild">
       <build-task-page @close="closeDialogTask" :courseId="courseId" :chapterId="chapterId"></build-task-page>
     </el-dialog>
 
     <el-dialog title="修改任务" v-if="dialogTaskEdit" :visible.sync="dialogTaskEdit">
-      <build-task-page @close="closeDialogTask" :isEdit="true" :taskId="taskId" ></build-task-page>
+      <build-task-page @close="closeDialogTask" :isEdit="true" :taskId="taskId"></build-task-page>
     </el-dialog>
 
     <el-main v-show="homeworkView" style="min-height: 480px">
 
       <template>
         <el-radio-group v-model="radio" style="float: left;margin: 5px 20px">
-          <el-radio :label="1" @change="openHomework(taskId)" >全部作业</el-radio>
+          <el-radio :label="1" @change="openHomework(taskId)">全部作业</el-radio>
           <el-radio :label="2" @change="displayHomeworkData(taskId,0)">未上传</el-radio>
           <el-radio :label="3" @change="displayHomeworkData(taskId,1)">已驳回</el-radio>
           <el-radio :label="4" @change="displayHomeworkData(taskId,2)">已上传</el-radio>
@@ -227,7 +232,7 @@
         <el-table-column label="操作" width="400px">
           <template slot-scope="scope">
             <el-button-group>
-              <el-button type="primary" @click="dialogHw=true;hwInfo=scope.row" icon="el-icon-edit" >批改作业</el-button>
+              <el-button type="primary" @click="dialogHw=true;hwInfo=scope.row" icon="el-icon-edit">批改作业</el-button>
             </el-button-group>
           </template>
         </el-table-column>
@@ -235,7 +240,7 @@
     </el-main>
 
     <el-dialog title="批改作业" v-if="dialogHw" :visible.sync="dialogHw">
-      <correct-hw @close="closeDialogHw" :info="hwInfo" ></correct-hw>
+      <correct-hw @close="closeDialogHw" :info="hwInfo"></correct-hw>
     </el-dialog>
 
     <el-drawer
@@ -249,7 +254,7 @@
         size="600px"
 
     >
-      <editChapter @close="drawerClose" :courseId="courseId" :chapterId="chapterId" ></editChapter>
+      <editChapter @close="drawerClose" :courseId="courseId" :chapterId="chapterId"></editChapter>
     </el-drawer>
 
     <el-drawer
@@ -271,7 +276,6 @@
 
 <script>
 import axios from "axios";
-import buildTaskPage from "@/components/classmanagement/tools/buildTaskPage";
 import ossClient from "@/aliyun.oss.client";
 
 export default {
@@ -288,17 +292,17 @@ export default {
       },
       videoName: '',
       fileListTask: [],
-      fileListVideo:[],
-      loading:false,
-      hwInfo:{},
-      dialogTaskAdd:false,
-      dialogHw:false,
-      dialogTaskBuild:false,
-      dialogTaskEdit:false,
-      taskId:null,
-      radio:1,
-      homeworkView:false,
-      taskView:false,
+      fileListVideo: [],
+      loading: false,
+      hwInfo: {},
+      dialogTaskAdd: false,
+      dialogHw: false,
+      dialogTaskBuild: false,
+      dialogTaskEdit: false,
+      taskId: null,
+      radio: 1,
+      homeworkView: false,
+      taskView: false,
       dialogClassEdit: false,
       dialog1: false,
       dialog2: false,
@@ -311,26 +315,26 @@ export default {
       videoData: this.$store.state.teacherData.teacherVideoData,
       taskData: this.$store.state.teacherData.taskData,
       homeworkData: this.$store.state.teacherData.homeworkData,
-      page:this.$store.state.teacherData.teacherClassData.total_element,
+      page: this.$store.state.teacherData.teacherClassData.total_element,
       chapterIntro: "",
       courseId: null,  //临时传参用
-      chapterId:null,
-      currentPage:null,
+      chapterId: null,
+      currentPage: null,
     }
   },
   components: {
     editChapter: () => import('@/components/classmanagement/editchapter'),
     editVideo: () => import('@/components/classmanagement/editVideo'),
     buildClassPage: () => import('@/components/classmanagement/tools/buildClassPage'),
-    buildTaskPage: ()=> import('@/components/classmanagement/tools/buildTaskPage'),
-    correctHw: ()=>import('@/components/classmanagement/tools/correctHw')
+    buildTaskPage: () => import('@/components/classmanagement/tools/buildTaskPage'),
+    correctHw: () => import('@/components/classmanagement/tools/correctHw')
   },
   methods: {
-    handleCurrentChange(val){
+    handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-       this.getCourse(val);
-       this.currentPage=val;
-      },
+      this.getCourse(val);
+      this.currentPage = val;
+    },
     tableRowClassName({row}) {
       if (row.status === 1) {
         return 'success-row';
@@ -340,16 +344,16 @@ export default {
       return '';
     },
     closeDialog() {
-      let that=this;
+      let that = this;
       this.dialogClassBuild = false;
       this.dialogClassEdit = false;
       this.getCourse(that.currentPage);
     },
     closeDialogTask() {
-      let that=this;
+      let that = this;
       this.dialogTaskBuild = false;
       this.dialogTaskEdit = false;
-      this.openTask(that.courseId,that.chapterId);
+      this.openTask(that.courseId, that.chapterId);
     },
     closeDialogHw() {
       this.dialogHw = false;
@@ -360,7 +364,7 @@ export default {
 
       console.log(file);
       let that = this;
-      that.loading=true;
+      that.loading = true;
       let f = file;
       console.log(f);
       let fileName = `${that.courseId}_courseId/${that.chapterId}_chapterId/${file.name}`;  //定义唯一的文件名
@@ -373,7 +377,7 @@ export default {
             url: url,
           });
           console.log(`阿里云OSS上传成功回调`, res, url, name);
-          that.loading=false;
+          that.loading = false;
         }
       }).catch((err) => {
         console.log(`阿里云OSS上传失败回调`, err);
@@ -385,7 +389,7 @@ export default {
       console.log(file);
       let that = this;
       let f = file;
-      that.loading=true;
+      that.loading = true;
       console.log(f);
       let fileName = `${that.courseId}_courseId/${that.chapterId}_chapterId/${file.name}`;  //定义唯一的文件名
       fileName = `pic/Course/` + fileName;
@@ -397,19 +401,19 @@ export default {
             url: url,
           });
           console.log(`阿里云OSS上传成功回调`, res, url, name);
-          that.loading=false;
+          that.loading = false;
         }
       }).catch((err) => {
         console.log(`阿里云OSS上传失败回调`, err);
       });
     },  //上传至阿里云
 
-    async sendTaskFile(){
+    async sendTaskFile() {
       let that = this;
       let JWT = that.$store.state.JWT;
       console.log(that.fileListTask);
-      let c=that.fileListTask.map(item =>({taskFileName:item.name,taskFileUrl:item.url,taskId:that.taskId}));
-      await axios.post("http://" + that.Api + "/api/Task/addTaskFileByTasks" ,c, {
+      let c = that.fileListTask.map(item => ({taskFileName: item.name, taskFileUrl: item.url, taskId: that.taskId}));
+      await axios.post("http://" + that.Api + "/api/Task/addTaskFileByTasks", c, {
         headers: {
           'Authorization': JWT,
         }
@@ -418,8 +422,8 @@ export default {
         that.$alert('任务文件上传成功', '提示', {
           confirmButtonText: '确定',
         });
-        that.dialogTaskAdd=false;
-        that.fileListTask=[];
+        that.dialogTaskAdd = false;
+        that.fileListTask = [];
       }, function (err) {
         console.log(err);
       });
@@ -430,7 +434,7 @@ export default {
       let b = new URLSearchParams();
       b.append('courseId', a);
 
-      await axios.post("http://"+ that.Api +"/api/Course/deleteCourseChapter?chapterId=14&courseId=1"  , {
+      await axios.post("http://" + that.Api + "/api/Course/deleteCourseChapter?chapterId=14&courseId=1", {
         headers: {
           'Authorization': JWT,
         }
@@ -440,13 +444,13 @@ export default {
         console.log(err);
       });
     },  //删除课程
-    async deleteChapter(course,chapter) {
+    async deleteChapter(course, chapter) {
       let that = this;
       let JWT = that.$store.state.JWT;
       let a = new URLSearchParams();
       a.append('courseId', course);
       a.append('chapterId', chapter);
-      await axios.post("http://" + that.Api + "/api/Course/deleteCourseChapter" ,a, {
+      await axios.post("http://" + that.Api + "/api/Course/deleteCourseChapter", a, {
         headers: {
           'Authorization': JWT,
         }
@@ -480,8 +484,8 @@ export default {
         console.log(err);
       });
     },  //删除视频
-       //删除任务
-       //删除作业
+    //删除任务
+    //删除作业
     handleClose(done) {
       if (this.loading) {
         return;
@@ -503,14 +507,14 @@ export default {
 
     async openChapter(id) {
       let that = this;
-      that.courseId=id;
+      that.courseId = id;
       await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': that.$store.state.JWT,
         }
       }).then(function (res) {
-        console.log("章节信息",res);
+        console.log("章节信息", res);
         that.$store.commit("saveTeacherChapterData", res.data.data);
       })
       that.chapterData = that.$store.state.teacherData.teacherChapterData;
@@ -568,7 +572,7 @@ export default {
       this.$store.commit("savebreadcrumb", breadcrumb)
     },   //打开视频时调用
 
-    async openTask(course,chapter) {
+    async openTask(course, chapter) {
       let that = this;
       let b = new URLSearchParams();
 
@@ -585,7 +589,7 @@ export default {
             console.log("课程的任务信息", res);
             if (res.data.code === 1000) {
               that.$store.commit('saveTaskData', res.data.data);
-              that.taskData=that.$store.state.teacherData.taskData;
+              that.taskData = that.$store.state.teacherData.taskData;
 
               that.$router.push({name: 'classManagementClass', params: {id: 4}});
               let breadcrumb = [
@@ -607,7 +611,8 @@ export default {
                 },
               ]
               that.$store.commit("savebreadcrumb", breadcrumb)
-            } },function (err) {
+            }
+          }, function (err) {
             console.log(err);
           }
       );
@@ -622,21 +627,18 @@ export default {
       let that = this;
       let JWT = that.$store.state.JWT;
       let videoId;
-      if (that.videoData.length === 0)
-      {
+      if (that.videoData.length === 0) {
         videoId = 1;
-      }
-      else
-      {
-        videoId = that.videoData[that.videoData.length - 1].courseChapterVideoPK.videoId+1;
+      } else {
+        videoId = that.videoData[that.videoData.length - 1].courseChapterVideoPK.videoId + 1;
       }
       console.log(that.fileListVideo);
-      let params={
+      let params = {
         videoId: videoId,
         videoName: that.videoName,
         videoUrl: that.fileListVideo[0].url,
       }
-      await axios.post("http://" + that.Api + "/api/Course/addCourseChapterViedo?courseId="+that.courseId+"&videoId="+videoId+"&chapterId="+that.chapterId ,params, {
+      await axios.post("http://" + that.Api + "/api/Course/addCourseChapterViedo?courseId=" + that.courseId + "&videoId=" + videoId + "&chapterId=" + that.chapterId, params, {
         headers: {
           'Authorization': JWT,
         }
@@ -652,8 +654,8 @@ export default {
         }).then(function (res) {
           that.$store.commit("saveTeacherVideoData", res.data.data);
           that.videoData = that.$store.state.teacherData.teacherVideoData;
-          console.log("更新视频",res);
-          that.fileListVideo=[];
+          console.log("更新视频", res);
+          that.fileListVideo = [];
         })
       }, function (err) {
         console.log(err);
@@ -663,20 +665,17 @@ export default {
     async sendChapter() {
       let that = this;
       let a = new URLSearchParams();
-      let course ;
-      let chapter ;
+      let course;
+      let chapter;
       let intro;
       console.log(that.chapterData);
-      if (that.chapterData.length === 0)
-      {
-         course = that.courseId;
-         chapter = 1;
-         intro = that.chapterIntro;
-      }
-      else
-      {
+      if (that.chapterData.length === 0) {
+        course = that.courseId;
+        chapter = 1;
+        intro = that.chapterIntro;
+      } else {
         course = that.chapterData[0].courseChapterPK.courseId;
-        chapter = that.chapterData[that.chapterData.length - 1].courseChapterPK.chapterId+1;
+        chapter = that.chapterData[that.chapterData.length - 1].courseChapterPK.chapterId + 1;
         intro = that.chapterIntro;
       }
       a.append('courseId', course);
@@ -719,8 +718,9 @@ export default {
             console.log("老师的课程信息", res);
             if (res.data.code === 1000) {
               that.$store.commit('saveTeacherClassData', res.data.data);
-              that.classData=that.$store.state.teacherData.teacherClassData;
-            } },function (err) {
+              that.classData = that.$store.state.teacherData.teacherClassData;
+            }
+          }, function (err) {
             console.log(err);
           }
       );
@@ -733,7 +733,7 @@ export default {
       b.append("taskId", task);
       b.append("page", 1);
 
-      await axios.post('http://' + that.Api + "/api/Homework/getByTask",b,
+      await axios.post('http://' + that.Api + "/api/Homework/getByTask", b,
           {
             headers: {
               'Authorization': that.$store.state.JWT,
@@ -743,24 +743,25 @@ export default {
             console.log("任务的作业信息", res);
             if (res.data.code === 1000) {
               that.$store.commit('saveHomeworkData', res.data.data);
-              that.homeworkData=that.$store.state.teacherData.homeworkData;
+              that.homeworkData = that.$store.state.teacherData.homeworkData;
               console.log(that.$store.state.teacherData.homeworkData);
               that.$router.push({name: 'classManagementClass', params: {id: 5}});
 
-            } },function (err) {
+            }
+          }, function (err) {
             console.log(err);
           }
       );
     },
 
-    async displayHomeworkData(task,status) {
+    async displayHomeworkData(task, status) {
       let that = this;
-      console.log("任务号 状态",task,status);
+      console.log("任务号 状态", task, status);
       let b = new URLSearchParams();
       b.append("taskId", task);
       b.append("page", 1);
-      b.append("status",status);
-      await axios.post('http://' + that.Api + "/api/Homework/getByTaskAndStatus",b,
+      b.append("status", status);
+      await axios.post('http://' + that.Api + "/api/Homework/getByTaskAndStatus", b,
           {
             headers: {
               'Authorization': that.$store.state.JWT,
@@ -770,10 +771,11 @@ export default {
             console.log("各种状态的作业信息", res);
             if (res.data.code === 1000) {
               that.$store.commit('saveHomeworkData', res.data.data);
-              that.homeworkData=that.$store.state.teacherData.homeworkData;
+              that.homeworkData = that.$store.state.teacherData.homeworkData;
               console.log(that.$store.state.teacherData.homeworkData);
 
-            } },function (err) {
+            }
+          }, function (err) {
             console.log(err);
           }
       );
@@ -788,8 +790,8 @@ export default {
       that.classview = true;
       that.chapterview = false;
       that.videoview = false;
-      that.taskView=false;
-      that.homeworkView=false;
+      that.taskView = false;
+      that.homeworkView = false;
       let breadcrumb = [
         {
           link: '/Classmanagement/blank',
@@ -805,8 +807,8 @@ export default {
       that.classview = false;
       that.chapterview = true;
       that.videoview = false;
-      that.taskView=false;
-      that.homeworkView=false;
+      that.taskView = false;
+      that.homeworkView = false;
       let breadcrumb = [
         {
           link: '/Classmanagement/blank',
@@ -826,8 +828,8 @@ export default {
       that.classview = false;
       that.chapterview = false;
       that.videoview = true;
-      that.taskView=false;
-      that.homeworkView=false;
+      that.taskView = false;
+      that.homeworkView = false;
       let breadcrumb = [
         {
           link: '/Classmanagement/blank',
@@ -851,8 +853,8 @@ export default {
       that.classview = false;
       that.chapterview = false;
       that.videoview = false;
-      that.taskView=true;
-      that.homeworkView=false;
+      that.taskView = true;
+      that.homeworkView = false;
       let breadcrumb = [
         {
           link: '/Classmanagement/blank',
@@ -877,7 +879,7 @@ export default {
       that.chapterview = false;
       that.videoview = false;
       that.taskView = false;
-      that.homeworkView=true;
+      that.homeworkView = true;
       let breadcrumb = [
         {
           link: '/Classmanagement/blank',
@@ -913,8 +915,8 @@ export default {
         that.classview = true;
         that.chapterview = false;
         that.videoview = false;
-        that.taskView=false;
-        that.homeworkView=false;
+        that.taskView = false;
+        that.homeworkView = false;
         let breadcrumb = [
           {
             link: '/Classmanagement/blank',
@@ -930,8 +932,8 @@ export default {
         that.classview = false;
         that.chapterview = true;
         that.videoview = false;
-        that.taskView=false;
-        that.homeworkView=false;
+        that.taskView = false;
+        that.homeworkView = false;
         let breadcrumb = [
           {
             link: '/Classmanagement/blank',
@@ -951,8 +953,8 @@ export default {
         that.classview = false;
         that.chapterview = false;
         that.videoview = true;
-        that.taskView=false;
-        that.homeworkView=false;
+        that.taskView = false;
+        that.homeworkView = false;
         let breadcrumb = [
           {
             link: '/Classmanagement/blank',
@@ -976,8 +978,8 @@ export default {
         that.classview = false;
         that.chapterview = false;
         that.videoview = false;
-        that.taskView=true;
-        that.homeworkView=false;
+        that.taskView = true;
+        that.homeworkView = false;
         let breadcrumb = [
           {
             link: '/Classmanagement/blank',
@@ -1002,7 +1004,7 @@ export default {
         that.chapterview = false;
         that.videoview = false;
         that.taskView = false;
-        that.homeworkView=true;
+        that.homeworkView = true;
         let breadcrumb = [
           {
             link: '/Classmanagement/blank',

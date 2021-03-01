@@ -29,7 +29,8 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item label="选择直播时间" v-show="timeView">
-            <el-select v-model="formBuild.arrange"  @change="checkAddress" placeholder="请选择时间" style="float: left;margin: 10px 24px">
+            <el-select v-model="formBuild.arrange" @change="checkAddress" placeholder="请选择时间"
+                       style="float: left;margin: 10px 24px">
               <el-option
                   v-for="item in options1"
                   :key="item.value"
@@ -95,8 +96,8 @@ export default {
   },
   data() {
     return {
-      timeView:false,
-      arrangeView:false,
+      timeView: false,
+      arrangeView: false,
       pickerOptions: {                   //可选直播的时间
         disabledDate(time) {
           let n = time.getTime() < Date.now() - 3600 * 1000 * 24;
@@ -190,7 +191,7 @@ export default {
           }
         });
         that.key++;
-        that.timeView=true;
+        that.timeView = true;
         console.log(that.options1);
       }, function (err) {
         console.log(err);
@@ -204,9 +205,9 @@ export default {
         that.options2[index].disabled = false;
       });
       if (that.dayLive[val - 1].address !== 0) {
-        that.options2[that.dayLive[val - 1].address-1].disabled = true;
+        that.options2[that.dayLive[val - 1].address - 1].disabled = true;
       }
-      that.arrangeView=true;
+      that.arrangeView = true;
       console.log(that.options2);
       that.key++;
     },
@@ -250,16 +251,15 @@ export default {
         }).then(function (response) {
           if (response.data.code === 3005) {
             this.$message.error('此时间段已被预约满,请换个时间段');
+          } else if (response.data.code === 1000) {
+            console.log("修改成功", response);
+            that.arrangeView = false;
+            that.timeView = false;
+            that.$emit('close', false);
+            that.$alert('修改成功', '提示', {
+              confirmButtonText: '确定',
+            });
           }
-          else if(response.data.code === 1000 )
-          {
-          console.log("修改成功", response);
-          that.arrangeView=false;
-          that.timeView=false;
-          that.$emit('close', false);
-          that.$alert('修改成功', '提示', {
-            confirmButtonText: '确定',
-          });}
         }, function (err) {
           console.log(err);
         });
@@ -273,14 +273,13 @@ export default {
         }).then(function (response) {
           if (response.data.code === 3005) {
             this.$message.error('此时间段已被预约满,请换个时间段');
-          }
-          else if(response.data.code === 1000 )
-          {
+          } else if (response.data.code === 1000) {
             console.log("创建成功", response);
-          that.$emit('close', false);
-          that.$alert('创建成功', '提示', {
-            confirmButtonText: '确定',
-          }); }
+            that.$emit('close', false);
+            that.$alert('创建成功', '提示', {
+              confirmButtonText: '确定',
+            });
+          }
           that.$emit('close', false);
         }, function (err) {
           console.log(err);
@@ -298,6 +297,8 @@ export default {
       that.formBuild.arrange = that.liveInfo.liveArrange;
       that.formBuild.livePicUrl = that.liveInfo.livePicUrl;
       that.imageUrl = that.liveInfo.livePicUrl;
+      that.timeView = true;
+      that.arrangeView = true;
     }
   }
 }

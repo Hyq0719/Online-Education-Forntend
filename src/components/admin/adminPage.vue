@@ -11,6 +11,9 @@
             <el-menu-item index="1-2">
               <router-link :to="{name:'classAudit'}">课程审核</router-link>
             </el-menu-item>
+            <el-menu-item index="1-3">
+              <router-link :to="{name:'liveAudit'}">直播地址管理</router-link>
+            </el-menu-item>
 
           </el-menu-item-group>
         </el-submenu>

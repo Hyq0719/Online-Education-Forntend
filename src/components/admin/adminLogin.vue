@@ -68,6 +68,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 0 30px green;
   height: 300px;
+  min-height: 300px;
 }
 
 .login-title {
