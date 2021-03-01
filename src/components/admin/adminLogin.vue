@@ -17,7 +17,7 @@
 
 <script>
 import axios from 'axios';
-import {MessageBox} from 'element-ui';
+
 
 export default {
   name: "LoginTeacher",
@@ -67,6 +67,7 @@ export default {
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 0 30px green;
+  height: 300px;
 }
 
 .login-title {

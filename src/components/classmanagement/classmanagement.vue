@@ -63,9 +63,8 @@ export default {
   computed: {
     breadcrumb: function () {
       return this.$store.state.breadcrumb
-    }
-    ,
-  }
+    },
+  },
 }
 ;
 </script>
