@@ -33,13 +33,14 @@
     <div v-show="analyzeView">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="具体评论" name="first"></el-tab-pane>
-        <el-tab-pane label="评论分析" name="second">数据可视化</el-tab-pane>
+        <el-tab-pane label="评论分析" name="second"></el-tab-pane>
       </el-tabs>
 
       <div v-show="commentView">
         <div class="search-box">
           <div class="search-wrap">
-            <input class="search-word" type="text" @input="querySearch" placeholder="请输入要查找的关键字" v-model="input" @keyup.enter="findComment"/>
+            <input class="search-word" type="text" @input="querySearch" placeholder="请输入要查找的关键字" v-model="input"
+                   @keyup.enter="findComment"/>
             <div>
               <button class="search-bottom" @click="querySearch">搜索评论</button>
             </div>
@@ -61,7 +62,7 @@
             </div>
           </div>
           <div style="overflow: hidden;margin: 10px 10px">
-            <div style="float:left;text-align:left;font-size: 16px" v-html="item.content">  </div>
+            <div style="float:left;text-align:left;font-size: 16px" v-html="item.content"></div>
           </div>
         </el-card>
       </div>
@@ -76,31 +77,35 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12" style="overflow: hidden">
-            <ECharts id="PolylineChart" :data="option1" height="300px" width="400px"></ECharts>
-          </el-col>
-          <el-col :span="12" style="overflow: hidden" >
-            <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px"> 评论词云</span>
-            <wordcloud
-                style="height:300px;width:400px"
-                :data="words"
-                nameKey="name"
-                valueKey="value"
-                :color="myColors"
-                :showTooltip="false"
-                :wordClick="wordClickHandler">
-            </wordcloud>
+          <el-col :span="24" style="overflow: hidden">
+            <el-row style="width: 200px">
+              <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px"> 评论词云</span>
+              <el-divider></el-divider>
+            </el-row>
+            <el-row>
+              <wordcloud
+                  style="height:600px;width:900px"
+                  :data="words"
+                  nameKey="name"
+                  valueKey="value"
+                  :color="myColors"
+                  :showTooltip="false"
+                  :wordClick="wordClickHandler">
+              </wordcloud>
+            </el-row>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12" style="overflow: hidden">
-            <ECharts id="BarChart2" :data="option4" height="300px" width="400px"></ECharts>
+          <el-col :span="24" style="overflow: hidden">
+            <ECharts id="BarChart2" :data="option4" height="600px" width="900px"></ECharts>
           </el-col>
-          <el-col :span="12" style="overflow: hidden;float: left">
+        </el-row>
+        <el-row>
+          <el-col :span="24" style="overflow: hidden;float: left">
             <el-row>
               <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px">最坏的几条评论</span>
             </el-row>
-            <el-row>
+            <el-row style="width: 900px">
               <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in badComment" :key="index"
                        style="display:block;margin: 5px;overflow: hidden;min-height: 80px">
                 <div style="overflow: hidden">
@@ -123,8 +128,8 @@
 
         </el-row>
         <el-row>
-          <el-col :span="12" style="overflow: hidden">
-            <ECharts id="BarChart3" :data="option5" height="300px" width="400px"></ECharts>
+          <el-col :span="24" style="overflow: hidden">
+            <ECharts id="BarChart3" :data="option5" height="600px" width="900px"></ECharts>
           </el-col>
 
 
@@ -142,13 +147,12 @@ import axios from "axios";
 import wordcloud from 'vue-wordcloud';
 
 
-
 export default {
   name: "commentClass",
   data() {
     return {
       myColors: ['#1f77b4', '#629fc9', '#94bedb', '#c9e0ef'],
-      courseId:null,
+      courseId: null,
       words: [],
       key: 1,
       analyzeView: false,
@@ -161,71 +165,8 @@ export default {
       commentView: true,
       chartView: false,
       chartBarView: false,
-      page:this.$store.state.teacherData.teacherClassData.total_element,
+      page: this.$store.state.teacherData.teacherClassData.total_element,
       optionc: 1,
-      option1: {
-        title: {
-          text: '评论数变化图',
-          textStyle: {
-            fontSize: 14
-          }
-        },
-        tooltip: {
-          //鼠标悬浮弹框组件
-          trigger: 'axis'
-        },
-        legend: {
-          //多个视图配置
-          data: ['五星', '四星', '三星', '二星', '一星'],
-          top: "10%"
-        },
-        grid: {
-          //配置视图的位置 左右默认10%
-          bottom: '15%',
-          top: '30%',
-          containLabel: true
-        },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [
-          {
-            name: '五星',
-            type: 'line',
-            stack: '总量',
-            data: [120, 132, 101, 134, 90, 230, 210]
-          },
-          {
-            name: '四星',
-            type: 'line',
-            stack: '总量',
-            data: [220, 182, 191, 234, 290, 330, 310]
-          },
-          {
-            name: '三星',
-            type: 'line',
-            stack: '总量',
-            data: [150, 232, 201, 154, 190, 330, 410]
-          },
-          {
-            name: '二星',
-            type: 'line',
-            stack: '总量',
-            data: [320, 332, 301, 334, 390, 330, 320]
-          },
-          {
-            name: '一星',
-            type: 'line',
-            stack: '总量',
-            data: [820, 932, 901, 934, 1290, 1330, 1320]
-          }
-        ]
-      },
       option2: {
         title: {
           text: '热评词柱状图',
@@ -304,7 +245,7 @@ export default {
           {type: 'bar'}
         ]
       },
-      badComment:{},
+      badComment: {},
     }
   },
   props: ['id'],
@@ -323,8 +264,12 @@ export default {
       a.append("query", that.input);
       console.log("获取搜索", that.input);
       axios.post("http://" + this.Api + "/api/Course/getCourseCommentWithRegex?" + a,
-          {headers: {'Content-Type': 'application/x-www-form-urlencoded',
-              'Authorization': that.$store.state.JWT,}}).then(function (response) {
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': that.$store.state.JWT,
+            }
+          }).then(function (response) {
         console.log("获取搜索", response);
 
         that.$store.commit("saveCommentData", response.data.data.list);
@@ -333,7 +278,7 @@ export default {
         console.log(err);
       });
     },
-    handleCurrentChange(val){
+    handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.getCourse(val);
     },
@@ -354,8 +299,9 @@ export default {
             console.log("老师的课程信息", res);
             if (res.data.code === 1000) {
               that.$store.commit('saveTeacherClassData', res.data.data);
-              that.classData=that.$store.state.teacherData.teacherClassData;
-            } },function (err) {
+              that.classData = that.$store.state.teacherData.teacherClassData;
+            }
+          }, function (err) {
             console.log(err);
           }
       );
@@ -368,7 +314,7 @@ export default {
       let JWT = that.$store.state.JWT;
       let a = new URLSearchParams();
       console.log(row, column, event);
-      that.courseId=row.courseId;
+      that.courseId = row.courseId;
       a.append('courseId', row.courseId);
       a.append('page', 1);
       a.append('sort', 1);
@@ -399,22 +345,22 @@ export default {
           'Authorization': JWT,
         }
       }).then(function (response) {
-        console.log("nlp结果：",response.data.data);
+        console.log("nlp结果：", response.data.data);
         if (response.data.code === 1000) {
           if (response.data.data !== null) {
             that.$store.commit("saveAnalysisComment", response.data.data);
             that.analysisComment = that.$store.state.teacherData.analysisComment;
             that.option2.dataset.source = that.analysisComment.word_cut;
             const n = that.analysisComment.mark_distribution;
-            console.log("n",Object.entries(n))
-            that.option4.dataset.source = Object.entries(n).map(item=>{
-              if (item[0] == 'neg')  return ["差评",item[1]];
-              else if (item[0] == 'pos')  return ["好评",item[1]];
-              else if (item[0] == 'neu')  return ["中评",item[1]];
+            console.log("n", Object.entries(n))
+            that.option4.dataset.source = Object.entries(n).map(item => {
+              if (item[0] == 'neg') return ["差评", item[1]];
+              else if (item[0] == 'pos') return ["好评", item[1]];
+              else if (item[0] == 'neu') return ["中评", item[1]];
             });
             console.log(that.option5.dataset.source)
-            that.option5.dataset.source=Object.entries(that.analysisComment.comment_mark_distribution).map((item,index)=>{
-              return [index+"星",item[1]]
+            that.option5.dataset.source = Object.entries(that.analysisComment.comment_mark_distribution).map((item, index) => {
+              return [index + "星", item[1]]
             })
             console.log(that.option4.dataset.source)
             console.log(that.option5.dataset.source)
