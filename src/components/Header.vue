@@ -69,6 +69,9 @@
       <el-menu-item index="5" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <router-link to="/main">首页</router-link>
       </el-menu-item>
+      <el-menu-item index="6" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
+        <a href="piep:">测试</a>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
