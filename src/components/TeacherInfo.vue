@@ -2,12 +2,12 @@
   <div class="teacher">
     <div class="teacher-info">
       <div class="teacher-info-img">
-        <img :src="this.$store.state.courseData.teacher.teacherPicUrl" alt="">
+        <img :src="this.$store.state.TeacherInfo.teacherPicUrl" alt="">
       </div>
       <div class="teacher-info-content">
-        <h2>{{ this.$store.state.courseData.teacher.name }}</h2>
-        <h6>{{ this.$store.state.courseData.teacher.school }}</h6>
-        <h6>{{ this.$store.state.courseData.teacher.intro }}</h6>
+        <h2>{{ this.$store.state.TeacherInfo.name }}</h2>
+        <h6>{{ this.$store.state.TeacherInfo.school }}</h6>
+        <h6>{{ this.$store.state.TeacherInfo.intro }}</h6>
       </div>
     </div>
     <div class="new-best-hot">
@@ -53,8 +53,20 @@ export default {
   },
   created() {
     this.initTeacherCourse();
+    this.initTeacherInfo();
   },
   methods: {
+    initTeacherInfo(){
+      let that = this;
+      let a = new URLSearchParams;
+      a.append("user_id", this.$route.query.teacherId);
+      axios.post("http://" + this.Api + "/api/Teacher/getTeacherById?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
+        console.log("获取老师信息", response);
+        that.$store.commit('saveTeacherInfo', response.data.data);
+      }, function (err) {
+        console.log(err);
+      });
+    },
     Course(courseId) {
       this.$router.push({path: '/course', query: {courseId: courseId}});
     },
@@ -64,7 +76,7 @@ export default {
       let a = new URLSearchParams;
       a.append("page", currentPage);
       a.append("sort", this.sort);
-      a.append("teacherId", this.$store.state.courseData.teacherId);
+      a.append("teacherId", this.$route.query.teacherId);
       axios.post("http://" + this.Api + "/api/Course/getCourseByTeacherId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log("获取老师课程", response);
         that.$store.commit('saveTeacherMenuCourseData', response.data.data);
@@ -77,7 +89,7 @@ export default {
       let a = new URLSearchParams;
       a.append("page", 1);
       a.append("sort", 1);
-      a.append("teacherId", this.$store.state.courseData.teacherId);
+      a.append("teacherId", this.$route.query.teacherId);
       axios.post("http://" + this.Api + "/api/Course/getCourseByTeacherId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log("获取老师课程", response);
         that.$store.commit('saveTeacherMenuCourseData', response.data.data);
@@ -91,7 +103,7 @@ export default {
       let a = new URLSearchParams;
       a.append("page", 1);
       a.append("sort", sort);
-      a.append("teacherId", this.$store.state.courseData.teacherId);
+      a.append("teacherId", this.$route.query.teacherId);
       axios.post("http://" + this.Api + "/api/Course/getCourseByTeacherId?" + a, null, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         console.log("获取老师课程", response);
         that.$store.commit('saveTeacherMenuCourseData', response.data.data);

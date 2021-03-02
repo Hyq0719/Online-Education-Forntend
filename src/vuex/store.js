@@ -28,11 +28,14 @@ export default new Vuex.Store({
         TaskFile: JSON.parse(sessionStorage.getItem('TaskFile')) || false,
         HomeworkInfo: JSON.parse(sessionStorage.getItem('HomeworkInfo')) || false,
         HomeworkFile: JSON.parse(sessionStorage.getItem('HomeworkFile')) || false,
+
+        TeacherInfo:JSON.parse(sessionStorage.getItem('TeacherInfo')) || false,
         TeacherMenuCourseData: JSON.parse(sessionStorage.getItem('TeacherMenuCourseData')) || false,
 
         SearchedCourseData: JSON.parse(sessionStorage.getItem('SearchedCourseData')) || false,
 
         MenuLiveData: JSON.parse(sessionStorage.getItem('MenuLiveData')) || false,
+        LiveAllData: JSON.parse(sessionStorage.getItem('LiveAllData')) || false,
 
         commentData: JSON.parse(sessionStorage.getItem('commentData')) || [],
         teacherData: {
@@ -173,15 +176,29 @@ export default new Vuex.Store({
             state.HomeworkFile = HomeworkFile;
             sessionStorage.setItem('HomeworkFile', JSON.stringify(state.HomeworkFile));
         },
+
+
+        //老师的信息
+        saveTeacherInfo(state, TeacherInfo) {
+            state.TeacherInfo = TeacherInfo;
+            sessionStorage.setItem('TeacherInfo', JSON.stringify(state.TeacherInfo));
+        },
         //老师的课程信息
         saveTeacherMenuCourseData(state, TeacherMenuCourseData) {
             state.TeacherMenuCourseData = TeacherMenuCourseData;
             sessionStorage.setItem('TeacherMenuCourseData', JSON.stringify(state.TeacherMenuCourseData));
         },
+
+
         //直播菜单页面的课程信息
         saveMenuLiveData(state, MenuLiveData) {
             state.MenuLiveData = MenuLiveData;
             sessionStorage.setItem('MenuLiveData', JSON.stringify(state.MenuLiveData));
+        },
+        //直播的信息
+        saveLiveAllData(state, LiveAllData) {
+            state.LiveAllData = LiveAllData;
+            sessionStorage.setItem('LiveAllData', JSON.stringify(state.LiveAllData));
         },
         saveSearchedCourseData(state, SearchedCourseData) {
             state.SearchedCourseData = SearchedCourseData;

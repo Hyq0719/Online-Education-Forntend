@@ -97,6 +97,57 @@ export default {
     isMyself(what) {
       return what === this.$store.state.userData.nickName ? "myself" : "others";
     },
+    sendBarrage(VIP, isSelf, content) {
+      if (content !== '' && content != null) {//发送弹幕
+        {
+          if (this.arr.length > 1) {
+            if (VIP) {
+              this.arr.unshift({
+                content: content,
+                direction: 'top',
+                isSelf: isSelf,
+                style: {
+                  color: '#F56C6C',
+                },
+                isJs: this.isJs,
+              });
+            } else {
+              this.arr.unshift({
+                content: content,
+                direction: 'default',
+                isSelf: isSelf,
+                style: {
+                  color: 'white',
+                },
+                isJs: this.isJs,
+              });
+            }
+          } else {
+            if (VIP) {
+              this.arr.push({
+                content: content,
+                direction: 'top',
+                isSelf: isSelf,
+                style: {
+                  color: '#F56C6C'
+                },
+                isJs: this.isJs,
+              });
+            } else {
+              this.arr.push({
+                content: content,
+                direction: 'default',
+                isSelf: isSelf,
+                style: {
+                  color: 'white'
+                },
+                isJs: this.isJs,
+              });
+            }
+          }
+        }
+      }
+    },
     mySend() {
       // console.log('mySend!');
       let VIP = Date.parse(new Date()) <= Date.parse(this.$store.state.userData.vipDate);
@@ -113,54 +164,6 @@ export default {
       let toSend = JSON.stringify(preMsg);
       // console.log(toSend);
       this.chatRoomWebsocket.send(toSend); //将消息发送到服务端
-
-
-      if (this.arr.length > 1 && this.input !== '' && this.input != null) {   //发送弹幕
-        if (VIP) {
-          this.arr.unshift({
-            content: this.input,
-            direction: 'top',
-            isSelf: true,
-            style: {
-              color: '#F56C6C',
-            },
-            isJs: this.isJs,
-          });
-        } else {
-          this.arr.unshift({
-            content: this.input,
-            direction: this.direction,
-            isSelf: true,
-            style: {
-              color: 'white',
-            },
-            isJs: this.isJs,
-          });
-        }
-      } else {
-        if (VIP) {
-          this.arr.push({
-            content: this.input,
-            direction: 'top',
-            isSelf: true,
-            style: {
-              color: '#F56C6C'
-            },
-            isJs: this.isJs,
-          });
-        } else {
-          this.arr.push({
-            content: this.input,
-            direction: this.direction,
-            isSelf: true,
-            style: {
-              color: 'white'
-            },
-            isJs: this.isJs,
-          });
-        }
-      }
-
       this.input = '';
       // console.log("sended!");
     },
@@ -174,14 +177,13 @@ export default {
       axios.post("http://" + this.Api + "/api/WebSocket/onlineStudents", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
         // console.log(response);
         if (response.data.code === 1000) {
-          // console.log('OK');
           // console.log(response);
           that.myCount = response.data.data.count;
           that.userList = [];//response.data.data.student
           for (let i in response.data.data.student) {
             that.userList.push(response.data.data.student[i]);
           }
-          console.log(that.userList);
+          // console.log(that.userList);
         }
       }, function (err) {
         console.log(err);
@@ -203,16 +205,16 @@ export default {
       console.log("WebSocket 连接发生错误");
     },
     websocketOnMessage(event) {
-      // console.log(event);
+      console.log(event);
       let myEvent = JSON.parse(event.data);
       // console.log(myEvent);
       this.list.push([myEvent.nickName, myEvent.msg]);
       // console.log(this.list);
+      this.sendBarrage(myEvent.vip, myEvent.userId == this.$store.state.userData.userId, myEvent.msg)
     },
     websocketOnClose(e) {
       console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean);
     },
-
   },
   components: {
     Flvjs,

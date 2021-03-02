@@ -30,13 +30,16 @@
         <div>
           <h3>直播老师</h3>
         </div>
-        <div class="Teacher">
-          <img src="../assets/teacherhead.png" alt="图片缺失">
-          <div class="TeacherName">
-            猴博士
-          </div>
-          <div class="TeacherIntroduce">
-            《猴博士爱讲课》视频讲解
+        <div class="Teacher" v-if="this.$store.state.LiveAllData.teacher">
+          <img :src="this.$store.state.LiveAllData.teacher.teacherPicUrl" alt="图片缺失"
+               @click="Teacher($store.state.LiveAllData.teacherId)">
+          <div class="Teacher-Introduce">
+            <div class="TeacherName" @click="Teacher($store.state.LiveAllData.teacherId)">
+              {{ this.$store.state.LiveAllData.teacher.name }}
+            </div>
+            <div class="TeacherSchool">
+              {{ this.$store.state.LiveAllData.teacher.school }}
+            </div>
           </div>
         </div>
       </el-aside>
@@ -65,6 +68,9 @@ export default {
     fchange(num, index) {               //接受子组件传递来的评价
       this.value = num;
       console.log(this.value, index);
+    },
+    Teacher(teacherId) {
+      this.$router.push({path: '/TeacherInfo', query: {teacherId: teacherId}});
     },
   },
   components: {
@@ -103,7 +109,7 @@ export default {
   display: flex;
 }
 
-.content-Title i{
+.content-Title i {
   margin: 35px 0 10px 10px;
 }
 
@@ -113,28 +119,27 @@ export default {
 
 .Teacher {
   text-align: left;
+  display: flex;
 }
 
 .Teacher img {
+  cursor: pointer;
   height: 100px;
-  width: 35%;
+  width: 100px;
   margin: 10px 10px;
-  float: left;
-  clear: left;
 }
 
 .TeacherName {
-  text-align: center;
+  cursor: pointer;
   font-size: 20px;
-  float: left;
-  margin-bottom: 10px;
+  margin: 10px;
 }
 
-.TeacherIntroduce {
-  float: left;
+.TeacherSchool {
+  margin: 10px;
   font-size: 14px;
-  width: 55%;
 }
+
 </style>
 <style>
 .Comment textarea.el-textarea__inner {
