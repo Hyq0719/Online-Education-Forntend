@@ -5,7 +5,8 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="课程介绍" name="first">
             <div class="collect">
-              <el-button v-if="collected" type="primary" icon="el-icon-star-off" circle @click="deleteCollect"></el-button>
+              <el-button v-if="collected" type="primary" icon="el-icon-star-off" circle
+                         @click="deleteCollect"></el-button>
               <el-button v-if="!collected" icon="el-icon-star-off" circle @click="Collect"></el-button>
             </div>
             <div class="content">
@@ -113,9 +114,10 @@
           <h3>授课老师</h3>
         </div>
         <div class="Teacher" v-if="this.$store.state.courseData.teacher">
-          <img :src="this.$store.state.courseData.teacher.teacherPicUrl" alt="图片缺失" @click="Teacher($store.state.courseData.courseId)">
+          <img :src="this.$store.state.courseData.teacher.teacherPicUrl" alt="图片缺失"
+               @click="Teacher($store.state.courseData.teacherId)">
           <div class="Teacher-Introduce">
-            <div class="TeacherName" @click="Teacher($store.state.courseData.courseId)">
+            <div class="TeacherName" @click="Teacher($store.state.courseData.teacherId)">
               {{ this.$store.state.courseData.teacher.name }}
             </div>
             <div class="TeacherSchool">
@@ -134,7 +136,8 @@
       <div class="Course-content">
         <div class="Course-content-content" v-for="(item,index) in this.$store.state.RelatedCourses"
              v-bind:key="index" @click="Course(item.courseId)">
-          <Menu :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1" :VIP="item.needVip"></Menu>
+          <Menu :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1"
+                :VIP="item.needVip"></Menu>
         </div>
       </div>
     </div>
@@ -180,8 +183,8 @@ export default {
     this.initCollect();
   },
   methods: {
-    Teacher(courseId){
-      this.$router.push({path: '/TeacherInfo', query: {courseId: courseId}});
+    Teacher(teacherId) {
+      this.$router.push({path: '/TeacherInfo', query: {teacherId: teacherId}});
     },
     initCollect() {
       if (this.$store.state.isLogin) {
@@ -515,7 +518,7 @@ export default {
   display: flex;
 }
 
-.content-Title i{
+.content-Title i {
   margin: 35px 0 10px 10px;
 }
 

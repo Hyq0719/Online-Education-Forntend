@@ -93,7 +93,7 @@ export default {
       });
     },
     Live(liveId) {
-      this.$router.push({path: '/live', query: {courseId: liveId}});
+      this.$router.push({path: '/live', query: {liveId: liveId}});
     },
     LiveChoose(e, sort) {
       if (e.target.tagName === 'INPUT') return // 因为原生click事件会执行两次，第一次在label标签上，第二次在input标签上，故此处理

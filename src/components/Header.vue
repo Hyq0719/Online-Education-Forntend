@@ -7,6 +7,9 @@
         @select="handleSelect"
     >
       <slot>
+        <div class="header-img">
+          <img src="../assets/SHUCESlogo.jpeg" alt="图片缺失">
+        </div>
         <div class="Header-search">
           <el-autocomplete
               class="inline-input"
@@ -46,16 +49,17 @@
             placement="bottom"
             width="300"
             trigger="hover">
-          <h3>大学课程</h3>
-          <div>
+          <div class="courseTitle">
+            <h3>大学课程</h3>
+          </div>
+          <div class="courseContent">
             <el-button @click="CourseMenuPrefer(item.majorId)" v-for="(item,index) in this.$store.state.MajorPrefer"
                        v-bind:key="index"
-                       class="CourseMenu">{{
+                       class="CourseButton">{{
                 item.majorContent
               }}
             </el-button>
           </div>
-          <el-divider></el-divider>
           <el-button slot="reference" class="course" plain>课程</el-button>
         </el-popover>
       </el-menu-item>
@@ -64,6 +68,9 @@
       </el-menu-item>
       <el-menu-item index="5" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
         <router-link to="/main">首页</router-link>
+      </el-menu-item>
+      <el-menu-item index="6" v-if="(!isLogin&&!isLoginTeacher)||(isLogin)">
+        <a href="piep:">测试</a>
       </el-menu-item>
     </el-menu>
   </div>
@@ -159,10 +166,22 @@ export default {
   vertical-align: baseline;
 }
 
+.header-img {
+  float: left;
+  width: 50px;
+  height: 50px;
+  margin: 0 20px 0 50px;
+}
+
+.header-img img {
+  width: 100%;
+  height: 100%;
+}
+
 .Header-search {
   float: left;
   width: 300px;
-  margin: 10px 0 10px 100px;
+  margin: 10px 0 10px 10px;
 }
 
 .el-autocomplete {
@@ -200,7 +219,15 @@ a {
   color: #99a9bf;
 }
 
-.CourseMenu {
+.courseTitle {
+  text-align: center;
+}
+
+.courseContent {
+  margin: 5px auto;
+}
+
+.CourseButton {
   margin: 5px;
   font-size: 12px;
 }

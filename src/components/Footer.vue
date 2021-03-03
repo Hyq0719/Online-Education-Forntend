@@ -1,5 +1,8 @@
 <template>
   <div class="myFooter">
+    <div class="img">
+      <img src="../assets/SHUCESlogo.jpeg" alt="图片缺失">
+    </div>
     <div class="text">
       <p>下载客户端 | 联系我们 | 新闻资讯 | 支持我们 | 加入我们</p>
       <p>Copyright © 2020-2021 沪ICP备2021003682号-1</p>
@@ -18,7 +21,7 @@
           <img src="../assets/follwUsWechat.png">
         </div>
       </el-popover>
-  </div>
+    </div>
     <div class="clear"></div>
   </div>
 </template>
@@ -37,11 +40,23 @@ export default {
   border-top: 1px solid #DCDFE6;
 }
 
+.img {
+  height: 100px;
+  width: 100px;
+  float: left;
+  margin: 10px 10px 10px 150px;
+}
+
+.img img {
+  height: 100%;
+  width: 100%;
+}
+
 .text {
   float: left;
   color: grey;
   font-size: 13px;
-  margin: 10px 10px 10px 150px;
+  margin: 10px;
   text-align: left;
 }
 

@@ -1,0 +1,11 @@
+Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\Piep]
+"URL Protocol"="C:\\Users\\11214\\AppData\\Local\\Postman\\Postman.exe"
+@="Piep"
+[HKEY_CLASSES_ROOT\Piep\DefaultIcon]
+@="C:\\Users\\11214\\AppData\\Local\\Postman\\Postman.exe"
+[HKEY_CLASSES_ROOT\Piep\shell]
+[HKEY_CLASSES_ROOT\Piep\shell\open]
+[HKEY_CLASSES_ROOT\Piep\shell\open\command]
+@="\"C:\\Users\\11214\\AppData\\Local\\Postman\\Postman.exe\""
+
