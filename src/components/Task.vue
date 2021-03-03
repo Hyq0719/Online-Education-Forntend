@@ -10,6 +10,10 @@
     <el-divider></el-divider>
     <div class="task-details">
       <p>开始时间：{{ this.$store.state.TaskInfo.startTime }}</p>
+      <div class="task-mark" v-if="this.$store.state.HomeworkInfo.status==3">
+        <p>成绩：</p>
+        <p class="mark">{{ this.$store.state.HomeworkInfo.mark }}</p>
+      </div>
     </div>
     <div class="task-homework">
       <div class="task-homework-content">
@@ -46,6 +50,14 @@
         </el-upload>
       </div>
     </div>
+    <div class="task-reply" v-if="this.$store.state.HomeworkInfo.status==3">
+      <div class="task-reply-title">
+        <h4>教师批语</h4>
+      </div>
+      <div class="task-reply-content">
+        <p>{{ this.$store.state.HomeworkInfo.reply }}</p>
+      </div>
+    </div>
     <div class="submit">
       <el-button v-if="this.$store.state.HomeworkInfo.status!=3" @click="submit($store.state.HomeworkInfo.status)">
         暂时保存
@@ -74,7 +86,8 @@
         center>
       <div class="taskFile" v-for="(item,index) in this.$store.state.HomeworkFile" v-bind:key="index">
         <el-link type="primary" @click="downFile(item.fileUrl)">{{ item.fileName }}</el-link>
-        <el-button icon="el-icon-delete" type="text" @click="deleteHomeworkFile(item.homeworkFileId,item.homeworkId)">
+        <el-button icon="el-icon-delete" type="text"
+                   @click="deleteHomeworkFile(item.homeworkFileId,item.homeworkId,item.fileName)">
           删除
         </el-button>
       </div>
@@ -115,39 +128,43 @@ export default {
     this.homeworkInfo();
   },
   methods: {
-    deleteHomeworkFile(homeworkFileId, homeworkId) {
-      let that = this;
-      let a = new URLSearchParams;
-      a.append("homeworkFileId", homeworkFileId);
-      axios.post("http://" + this.Api + "/api/Homework/deleteHomeworkFile?" + a, null, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': this.$store.state.JWT,
-        }
-      }).then(function (response) {
-        console.log("删除作业文件", response);
-        let b = new URLSearchParams;
-        b.append("homeworkId", homeworkId);
-        axios.post("http://" + that.Api + "/api/Homework/getFilesByHomework?" + b, null, {
+    deleteHomeworkFile(homeworkFileId, homeworkId, fileName) {
+      this.$confirm(`确定移除 ${fileName}？`).then(() => {
+        let that = this;
+        let a = new URLSearchParams;
+        a.append("homeworkFileId", homeworkFileId);
+        axios.post("http://" + this.Api + "/api/Homework/deleteHomeworkFile?" + a, null, {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': that.$store.state.JWT,
+            'Content-Type': 'application/json',
+            'Authorization': this.$store.state.JWT,
           }
         }).then(function (response) {
-          console.log("获取学生作业文件信息", response);
-          that.$store.commit('saveHomeworkFile', response.data.data);
+          console.log("删除作业文件", response);
+          let b = new URLSearchParams;
+          b.append("homeworkId", homeworkId);
+          axios.post("http://" + that.Api + "/api/Homework/getFilesByHomework?" + b, null, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': that.$store.state.JWT,
+            }
+          }).then(function (response) {
+            console.log("获取学生作业文件信息", response);
+            that.$store.commit('saveHomeworkFile', response.data.data);
+          }, function (err) {
+            console.log(err);
+          });
         }, function (err) {
           console.log(err);
         });
-      }, function (err) {
+      }).catch((err) => {
         console.log(err);
       });
     },
-    onRemove(file, fileList){
-      for(let i in this.homeworkFileDtos){
-        if(this.homeworkFileDtos[i].homeworkFileName==file.name){
-          console.log("被删除的文件名",this.homeworkFileDtos[i].homeworkFileName);
-          this.homeworkFileDtos.splice(i,1);
+    onRemove(file, fileList) {
+      for (let i in this.homeworkFileDtos) {
+        if (this.homeworkFileDtos[i].homeworkFileName == file.name) {
+          console.log("被删除的文件名", this.homeworkFileDtos[i].homeworkFileName);
+          this.homeworkFileDtos.splice(i, 1);
         }
       }
     },
@@ -175,6 +192,7 @@ export default {
       });
     },
     submit(status) {
+      let that = this;
       let params = {
         content: this.textarea,
         status: status,
@@ -198,6 +216,8 @@ export default {
         }
       }).then(function (response) {
         console.log("提交作业文件", response);
+        that.homeworkFileDtos = [];
+        that.homeworkInfo();
       }, function (err) {
         console.log(err);
       });
@@ -219,20 +239,38 @@ export default {
         }
       }).then(function (response) {
         console.log("获取学生作业信息", response);
-        that.$store.commit('saveHomeworkInfo', response.data.data);
-        let b = new URLSearchParams;
-        b.append("homeworkId", response.data.data.homeworkId);
-        axios.post("http://" + that.Api + "/api/Homework/getFilesByHomework?" + b, null, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': that.$store.state.JWT,
-          }
-        }).then(function (response) {
-          console.log("获取学生作业文件信息", response);
-          that.$store.commit('saveHomeworkFile', response.data.data);
-        }, function (err) {
-          console.log(err);
-        });
+        if (response.data.data == null) {
+          let b = new URLSearchParams;
+          b.append("studentId", that.$store.state.userData.userId);
+          b.append("taskId", that.$route.query.taskId);
+          axios.post("http://" + that.Api + "/api/Homework/addHomework?" + b, null, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': that.$store.state.JWT,
+            }
+          }).then(function (response) {
+            console.log("添加作业作业", response);
+          }, function (err) {
+            console.log(err);
+          }).then(function () {
+            that.homeworkInfo();
+          })
+        } else {
+          that.$store.commit('saveHomeworkInfo', response.data.data);
+          let b = new URLSearchParams;
+          b.append("homeworkId", response.data.data.homeworkId);
+          axios.post("http://" + that.Api + "/api/Homework/getFilesByHomework?" + b, null, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': that.$store.state.JWT,
+            }
+          }).then(function (response) {
+            console.log("获取学生作业文件信息", response);
+            that.$store.commit('saveHomeworkFile', response.data.data);
+          }, function (err) {
+            console.log(err);
+          });
+        }
       }, function (err) {
         console.log(err);
       });
@@ -286,7 +324,17 @@ export default {
 .task-details {
   display: flex;
   text-align: left;
-  font-size: 12px;
+  font-size: 13px;
+}
+
+.task-mark {
+  margin-left: 20px;
+  display: flex;
+}
+
+.mark {
+  font-size: 14px;
+  color: #F56C6C;
 }
 
 .task-homework {
@@ -322,6 +370,20 @@ export default {
 
 .upload-demo {
   width: 24%;
+}
+
+.task-reply {
+  text-align: left;
+}
+
+.task-reply-content{
+  height: 180px;
+  background: #F2F6FC;
+}
+
+.task-reply-content p{
+  margin: 20px;
+  display: inline-block;
 }
 
 .submit {
