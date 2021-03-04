@@ -136,10 +136,8 @@
             </el-upload>
               </el-row>
               <el-row v-show="progressView">
-                <el-progress :text-inside="true" :stroke-width="26" :percentage="p">
-                  <span>上传进度</span>
-                </el-progress>
-              </el-row>
+                <el-progress :text-inside="true" :stroke-width="26" :percentage="p"><span>上传进度</span></el-progress>
+                 </el-row>
             </el-col>
           </el-form-item>
 <!--          <el-button size="small" type="primary" @click="stop">暂停上传</el-button>-->
@@ -155,19 +153,14 @@
       </el-row>
 
       <el-table :data="videoData">
-        <el-table-column label="视频号">
-          <template slot-scope="scope">
-            {{ scope.row.courseChapterVideoPK.videoId }}
-          </template>
-        </el-table-column>
         <el-table-column prop="videoName" label="视频名称">
         </el-table-column>
-        <el-table-column label="操作" width="400px">
+        <el-table-column label="操作" width="500px">
           <template slot-scope="scope">
             <el-button-group>
-              <el-button type="primary" icon="el-icon-edit" @click="dialog2 = true">修改视频</el-button>
+              <el-button type="primary" icon="el-icon-edit" @click="videoInfo=scope.row;dialog2 = true">修改视频</el-button>
               <el-button type="primary" icon="el-icon-delete"
-                         @click.native.prevent="deleteVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
+                         @click.native.prevent="deleteVideo(scope.row.courseChapterVideoPK.courseId,scope.row.courseChapterVideoPK.chapterId)">
                 删除视频
               </el-button>
             </el-button-group>
@@ -280,7 +273,7 @@
         size="550px"
 
     >
-      <editVideo @close="drawerClose"></editVideo>
+      <editVideo @close="drawerClose" :info="videoInfo"></editVideo>
     </el-drawer>
 
   </div>
@@ -306,7 +299,8 @@ export default {
       fileListTask: [],
       fileListVideo: [],
       loading: false,
-      hwInfo: {},
+      hwInfo: {},   //Info都是用来向子组件传数据的
+      videoInfo:{},
       dialogTaskAdd: false,
       dialogHw: false,
       dialogTaskBuild: false,
@@ -408,7 +402,7 @@ export default {
       let f = file;
       console.log(f);
       let fileName = `${that.courseId}_courseId/${that.chapterId}_chapterId/${file.name}`;  //定义唯一的文件名
-      fileName = `pic/Course/` + fileName;
+      fileName = `video/Course/` + fileName;
 
       if (f.size < that.partSize) {         //文件较小则直接上传
         ossClient(this.uploadConf).put(fileName, file).then(({res, url, name}) => {
@@ -425,7 +419,7 @@ export default {
           console.log(`阿里云OSS上传失败回调`, err);
         });
       } else {    //较大分片上传
-        that.multipartUpload(file);
+        that.multipartUpload(file,fileName);
       }
     },  //上传至阿里云
 
@@ -449,9 +443,8 @@ export default {
       this.$message.warning(`每次只能上传一个视频`);
     },
 
-    async multipartUpload(file) {
+    async multipartUpload(file,fileName) {
       let that = this;
-      const fileName = file.name;
       that.progressView=true;
       return ossClient(that.uploadConf).multipartUpload(fileName, file, {
         parallel: that.parallel,
@@ -462,6 +455,10 @@ export default {
         const url = `http://${that.uploadConf.bucket}.${that.uploadConf.region}.aliyuncs.com/${fileName}`;
         console.log(`Multipart upload ${file.name} succeeded, url === `, url);
         that.loading=false;
+        that.fileListVideo.push({
+          name: file.name,
+          url: url,
+        });
       }).catch(err => {
         console.log(`Multipart upload ${file.name} failed === `, err);
       });
@@ -551,15 +548,21 @@ export default {
       })
       that.chapterData = that.$store.state.teacherData.teacherChapterData;
     },  //删除章节
-    async deleteVideo(a) {
+    async deleteVideo(course,chapter) {
       let that = this;
       let JWT = that.$store.state.JWT;
-      await axios.post("http://" + that.Api + "/api/Course/getCourseById?courseId=" + a, {
+      let a = new URLSearchParams();
+      a.append('courseId', course);
+      a.append('chapterId', chapter);
+      await axios.post("http://" + that.Api + "/api/Course/deleteCourseChapter" ,a, {
         headers: {
           'Authorization': JWT,
         }
       }).then(function (response) {
         console.log("删除课程", response);
+
+        that.newVideo();
+
       }, function (err) {
         console.log(err);
       });
@@ -570,7 +573,7 @@ export default {
       if (this.loading) {
         return;
       }
-      this.$confirm('确定要提交表单吗？')
+      this.$confirm('未保存，确定要退出吗？')
           .then(_ => {
             this.timer = setTimeout(() => {
               done();
@@ -578,7 +581,7 @@ export default {
               setTimeout(() => {
                 this.loading = false;
               }, 400);
-            }, 2000);
+            }, 400);
           })
           .catch(_ => {
           });
@@ -700,7 +703,21 @@ export default {
     drawerClose(data) {
       this.dialog1 = data;
       this.dialog2 = data;
+      this.newVideo();
     },
+
+    async newVideo(){
+      let that=this;
+     await axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + that.chapterId + "&courseId=" + that.courseId, {
+        headers: {
+          'Authorization': that.$store.state.JWT,
+        }
+      }).then(function (res) {
+        that.$store.commit("saveTeacherVideoData", res.data.data);
+        that.videoData = that.$store.state.teacherData.teacherVideoData;
+        console.log("更新视频", res);
+      })
+    }, //刷新视频列表
 
     async sendVideo() {
       let that = this;
@@ -726,20 +743,15 @@ export default {
         that.$alert('任务视频成功', '提示', {
           confirmButtonText: '确定',
         });
-        axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + that.chapterId + "&courseId=" + that.courseId, {
-          headers: {
-            'Authorization': that.$store.state.JWT,
-          }
-        }).then(function (res) {
-          that.$store.commit("saveTeacherVideoData", res.data.data);
-          that.videoData = that.$store.state.teacherData.teacherVideoData;
-          console.log("更新视频", res);
-          that.fileListVideo = [];
-        })
+        that.progressView=false;
+        that.p=0;                          //初始化进度条
+        that.videoName='';
+        that.fileListVideo = [];
+        that.newVideo();
       }, function (err) {
         console.log(err);
       });
-    },
+    },  //创建视频
 
     async sendChapter() {
       let that = this;

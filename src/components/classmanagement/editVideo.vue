@@ -1,12 +1,12 @@
 <template>
   <div>
 
-    <div class="title" style="overflow: hidden;width: 500px;margin-top: 20px" >
+    <div class="title" style="overflow: hidden;width: 500px;margin-top: 20px">
       <h3 style="display: inline">
         修改视频
       </h3>
       <el-button type="primary" class="headerbutton" @click="closed" :loading="loading">
-        {{ loading ? '提交中 ...' : '确认修改' }}
+        {{ loading ? '上传中 ...' : '确认修改' }}
       </el-button>
       <el-divider></el-divider>
     </div>
@@ -14,14 +14,8 @@
     <el-main>
       <div style="width: 450px">
         <el-form label-width="100px">
-          <el-form-item label="视频号" style="width: 200px">
-            <el-input v-model="form.name"
-                      placeholder="请输入内容"
-                      maxlength="2"
-                      show-word-limit></el-input>
-          </el-form-item>
           <el-form-item label="视频名称" style="width: 300px">
-            <el-input v-model="form.videoname"
+            <el-input v-model="videoForm.videoName"
                       placeholder="请输入内容"
                       maxlength="20"
                       show-word-limit></el-input>
@@ -59,24 +53,27 @@
 <script>
 
 import ossClient from "@/aliyun.oss.client";
+import axios from "axios";
 
 export default {
   name: "editVideo",
+  props: {
+    info: {},
+  },
   data() {
     return {
-      form: {
+      videoForm: {
         name: '',
-        section: 1,
-        sectionname: '',
-        videoname: '',
+        url: null,
+        videoName: '',
       },
       fileNum: 1,
-      fileListVideo:[],
-      loading:false,
+      fileListVideo: [],
+      loading: false,
       partSize: 1024 * 1024, // 每个分片大小(byte)
       parallel: 3, // 同时上传的分片数
       checkpoints: {}, // 所有分片上传文件的检查点
-      p:0,
+      p: 0,
       progressView: false,
       uploadConf: {
         endpoint: "https://oss-accelerate.aliyuncs.com",
@@ -97,8 +94,8 @@ export default {
       that.loading = true;
       let f = file;
       console.log(f);
-      let fileName = `${that.courseId}_courseId/${that.chapterId}_chapterId/${file.name}`;  //定义唯一的文件名
-      fileName = `pic/Course/` + fileName;
+      let fileName = `${that.info.courseChapterVideoPK.courseId}_courseId/${that.info.courseChapterVideoPK.chapterId}_chapterId/${file.name}`;  //定义唯一的文件名
+      fileName = `video/Course/` + fileName;
 
       if (f.size < that.partSize) {         //文件较小则直接上传
         ossClient(this.uploadConf).put(fileName, file).then(({res, url, name}) => {
@@ -115,7 +112,7 @@ export default {
           console.log(`阿里云OSS上传失败回调`, err);
         });
       } else {    //较大分片上传
-        that.multipartUpload(file);
+        that.multipartUpload(file,fileName);
       }
     },  //上传至阿里云
 
@@ -131,7 +128,7 @@ export default {
 
     onMultipartUploadProgress(p, _checkpoint) {
       console.log("上传进度", p);
-      this.p=p*100;
+      this.p = p * 100;
       console.log("断点信息", _checkpoint);
     },
 
@@ -139,10 +136,9 @@ export default {
       this.$message.warning(`每次只能上传一个视频`);
     },
 
-    async multipartUpload(file) {
+    async multipartUpload(file,fileName) {
       let that = this;
-      const fileName = file.name;
-      that.progressView=true;
+      that.progressView = true;
       return ossClient(that.uploadConf).multipartUpload(fileName, file, {
         parallel: that.parallel,
         partSize: that.partSize,
@@ -151,7 +147,11 @@ export default {
         // 生成文件下载地址
         const url = `http://${that.uploadConf.bucket}.${that.uploadConf.region}.aliyuncs.com/${fileName}`;
         console.log(`Multipart upload ${file.name} succeeded, url === `, url);
-        that.loading=false;
+        that.loading = false;
+        that.fileListVideo.push({
+          name: file.name,
+          url: url,
+        });
       }).catch(err => {
         console.log(`Multipart upload ${file.name} failed === `, err);
       });
@@ -177,13 +177,37 @@ export default {
     //     });
     //   });
     //
-    closed(){
-      this.$alert('上传成功，待审核', '提示', {
-        confirmButtonText: '确定',
+
+    async closed() {
+      let that = this;
+      let JWT = that.$store.state.JWT;
+      let params = {
+        videoId: that.info.courseChapterVideoPK.videoId,
+        videoName: that.videoForm.videoName,
+        videoUrl: that.fileListVideo[0].url,
+      }
+      await axios.post("http://" + that.Api + "/api/Course/addCourseChapterViedo?courseId=" + that.info.courseChapterVideoPK.courseId + "&videoId=" + that.info.courseChapterVideoPK.videoId + "&chapterId=" + that.info.courseChapterVideoPK.chapterId, params, {
+        headers: {
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log("上传视频成功", response);
+        that.$alert('任务视频成功', '提示', {
+          confirmButtonText: '确定',
+        });
+        that.progressView = false;
+        that.p = 0;                          //初始化进度条
+        that.videoName = '';
+        that.fileListVideo = [];
       });
-      this.$emit('close',false);
+      this.$emit('close', false);
     },
 
+  },
+  mounted() {
+    let that = this;
+    console.log(that.info);
+    that.videoForm.videoName = that.info.videoName;
   }
 }
 </script>
