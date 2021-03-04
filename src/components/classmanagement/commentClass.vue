@@ -25,7 +25,7 @@
                        background
                        layout="prev, pager, next"
                        @current-change="handleCurrentChange"
-                       :total="page">
+                       :total="this.$store.state.teacherData.teacherClassData.total_element">
         </el-pagination>
       </div>
     </div>
@@ -165,7 +165,6 @@ export default {
       commentView: true,
       chartView: false,
       chartBarView: false,
-      page: this.$store.state.teacherData.teacherClassData.total_element,
       optionc: 1,
       option2: {
         title: {

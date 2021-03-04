@@ -185,7 +185,7 @@
               </el-button>
               <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskAdd = true">上传任务文件</el-button>
               <el-button type="primary" @click="openHomework(scope.row.taskId);">查看作业</el-button>
-              <el-button type="primary" icon="el-icon-delete">删除任务</el-button>
+              <el-button type="primary" @click="deleteTask(scope.row.taskId);" icon="el-icon-delete">删除任务</el-button>
             </el-button-group>
           </template>
         </el-table-column>
@@ -567,8 +567,22 @@ export default {
         console.log(err);
       });
     },  //删除视频
-    //删除任务
-    //删除作业
+    async deleteTask(task) {
+      let that = this;
+      let JWT = that.$store.state.JWT;
+      let a = new URLSearchParams();
+      a.append('taskId', task);
+      await axios.post("http://" + that.Api + "/api/Task/deleteTaskById" ,a, {
+        headers: {
+          'Authorization': JWT,
+        }
+      }).then(function (response) {
+        console.log("删除任务", response);
+        this.openTask(that.courseId, that.chapterId);
+      }, function (err) {
+        console.log(err);
+      });
+    },//删除任务
     handleClose(done) {
       if (this.loading) {
         return;
@@ -703,7 +717,7 @@ export default {
             console.log(err);
           }
       );
-    },
+    },  //打开任务，可用来刷新
 
     drawerClose(data) {
       this.dialog1 = data;
