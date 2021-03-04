@@ -87,11 +87,11 @@
           <template slot-scope="scope">
             <el-button-group>
               <el-button type="primary" icon="el-icon-edit"
-                         @click="openVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId);courseId=scope.row.courseChapterPK.courseId;chapterId=scope.row.courseChapterPK.chapterId">
+                         @click="openVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
                 管理视频
               </el-button>
               <el-button type="primary" icon="el-icon-edit"
-                         @click="openTask(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId);courseId=scope.row.courseChapterPK.courseId;chapterId=scope.row.courseChapterPK.chapterId">
+                         @click="openTask(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
                 管理任务
               </el-button>
               <el-button type="primary"
@@ -184,7 +184,7 @@
                 修改任务
               </el-button>
               <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskAdd = true">上传任务文件</el-button>
-              <el-button type="primary" @click="openHomework(scope.row.taskId);taskId=scope.row.taskId">查看作业</el-button>
+              <el-button type="primary" @click="openHomework(scope.row.taskId);">查看作业</el-button>
               <el-button type="primary" icon="el-icon-delete">删除任务</el-button>
             </el-button-group>
           </template>
@@ -305,7 +305,6 @@ export default {
       dialogHw: false,
       dialogTaskBuild: false,
       dialogTaskEdit: false,
-      taskId: null,
       radio: 1,
       homeworkView: false,
       taskView: false,
@@ -322,8 +321,9 @@ export default {
       taskData: this.$store.state.teacherData.taskData,
       homeworkData: this.$store.state.teacherData.homeworkData,
       chapterIntro: "",
-      courseId: null,  //临时传参用
-      chapterId: null,
+      courseId: this.$store.state.teacherData.courseId,  //临时传参用
+      chapterId: this.$store.state.teacherData.chapterId,
+      taskId: this.$store.state.teacherData.taskId,
       currentPage: null,
       partSize: 1024 * 1024, // 每个分片大小(byte)
       parallel: 3, // 同时上传的分片数
@@ -589,6 +589,7 @@ export default {
 
     async openChapter(id) {
       let that = this;
+      that.$store.commit("saveCourseId",id);
       that.courseId = id;
       await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + id, {
         headers: {
@@ -621,6 +622,8 @@ export default {
 
     async openVideo(course, chapter) {
       let that = this;
+      that.$store.commit("saveChapterId",chapter);
+      that.chapterId=that.$store.state.teacherData.chapterId;
       await axios.post("http://" + that.Api + "/api/Course/getCourseChapterViedo?chapterId=" + chapter + "&courseId=" + course, {
         headers: {
           'Content-Type': 'application/json',
@@ -656,6 +659,8 @@ export default {
 
     async openTask(course, chapter) {
       let that = this;
+      that.$store.commit("saveChapterId",chapter);
+      that.chapterId=chapter;
       let b = new URLSearchParams();
 
       b.append("courseId", course);
@@ -819,6 +824,8 @@ export default {
 
     async openHomework(task) {
       let that = this;
+      that.$store.commit("saveTaskId",task);
+      that.taskrId=task;
       let b = new URLSearchParams();
 
       b.append("taskId", task);

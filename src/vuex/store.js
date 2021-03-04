@@ -44,8 +44,11 @@ export default new Vuex.Store({
             teacherVideoData: JSON.parse(sessionStorage.getItem('teacherVideoData')) || [],
             analysisComment: JSON.parse(sessionStorage.getItem('analysisComment')) || {},
             liveData: JSON.parse(sessionStorage.getItem('liveData')) || [],
-            taskData: JSON.parse(sessionStorage.getItem('taskData')) || [],
+            taskData: JSON.parse(sessionStorage.getItem('TaskData')) || [],
             homeworkData: JSON.parse(sessionStorage.getItem('homeworkData')) || [],
+            courseId: JSON.parse(sessionStorage.getItem('courseId')) || null,
+            chapterId: JSON.parse(sessionStorage.getItem('chapterId')) || null,
+            taskId: JSON.parse(sessionStorage.getItem('taskId')) || null,
         },   //教师管理后台用的
         breadcrumb: [],
         isLoginTeacher: JSON.parse(sessionStorage.getItem('isLoginTeacher')) || false,
@@ -238,6 +241,18 @@ export default new Vuex.Store({
         saveHomeworkData(state, homeworkData) {
             state.teacherData.homeworkData = homeworkData;
             sessionStorage.setItem('homeworkData', JSON.stringify(state.teacherData.homeworkData));
+        },
+        saveCourseId(state, courseId) {
+            state.teacherData.courseId = courseId;
+            sessionStorage.setItem('courseId', JSON.stringify(state.teacherData.courseId));
+        },
+        saveChapterId(state, chapterId) {
+            state.teacherData.chapterId = chapterId;
+            sessionStorage.setItem('chapterId', JSON.stringify(state.teacherData.chapterId));
+        },
+        saveTaskId(state, taskId) {
+            state.teacherData.taskId = taskId;
+            sessionStorage.setItem('taskId', JSON.stringify(state.teacherData.taskId));
         },
     }
 })
