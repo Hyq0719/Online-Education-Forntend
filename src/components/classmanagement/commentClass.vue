@@ -70,10 +70,10 @@
       <div v-show="chartView" :key="key" style="overflow: hidden;padding: 20px">
         <el-row>
           <el-col :span="24" style="font-size: 16px;text-align:left ">
-            平均评分： {{ analysisComment.avg_comment_mark }}
+            平均评分： {{ analysisComment.avg_comment_mark }} /5
           </el-col>
           <el-col :span="24" style="font-size: 16px;text-align:left ">
-            情感评分： {{ analysisComment.avg_mark }}
+            情感评分： {{ analysisComment.avg_mark }} /5
           </el-col>
         </el-row>
         <el-row>

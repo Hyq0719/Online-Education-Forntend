@@ -40,7 +40,7 @@
                        background
                        layout="prev, pager, next"
                        @current-change="handleCurrentChange"
-                       :total="page">
+                       :total="this.$store.state.teacherData.teacherClassData.total_element">
         </el-pagination>
       </div>
     </el-main>
@@ -122,16 +122,28 @@
                 show-word-limit></el-input>
           </el-form-item>
           <el-form-item label="视频文件" style="width: 300px;margin-bottom: 0">
+            <el-col>
+              <el-row>
             <el-upload
                 class="upload-demo"
                 action=""
                 :http-request="uploadHttpVideo"
                 multiple
                 :limit="1"
+                :on-exceed="handleExceed"
                 :file-list="fileListVideo">
               <el-button size="small" type="primary" v-loading="loading">点击上传视频</el-button>
             </el-upload>
+              </el-row>
+              <el-row v-show="progressView">
+                <el-progress :text-inside="true" :stroke-width="26" :percentage="p">
+                  <span>上传进度</span>
+                </el-progress>
+              </el-row>
+            </el-col>
           </el-form-item>
+<!--          <el-button size="small" type="primary" @click="stop">暂停上传</el-button>-->
+<!--          <el-button size="small" type="primary" @click="resume">续传视频</el-button>-->
           <el-form-item style="width: 300px;margin-bottom: 0">
             <el-button type="primary" @click="sendVideo" style="float: right" v-loading="loading">上传<i
                 class="el-icon-upload el-icon--right"></i></el-button>
@@ -156,7 +168,7 @@
               <el-button type="primary" icon="el-icon-edit" @click="dialog2 = true">修改视频</el-button>
               <el-button type="primary" icon="el-icon-delete"
                          @click.native.prevent="deleteVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
-                删除课程
+                删除视频
               </el-button>
             </el-button-group>
           </template>
@@ -315,11 +327,15 @@ export default {
       videoData: this.$store.state.teacherData.teacherVideoData,
       taskData: this.$store.state.teacherData.taskData,
       homeworkData: this.$store.state.teacherData.homeworkData,
-      page: this.$store.state.teacherData.teacherClassData.total_element,
       chapterIntro: "",
       courseId: null,  //临时传参用
       chapterId: null,
       currentPage: null,
+      partSize: 1024 * 1024, // 每个分片大小(byte)
+      parallel: 3, // 同时上传的分片数
+      checkpoints: {}, // 所有分片上传文件的检查点
+      p:0,
+      progressView: false,
     }
   },
   components: {
@@ -359,32 +375,7 @@ export default {
       this.dialogHw = false;
     },
 
-    async uploadHttpVideo({file}) {
-      // const file=this.imgFile;
-
-      console.log(file);
-      let that = this;
-      that.loading = true;
-      let f = file;
-      console.log(f);
-      let fileName = `${that.courseId}_courseId/${that.chapterId}_chapterId/${file.name}`;  //定义唯一的文件名
-      fileName = `pic/Course/` + fileName;
-      ossClient(this.uploadConf).put(fileName, file).then(({res, url, name}) => {
-        if (res && res.status === 200) {
-          console.log(url);
-          that.fileListVideo.push({
-            name: f.name,
-            url: url,
-          });
-          console.log(`阿里云OSS上传成功回调`, res, url, name);
-          that.loading = false;
-        }
-      }).catch((err) => {
-        console.log(`阿里云OSS上传失败回调`, err);
-      });
-    },  //上传至阿里云
-
-    async uploadHttpTask({file}) {
+    uploadHttpTask({file}) {
       // const file=this.imgFile;
       console.log(file);
       let that = this;
@@ -407,6 +398,95 @@ export default {
         console.log(`阿里云OSS上传失败回调`, err);
       });
     },  //上传至阿里云
+
+    uploadHttpVideo({file}) {
+      // const file=this.imgFile;
+
+      console.log(file);
+      let that = this;
+      that.loading = true;
+      let f = file;
+      console.log(f);
+      let fileName = `${that.courseId}_courseId/${that.chapterId}_chapterId/${file.name}`;  //定义唯一的文件名
+      fileName = `pic/Course/` + fileName;
+
+      if (f.size < that.partSize) {         //文件较小则直接上传
+        ossClient(this.uploadConf).put(fileName, file).then(({res, url, name}) => {
+          if (res && res.status === 200) {
+            console.log(url);
+            that.fileListVideo.push({
+              name: f.name,
+              url: url,
+            });
+            console.log(`阿里云OSS上传成功回调`, res, url, name);
+            that.loading = false;
+          }
+        }).catch((err) => {
+          console.log(`阿里云OSS上传失败回调`, err);
+        });
+      } else {    //较大分片上传
+        that.multipartUpload(file);
+      }
+    },  //上传至阿里云
+
+    // stop() {
+    //   if (ossClient) ossClient.cancel();
+    // },
+    //
+    //  // 续传
+    // resume() {
+    //   console.log(ossClient);
+    //   if (ossClient) this.resumeMultipartUpload();
+    // },
+
+    onMultipartUploadProgress(p, _checkpoint) {
+      console.log("上传进度", p);
+      this.p=p*100;
+      console.log("断点信息", _checkpoint);
+    },
+
+    handleExceed() {
+      this.$message.warning(`每次只能上传一个视频`);
+    },
+
+    async multipartUpload(file) {
+      let that = this;
+      const fileName = file.name;
+      that.progressView=true;
+      return ossClient(that.uploadConf).multipartUpload(fileName, file, {
+        parallel: that.parallel,
+        partSize: that.partSize,
+        progress: that.onMultipartUploadProgress
+      }).then(result => {
+        // 生成文件下载地址
+        const url = `http://${that.uploadConf.bucket}.${that.uploadConf.region}.aliyuncs.com/${fileName}`;
+        console.log(`Multipart upload ${file.name} succeeded, url === `, url);
+        that.loading=false;
+      }).catch(err => {
+        console.log(`Multipart upload ${file.name} failed === `, err);
+      });
+    },    //分片上传
+
+    // async resumeMultipartUpload() {          //断点续传
+    //   let that = this;
+    //   Object.values(that.checkpoints).forEach((checkpoint) => {
+    //     const {uploadId, file, name} = checkpoint;
+    //     ossClient.multipartUpload(uploadId, file, {
+    //       parallel: that.parallel,
+    //       partSize: that.partSize,
+    //       progress: that.onMultipartUploadProgress,
+    //       checkpoint
+    //     }).then(result => {
+    //       console.log('before delete checkpoints === ', that.checkpoints);
+    //       delete that.checkpoints[checkpoint.uploadId];
+    //       console.log('after delete checkpoints === ', that.checkpoints);
+    //       const url = `http://${that.uploadConf.bucket}.${that.uploadConf.region}.aliyuncs.com/${name}`;
+    //       console.log(`Resume multipart upload ${file.name} succeeded, url === `, url)
+    //     }).catch(err => {
+    //       console.log('Resume multipart upload failed === ', err);
+    //     });
+    //   });
+    // },
 
     async sendTaskFile() {
       let that = this;
@@ -492,7 +572,6 @@ export default {
       }
       this.$confirm('确定要提交表单吗？')
           .then(_ => {
-            this.loading = true;
             this.timer = setTimeout(() => {
               done();
               // 动画关闭需要一定的时间
