@@ -21,7 +21,7 @@
                       show-word-limit></el-input>
           </el-form-item>
           <el-form-item label="上传课程视频" style="width: 300px">
-            <el-col class="normal" :span="24">请上传一个视频</el-col>
+            <el-col class="normal" :span="24">请点击删除，再替换视频</el-col>
             <div style="align-items: center">
               <el-col>
                 <el-row>
@@ -112,7 +112,7 @@ export default {
           console.log(`阿里云OSS上传失败回调`, err);
         });
       } else {    //较大分片上传
-        that.multipartUpload(file,fileName);
+        that.multipartUpload(file, fileName);
       }
     },  //上传至阿里云
 
@@ -136,7 +136,7 @@ export default {
       this.$message.warning(`每次只能上传一个视频`);
     },
 
-    async multipartUpload(file,fileName) {
+    async multipartUpload(file, fileName) {
       let that = this;
       that.progressView = true;
       return ossClient(that.uploadConf).multipartUpload(fileName, file, {
@@ -208,6 +208,11 @@ export default {
     let that = this;
     console.log(that.info);
     that.videoForm.videoName = that.info.videoName;
+    that.fileListVideo.push({
+      name: that.info.videoName,
+      url: that.info.videoUrl,
+    });
+
   }
 }
 </script>

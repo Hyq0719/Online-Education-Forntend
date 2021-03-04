@@ -333,8 +333,8 @@ export default {
     }
   },
   components: {
-    editChapter: () => import('@/components/classmanagement/editchapter'),
-    editVideo: () => import('@/components/classmanagement/editVideo'),
+    editChapter: () => import('@/components/classmanagement/tools/editchapter'),
+    editVideo: () => import('@/components/classmanagement/tools/editVideo'),
     buildClassPage: () => import('@/components/classmanagement/tools/buildClassPage'),
     buildTaskPage: () => import('@/components/classmanagement/tools/buildTaskPage'),
     correctHw: () => import('@/components/classmanagement/tools/correctHw')
