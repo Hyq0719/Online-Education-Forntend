@@ -21,9 +21,7 @@ import History from '../views/History';
 import Collect from '../views/Collect';
 import VIP from '../views/VIP';
 import Feedback from "@/views/Feedback";
-
-import classManagementClass from "@/components/classmanagement/class";
-import classBread from "@/components/classmanagement/classbread";
+import classBread from "@/components/classmanagement/tools/classbread";
 import commentClass from "@/components/classmanagement/commentClass";
 import liveManagement from "@/components/classmanagement/liveManagement";
 import blank from "@/components/classmanagement/blank";
@@ -34,6 +32,12 @@ import adminPage from "@/components/admin/adminPage";
 import adminLogin from "@/components/admin/adminLogin";
 import teacherAudit from "@/components/admin/teacherAudit";
 import ObsIntro from "@/components/ObsIntro";
+import classList from "@/components/classmanagement/list/classList";
+import chapterList from "@/components/classmanagement/list/chapterList";
+import videoList from "@/components/classmanagement/list/videoList";
+import taskList from "@/components/classmanagement/list/taskList";
+import hwList from "@/components/classmanagement/list/hwList";
+
 
 Vue.use(Router);
 
@@ -120,10 +124,29 @@ export default new Router({
                     component: classBread,
                 },
                 {
-                    path: 'class/:id',
-                    name: 'classManagementClass',
-                    props: true,
-                    component: classManagementClass,
+                    path: 'classList',
+                    name: 'classList',
+                    component: classList,
+                },
+                {
+                    path: 'chapterList',
+                    name: 'chapterList',
+                    component: chapterList,
+                },
+                {
+                    path: 'videoList',
+                    name: 'videoList',
+                    component: videoList,
+                },
+                {
+                    path: 'taskList',
+                    name: 'taskList',
+                    component: taskList,
+                },
+                {
+                    path: 'hwList',
+                    name: 'hwList',
+                    component: hwList,
                 },
                 {
                     path: 'commentClass/:id',
@@ -132,33 +155,33 @@ export default new Router({
                     component: commentClass,
                 },
                 {
-                    path:'liveManagement',
-                    name:'liveManagement',
-                    component:liveManagement,
+                    path: 'liveManagement',
+                    name: 'liveManagement',
+                    component: liveManagement,
                 },
                 {
-                    path:'blank',
-                    name:'blank',
-                    component:blank,
+                    path: 'blank',
+                    name: 'blank',
+                    component: blank,
                 },
             ]
         },
         {
-            path:'/admin',
-            name:'admin',
-            redirect: {name : "adminLogin"},
+            path: '/admin',
+            name: 'admin',
+            redirect: {name: "adminLogin"},
             replace: true,
         },
         {
-            path:'/adminLogin',
+            path: '/adminLogin',
             name: 'adminLogin',
             component: adminLogin,
         },
         {
-            path:'/adminPage',
-            name:'adminPage',
-            component:adminPage,
-            children:[
+            path: '/adminPage',
+            name: 'adminPage',
+            component: adminPage,
+            children: [
                 {
                     path: 'classAudit',
                     name: 'classAudit',
@@ -170,8 +193,8 @@ export default new Router({
                     component: commentAudit,
                 },
                 {
-                  path: 'liveAudit',
-                  name: 'liveAudit',
+                    path: 'liveAudit',
+                    name: 'liveAudit',
                     component: liveAudit,
                 },
                 {

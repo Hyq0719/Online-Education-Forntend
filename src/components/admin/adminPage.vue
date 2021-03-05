@@ -44,7 +44,7 @@
 </style>
 
 <script>
-import classbread from "@/components/classmanagement/classbread";
+import classbread from "@/components/classmanagement/tools/classbread";
 
 
 export default {
