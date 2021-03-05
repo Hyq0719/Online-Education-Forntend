@@ -216,9 +216,20 @@ export default {
           });
     },
 
-    drawerClose(data) {
+    async drawerClose(data) {
+      let that=this;
       this.dialog1 = data;
-      this.newVideo();
+      await axios.get("http://" + that.Api + "/api/Course/getCourseChapter/" + that.courseId, {
+        headers: {
+          // 'Content-Type': 'application/json',
+          'Authorization': that.$store.state.JWT,
+        }
+      }).then(function (res) {
+         console.log("刷新",res);
+        that.$store.commit("saveTeacherChapterData", res.data.data);
+        that.chapterData = that.$store.state.teacherData.teacherChapterData;
+      })
+
     },
   },
   mounted() {

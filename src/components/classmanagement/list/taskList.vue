@@ -22,7 +22,7 @@
         </el-table-column>
       </el-table>
 
-      <el-button circle @click="dialogTaskBuild = true" style="position: fixed;bottom: 180px;left: 240px">
+      <el-button circle @click="dialogTaskBuild = true" style="position: fixed;bottom: 280px;left: 240px">
         <i class="el-icon-circle-plus-outline"></i>
       </el-button>
     </el-main>

@@ -40,7 +40,7 @@ export default {
         content: '/';
         position: absolute;
         right: -12px;
-        top: 0px;
+        top: 0;
         color: #ccc;
       }
 
