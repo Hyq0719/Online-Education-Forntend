@@ -101,6 +101,7 @@ export default {
         ossClient(this.uploadConf).put(fileName, file).then(({res, url, name}) => {
           if (res && res.status === 200) {
             console.log(url);
+            that.fileListVideo.pop();
             that.fileListVideo.push({
               name: f.name,
               url: url,
@@ -148,6 +149,7 @@ export default {
         const url = `http://${that.uploadConf.bucket}.${that.uploadConf.region}.aliyuncs.com/${fileName}`;
         console.log(`Multipart upload ${file.name} succeeded, url === `, url);
         that.loading = false;
+        that.fileListVideo.pop();
         that.fileListVideo.push({
           name: file.name,
           url: url,
@@ -181,6 +183,7 @@ export default {
     async closed() {
       let that = this;
       let JWT = that.$store.state.JWT;
+      console.log(that.fileListVideo);
       let params = {
         videoId: that.info.courseChapterVideoPK.videoId,
         videoName: that.videoForm.videoName,
