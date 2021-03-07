@@ -68,7 +68,7 @@ export default {
       classData: this.$store.state.teacherData.teacherClassData,
       dialogClassBuild: false,
       dialogClassEdit: false,
-      currentPage: null,
+      currentPage: 1,
     }
   },
   methods:{
@@ -145,6 +145,7 @@ export default {
     },   //刷新课程用
   },
   mounted() {
+    this.getCourse(this.currentPage);
     let breadcrumb = [
       {
         link: '/Classmanagement/blank',
