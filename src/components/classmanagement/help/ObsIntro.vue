@@ -1,4 +1,5 @@
 <template>
+  <div style="background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
   <div class="ObsIntro">
     <h1>OBS介绍及使用教程</h1>
     <p>OBS是用于推送直播视频源到服务器的工具</p>
@@ -42,6 +43,7 @@
     <img
         src="http://wechatapppro-1252524126.file.myqcloud.com/help_document/image/ueditor/35582400_1562207682.cn/txdocpic/0/a806edaa93be50302d59091c04541ee9/0"
         alt="">
+  </div>
   </div>
 </template>
 

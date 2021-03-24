@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-main style="min-height: 480px">
+    <el-main style="min-height: 480px;background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
 
       <template>
         <el-radio-group v-model="radio" style="float: left;margin: 5px 20px">

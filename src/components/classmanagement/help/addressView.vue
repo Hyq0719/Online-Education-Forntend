@@ -1,10 +1,12 @@
 <template>
+  <div style="background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;min-height: 480px;">
   <div class="Intro">
        <h4>当前可用直播地址：</h4>
       <div style="width: 300px;margin: 0 0 0 0"><el-divider/></div>
       直播地址{{addressData[0].liveAddressId}}：{{addressData[0].liveAddress}}
       <div style="margin: 10px"/>
       直播地址{{addressData[1].liveAddressId}}：{{addressData[1].liveAddress}}
+  </div>
   </div>
 </template>
 
@@ -54,6 +56,6 @@ export default {
   text-align: left;
   width: 1000px;
   margin: 20px auto;
-  min-height: 480px;
+
 }
 </style>

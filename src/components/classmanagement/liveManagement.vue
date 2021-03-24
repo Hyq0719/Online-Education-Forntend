@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
     <el-main style="overflow:hidden;position: relative;min-height: 480px">
       <template>
         <el-radio-group v-model="radio" style="float: left;margin: 5px 20px">

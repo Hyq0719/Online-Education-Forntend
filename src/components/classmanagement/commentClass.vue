@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-show="classView" style="position: relative;height: 620px">
+  <div style="background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
+    <div v-show="classView" style="position: relative;min-height: 620px">
       <el-main>
         <el-table :data="classData.list" @row-click="findComment">
           <el-table-column prop="name" label="课程名称">
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div v-show="analyzeView">
+    <div v-show="analyzeView" style="min-height: 480px">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="具体评论" name="first"></el-tab-pane>
         <el-tab-pane label="评论分析" name="second"></el-tab-pane>
