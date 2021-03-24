@@ -20,6 +20,7 @@
                     class="upload-demo"
                     action=""
                     :http-request="uploadHttpVideo"
+                    accept=".mp4"
                     multiple
                     :limit="1"
                     :on-exceed="handleExceed"
@@ -186,7 +187,6 @@ export default {
       console.log(f);
       let fileName = `${that.courseId}_courseId/${that.chapterId}_chapterId/${file.name}`;  //定义唯一的文件名
       fileName = `video/Course/` + fileName;
-
       if (f.size < that.partSize) {         //文件较小则直接上传
         ossClient(this.uploadConf).put(fileName, file).then(({res, url, name}) => {
           if (res && res.status === 200) {

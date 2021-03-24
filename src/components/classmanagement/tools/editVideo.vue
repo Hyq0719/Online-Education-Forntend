@@ -28,6 +28,7 @@
                   <el-upload
                       class="upload-demo"
                       action=""
+                      accept=".mp4"
                       :http-request="uploadHttpVideo"
                       multiple
                       :limit="1"
