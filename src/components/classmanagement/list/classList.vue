@@ -35,7 +35,7 @@
         <el-button circle @click="dialogClassBuild = true" style="position: fixed;bottom: 180px;left: 240px">
           <i class="el-icon-circle-plus-outline"></i>
         </el-button>
-        <el-pagination style="position: absolute;bottom: 0;left: 300px"
+        <el-pagination style="position: absolute;bottom: 0;left: 410px"
                        background
                        layout="prev, pager, next"
                        @current-change="handleCurrentChange"

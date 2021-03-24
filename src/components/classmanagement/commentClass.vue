@@ -21,7 +21,7 @@
       </el-main>
 
       <div>
-        <el-pagination style="position: absolute;bottom: 10px;left: 400px"
+        <el-pagination style="position: absolute;bottom: 10px;left: 410px"
                        background
                        layout="prev, pager, next"
                        @current-change="handleCurrentChange"
