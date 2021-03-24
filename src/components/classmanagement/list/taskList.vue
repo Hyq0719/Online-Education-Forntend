@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-height: 480px">
     <el-main>
       <el-table :data="taskData">
         <el-table-column prop="taskName" label="任务名称">

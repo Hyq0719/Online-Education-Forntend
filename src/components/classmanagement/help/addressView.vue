@@ -1,5 +1,5 @@
 <template>
-  <div class="ObsIntro">
+  <div class="Intro">
        <h4>当前可用直播地址：</h4>
       <div style="width: 300px;margin: 0 0 0 0"><el-divider/></div>
       直播地址{{addressData[0].liveAddressId}}：{{addressData[0].liveAddress}}
@@ -50,14 +50,10 @@ export default {
 </script>
 
 <style scoped>
-.ObsIntro {
+.Intro {
   text-align: left;
   width: 1000px;
   margin: 20px auto;
-}
-.ObsIntro img{
-  width: 80%;
-  height: 80%;
-  margin: 30px auto;
+  min-height: 480px;
 }
 </style>

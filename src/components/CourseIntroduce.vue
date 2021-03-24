@@ -313,10 +313,10 @@ export default {
     },
     commentCourse() {
       let that = this;
-      if (that.value[0] === null & that.textarea === '') {
+      if (that.value[0] === null || that.textarea === '') {
         that.$notify.info({
           title: '警告',
-          message: '请输入评价或打分',
+          message: '请输入评价评分',
           type: 'warning',
         });
       } else {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-height: 480px">
     <el-main style="overflow:hidden;position: relative;min-height: 780px">
       <el-table :data="classData.list">
         <el-table-column prop="name" label="课程名称">

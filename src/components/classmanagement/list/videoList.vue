@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-height: 480px">
     <el-main>
       <el-row class="box-wrapper" style="height: auto">
         <el-row class="subtitle">
