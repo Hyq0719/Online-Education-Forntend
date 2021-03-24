@@ -91,7 +91,7 @@ export default {
       let b = new URLSearchParams();
       b.append('courseId', a);
 
-      await axios.post("http://" + that.Api + "/api/Course/deleteCourseChapter?chapterId=14&courseId=1", {
+      await axios.post("http://" + that.Api + "/api/Course/deleteCourseById",b, {
         headers: {
           'Authorization': JWT,
         }
