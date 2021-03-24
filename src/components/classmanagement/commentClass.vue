@@ -77,14 +77,14 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24" style="overflow: hidden">
+          <el-col :span="12" style="overflow: hidden">
             <el-row style="width: 200px">
               <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px"> 评论词云</span>
               <el-divider></el-divider>
             </el-row>
             <el-row>
               <wordcloud
-                  style="height:600px;width:900px"
+                  style="height:300px;width:400px"
                   :data="words"
                   nameKey="name"
                   valueKey="value"
@@ -94,18 +94,21 @@
               </wordcloud>
             </el-row>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24" style="overflow: hidden">
-            <ECharts id="BarChart2" :data="option4" height="600px" width="900px"></ECharts>
+          <el-col :span="12" style="overflow: hidden">
+            <ECharts id="BarChart2" :data="option4" height="300px" width="400px"></ECharts>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24" style="overflow: hidden;float: left">
+
+          <el-col :span="12" style="overflow: hidden">
+            <ECharts id="BarChart3" :data="option5" height="300px" width="400px"></ECharts>
+          </el-col>
+
+          <el-col :span="12" style="overflow: hidden;float: left">
             <el-row>
               <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px">最坏的几条评论</span>
             </el-row>
-            <el-row style="width: 900px">
+            <el-row style="width: 500px">
               <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in badComment" :key="index"
                        style="display:block;margin: 5px;overflow: hidden;min-height: 80px">
                 <div style="overflow: hidden">
@@ -125,13 +128,6 @@
               </el-card>
             </el-row>
           </el-col>
-
-        </el-row>
-        <el-row>
-          <el-col :span="24" style="overflow: hidden">
-            <ECharts id="BarChart3" :data="option5" height="600px" width="900px"></ECharts>
-          </el-col>
-
 
         </el-row>
       </div>
