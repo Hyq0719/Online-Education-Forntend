@@ -55,7 +55,7 @@ export default {
         title: '帮助'
       },
       {
-        link: {name: 'liveManagement'},
+        link: {name: 'obsIntro'},
         title: 'obs介绍'
       },
     ]

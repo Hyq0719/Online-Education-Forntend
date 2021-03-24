@@ -31,12 +31,13 @@ import classAudit from "@/components/admin/classAudit";
 import adminPage from "@/components/admin/adminPage";
 import adminLogin from "@/components/admin/adminLogin";
 import teacherAudit from "@/components/admin/teacherAudit";
-import ObsIntro from "@/components/ObsIntro";
+import ObsIntro from "@/components/classmanagement/help/ObsIntro";
 import classList from "@/components/classmanagement/list/classList";
 import chapterList from "@/components/classmanagement/list/chapterList";
 import videoList from "@/components/classmanagement/list/videoList";
 import taskList from "@/components/classmanagement/list/taskList";
 import hwList from "@/components/classmanagement/list/hwList";
+import addressView from "@/components/classmanagement/help/addressView";
 
 
 Vue.use(Router);
@@ -113,6 +114,11 @@ export default new Router({
             name: 'classManagement',
             component: classManagement,
             children: [
+                {
+                  path: 'addressView',
+                  name: 'addressView',
+                  component: addressView,
+                },
                 {
                     path: 'obsIntro',
                     name: 'obsIntro',

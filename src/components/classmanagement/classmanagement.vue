@@ -23,7 +23,9 @@
             <el-menu-item index="2-1">
               <router-link :to="{name:'obsIntro'}">obs介绍</router-link>
             </el-menu-item>
-
+            <el-menu-item index="2-2">
+              <router-link :to="{name:'addressView'}">查看直播地址</router-link>
+            </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
