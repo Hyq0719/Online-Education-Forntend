@@ -69,9 +69,15 @@
         <el-row>
           <el-col :span="24" style="font-size: 16px;text-align:left ">
             平均评分： {{ analysisComment.avg_comment_mark }} /5
+            <div style="display: inline-block;width: 30px"></div>
+            <span id="remark1" ref="remark1" style="font-family: 微软雅黑"><em>{{remark1w}}</em></span>
+           <div style="width: 400px"> <el-divider/></div>
           </el-col>
           <el-col :span="24" style="font-size: 16px;text-align:left ">
             情感评分： {{ analysisComment.avg_mark }} /5
+            <div style="display: inline-block;width: 30px"></div>
+            <span id="remark2" ref="remark2" style="font-family: 微软雅黑"><em>{{remark2w}}</em></span>
+            <div style="width: 400px"> <el-divider/></div>
           </el-col>
         </el-row>
         <el-row>
@@ -79,7 +85,6 @@
             <div class="card-wrapper2">
             <el-row style="width: 200px" >
               <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px"> 评论词云</span>
-              <el-divider></el-divider>
             </el-row>
             <el-row>
               <wordcloud
@@ -96,14 +101,14 @@
           </el-col>
           <el-col :span="12" style="overflow: hidden" >
             <div class="card-wrapper2">
-            <ECharts id="BarChart2" :data="option4" height="370px" width="500px"></ECharts>
+            <ECharts id="BarChart2" :data="option4" height="350px" width="500px"></ECharts>
             </div>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12" style="overflow: hidden" >
             <div class="card-wrapper2">
-            <ECharts id="BarChart3" :data="option5" height="370px" width="500px"></ECharts>
+            <ECharts id="BarChart3" :data="option5" height="350px" width="500px"></ECharts>
             </div>
           </el-col>
           <el-col :span="12" style="overflow: hidden" >
@@ -151,6 +156,10 @@ export default {
   data() {
     return {
       myColors: ['#1f77b4', '#629fc9', '#94bedb', '#c9e0ef'],
+      remark1:["学生对该课程评价不佳，请您提升教学水平",'学生对该课程评价一般，有待提高','学生对该课程评价非常好，请您继续保持'],
+      remark2:['这门课反响很差','这门课反响一般','这门课反响一般'],
+      remark1w:"",
+      remark2w:"",
       courseId: null,
       words: [],
       key: 1,
@@ -274,8 +283,7 @@ export default {
           },
         },
         series: [
-          {type: 'bar',
-            }
+          {type: 'bar',}
         ]
       },
       badComment: {},
@@ -383,6 +391,22 @@ export default {
           if (response.data.data !== null) {
             that.$store.commit("saveAnalysisComment", response.data.data);
             that.analysisComment = that.$store.state.teacherData.analysisComment;
+            if (that.analysisComment.avg_comment_mark>3.0 && that.analysisComment.avg_comment_mark<=5){
+              that.remark1w=that.remark1[2];
+            }
+            else if (that.analysisComment.avg_comment_mark>1.5 && that.analysisComment.avg_comment_mark<=3) {
+              that.remark1w = that.remark1[1];
+            }
+            else if (that.analysisComment.avg_comment_mark<=1.5)
+              that.remark1w=that.remark1[0];
+            if (that.analysisComment.avg_mark>3.0 && that.analysisComment.avg_comment_mark<=5){
+              that.remark2w=that.remark2[2];
+            }
+            else if (that.analysisComment.avg_mark>1.5 && that.analysisComment.avg_comment_mark<=3) {
+              that.remark2w = that.remark2[1];
+            }
+            else if (that.analysisComment.avg_mark<=1.5)
+              that.remark2w=that.remark2[0];
             that.option2.dataset.source = that.analysisComment.word_cut;
             const n = that.analysisComment.mark_distribution;
             console.log("n", Object.entries(n))
@@ -571,7 +595,7 @@ export default {
   width: 500px;
   min-height: 300px;
   background-color: #ffffff;
-  box-shadow: -2px -2px 5px #00a1d6;
+  box-shadow: 0 0 5px #4d555d;
   border-radius: 5px;
   margin: 0 0 20px 0;
 }
