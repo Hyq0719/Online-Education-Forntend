@@ -1,6 +1,6 @@
 <template>
-  <div style="min-height: 480px;background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
-    <el-main style="overflow:hidden;position: relative;min-height: 780px">
+  <div style="min-height: 480px">
+    <el-main style="overflow:hidden;position: relative" class="card-wrapper">
       <el-table :data="classData.list">
         <el-table-column prop="name" label="课程名称">
         </el-table-column>
@@ -31,16 +31,17 @@
         </el-table-column>
       </el-table>
 
+      <el-pagination style="left: 410px;margin: 20px 0 0 0"
+                     background
+                     layout="prev, pager, next"
+                     @current-change="handleCurrentChange"
+                     :total="this.$store.state.teacherData.teacherClassData.total_element">
+      </el-pagination>
+
       <div>
         <el-button circle @click="dialogClassBuild = true" style="position: fixed;bottom: 180px;left: 240px">
           <i class="el-icon-circle-plus-outline"></i>
         </el-button>
-        <el-pagination style="position: absolute;bottom: 0;left: 410px"
-                       background
-                       layout="prev, pager, next"
-                       @current-change="handleCurrentChange"
-                       :total="this.$store.state.teacherData.teacherClassData.total_element">
-        </el-pagination>
       </div>
     </el-main>
 
@@ -167,5 +168,12 @@ button:hover {
   text-decoration: none;
   text-decoration-color: #99a9bf;
   text-decoration-width: auto;
+}
+
+.card-wrapper{
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
 }
 </style>

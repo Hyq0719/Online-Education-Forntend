@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
+  <div class="card-wrapper">
   <div class="ObsIntro">
     <h1>OBS介绍及使用教程</h1>
     <p>OBS是用于推送直播视频源到服务器的工具</p>
@@ -69,12 +69,18 @@ export default {
 <style scoped>
 .ObsIntro {
   text-align: left;
-  width: 1000px;
-  margin: 20px auto;
+  padding: 20px;
 }
 .ObsIntro img{
   width: 80%;
   height: 80%;
   margin: 30px auto;
+}
+
+.card-wrapper{
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
 }
 </style>

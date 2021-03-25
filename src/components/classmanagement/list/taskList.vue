@@ -1,6 +1,6 @@
 <template>
-  <div style="min-height: 480px;background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
-    <el-main>
+  <div style="min-height: 480px">
+    <el-main class="card-wrapper">
       <el-table :data="taskData">
         <el-table-column prop="taskName" label="任务名称">
         </el-table-column>
@@ -234,6 +234,12 @@ button:hover {
   text-decoration: none;
   text-decoration-color: #99a9bf;
   text-decoration-width: auto;
+}
+.card-wrapper{
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
 }
 
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div style="background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
-    <div v-show="classView" style="position: relative;min-height: 620px">
+    <div v-show="classView" style="position: relative;min-height: 480px">
       <el-main>
         <el-table :data="classData.list" @row-click="findComment">
           <el-table-column prop="name" label="课程名称">
@@ -18,16 +18,14 @@
             </template>
           </el-table-column>
         </el-table>
-      </el-main>
-
-      <div>
-        <el-pagination style="position: absolute;bottom: 10px;left: 410px"
+        <el-pagination style="left: 410px;margin: 20px 0 0 0"
                        background
                        layout="prev, pager, next"
                        @current-change="handleCurrentChange"
                        :total="this.$store.state.teacherData.teacherClassData.total_element">
         </el-pagination>
-      </div>
+      </el-main>
+
     </div>
 
     <div v-show="analyzeView" style="min-height: 480px">

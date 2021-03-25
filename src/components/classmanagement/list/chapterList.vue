@@ -1,7 +1,8 @@
 <template>
-  <div style="min-height: 480px;background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
-    <el-main >
-      <el-row class="box-wrapper" style="height: auto">
+  <div style="min-height: 480px;">
+
+    <el-main class="card-wrapper" style="padding: 0">
+      <el-row  style="height: auto">
         <el-row class="subtitle">
           <h5 style="margin: 10px 24px;float: left">创建章节</h5>
         </el-row>
@@ -21,6 +22,11 @@
 
         </el-row>
       </el-row>
+    </el-main>
+
+
+
+    <el-main class="card-wrapper" >
       <el-table :data="chapterData">
         <el-table-column label="章节号">
           <template slot-scope="scope">
@@ -260,17 +266,15 @@ button:hover {
   text-decoration-width: auto;
 }
 
-.box-wrapper {
-  border: #1c1f21 solid 1px;
-  border-radius: 6px;
-  margin: 16px 30px;
-  width: 1000px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-}
-
 .subtitle {
   background-color: #6fadff;
+}
+
+.card-wrapper{
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
 }
 
 </style>

@@ -1,5 +1,6 @@
 <template>
-  <div style="background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;min-height: 480px;">
+  <div style="min-height: 480px;">
+    <div class="card-wrapper">
   <div class="Intro">
        <h4>当前可用直播地址：</h4>
       <div style="width: 300px;margin: 0 0 0 0"><el-divider/></div>
@@ -7,6 +8,7 @@
       <div style="margin: 10px"/>
       直播地址{{addressData[1].liveAddressId}}：{{addressData[1].liveAddress}}
   </div>
+    </div>
   </div>
 </template>
 
@@ -54,8 +56,12 @@ export default {
 <style scoped>
 .Intro {
   text-align: left;
-  width: 1000px;
-  margin: 20px auto;
-
+  padding: 30px;
+}
+.card-wrapper{
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
 }
 </style>
