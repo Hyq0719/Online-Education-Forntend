@@ -10,6 +10,7 @@ export default new Vuex.Store({
         isLogin: JSON.parse(sessionStorage.getItem('isLogin')) || false,
         JWT: JSON.parse(VueCookies.get('JWT')) || false,
         userData: JSON.parse(sessionStorage.getItem('userData')) || false,
+        StudentHomework: JSON.parse(sessionStorage.getItem('StudentHomework')) || false,
         StudentHistory: JSON.parse(sessionStorage.getItem('StudentHistory')) || false,
         StudentCollect: JSON.parse(sessionStorage.getItem('StudentCollect')) || false,
         StudentPreferences: JSON.parse(sessionStorage.getItem('StudentPreferences')) || false,
@@ -74,6 +75,11 @@ export default new Vuex.Store({
         saveJWT(state, JWT) {
             state.JWT = JWT;
             VueCookies.set('JWT', JSON.stringify(state.JWT), "7D");
+        },
+        //学生作业
+        saveStudentHomework(state, StudentHomework) {
+            state.StudentHomework = StudentHomework;
+            sessionStorage.setItem('StudentHomework', JSON.stringify(state.StudentHomework));
         },
         //学生历史记录
         saveStudentHistory(state, StudentHistory) {

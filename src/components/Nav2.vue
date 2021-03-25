@@ -72,7 +72,7 @@ export default {
       });
     },
     Live(liveId) {
-      this.$router.push({path: '/live', query: {courseId: liveId}});
+      this.$router.push({path: '/live', query: {liveId: liveId}});
     },
     Course(courseId) {
       this.$router.push({path: '/course', query: {courseId: courseId}});

@@ -7,14 +7,16 @@
           <el-button icon="el-icon-delete" circle @click="DeleteHistory(item.id)"></el-button>
         </div>
         <div class="history-teacher">
-          <img :src="item.course.teacher.teacherPicUrl" alt="图片缺失">
+          <img v-if="item.course.teacher.teacherPicUrl" :src="item.course.teacher.teacherPicUrl" alt="图片缺失">
+          <img v-if="!item.course.teacher.teacherPicUrl" src="../assets/SHUlogo.jpg" alt="图片缺失">
           <p>{{ item.course.teacher.name }} | {{ item.course.teacher.intro }}</p>
         </div>
       </div>
       <div class="history-content">
         <div class="history-img"
              @click="videoHistory(item.course.courseId)">
-          <img :src="item.course.coursePic" alt="图片丢失">
+          <img v-if="item.course.coursePic" :src="item.course.coursePic" alt="图片缺失">
+          <img v-if="!item.course.coursePic" src="../assets/SHUlogo.jpg" alt="图片缺失">
         </div>
         <div class="history-text">
           <div class="history-text-title"
@@ -180,6 +182,11 @@ export default {
 a {
   text-decoration: none;
   color: #1c1f21;
+}
+
+.block {
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .clear {

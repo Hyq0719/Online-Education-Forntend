@@ -33,10 +33,11 @@
           <img v-if="isLoginTeacher" :src="this.teacherPicUrl" alt="头像加载失败"/>
         </template>
         <el-menu-item index="1-1" @click="Information">个人信息</el-menu-item>
-        <el-menu-item index="1-2" v-if="isLogin" @click="History">历史记录</el-menu-item>
-        <el-menu-item index="1-3" v-if="isLogin" @click="Collect">收藏课程</el-menu-item>
-        <el-menu-item index="1-4" v-if="isLoginTeacher" @click="class_management">管理课程</el-menu-item>
-        <el-menu-item index="1-5" @click="Logout">注销</el-menu-item>
+        <el-menu-item index="1-2" v-if="isLogin" @click="Homework">我的作业</el-menu-item>
+        <el-menu-item index="1-3" v-if="isLogin" @click="History">历史记录</el-menu-item>
+        <el-menu-item index="1-4" v-if="isLogin" @click="Collect">收藏课程</el-menu-item>
+        <el-menu-item index="1-5" v-if="isLoginTeacher" @click="class_management">管理课程</el-menu-item>
+        <el-menu-item index="1-6" @click="Logout">注销</el-menu-item>
       </el-submenu>
       <el-menu-item index="1" v-if="isLogin">
         <router-link to="/VIP">开通VIP</router-link>
@@ -153,6 +154,9 @@ export default {
     },
     Collect() {
       this.$router.push('/collect');
+    },
+    Homework() {
+      this.$router.push('/homework');
     },
   },
 };

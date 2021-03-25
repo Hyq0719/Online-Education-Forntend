@@ -11,9 +11,9 @@
     <p class="VIP" v-if="isFree&&VIP">VIP</p>
     <!--    直播-->
     <h6 v-if="liveDate">直播时间：{{ liveDate }}</h6>
-    <h6 v-if="liveDate && Date.parse(new Date()) < Date.parse(liveDate)">直播已过期</h6>
-    <h6 v-if="liveDate && Date.parse(new Date()) == Date.parse(liveDate)">正在直播</h6>
-    <h6 v-if="liveDate && Date.parse(new Date()) > Date.parse(liveDate)">直播未开始</h6>
+    <h6 v-if="liveDate && (Date.parse(today) > Date.parse(liveDate))">直播已过期</h6>
+    <h6 class="now" v-if="liveDate && (Date.parse(today) == Date.parse(liveDate))">今日直播</h6>
+    <h6 class="future" v-if="liveDate && (Date.parse(today) < Date.parse(liveDate))">直播未开始</h6>
   </div>
 </template>
 
@@ -31,12 +31,19 @@ export default {
     //直播
     liveDate: null,
   },
+  computed:{
+    today:{
+      get(){
+        return new Date().toLocaleDateString();
+      },
+    }
+  },
 }
 </script>
 
 <style scoped>
 .Course-content-content {
-  height: 240px;
+  height: 265px;
   cursor: pointer;
   text-align: left;
   border-radius: 10px;
@@ -55,7 +62,7 @@ export default {
 .Course-content-content-img {
   text-align: center;
   margin: 3px;
-  height: 105px;
+  height: 130px;
 }
 
 .Course-content-content img {
@@ -73,7 +80,7 @@ export default {
 }
 
 .Course-content-content p {
-  margin: 30px 10px 0 10px;
+  margin: 50px 10px 10px 10px;
 }
 
 .free {
@@ -82,6 +89,14 @@ export default {
 
 .VIP {
   color: #F56C6C;
+}
+
+.now {
+  color: #F56C6C;
+}
+
+.future {
+  color: #67C23A;
 }
 
 a {

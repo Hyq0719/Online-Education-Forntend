@@ -9,13 +9,7 @@
                 <i class="el-icon-menu"></i>
                 <h3>课程概述</h3>
               </div>
-              <p>
-                《电路》课程是自动化专业及其相近专业的必修课程，是学生学习和掌握电路基本理论知识和电路分析基本方法的专业基础课程。本课程在教学内容方面侧重于基本知识、基本理论和基本分析方法的讲解；另外独立开设的实验课程培养相应的实践能力。
-
-                本课程内容包括：电路的基本概念与基本定律、电阻电路的等效变换、线性电路的基本分析方法、基本定理、含有理想运放的电路分析、正弦交流电路的稳态分析、含有互感的电路、三相电路、双口网络、一阶电路的时域分析、二阶电路的时域分析等内容。
-
-                该课程不仅为后续专业课的学习打基础，对发展学生科学思维、培养学生分析问题、解决问题也具有十分重要的作用，同时也为学生今后从事自动化专业相关领域的实际工作打下必要的理论基础。
-              </p>
+              {{ this.$store.state.LiveAllData.intro }}
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -24,7 +18,7 @@
         <div>
           <h3>直播老师</h3>
         </div>
-        <div class="Teacher" v-if="this.$store.state.LiveAllData.teacher">
+        <div class="Teacher" v-if="this.$store.state.LiveAllData">
           <img :src="this.$store.state.LiveAllData.teacher.teacherPicUrl" alt="图片缺失"
                @click="Teacher($store.state.LiveAllData.teacherId)">
           <div class="Teacher-Introduce">

@@ -1,10 +1,10 @@
 <template>
   <div>
     <video id="videoElement" controls autoplay muted></video>
-    <div class="flvjs-button">
-      <el-button icon="el-icon-video-play" circle @click="play"></el-button>
-      <el-button icon="el-icon-refresh" circle @click="reload"></el-button>
-    </div>
+    <!--    <div class="flvjs-button">-->
+    <!--      <el-button icon="el-icon-video-play" circle @click="play"></el-button>-->
+    <!--      <el-button icon="el-icon-refresh" circle @click="reload"></el-button>-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -51,7 +51,8 @@ export default {
   width: 100%;
   height: 500px;
 }
-.flvjs-button{
+
+.flvjs-button {
   margin: 10px;
   text-align: left;
 }

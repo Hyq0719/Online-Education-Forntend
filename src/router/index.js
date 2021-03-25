@@ -17,6 +17,7 @@ import classManagement from "@/views/Classmanagement";
 import TeacherInfo from '../views/TeacherInfo';
 import Information from '../views/Information';
 import InformationChange from '../views/InformationChange';
+import Homework from '../views/Homework';
 import History from '../views/History';
 import Collect from '../views/Collect';
 import VIP from '../views/VIP';
@@ -235,6 +236,11 @@ export default new Router({
             path: '/history',
             name: 'History',
             component: History,
+        },
+        {
+            path: '/homework',
+            name: 'Homework',
+            component: Homework,
         },
         {
             path: '/collect',
