@@ -57,7 +57,7 @@ export default {
       await _this.setChart();
     },
     click(p) {
-      let _this = this;
+      let _this = this;3
       let d = this.$avoid(p.data);
       _this.$emit("clickECharts", Object.assign({}, null, d));
     },

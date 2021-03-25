@@ -28,7 +28,7 @@
 
     </div>
 
-    <div v-show="analyzeView" style="min-height: 480px">
+    <div v-show="analyzeView" class="card-wrapper">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="具体评论" name="first"></el-tab-pane>
         <el-tab-pane label="评论分析" name="second"></el-tab-pane>
@@ -75,8 +75,9 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12" style="overflow: hidden">
-            <el-row style="width: 200px">
+          <el-col :span="12" style="overflow: hidden" >
+            <div class="card-wrapper2">
+            <el-row style="width: 200px" >
               <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px"> 评论词云</span>
               <el-divider></el-divider>
             </el-row>
@@ -91,18 +92,22 @@
                   :wordClick="wordClickHandler">
               </wordcloud>
             </el-row>
+            </div>
           </el-col>
-          <el-col :span="12" style="overflow: hidden">
-            <ECharts id="BarChart2" :data="option4" height="300px" width="400px"></ECharts>
+          <el-col :span="12" style="overflow: hidden" >
+            <div class="card-wrapper2">
+            <ECharts id="BarChart2" :data="option4" height="370px" width="500px"></ECharts>
+            </div>
           </el-col>
         </el-row>
         <el-row>
-
-          <el-col :span="12" style="overflow: hidden">
-            <ECharts id="BarChart3" :data="option5" height="300px" width="400px"></ECharts>
+          <el-col :span="12" style="overflow: hidden" >
+            <div class="card-wrapper2">
+            <ECharts id="BarChart3" :data="option5" height="370px" width="500px"></ECharts>
+            </div>
           </el-col>
-
-          <el-col :span="12" style="overflow: hidden;float: left">
+          <el-col :span="12" style="overflow: hidden" >
+            <div class="card-wrapper2">
             <el-row>
               <span style="float: left;font-size: 14px;font-weight: bold;margin-left: 10px">最坏的几条评论</span>
             </el-row>
@@ -125,9 +130,9 @@
                 </div>
               </el-card>
             </el-row>
+            </div>
           </el-col>
-
-        </el-row>
+         </el-row>
       </div>
 
 
@@ -180,7 +185,7 @@ export default {
           type: 'category',
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
         },
         series: [
           {type: 'bar'}
@@ -196,6 +201,14 @@ export default {
         dataset: {
           source: []
         },
+        visualMap:{
+          orient: 'horizontal',
+          left: 'center',
+          min:0,
+          inRange:{
+            color:['#D7DA88','red']
+          }
+        },
         tooltip: {
           //鼠标悬浮弹框组件
           trigger: 'axis'
@@ -204,12 +217,26 @@ export default {
         grid: {},
         xAxis: {
           type: 'category',
+          axisLabel:{
+            textStyle:{
+              fontSize:14,
+            }
+          },
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          min:0,
+          interval: 1,
+          axisLabel:{
+            textStyle:{
+              fontSize:14,
+            }
+          },
         },
         series: [
-          {type: 'bar'}
+          {
+            type: 'bar',
+          }
         ]
       },
       option5: {
@@ -230,12 +257,25 @@ export default {
         grid: {},
         xAxis: {
           type: 'category',
+          axisLabel:{
+            textStyle:{
+              fontSize:14,
+            }
+          },
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          min:0,
+          interval:1,
+          axisLabel:{
+            textStyle:{
+              fontSize:14,
+            }
+          },
         },
         series: [
-          {type: 'bar'}
+          {type: 'bar',
+            }
         ]
       },
       badComment: {},
@@ -523,6 +563,15 @@ export default {
 .card-wrapper{
   background-color: #ffffff;
   box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
+}
+
+.card-wrapper2{
+  width: 500px;
+  min-height: 300px;
+  background-color: #ffffff;
+  box-shadow: -2px -2px 5px #00a1d6;
   border-radius: 5px;
   margin: 0 0 20px 0;
 }
