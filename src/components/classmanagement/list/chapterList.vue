@@ -28,33 +28,33 @@
 
     <el-main class="card-wrapper" >
       <el-table :data="chapterData">
-        <el-table-column label="章节号">
+        <el-table-column label="章节号" width="150px">
           <template slot-scope="scope">
             {{ scope.row.courseChapterPK.chapterId }}
           </template>
         </el-table-column>
-        <el-table-column prop="chapterIntro" label="章节名称">
+        <el-table-column prop="chapterIntro" label="章节名称" width="300px">
         </el-table-column>
-        <el-table-column label="操作" width="500px">
+        <el-table-column label="操作" >
           <template slot-scope="scope">
-            <el-button-group>
+
               <el-button type="primary" icon="el-icon-edit"
                          @click="openVideo(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
                 管理视频
               </el-button>
-              <el-button type="primary" icon="el-icon-edit"
+              <el-button type="success" icon="el-icon-edit"
                          @click="openTask(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
                 管理任务
               </el-button>
-              <el-button type="primary"
+              <el-button type="warning"
                          @click="dialog1 = true;courseId = scope.row.courseChapterPK.courseId;chapterId=scope.row.courseChapterPK.chapterId ">
                 修改章节
               </el-button>
-              <el-button type="primary" icon="el-icon-delete"
+              <el-button type="danger" icon="el-icon-delete"
                          @click.native.prevent="deleteChapter(scope.row.courseChapterPK.courseId,scope.row.courseChapterPK.chapterId)">
                 删除章节
               </el-button>
-            </el-button-group>
+
           </template>
         </el-table-column>
       </el-table>

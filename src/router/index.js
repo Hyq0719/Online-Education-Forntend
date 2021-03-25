@@ -38,6 +38,7 @@ import videoList from "@/components/classmanagement/list/videoList";
 import taskList from "@/components/classmanagement/list/taskList";
 import hwList from "@/components/classmanagement/list/hwList";
 import addressView from "@/components/classmanagement/help/addressView";
+import majorAudit from "@/components/admin/majorAudit";
 
 
 Vue.use(Router);
@@ -208,6 +209,11 @@ export default new Router({
                     name: 'teacherAudit',
                     component: teacherAudit,
                 },
+                {
+                    path: 'majorAudit',
+                    name: 'majorAudit',
+                    component: majorAudit,
+                }
             ]
         },
         {

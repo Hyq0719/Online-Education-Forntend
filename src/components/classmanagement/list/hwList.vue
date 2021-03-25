@@ -17,9 +17,9 @@
         </el-table-column>
         <el-table-column prop="commitTime" label="提交时间">
         </el-table-column>
-        <el-table-column label="操作" width="400px">
+        <el-table-column label="操作" width="400px" >
           <template slot-scope="scope">
-            <el-button-group>
+            <el-button-group v-show="hwView">
               <el-button type="primary" @click="dialogHw=true;hwInfo=scope.row" icon="el-icon-edit">批改作业</el-button>
             </el-button-group>
           </template>
@@ -45,6 +45,7 @@ export default {
     return{
       hwInfo: {},
       dialogHw: false,
+      hwView:true,
       radio:1,
       homeworkData: this.$store.state.teacherData.homeworkData,
       courseId: this.$store.state.teacherData.courseId,
@@ -64,6 +65,8 @@ export default {
       b.append("taskId", task);
       b.append("page", 1);
       b.append("status", status);
+      if (status===0 || status===1) that.hwView=false;
+      else that.hwView=true;
       await axios.post('http://' + that.Api + "/api/Homework/getByTaskAndStatus", b,
           {
             headers: {

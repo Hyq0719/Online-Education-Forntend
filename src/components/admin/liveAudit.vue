@@ -1,25 +1,28 @@
 <template>
   <div>
-    <el-row class="box-wrapper" style="height: auto">
-      <el-row class="subtitle">
-        <h5 style="margin: 10px 24px;float: left">创建直播地址</h5>
+    <el-main class="card-wrapper" style="padding: 0">
+      <el-row  style="height: auto">
+        <el-row class="subtitle">
+          <h5 style="margin: 10px 24px;float: left">创建直播地址</h5>
+        </el-row>
+        <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
+          <el-form-item label="直播地址" style="width: 500px;margin-bottom: 0">
+            <el-input
+                style="width: 400px"
+                placeholder="请输入地址"
+                v-model="liveAddress"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="send" style="float: right;margin: 0 0 0 50px" >上传地址<i
+                class="el-icon-upload el-icon--right"></i></el-button>
+          </el-form-item>
+        </el-form>
+        <el-row>
+        </el-row>
       </el-row>
-      <el-form :inline="true" label-width="80px" style="margin: 20px 0 10px 0">
-        <el-form-item label="直播地址" style="width: 500px;margin-bottom: 0">
-          <el-input
-              style="width: 400px"
-              placeholder="请输入地址"
-              v-model="liveAddress"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="send" style="float: right;margin: 0 0 0 50px" v-loading="loading">上传地址<i
-              class="el-icon-upload el-icon--right"></i></el-button>
-        </el-form-item>
-      </el-form>
-      <el-row>
+    </el-main>
 
-      </el-row>
-    </el-row>
+   <el-main class="card-wrapper">
     <el-table :data="addressData">
       <el-table-column prop="liveAddressId" label="liveAddressId"></el-table-column>
       <el-table-column prop="liveAddress" label="liveAddress"></el-table-column>
@@ -35,6 +38,7 @@
         </template>
       </el-table-column>
     </el-table>
+   </el-main>
 
     <el-dialog title="修改地址" v-if="dialogEdit" :visible.sync="dialogEdit">
       <el-form label-width="80px" style="margin: 20px 0 10px 0">
@@ -162,13 +166,11 @@ button:hover {
   text-decoration-width: auto;
 }
 
-.box-wrapper {
-  border: #1c1f21 solid 1px;
-  border-radius: 6px;
-  margin: 16px 30px;
-  width: 1000px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+.card-wrapper{
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
 }
 
 .subtitle {

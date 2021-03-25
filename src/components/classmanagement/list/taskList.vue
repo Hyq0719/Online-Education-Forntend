@@ -2,22 +2,22 @@
   <div style="min-height: 480px">
     <el-main class="card-wrapper">
       <el-table :data="taskData">
-        <el-table-column prop="taskName" label="任务名称">
+        <el-table-column prop="taskName" label="任务名称" width="100px">
         </el-table-column>
-        <el-table-column prop="startTime" label="开始时间">
+        <el-table-column prop="startTime" label="开始时间" width="200px">
         </el-table-column>
-        <el-table-column prop="endTime" label="结束时间">
+        <el-table-column prop="endTime" label="结束时间" width="200px">
         </el-table-column>
-        <el-table-column label="操作" width="500px">
+        <el-table-column label="操作" >
           <template slot-scope="scope">
-            <el-button-group>
+
               <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskEdit = true" icon="el-icon-edit">
                 修改任务
               </el-button>
-              <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskAdd = true">上传任务文件</el-button>
-              <el-button type="primary" @click="openHomework(scope.row.taskId);">查看作业</el-button>
-              <el-button type="primary" @click="deleteTask(scope.row.taskId);" icon="el-icon-delete">删除任务</el-button>
-            </el-button-group>
+              <el-button type="success" @click="taskId=scope.row.taskId;dialogTaskAdd = true">上传任务文件</el-button>
+              <el-button type="warning" @click="openHomework(scope.row.taskId);">查看作业</el-button>
+              <el-button type="danger" @click="deleteTask(scope.row.taskId);" icon="el-icon-delete">删除任务</el-button>
+
           </template>
         </el-table-column>
       </el-table>

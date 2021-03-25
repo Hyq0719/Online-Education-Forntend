@@ -39,9 +39,9 @@
       </el-header>
 
       <el-main style="background-color: #e8f0f5">
-       <div >
+
         <router-view></router-view>
-       </div>
+
       </el-main>
 
     </el-container>

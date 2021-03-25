@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-main   style="overflow:hidden;position: relative;min-height: 580px">
+    <el-main   style="overflow:hidden;position: relative;" class="card-wrapper">
       <el-table :data="classData.list" >
         <el-table-column prop="name" label="课程名称">
         </el-table-column>
@@ -52,7 +52,7 @@
         </el-table-column>
       </el-table>
 
-      <el-pagination style="position: absolute;bottom: 0;left: 380px"
+      <el-pagination style="left: 410px;margin: 20px 0 0 0"
                      background
                      layout="prev, pager, next"
                      @current-change="handleCurrentChange"
@@ -149,5 +149,10 @@ name: "classAudit",
 </script>
 
 <style scoped>
-
+.card-wrapper{
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
+}
 </style>

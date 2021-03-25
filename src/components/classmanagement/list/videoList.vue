@@ -55,13 +55,12 @@
         </el-table-column>
         <el-table-column label="操作" width="500px">
           <template slot-scope="scope">
-            <el-button-group>
+
               <el-button type="primary" icon="el-icon-edit" @click="videoInfo=scope.row;dialog2 = true">修改视频</el-button>
-              <el-button type="primary" icon="el-icon-delete"
+              <el-button type="danger" icon="el-icon-delete"
                          @click.native.prevent="deleteVideo(scope.row.courseChapterVideoPK.courseId,scope.row.courseChapterVideoPK.chapterId)">
                 删除视频
               </el-button>
-            </el-button-group>
           </template>
         </el-table-column>
       </el-table>

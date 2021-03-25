@@ -23,7 +23,7 @@
               <el-button type="primary" icon="el-icon-edit"
                          @click="liveId=scope.row.liveId;dialogEdit = true;liveInfo= liveData[scope.$index]">修改直播信息
               </el-button>
-              <el-button type="primary" icon="el-icon-delete"
+              <el-button type="danger" icon="el-icon-delete"
                          @click.native.prevent="deleteLive(scope.row.liveId)">删除直播
               </el-button>
           </template>
