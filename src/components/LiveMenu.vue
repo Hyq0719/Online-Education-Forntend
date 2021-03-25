@@ -11,10 +11,10 @@
       <el-radio v-model="radioFutureAndNow" @click.native="LiveChoose($event,2)" label="3">正在直播</el-radio>
     </div>
     <div class="Course-content">
-      <div class="Course-content-content" v-for="(item,index) in this.$store.state.MenuLiveData.list"
-           v-bind:key="index" @click="Live(item.liveId)">
-        <Menu :name="item.liveName" :teacherName="item.intro" :liveDate="item.liveDate" :coursePic="item.livePicUrl"></Menu>
-      </div>
+      <Menu v-for="(item,index) in this.$store.state.MenuLiveData.list"
+            v-bind:key="index" @click.native="Live(item.liveId)"
+            :name="item.liveName" :teacherName="item.intro" :liveDate="item.liveDate"
+            :coursePic="item.livePicUrl" style="width: 18%"></Menu>
     </div>
     <div class="block">
       <el-pagination
@@ -147,29 +147,6 @@ export default {
 .Course-content {
   display: flex;
   flex-wrap: wrap;
-}
-
-.Course-content-content {
-  height: 220px;
-  width: 18%;
-  cursor: pointer;
-  text-align: left;
-  border-radius: 10px;
-  border: #E4E7ED 1px solid;
-  margin: 10px;
-  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
-}
-
-.Course-content-content:hover {
-  background-color: #d3dce6;
-  text-decoration: none;
-  text-decoration-color: #99a9bf;
-  text-decoration-width: auto;
-}
-
-a {
-  text-decoration: none;
-  color: #1c1f21;
 }
 
 .block {

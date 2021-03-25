@@ -4,9 +4,6 @@
       <li class="sidebar-item">
         <span class="sidebar-text"><router-link to="/Feedback">意见反馈</router-link></span>
       </li>
-      <li class="sidebar-item">
-        <span class="sidebar-text">帮助中心</span>
-      </li>
       <li class="sidebar-item" @click="backToTop">
         <span class="sidebar-text">返回顶部</span>
       </li>

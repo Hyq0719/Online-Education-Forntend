@@ -7,6 +7,7 @@
       <el-menu
           class="el-menu-vertical-demo"
           :default-openeds="[($store.state.Video.chapterId - 1).toString()]"
+          :unique-opened="true"
           @open="handleOpen"
           @close="handleClose"
           v-for="(item,index) in this.$store.state.chapterData" v-bind:key="index">
@@ -16,11 +17,13 @@
             <span>{{ item.courseChapterJson.chapterIntro }}</span>
           </template>
           <el-menu-item-group>
-            <el-radio-group v-model="$store.state.Video.videoId">
+            <el-radio-group v-model="videoId">
               <div :index="1+String(indexItem)" v-for="(value,indexItem) in item.VideoList"
                    v-bind:key="'1'+indexItem" class="video"
                    @click="Video($event,value.courseChapterVideoPK.videoId,value.videoUrl,value.courseChapterVideoPK.chapterId,value.courseChapterVideoPK.courseId)">
-                <el-radio-button :label="value.courseChapterVideoPK.videoId">{{ value.videoName }}</el-radio-button>
+                <el-radio-button :label="value.courseChapterVideoPK.chapterId*100+value.courseChapterVideoPK.videoId">
+                  {{ value.videoName }}
+                </el-radio-button>
               </div>
             </el-radio-group>
             <el-menu-item :index="2+String(indexItem)" v-for="(value,indexItem) in item.TaskList"
@@ -47,6 +50,7 @@ export default {
   data() {
     return {
       input: '',
+      videoId: this.$store.state.Video.chapterId * 100 + this.$store.state.Video.videoId,
     };
   },
   methods: {
@@ -54,8 +58,7 @@ export default {
       if (this.$store.state.isLogin) {
         console.log(courseId, chapterId);
         this.$router.push({path: '/taskmenu', query: {courseId: courseId, chapterId: chapterId}});
-      }
-      else{
+      } else {
         this.$message.error('请登录后查看课程任务');
       }
     },

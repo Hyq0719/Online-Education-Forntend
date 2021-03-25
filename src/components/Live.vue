@@ -63,7 +63,7 @@ export default {
     };
   },
   mounted() {
-    this.initTestData();   //初始化弹幕数据
+    // this.initTestData();   //初始化弹幕数据
     this.initWebSocket();
     this.updateStudentNumber();
     this.mySetInterval();

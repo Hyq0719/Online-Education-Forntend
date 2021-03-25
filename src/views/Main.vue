@@ -4,7 +4,6 @@
     <Header :key="$store.state.isLogin||$store.state.isLoginTeacher"></Header>
     <Nav1></Nav1>
     <nav2></nav2>
-    <Article></Article>
   </div>
 </template>
 
@@ -13,7 +12,6 @@ import Header from '../components/Header';
 import Nav1 from '../components/Nav1';
 import Sidebar from '../components/Sidebar';
 import Nav2 from '../components/Nav2';
-import Article from '../components/Article';
 import axios from "axios";
 
 export default {
@@ -23,7 +21,6 @@ export default {
     Nav1,
     Sidebar,
     Nav2,
-    Article,
   },
   created() {
     this.main();

@@ -167,23 +167,7 @@ export default {
       }).then(function (response) {
         console.log("修改偏好成功", response);
         that.selectedPrefer = [];
-        let b = new URLSearchParams;
-        b.append("user_id", that.$store.state.userData.userId);
-        axios.post("http://" + that.Api + "/api/Student/findAllPreferences?" + b, null, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': JWT,
-          }
-        }).then(function (response) {
-          console.log("获取学生偏好", response);
-          for (let i = 0; i < response.data.data.length; i++) {
-            that.selectedPrefer.push(response.data.data[i].prefer.preferId);
-          }
-          console.log("学生偏好Id", that.selectedPrefer);
-          that.$store.commit('saveStudentPreferences', response.data.data);
-        }, function (err) {
-          console.log(err);
-        });
+        that.StudentPreferences();
       }, function (err) {
         console.log(err);
       });
