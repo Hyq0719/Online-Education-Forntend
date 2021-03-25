@@ -1,6 +1,6 @@
 <template>
-  <div style="background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
-    <el-main style="overflow:hidden;position: relative;min-height: 480px">
+  <div style="min-height: 480px">
+    <el-main style="overflow:hidden;position: relative" class="card-wrapper">
       <template>
         <el-radio-group v-model="radio" style="float: left;margin: 5px 20px">
           <el-radio :label="1" @change="displayLive">全部直播</el-radio>
@@ -238,5 +238,12 @@ export default {
 </script>
 
 <style scoped>
+
+.card-wrapper{
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
+}
 
 </style>

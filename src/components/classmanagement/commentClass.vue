@@ -1,6 +1,6 @@
 <template>
-  <div style="background-color: #ffffff;box-shadow: 0 0 10px #4d555d;border-radius: 5px;">
-    <div v-show="classView" style="position: relative;min-height: 480px">
+  <div style="min-height: 480px">
+    <div v-show="classView" style="position: relative" class="card-wrapper">
       <el-main>
         <el-table :data="classData.list" @row-click="findComment">
           <el-table-column prop="name" label="课程名称">
@@ -518,6 +518,13 @@ export default {
   padding-top: 40px;
   overflow: hidden;
   clear: both;
+}
+
+.card-wrapper{
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #4d555d;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
 }
 
 .el-row {
