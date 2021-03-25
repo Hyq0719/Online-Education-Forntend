@@ -90,6 +90,13 @@ export default {
     },
     closed1() {
       let that = this;
+      if (Number(this.input)>100)
+        that.$notify.info({
+          title: '警告',
+          message: '打分请小于100',
+          type: 'warning',
+        });
+      else {
       let params = {
         homeworkId: this.info.homeworkId,
         mark: Number(this.input),
@@ -112,10 +119,11 @@ export default {
         that.$emit('close', false);
       }, function (err) {
         console.log(err);
-      });
+      });};
     },
     closed2() {
       let that = this;
+
       let params = {
         homeworkId: this.info.homeworkId,
         mark: Number(this.input),

@@ -90,7 +90,7 @@ export default {
       that.$store.commit("saveTaskId",task);
       that.taskrId=task;
       let b = new URLSearchParams();
-
+      that.hwView=true;
       b.append("taskId", task);
       b.append("page", 1);
 
