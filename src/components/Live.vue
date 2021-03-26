@@ -14,8 +14,7 @@
         <el-tabs type="card" v-model="activeList" stretch>
           <el-tab-pane label="聊天室" name="first">
             <div class="infinite-list-wrapper">
-              <ul
-                  class="list">
+              <ul class="list">
                 <li v-for="item in list" :key='item.id' :class="isMyself(item[0])">{{ item[0] }}：{{ item[1] }}</li>
               </ul>
             </div>
@@ -36,7 +35,6 @@
             </div>
           </el-tab-pane>
         </el-tabs>
-
       </el-aside>
     </el-container>
   </div>
@@ -149,7 +147,6 @@ export default {
       }
     },
     mySend() {
-      // console.log('mySend!');
       let VIP = Date.parse(new Date()) <= Date.parse(this.$store.state.userData.vipDate);
       console.log('VIP', VIP);
       let preMsg = {
@@ -160,12 +157,9 @@ export default {
         timer: '',
         isVip: VIP,
       };
-      // console.log(preMsg);
       let toSend = JSON.stringify(preMsg);
-      // console.log(toSend);
       this.chatRoomWebsocket.send(toSend); //将消息发送到服务端
       this.input = '';
-      // console.log("sended!");
     },
     mySetInterval() {
       this.timer = setInterval(this.updateStudentNumber, 1000);
@@ -175,15 +169,12 @@ export default {
       let that = this;
       a.append('sid', '1');
       axios.post("http://" + this.Api + "/api/WebSocket/onlineStudents", a, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function (response) {
-        // console.log(response);
         if (response.data.code === 1000) {
-          // console.log(response);
           that.myCount = response.data.data.count;
           that.userList = [];//response.data.data.student
           for (let i in response.data.data.student) {
             that.userList.push(response.data.data.student[i]);
           }
-          // console.log(that.userList);
         }
       }, function (err) {
         console.log(err);
@@ -196,7 +187,6 @@ export default {
       this.chatRoomWebsocket.onerror = this.websocketOnError;
       this.chatRoomWebsocket.onmessage = this.websocketOnMessage;
       this.chatRoomWebsocket.onclose = this.websocketOnClose;
-      // console.log("123")
     },
     websocketOnOpen() {
       console.log("连接成功");
@@ -207,9 +197,7 @@ export default {
     websocketOnMessage(event) {
       console.log(event);
       let myEvent = JSON.parse(event.data);
-      // console.log(myEvent);
       this.list.push([myEvent.nickName, myEvent.msg]);
-      // console.log(this.list);
       this.sendBarrage(myEvent.vip, myEvent.userId == this.$store.state.userData.userId, myEvent.msg)
     },
     websocketOnClose(e) {
