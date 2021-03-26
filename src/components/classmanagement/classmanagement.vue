@@ -2,29 +2,37 @@
   <el-container style=" border: 1px solid #eee">
 
     <el-aside width="200px" style="background-color: #ecf5ff ">
-      <el-menu >
+      <el-menu :default-openeds="['1','2', '3']" >
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-edit"></i>课程管理</template>
+          <template slot="title"><i class="el-icon-edit"></i>管理</template>
           <el-menu-item-group>
             <el-menu-item index="1-1">
-              <router-link to="/Classmanagement/classList">课程列表</router-link>
+              <router-link to="/Classmanagement/classList">课程管理</router-link>
             </el-menu-item>
             <el-menu-item index="1-2">
               <router-link :to="{name:'commentClass',params:{id:1}}">课程评论</router-link>
             </el-menu-item>
-            <el-menu-item index="1-3">
+            <el-menu-item index="1-2">
               <router-link :to="{name:'liveManagement'}">直播管理</router-link>
             </el-menu-item>
 
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="2">
-          <template slot="title"><i class="el-icon-guide"></i>帮助</template>
+          <template slot="title"><i class="el-icon-data-board"></i>课程反馈</template>
           <el-menu-item-group>
             <el-menu-item index="2-1">
+              <router-link :to="{name:'commentClass',params:{id:1}}">课程评论</router-link>
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="3">
+          <template slot="title"><i class="el-icon-guide"></i>帮助</template>
+          <el-menu-item-group>
+            <el-menu-item index="3-1">
               <router-link :to="{name:'obsIntro'}">obs介绍</router-link>
             </el-menu-item>
-            <el-menu-item index="2-2">
+            <el-menu-item index="3-2">
               <router-link :to="{name:'addressView'}">查看直播地址</router-link>
             </el-menu-item>
           </el-menu-item-group>
