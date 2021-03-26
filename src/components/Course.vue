@@ -50,8 +50,14 @@ export default {
   data() {
     return {
       input: '',
-      videoId: this.$store.state.Video.chapterId * 100 + this.$store.state.Video.videoId,
     };
+  },
+  computed: {
+    videoId: {
+      get() {
+        return this.$store.state.Video.chapterId * 100 + this.$store.state.Video.videoId;
+      },
+    }
   },
   methods: {
     TaskMenu(courseId, chapterId) {

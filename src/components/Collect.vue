@@ -15,7 +15,8 @@
       <div class="collect-content">
         <div class="collect-img"
              @click="Course(item.course.courseId)">
-          <img :src="item.course.coursePic" alt="图片丢失">
+          <img v-if="item.course.coursePic" :src="item.course.coursePic" alt="图片缺失">
+          <img v-if="!item.course.coursePic" src="../assets/SHUlogo.jpg" alt="图片缺失">
         </div>
         <div class="collect-text">
           <div class="collect-text-title"
@@ -172,6 +173,11 @@ export default {
 
 .collect-text-title {
   cursor: pointer;
+}
+
+.block {
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 a {

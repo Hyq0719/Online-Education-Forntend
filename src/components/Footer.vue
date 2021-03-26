@@ -5,8 +5,9 @@
     </div>
     <div class="text">
       <p>下载客户端 | 联系我们 | 新闻资讯 | 支持我们 | 加入我们</p>
-      <p>Copyright © 2020-2021 沪ICP备2021003682号-1</p>
-      <p>Looc网隶属于上海大学某小组</p>
+      <p>Copyright © 2020-2021 互联网ICP备案：沪ICP备2021003682号-1</p>
+      <p>Looc网隶属于上海大学计算机学院某小组</p>
+      <p>课程视频均转载自网络内容，若有侵权请私信联系，本平台将立即删除</p>
     </div>
     <div class="follow">
       <el-popover
@@ -41,8 +42,8 @@ export default {
 }
 
 .img {
-  height: 100px;
-  width: 100px;
+  height: 120px;
+  width: 120px;
   float: left;
   margin: 10px 10px 10px 150px;
 }

@@ -30,9 +30,9 @@
           </el-tab-pane>
           <el-tab-pane label="在线用户" name="second">
             <div class="infinite-list-wrapper">
-              <ul class="list">
-                <li v-for="value in userList" :key="value.id" class="users">{{ value }}</li>
-              </ul>
+              <div class="onlineUsers" v-for="value in userList" :key="value.id">
+                <p>{{ value }}</p>
+              </div>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -301,14 +301,14 @@ ul {
   padding: 20px;
 }
 
-.users {
-  display: block;
-  list-style-type: none;
-  text-align: left;
+.onlineUsers {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
   font-size: 20px;
-  padding: 2px;
-  margin-bottom: 10px;
-  overflow: hidden;
+  margin: 10px;
+  background: #EBEEF5;
+  border-radius: 10px;
 }
 
 .communicate {

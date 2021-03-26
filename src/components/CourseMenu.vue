@@ -20,10 +20,11 @@
       <el-radio v-model="radioVip" @click.native="CourseChoose($event,preferId,sort,1)" label="3">付费课程</el-radio>
     </div>
     <div class="Course-content">
-        <Menu v-for="(item,index) in this.$store.state.MenuCourseData.list"
-              v-bind:key="index" @click.native="Course(item.courseId)"
-              :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1"
-              :VIP="item.needVip" style="width: 18%"></Menu>
+      <Menu v-for="(item,index) in this.$store.state.MenuCourseData.list"
+            v-bind:key="index" @click.native="Course(item.courseId)"
+            :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1"
+            :VIP="item.needVip" :courseWatches="item.courseWatches" :courseAvgMark="item.courseAvgMark"
+            style="width: 18%"></Menu>
     </div>
     <div class="block">
       <el-pagination
