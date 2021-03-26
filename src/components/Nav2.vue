@@ -4,7 +4,7 @@
     <div class="Course-content" v-if="this.$store.state.MainMenuLiveData">
       <Menu v-for="(item,index) in this.$store.state.MainMenuLiveData.list.slice(0, 4)"
             v-bind:key="index" @click.native="Live(item.liveId)"
-            :name="item.liveName" :teacherName="item.intro" :liveDate="item.liveDate"
+            :name="item.liveName" :teacherName="item.teacher.name" :liveDate="item.liveDate"
             :coursePic="item.livePicUrl" style="width: 23%"></Menu>
     </div>
     <h2>好课推荐</h2>
@@ -12,7 +12,8 @@
       <Menu v-for="(item,index) in this.$store.state.MainMenuCourseData.slice(0, 4)"
             v-bind:key="index" @click="Course(item.courseId)"
             :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1"
-            :VIP="item.needVip" style="width: 23%"></Menu>
+            :VIP="item.needVip" :courseWatches="item.courseWatches" :courseAvgMark="item.courseAvgMark"
+            style="width: 23%"></Menu>
     </div>
   </div>
 </template>

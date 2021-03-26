@@ -13,7 +13,7 @@
     <div class="Course-content">
       <Menu v-for="(item,index) in this.$store.state.MenuLiveData.list"
             v-bind:key="index" @click.native="Live(item.liveId)"
-            :name="item.liveName" :teacherName="item.intro" :liveDate="item.liveDate"
+            :name="item.liveName" :teacherName="item.teacher.name" :liveDate="item.liveDate"
             :coursePic="item.livePicUrl" style="width: 18%"></Menu>
     </div>
     <div class="block">

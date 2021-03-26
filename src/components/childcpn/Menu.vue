@@ -6,14 +6,16 @@
     </div>
     <!--    课程-->
     <h4 v-if="name">{{ name }}</h4>
-    <h6 v-if="teacherName">{{ teacherName }}</h6>
-    <p class="free" v-if="isFree&&!VIP">免费</p>
-    <p class="VIP" v-if="isFree&&VIP">VIP</p>
+    <h6 v-if="teacherName">教师：{{ teacherName }}</h6>
+    <h6 v-if="courseAvgMark" style="color: #409EFF">课程评分：{{ courseAvgMark }}</h6>
+    <h6 class="courseWatches" v-if="courseWatches" style="color: #E6A23C">观看人数：{{ courseWatches }}</h6>
+    <p style="color: #67C23A" v-if="isFree&&!VIP">免费</p>
+    <p style="color: #F56C6C" v-if="isFree&&VIP">VIP</p>
     <!--    直播-->
     <h6 v-if="liveDate">直播时间：{{ liveDate }}</h6>
-    <h6 v-if="liveDate && (Date.parse(today) > Date.parse(liveDate))">直播已过期</h6>
-    <h6 class="now" v-if="liveDate && (Date.parse(today) == Date.parse(liveDate))">今日直播</h6>
-    <h6 class="future" v-if="liveDate && (Date.parse(today) < Date.parse(liveDate))">直播未开始</h6>
+    <p v-if="liveDate && (Date.parse(today) > Date.parse(liveDate))">直播已过期</p>
+    <p style="color: #F56C6C" v-if="liveDate && (Date.parse(today) == Date.parse(liveDate))">今日直播</p>
+    <p style="color: #67C23A" v-if="liveDate && (Date.parse(today) < Date.parse(liveDate))">直播未开始</p>
   </div>
 </template>
 
@@ -25,15 +27,17 @@ export default {
     //课程
     name: null,
     teacherName: null,
+    courseAvgMark: null,
+    courseWatches: null,
     coursePic: null,
     isFree: null,
     VIP: null,
     //直播
     liveDate: null,
   },
-  computed:{
-    today:{
-      get(){
+  computed: {
+    today: {
+      get() {
         return new Date().toLocaleDateString();
       },
     }
@@ -43,6 +47,7 @@ export default {
 
 <style scoped>
 .Course-content-content {
+  position:relative;
   height: 265px;
   cursor: pointer;
   text-align: left;
@@ -76,27 +81,21 @@ export default {
 }
 
 .Course-content-content h6 {
-  margin: 10px 10px 20px 10px;
+  margin: 5px 10px 5px 10px;
 }
 
 .Course-content-content p {
-  margin: 50px 10px 10px 10px;
+  font-size: 13px;
+  position: absolute;
+  bottom: 0px;
+  margin: 5px 10px;
 }
 
-.free {
-  color: #67C23A;
-}
-
-.VIP {
-  color: #F56C6C;
-}
-
-.now {
-  color: #F56C6C;
-}
-
-.future {
-  color: #67C23A;
+.courseWatches{
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  margin: 5px 10px;
 }
 
 a {

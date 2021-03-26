@@ -131,7 +131,8 @@
         <Menu v-for="(item,index) in this.$store.state.RelatedCourses"
               v-bind:key="index" @click.native="Course(item.courseId)"
               :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1"
-              :VIP="item.needVip" style="width: 18%"></Menu>
+              :VIP="item.needVip" :courseWatches="item.courseWatches" :courseAvgMark="item.courseAvgMark"
+              style="width: 18%"></Menu>
       </div>
     </div>
   </div>
