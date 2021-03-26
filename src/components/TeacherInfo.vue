@@ -18,10 +18,11 @@
       </el-radio-group>
     </div>
     <div class="Course-content">
-      <div class="Course-content-content" v-for="(item,index) in this.$store.state.TeacherMenuCourseData.list"
-           v-bind:key="index" @click="Course(item.courseId)">
-        <Menu :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1" :VIP="item.needVip"></Menu>
-      </div>
+        <Menu v-for="(item,index) in this.$store.state.TeacherMenuCourseData.list"
+              v-bind:key="index" @click.native="Course(item.courseId)"
+              :name="item.name" :teacherName="item.teacher.name" :coursePic="item.coursePic" :isFree="1"
+              :VIP="item.needVip" :courseWatches="item.courseWatches" :courseAvgMark="item.courseAvgMark"
+              style="width: 18%"></Menu>
     </div>
     <div class="block">
       <el-pagination
@@ -162,24 +163,6 @@ export default {
 .Course-content {
   display: flex;
   flex-wrap: wrap;
-}
-
-.Course-content-content {
-  height: 220px;
-  width: 18%;
-  cursor: pointer;
-  text-align: left;
-  border-radius: 10px;
-  border: #E4E7ED 1px solid;
-  margin: 10px;
-  box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
-}
-
-.Course-content-content:hover {
-  background-color: #d3dce6;
-  text-decoration: none;
-  text-decoration-color: #99a9bf;
-  text-decoration-width: auto;
 }
 
 .block {
