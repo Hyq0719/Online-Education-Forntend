@@ -10,9 +10,6 @@
               <router-link to="/Classmanagement/classList">课程管理</router-link>
             </el-menu-item>
             <el-menu-item index="1-2">
-              <router-link :to="{name:'commentClass',params:{id:1}}">课程评论</router-link>
-            </el-menu-item>
-            <el-menu-item index="1-2">
               <router-link :to="{name:'liveManagement'}">直播管理</router-link>
             </el-menu-item>
 

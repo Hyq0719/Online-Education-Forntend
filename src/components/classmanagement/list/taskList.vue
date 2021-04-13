@@ -8,7 +8,7 @@
         </el-table-column>
         <el-table-column prop="endTime" label="结束时间" width="200px">
         </el-table-column>
-        <el-table-column label="操作" >
+        <el-table-column label="操作" min-width="570px">
           <template slot-scope="scope">
 
               <el-button type="primary" @click="taskId=scope.row.taskId;dialogTaskEdit = true" icon="el-icon-edit">

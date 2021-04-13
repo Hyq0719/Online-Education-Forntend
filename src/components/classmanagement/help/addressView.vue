@@ -3,10 +3,10 @@
     <div class="card-wrapper">
   <div class="Intro">
        <h4>当前可用直播地址：</h4>
-      <div style="width: 300px;margin: 0 0 0 0"><el-divider/></div>
-      直播地址{{addressData[0].liveAddressId}}：{{addressData[0].liveAddress}}
-      <div style="margin: 10px"/>
-      直播地址{{addressData[1].liveAddressId}}：{{addressData[1].liveAddress}}
+      <div v-for="(item,index) in addressData" :key="index">
+      <div  style="width: 300px;margin: 0 0 0 0"><el-divider/></div>
+      直播地址{{item.liveAddressId}}：{{item.liveAddress}}
+      </div>
   </div>
     </div>
   </div>
@@ -36,8 +36,11 @@ export default {
       };
     },
   },
-  mounted() {
+  created() {
     this.getAddress();
+  },
+  mounted() {
+
     let breadcrumb = [
       {
         link: '/Classmanagement/blank',
