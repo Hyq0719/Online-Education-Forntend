@@ -1,13 +1,17 @@
 <template>
   <div class="NAV2">
-    <h2>全部直播</h2>
+    <div class="Title">
+      <img src="https://www.imooc.com/static/img/index-v3/title-bg4.png" alt="">
+    </div>
     <div class="Course-content" v-if="this.$store.state.MainMenuLiveData">
       <Menu v-for="(item,index) in this.$store.state.MainMenuLiveData.list.slice(0, 4)"
             v-bind:key="index" @click.native="Live(item.liveId,item.liveDate)"
             :name="item.liveName" :teacherName="item.teacher.name" :liveDate="item.liveDate"
             :coursePic="item.livePicUrl" style="width: 23%"></Menu>
     </div>
-    <h2>好课推荐</h2>
+    <div class="Title">
+      <img src="https://www.imooc.com/static/img/index-v3/title-bg3.png" alt="">
+    </div>
     <div class="Course-content" v-if="this.$store.state.MainMenuCourseData">
       <Menu v-for="(item,index) in this.$store.state.MainMenuCourseData.slice(0, 4)"
             v-bind:key="index" @click.native="Course(item.courseId)"
@@ -91,19 +95,22 @@ export default {
 .NAV2 {
   width: 1100px;
   margin: auto;
-  padding: 32px 0;
-  clear: both;
 }
 
-.NAV2 h2 {
-  text-align: left;
-  margin: 60px 20px 40px 20px;
-  letter-spacing: 2px;
+.Title{
+  display: flex;
+}
+
+.Title img{
+  height: 15%;
+  width: 15%;
+  margin: 20px 0 40px 0;
 }
 
 .Course-content {
   display: flex;
   flex-wrap: wrap;
+  margin: 0 auto 50px auto;
 }
 </style>
 

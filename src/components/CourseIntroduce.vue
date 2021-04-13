@@ -91,15 +91,6 @@
                 <div style="float:left;text-align:left;font-size: 16px"> {{ item.content }}</div>
               </div>
             </el-card>
-            <div>
-              <el-pagination style="bottom: 10px;left: 400px"
-                             background
-                             layout="prev, pager, next"
-                             :total="1">
-                <!--                             @current-change="handleCurrentChange"-->
-
-              </el-pagination>
-            </div>
           </el-tab-pane>
         </el-tabs>
       </el-main>
