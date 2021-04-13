@@ -44,8 +44,12 @@ export default {
   margin: auto;
 }
 
+.el-main{
+  padding: 40px;
+}
+
 .el-container {
-  height: 500px;
+  height: 540px;
 }
 
 .el-carousel__item img {

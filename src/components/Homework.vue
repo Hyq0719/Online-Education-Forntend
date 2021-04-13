@@ -91,19 +91,23 @@ export default {
       });
     },
     DeleteHomework(homeworkId) {
-      let a = new URLSearchParams;
-      let that = this;
-      a.append("homeworkId", homeworkId);
-      axios.post("http://" + this.Api + "/api/Homework/deleteHomeWork?" + a, null, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': this.$store.state.JWT,
-        }
-      }).then(function (response) {
-        console.log("删除作业", response);
-        that.initHomework();
-        that.currentPage = 1;
-      }, function (err) {
+      this.$confirm(`确定删除作业？`).then(() => {
+        let a = new URLSearchParams;
+        let that = this;
+        a.append("homeworkId", homeworkId);
+        axios.post("http://" + this.Api + "/api/Homework/deleteHomeWork?" + a, null, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': this.$store.state.JWT,
+          }
+        }).then(function (response) {
+          console.log("删除作业", response);
+          that.initHomework();
+          that.currentPage = 1;
+        }, function (err) {
+          console.log(err);
+        });
+      }).catch((err) => {
         console.log(err);
       });
     },
