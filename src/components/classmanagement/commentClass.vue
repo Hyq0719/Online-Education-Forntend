@@ -65,84 +65,92 @@
         </el-card>
       </div>
 
-      <div v-show="chartView" :key="key" style="overflow: hidden;padding: 20px">
-        <el-row>
-          <el-col :span="24" style="font-size: 18px;text-align:left ">
-            平均评分： {{ analysisComment.avg_comment_mark }} /5
-            <div style="display: inline-block;width: 30px"></div>
-            <span id="remark1" ref="remark1" style="font-family: 微软雅黑"><em>{{ remark1w }}</em></span>
-            <div style="width: 400px">
-              <el-divider/>
-            </div>
-          </el-col>
-          <el-col :span="24" style="font-size: 18px;text-align:left ">
-            情感评分： {{ analysisComment.avg_mark }} /5
-            <div style="display: inline-block;width: 30px"></div>
-            <span id="remark2" ref="remark2" style="font-family: 微软雅黑"><em>{{ remark2w }}</em></span>
-            <div style="width: 400px">
-              <el-divider/>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12" style="overflow: hidden">
-            <div class="card-wrapper2">
-              <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 评论词云</h2>
-              <wordcloud
-                  style="height:344px;width:500px"
-                  :margin= "{top: 0, right: 0, bottom: 0, left: 0 }"
-                  :data="words"
-                  nameKey="name"
-                  valueKey="value"
-                  spiral="rectangular"
-                  :color="myColors"
-                  :showTooltip="true"
-                  :wordClick="wordClickHandler">
-              </wordcloud>
+      <div v-show="chartView" v-if="chartView" style="overflow: hidden;padding: 20px">
 
-              <div class="footer"></div>
-            </div>
-          </el-col>
-          <el-col :span="12" style="overflow: hidden">
-            <div class="card-wrapper2">
-              <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 情感分析</h2>
-              <ECharts id="BarChart2" :data="option4" height="350px" width="500px"></ECharts>
-              <div class="footer"></div>
-            </div>
-          </el-col>
-        </el-row>
+        <div v-show="notFound">
+          <h1 style="align-text: center">评论太少，获取分析失败。</h1>
+        </div>
+        <div v-show="picView">
         <el-row>
-          <el-col :span="12" style="overflow: hidden">
-            <div class="card-wrapper2">
-              <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 打分分布</h2>
-              <ECharts id="BarChart3" :data="option5" height="350px" width="500px"></ECharts>
-              <div class="footer"></div>
+          <el-col :span="24" style="font-size: 18px;text-align:left ">
+            平均评分： <span id="mark1">{{ analysisComment.avg_comment_mark }}</span> /5
+            <div style="display: inline-block;width: 30px"></div>
+            <span  ref="remark1" style="font-family: 微软雅黑"><em id="remark1"></em></span>
+            <div style="width: 400px">
+              <el-divider/>
             </div>
           </el-col>
-          <el-col :span="12" style="overflow: hidden">
-            <div class="card-wrapper2">
-              <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 最坏的几条评论</h2>
-              <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in badComment" :key="index"
-                       style="display:block;margin: 5px;overflow: hidden;min-height: 80px">
-                <div style="overflow: hidden">
-                  <div style="text-align:left;font-size: 12px;margin: 0 10px">
-                    <el-rate style="display: inline"
-                             v-model="item.commentMark"
-                             disabled
-                             show-score
-                             text-color="#ff9900"
-                             score-template="{value}">
-                    </el-rate>
-                  </div>
-                </div>
-                <div style="overflow: hidden;margin: 10px 10px">
-                  <div style="float:left;text-align:left;font-size: 16px"> {{ item[0] }}</div>
-                </div>
-              </el-card>
-              <div class="footer"></div>
+          <el-col :span="24" style="font-size: 18px;text-align:left ">
+            情感评分：<span id="mark2"> {{ analysisComment.avg_mark }} </span> /5
+            <div style="display: inline-block;width: 30px"></div>
+            <span ref="remark2" style="font-family: 微软雅黑"><em id="remark2" ></em></span>
+            <div style="width: 400px">
+              <el-divider/>
             </div>
           </el-col>
         </el-row>
+        <div :key="key">
+          <el-row>
+            <el-col :span="12" style="overflow: hidden">
+              <div class="card-wrapper2">
+                <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 评论词云</h2>
+                <wordcloud
+                    style="height:344px;width:500px"
+                    :margin="{top: 0, right: 0, bottom: 0, left: 0 }"
+                    :data="words"
+                    nameKey="name"
+                    valueKey="value"
+                    spiral="rectangular"
+                    :color="myColors"
+                    :showTooltip="true"
+                    :wordClick="wordClickHandler">
+                </wordcloud>
+
+                <div class="footer"></div>
+              </div>
+            </el-col>
+            <el-col :span="12" style="overflow: hidden">
+              <div class="card-wrapper2">
+                <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 情感分析</h2>
+                <ECharts id="BarChart2" :data="option4" height="350px" width="500px"></ECharts>
+                <div class="footer"></div>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12" style="overflow: hidden">
+              <div class="card-wrapper2">
+                <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 打分分布</h2>
+                <ECharts id="BarChart3" :data="option5" height="350px" width="500px"></ECharts>
+                <div class="footer"></div>
+              </div>
+            </el-col>
+            <el-col :span="12" style="overflow: hidden">
+              <div class="card-wrapper2">
+                <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 最坏的几条评论</h2>
+                <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in badComment" :key="index"
+                         style="display:block;margin: 5px;overflow: hidden;min-height: 80px">
+                  <div style="overflow: hidden">
+                    <div style="text-align:left;font-size: 12px;margin: 0 10px">
+                      <el-rate style="display: inline"
+                               v-model="item.commentMark"
+                               disabled
+                               show-score
+                               text-color="#ff9900"
+                               score-template="{value}">
+                      </el-rate>
+                    </div>
+                  </div>
+                  <div style="overflow: hidden;margin: 10px 10px">
+                    <div style="float:left;text-align:left;font-size: 16px"> {{ item[0] }}</div>
+                  </div>
+                </el-card>
+                <div class="footer"></div>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+        </div>
       </div>
 
 
@@ -161,10 +169,12 @@ export default {
   data() {
     return {
       myColors: ['#1f77b4', '#629fc9', '#94bedb', '#c9e0ef'],
-      remark1: ["学生对该课程评价不佳，请您提升教学水平", '学生对该课程评价一般，有待提高', '学生对该课程评价非常好，请您继续保持'],
-      remark2: ['这门课反响很差', '这门课反响一般', '这门课反响一般'],
-      remark1w: "",
-      remark2w: "",
+      remark1: ["<span style='color: red'>学生对该课程评价不佳，请您提升教学水平</span>>",
+        "<span style='color: yellow'>学生对该课程评价一般，有待提高</span>",
+        "<span style='color: deepskyblue'>学生对该课程评价非常好，请您继续保持</span>"],
+      remark2: ["<span style='color: red'>这门课反响很差</span>",
+        "<span style='color: yellow'>这门课反响一般</span>",
+        "<span style='color: deepskyblue'>这门课反响很好，请继续保持</span>"],
       courseId: null,
       words: [],
       key: 1,
@@ -178,6 +188,8 @@ export default {
       commentView: true,
       chartView: false,
       chartBarView: false,
+      notFound: false,
+      picView: false,
       optionc: 1,
       option2: {
         dataset: {
@@ -212,7 +224,7 @@ export default {
         series: [
           {
             type: 'pie',
-            radius: ["10%","70%"],
+            radius: ["10%", "70%"],
             roseType: "radius",
             label: {
               color: '#000'
@@ -266,8 +278,8 @@ export default {
           {
             type: 'bar',
             barWidth: "35%",
-            itemStyle:{
-              barBorderRadius:5,
+            itemStyle: {
+              barBorderRadius: 5,
             }
           }
         ]
@@ -374,20 +386,30 @@ export default {
         console.log("nlp结果：", response.data.data);
         if (response.data.code === 1000) {
           if (response.data.data !== null) {
+            that.picView=true;
+            that.notFound=false;
             that.$store.commit("saveAnalysisComment", response.data.data);
             that.analysisComment = that.$store.state.teacherData.analysisComment;
             if (that.analysisComment.avg_comment_mark > 3.0 && that.analysisComment.avg_comment_mark <= 5) {
-              that.remark1w = that.remark1[2];
+              document.getElementById('remark1').innerHTML = that.remark1[2];
+              document.getElementById('mark1').style.color="deepskyblue";
             } else if (that.analysisComment.avg_comment_mark > 1.5 && that.analysisComment.avg_comment_mark <= 3) {
-              that.remark1w = that.remark1[1];
-            } else if (that.analysisComment.avg_comment_mark <= 1.5)
-              that.remark1w = that.remark1[0];
+              document.getElementById('remark1').innerHTML = that.remark1[1];
+              document.getElementById('mark1').style.color="yellow";
+            } else if (that.analysisComment.avg_comment_mark <= 1.5) {
+              document.getElementById('remark1').innerHTML = that.remark1[0];
+              document.getElementById('mark1').style.color = "red";
+            }
             if (that.analysisComment.avg_mark > 3.0 && that.analysisComment.avg_comment_mark <= 5) {
-              that.remark2w = that.remark2[2];
+              document.getElementById('remark2').innerHTML = that.remark2[2];
+              document.getElementById('mark2').style.color="deepskyblue";
             } else if (that.analysisComment.avg_mark > 1.5 && that.analysisComment.avg_comment_mark <= 3) {
-              that.remark2w = that.remark2[1];
-            } else if (that.analysisComment.avg_mark <= 1.5)
-              that.remark2w = that.remark2[0];
+              document.getElementById('remark2').innerHTML = that.remark1[1];
+              document.getElementById('mark2').style.color = "yellow";
+            } else if (that.analysisComment.avg_mark <= 1.5) {
+              document.getElementById('remark2').innerHTML = that.remark1[0];
+              document.getElementById('mark2').style.color = "red";
+            }
             that.option2.dataset.source = that.analysisComment.word_cut;
             const n = that.analysisComment.mark_distribution;
             // console.log("n", Object.entries(n))
@@ -411,8 +433,11 @@ export default {
             that.chartBarView = true;
             that.optionc = that.optionc + 1;
           }
-          // that.option2.dataset.source.push(1);
-          // that.option2.dataset.source.pop();
+          else
+          {
+            that.picView=false;
+            that.notFound=true;
+          }
         }
       }, function (err) {
         console.log(err);
