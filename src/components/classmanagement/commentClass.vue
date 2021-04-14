@@ -65,7 +65,12 @@
         </el-card>
       </div>
 
-      <div v-show="chartView" style="overflow: hidden;padding: 20px">
+      <div v-show="chartView" v-if="chartView" style="overflow: hidden;padding: 20px">
+
+        <div v-show="notFound">
+          <h1 style="align-text: center">评论太少，获取分析失败。</h1>
+        </div>
+        <div v-show="picView">
         <el-row>
           <el-col :span="24" style="font-size: 18px;text-align:left ">
             平均评分： <span id="mark1">{{ analysisComment.avg_comment_mark }}</span> /5
@@ -145,6 +150,7 @@
             </el-col>
           </el-row>
         </div>
+        </div>
       </div>
 
 
@@ -169,8 +175,6 @@ export default {
       remark2: ["<span style='color: red'>这门课反响很差</span>",
         "<span style='color: yellow'>这门课反响一般</span>",
         "<span style='color: deepskyblue'>这门课反响很好，请继续保持</span>"],
-      // remark1w: "",
-      // remark2w: "",
       courseId: null,
       words: [],
       key: 1,
@@ -184,6 +188,8 @@ export default {
       commentView: true,
       chartView: false,
       chartBarView: false,
+      notFound: false,
+      picView: false,
       optionc: 1,
       option2: {
         dataset: {
@@ -380,6 +386,8 @@ export default {
         console.log("nlp结果：", response.data.data);
         if (response.data.code === 1000) {
           if (response.data.data !== null) {
+            that.picView=true;
+            that.notFound=false;
             that.$store.commit("saveAnalysisComment", response.data.data);
             that.analysisComment = that.$store.state.teacherData.analysisComment;
             if (that.analysisComment.avg_comment_mark > 3.0 && that.analysisComment.avg_comment_mark <= 5) {
@@ -425,8 +433,11 @@ export default {
             that.chartBarView = true;
             that.optionc = that.optionc + 1;
           }
-          // that.option2.dataset.source.push(1);
-          // that.option2.dataset.source.pop();
+          else
+          {
+            that.picView=false;
+            that.notFound=true;
+          }
         }
       }, function (err) {
         console.log(err);
