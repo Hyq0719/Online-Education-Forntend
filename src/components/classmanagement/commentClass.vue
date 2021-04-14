@@ -67,7 +67,7 @@
 
       <div v-show="chartView" :key="key" style="overflow: hidden;padding: 20px">
         <el-row>
-          <el-col :span="24" style="font-size: 20px;text-align:left ">
+          <el-col :span="24" style="font-size: 18px;text-align:left ">
             平均评分： {{ analysisComment.avg_comment_mark }} /5
             <div style="display: inline-block;width: 30px"></div>
             <span id="remark1" ref="remark1" style="font-family: 微软雅黑"><em>{{ remark1w }}</em></span>
@@ -75,7 +75,7 @@
               <el-divider/>
             </div>
           </el-col>
-          <el-col :span="24" style="font-size: 20px;text-align:left ">
+          <el-col :span="24" style="font-size: 18px;text-align:left ">
             情感评分： {{ analysisComment.avg_mark }} /5
             <div style="display: inline-block;width: 30px"></div>
             <span id="remark2" ref="remark2" style="font-family: 微软雅黑"><em>{{ remark2w }}</em></span>
@@ -89,12 +89,14 @@
             <div class="card-wrapper2">
               <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 评论词云</h2>
               <wordcloud
-                  style="height:300px;width:500px"
+                  style="height:344px;width:500px"
+                  :margin= "{top: 0, right: 0, bottom: 0, left: 0 }"
                   :data="words"
                   nameKey="name"
                   valueKey="value"
+                  spiral="rectangular"
                   :color="myColors"
-                  :showTooltip="false"
+                  :showTooltip="true"
                   :wordClick="wordClickHandler">
               </wordcloud>
 
@@ -568,6 +570,7 @@ export default {
   box-shadow: 0 0 10px #4d555d;
   border-radius: 5px;
   margin: 0 0 20px 0;
+  overflow: hidden;
 }
 
 .card-wrapper2 {
