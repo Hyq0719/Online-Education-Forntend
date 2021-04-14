@@ -126,6 +126,11 @@ export default {
   border-radius: 10px;
   border: #E4E7ED 1px solid;
   box-shadow: 0 0 3px rgba(95, 101, 105, 0.15);
+  background: #F2F6FC;
+}
+
+.history-course:hover {
+  background-color: #E4E7ED;
 }
 
 .history-time {

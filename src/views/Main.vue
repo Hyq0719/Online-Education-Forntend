@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="Main">
     <Sidebar></Sidebar>
     <Header :key="$store.state.isLogin||$store.state.isLoginTeacher"></Header>
     <Nav1></Nav1>
@@ -59,6 +59,11 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+.Main{
+  background-image: url("../assets/backPic1.webp");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position-y: 60px;
+}
 </style>
