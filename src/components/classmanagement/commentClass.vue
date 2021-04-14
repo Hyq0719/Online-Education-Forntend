@@ -65,7 +65,7 @@
         </el-card>
       </div>
 
-      <div v-show="chartView" v-if="chartView" style="overflow: hidden;padding: 20px">
+      <div v-show="chartView" style="overflow: hidden;padding: 20px">
 
         <div v-show="notFound">
           <h1 style="align-text: center">评论太少，获取分析失败。</h1>
