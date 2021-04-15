@@ -1,7 +1,8 @@
 <template>
   <div class="NAV2">
     <div class="Title">
-      <img src="https://www.imooc.com/static/img/index-v3/title-bg4.png" alt="">
+      <img src="../assets/HotIcon.png" alt="">
+      <h2>全部直播</h2>
     </div>
     <div class="Course-content" v-if="this.$store.state.MainMenuLiveData">
       <Menu v-for="(item,index) in this.$store.state.MainMenuLiveData.list.slice(0, 4)"
@@ -10,7 +11,8 @@
             :coursePic="item.livePicUrl" style="width: 23%"></Menu>
     </div>
     <div class="Title">
-      <img src="https://www.imooc.com/static/img/index-v3/title-bg3.png" alt="">
+      <img src="../assets/TapIcon.png" alt="">
+      <h2>好课推荐</h2>
     </div>
     <div class="Course-content" v-if="this.$store.state.MainMenuCourseData">
       <Menu v-for="(item,index) in this.$store.state.MainMenuCourseData.slice(0, 4)"
@@ -102,9 +104,13 @@ export default {
 }
 
 .Title img{
-  height: 15%;
-  width: 15%;
+  height: 60px;
+  width: 90px;
   margin: 20px 0 40px 0;
+}
+
+.Title h2{
+  margin: 35px 0 40px 10px;
 }
 
 .Course-content {
