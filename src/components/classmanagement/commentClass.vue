@@ -169,7 +169,7 @@ export default {
   data() {
     return {
       myColors: ['#1f77b4', '#629fc9', '#94bedb', '#c9e0ef'],
-      remark1: ["<span style='color: red'>学生对该课程评价不佳，请您提升教学水平</span>>",
+      remark1: ["<span style='color: red'>学生对该课程评价不佳，请您提升教学水平</span>",
         "<span style='color: yellow'>学生对该课程评价一般，有待提高</span>",
         "<span style='color: deepskyblue'>学生对该课程评价非常好，请您继续保持</span>"],
       remark2: ["<span style='color: red'>这门课反响很差</span>",
