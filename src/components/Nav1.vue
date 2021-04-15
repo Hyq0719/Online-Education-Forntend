@@ -41,7 +41,7 @@ export default {
 <style scoped>
 .NAV1 {
   width: 1100px;
-  margin: auto;
+  margin: 50px auto 0 auto;
 }
 
 .el-main{

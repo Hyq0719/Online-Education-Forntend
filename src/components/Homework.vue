@@ -152,6 +152,11 @@ export default {
   border: #E4E7ED 1px solid;
   margin: 10px;
   box-shadow: 0 0 10px rgba(95, 101, 105, 0.15);
+  background: #F2F6FC;
+}
+
+.Homework-content-content:hover {
+  background-color: #E4E7ED;
 }
 
 .content {

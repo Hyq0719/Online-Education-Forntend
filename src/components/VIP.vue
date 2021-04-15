@@ -1,8 +1,5 @@
 <template>
   <div class="VIP">
-    <div class="VIP-title">
-      <h2>加入会员</h2>
-    </div>
     <div class="VIP-content VIP-content-month">
       <h1>月会员</h1>
       <el-divider></el-divider>
@@ -124,10 +121,6 @@ export default {
 .VIP {
   margin: auto;
   width: 1100px;
-}
-
-.VIP-title h2 {
-  margin: 30px;
 }
 
 .VIP-content {
