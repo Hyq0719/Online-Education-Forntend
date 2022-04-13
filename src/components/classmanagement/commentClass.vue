@@ -127,20 +127,9 @@
             </el-col>
             <el-col :span="12" style="overflow: hidden">
               <div class="card-wrapper2">
-                <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 最坏的几条评论</h2>
+                <h2 style="text-align: center;font-size: 20px;font-weight: bold;margin-left: 10px"> 问题评论</h2>
                 <el-card :body-style="{ padding: '5px'}" v-for="(item,index) in badComment" :key="index"
                          style="display:block;margin: 5px;overflow: hidden;min-height: 80px">
-                  <div style="overflow: hidden">
-                    <div style="text-align:left;font-size: 12px;margin: 0 10px">
-                      <el-rate style="display: inline"
-                               v-model="item.commentMark"
-                               disabled
-                               show-score
-                               text-color="#ff9900"
-                               score-template="{value}">
-                      </el-rate>
-                    </div>
-                  </div>
                   <div style="overflow: hidden;margin: 10px 10px">
                     <div style="float:left;text-align:left;font-size: 16px"> {{ item[0] }}</div>
                   </div>

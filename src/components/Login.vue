@@ -6,8 +6,8 @@
     </div>
     <h2>学生登录</h2>
     <el-form ref="form" :model="form" label-width="100px">
-      <el-form-item label="账号/昵称：">
-        <el-input v-model="form.name" placeholder="请输入账号/昵称"></el-input>
+      <el-form-item label="手机号：">
+        <el-input v-model="form.name" placeholder="请输入手机号"></el-input>
       </el-form-item>
       <el-form-item label="密码：">
         <el-input placeholder="请输入密码" v-model="form.password" show-password></el-input>
