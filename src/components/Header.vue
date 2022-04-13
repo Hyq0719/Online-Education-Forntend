@@ -192,7 +192,6 @@ export default {
 .intro {
   font-size: 12px;
   color: #b4b4b4;
-  float: right;
 }
 
 .avatar img {
